@@ -3595,7 +3595,7 @@
 
         function enterTier(tier) {
             appState.currentTier = tier;
-            // Reset dashboard progress when switching tiers
+            appState.currentPage = 'dashboard';
             if (!appState.readCards) appState.readCards = {};
             localStorage.setItem('appState', JSON.stringify(appState));
             showPage('dashboard');
@@ -3616,7 +3616,6 @@
 
             appState.currentPage = pageName;
             trackToolVisit(pageName);
-            localStorage.setItem('appState', JSON.stringify(appState));
 
             // Update navigation
             updateNavigation();
@@ -4619,19 +4618,23 @@
             }
         });
 
-        // Initial page load
-        updateCountdowns();
-        // If user has a saved page that is NOT home/tier-detail, restore it.
-        // This ensures all tiers (including free) resume their session on reload.
-        const _inAppPages = ['home', 'tier-detail'];
-        const _savedPage  = appState.currentPage;
-        if (_savedPage && !_inAppPages.includes(_savedPage)) {
-            showPage(_savedPage);
-        } else if (appState.currentTier && appState.currentTier !== 'free') {
-            showPage('dashboard');
-        } else {
-            showPage('home');
-        }
+        // Initial page load — deferred to DOMContentLoaded so all const declarations
+        // (TRACKED_TOOLS, ONBOARDING_STEPS, etc.) are fully initialised before showPage runs.
+        document.addEventListener('DOMContentLoaded', function initApp() {
+            updateCountdowns();
+            // Restore the last visited in-app page if available, otherwise use tier default.
+            const inAppPages = ['home', 'tier-detail'];
+            const savedPage  = appState.currentPage;
+            const hasValidPage = savedPage && !inAppPages.includes(savedPage) &&
+                                 document.getElementById(savedPage + '-page');
+            if (hasValidPage) {
+                showPage(savedPage);
+            } else if (appState.currentTier && appState.currentTier !== 'free') {
+                showPage('dashboard');
+            } else {
+                showPage('home');
+            }
+        });
 
         // ============================================================================
         // AI KNOWLEDGE NAVIGATOR
@@ -4778,7 +4781,7 @@
             // ── Upgrade shortcut (exposed on aiNav object) ────────────────────
             function goUpgrade() {
                 closeChat();
-                showPage('pricing');
+                showPage('home');
             }
 
             // ── Closed-knowledge search ───────────────────────────────────────
