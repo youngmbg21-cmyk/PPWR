@@ -1013,7 +1013,7 @@
         .card-modal {
             background: white;
             border-radius: 18px;
-            max-width: 640px;
+            max-width: 760px;
             width: 100%;
             max-height: 88vh;
             overflow-y: auto;
@@ -2428,9 +2428,9 @@
         </div>
     </div>
 
-    <!-- ── SCENARIO PREVIEW MODAL ──────────────────────────────────────── -->
+    <!-- ── SCENARIO MODAL ───────────────────────────────────────────────── -->
     <div class="card-modal-backdrop" id="scenario-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="scenario-modal-title">
-        <div class="card-modal" id="scenario-modal" style="max-width:680px;">
+        <div class="card-modal" id="scenario-modal" style="max-width:900px;">
             <div class="card-modal-header">
                 <div style="flex:1">
                     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
@@ -2447,9 +2447,10 @@
                     <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px;letter-spacing:.06em">The situation</div>
                     <p id="scenario-modal-situation" style="font-size:14px;color:#333;line-height:1.7;margin:0"></p>
                 </div>
-                <div id="scenario-modal-outcomes" style="margin-bottom:20px"></div>
-                <div style="padding-top:4px;border-top:1px solid #EFEFEB;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-                    <button id="scenario-modal-launch" class="btn-primary" style="font-size:14px;padding:10px 24px">🎯 Launch Simulation →</button>
+                <div id="scenario-modal-choices" style="margin-bottom:4px;"></div>
+                <div id="scenario-modal-feedback" style="display:none;margin-bottom:16px;"></div>
+                <div style="padding-top:12px;border-top:1px solid #EFEFEB;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <button id="scenario-modal-retry" class="btn-secondary" style="display:none;font-size:13px;padding:7px 16px;">↺ Try again</button>
                     <a id="scenario-modal-reg" href="#" target="_blank" rel="noopener" class="card-modal-regulation">📄 Read the regulation ↗</a>
                 </div>
             </div>
@@ -4571,8 +4572,8 @@
                     <p style="color:#666;font-size:13px;line-height:1.5;margin-bottom:14px">${escapeHtml(scenario.description)}</p>
                     ${legalRef ? `<div style="font-size:11px;color:#0369a1;margin-bottom:12px;font-style:italic">${escapeHtml(legalRef)}</div>` : ''}
                     <div style="display:flex;justify-content:space-between;align-items:center">
-                        <span style="font-size:12px;color:#999">${scenario.choices.length} possible outcomes</span>
-                        <span style="font-size:13px;font-weight:600;color:var(--color-sage)">Preview →</span>
+                        <span style="font-size:12px;color:#999">${scenario.choices.length} options</span>
+                        <span style="font-size:13px;font-weight:600;color:var(--color-sage)">Try it →</span>
                     </div>`;
 
                 card.addEventListener('click', () => openScenarioModal(scenario));
@@ -6400,35 +6401,87 @@
             document.getElementById('scenario-modal-situation').textContent = scenario.situation;
 
             const diffEl = document.getElementById('scenario-modal-diff');
-            diffEl.textContent   = scenario.difficulty;
+            diffEl.textContent      = scenario.difficulty;
             diffEl.style.background = diffBg[scenario.difficulty] || '#EFEFEB';
             diffEl.style.color      = diffColor[scenario.difficulty] || '#666';
 
             document.getElementById('scenario-modal-legal').textContent = legalRef;
             document.getElementById('scenario-modal-reg').href          = PPWR_BASE;
 
-            // Show the 3 possible outcomes as a preview (no spoilers — just consequence severity)
-            const outcomesEl = document.getElementById('scenario-modal-outcomes');
-            const riskColor  = r => r >= 80 ? '#dc2626' : r >= 40 ? '#d97706' : '#15803d';
-            const riskBg     = r => r >= 80 ? '#fee2e2' : r >= 40 ? '#fef3c7' : '#dcfce7';
-            outcomesEl.innerHTML = `
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px;letter-spacing:.06em">Possible outcomes</div>
-                <div style="display:flex;flex-direction:column;gap:6px;">
-                ${scenario.choices.map(c => `
-                    <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#FAFAF8;border-radius:8px;border:1px solid #EFEFEB">
-                        <span style="font-weight:700;font-size:13px;flex-shrink:0;color:#333">Option ${c.answer}</span>
-                        <div style="flex:1;font-size:12px;color:#666">${c.text}</div>
-                        <span style="flex-shrink:0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:${riskBg(c.riskLevel || 0)};color:${riskColor(c.riskLevel || 0)}">${c.impact || 'Unknown'}</span>
-                    </div>`).join('')}
-                </div>`;
-
-            document.getElementById('scenario-modal-launch').onclick = () => {
-                closeScenarioModal();
-                startScenario(scenario.id);
-            };
+            _renderScenarioChoices(scenario);
 
             document.getElementById('scenario-modal-backdrop').classList.add('open');
             document.body.style.overflow = 'hidden';
+        }
+
+        function _renderScenarioChoices(scenario) {
+            const choicesEl  = document.getElementById('scenario-modal-choices');
+            const feedbackEl = document.getElementById('scenario-modal-feedback');
+            const retryBtn   = document.getElementById('scenario-modal-retry');
+
+            feedbackEl.style.display = 'none';
+            feedbackEl.innerHTML     = '';
+            retryBtn.style.display   = 'none';
+
+            choicesEl.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:10px;letter-spacing:.06em">What would you do?</div>';
+
+            scenario.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt';
+                btn.style.marginBottom = '8px';
+                btn.textContent = `Option ${choice.answer}  —  ${choice.text}`;
+                btn.onclick = () => _resolveScenarioChoice(scenario, choice, choicesEl, feedbackEl, retryBtn);
+                choicesEl.appendChild(btn);
+            });
+        }
+
+        function _resolveScenarioChoice(scenario, chosen, choicesEl, feedbackEl, retryBtn) {
+            const riskLevel = chosen.riskLevel || 0;
+            const isCorrect = !!chosen.correct;
+
+            // Lock all buttons and colour chosen + correct
+            choicesEl.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.disabled = true;
+                const label = btn.textContent.trim();
+                const matchChosen  = label.startsWith(`Option ${chosen.answer}`);
+                const correctChoice = scenario.choices.find(c => c.correct);
+                const matchCorrect = correctChoice && label.startsWith(`Option ${correctChoice.answer}`);
+                if (matchChosen)  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+                if (!isCorrect && matchCorrect) btn.classList.add('correct');
+            });
+
+            // Build feedback panel
+            const riskColor = riskLevel >= 80 ? '#dc2626' : riskLevel >= 40 ? '#d97706' : '#2A9D8F';
+            const riskBg    = riskLevel >= 80 ? '#FFF0F0' : riskLevel >= 40 ? '#FFFBF0' : '#F0FAF8';
+            const riskPct   = Math.min(100, riskLevel);
+
+            feedbackEl.innerHTML = `
+                <div class="quiz-feedback ${isCorrect ? 'correct' : 'wrong'}" style="margin-bottom:12px;">
+                    ${chosen.feedback}
+                </div>
+                ${chosen.legalRef ? `
+                <div style="background:#F0F5EC;border-left:3px solid #9CAF88;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#3A5C30;line-height:1.5;">
+                    <span style="font-weight:700;">📜 Regulation:</span> ${chosen.legalRef}
+                </div>` : ''}
+                <div style="background:${riskBg};border:1px solid ${riskColor}22;border-radius:10px;padding:14px 16px;">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:${riskColor};margin-bottom:10px;letter-spacing:.06em;">⚠️ Risk outcome</div>
+                    <div style="background:#E8E8E8;border-radius:4px;height:6px;margin-bottom:10px;overflow:hidden;">
+                        <div style="height:100%;width:${riskPct}%;background:${riskColor};border-radius:4px;transition:width .5s ease;"></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div><div style="font-size:11px;color:#888;margin-bottom:2px;">Impact</div><div style="font-size:13px;font-weight:600;color:${riskColor}">${chosen.impact || '—'}</div></div>
+                        <div><div style="font-size:11px;color:#888;margin-bottom:2px;">Fine range</div><div style="font-size:13px;font-weight:600;color:#333">${chosen.riskRange || 'No risk'}</div></div>
+                    </div>
+                </div>`;
+            feedbackEl.style.display = 'block';
+            retryBtn.style.display   = 'inline-flex';
+            retryBtn.onclick = () => _renderScenarioChoices(scenario);
+
+            if (isCorrect) {
+                appState.dashboard.score = Math.min(100, appState.dashboard.score + 10);
+                localStorage.setItem('appState', JSON.stringify(appState));
+                showToast('✅', 'Good call — correct decision!');
+            }
         }
 
         function closeScenarioModal() {
