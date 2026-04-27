@@ -982,6 +982,13 @@
         <div class="sidebar-item page-link" data-page="assessment">✅ Assessment</div>
         <div class="sidebar-item page-link" data-page="certificates">🎓 Certificates</div>
         <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Calculator</div>
+        <div style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">2030+ Readiness</p>
+        </div>
+        <div class="sidebar-item page-link" data-page="roadmap">📅 Roadmap 2024–2040</div>
+        <div class="sidebar-item page-link" data-page="grading">♻️ Grading Lab</div>
+        <div class="sidebar-item page-link" data-page="calculator">🧮 Content Calculator</div>
+        <div class="sidebar-item page-link" data-page="vault">📁 Record Vault</div>
         <div style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
         </div>
@@ -1247,6 +1254,17 @@
             </div>
 
             <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card" id="milestone-widget">
+                    <h3>⏱ Next PPWR Milestone</h3>
+                    <div id="milestone-content" style="margin-top: 12px; color: #666;">Loading…</div>
+                </div>
+                <div class="card" id="cert-status-widget">
+                    <h3>🏅 Certification Status</h3>
+                    <div id="cert-status-content" style="margin-top: 12px; color: #666;">Loading…</div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 32px;">
                 <div class="card">
                     <h3>Continue Learning</h3>
                     <p style="color: #666; margin-top: 12px;">Pick up where you left off.</p>
@@ -1401,6 +1419,42 @@
                 </div>
                 <div id="risk-recommendations" style="margin-top: 24px;"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- ROADMAP PAGE -->
+    <div class="page" id="roadmap-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 8px;">📅 PPWR Roadmap 2024–2040</h1>
+            <p style="color: #666; margin-bottom: 32px;">Full regulatory lifecycle — from PFAS ban to long-term circularity targets.</p>
+            <div id="roadmap-content"></div>
+        </div>
+    </div>
+
+    <!-- GRADING LAB PAGE -->
+    <div class="page" id="grading-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 8px;">♻️ Recyclability Grading Lab</h1>
+            <p style="color: #666; margin-bottom: 32px;">Match each packaging design to its PPWR recyclability grade (A–E). Instant feedback with EPR cost impact.</p>
+            <div id="grading-content"></div>
+        </div>
+    </div>
+
+    <!-- CALCULATOR PAGE -->
+    <div class="page" id="calculator-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 8px;">🧮 2030+ Content Calculator</h1>
+            <p style="color: #666; margin-bottom: 32px;">Check your recycled-content compliance and empty-space ratios against current and future targets.</p>
+            <div id="calculator-content"></div>
+        </div>
+    </div>
+
+    <!-- RECORD VAULT PAGE -->
+    <div class="page" id="vault-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 8px;">📁 Record Vault</h1>
+            <p style="color: #666; margin-bottom: 32px;">Retention rules by document type and EPR fee modulation reference table.</p>
+            <div id="vault-content"></div>
         </div>
     </div>
 
@@ -1668,6 +1722,90 @@
                 title: "Penalties for Non-Compliance",
                 content: "EU fines up to €50,000 per incident. Retailers can reject shipments. Production halt until compliant. Insurance may not cover non-compliance.",
                 category: "Penalties"
+            },
+            {
+                id: 11,
+                title: "Recyclability Grade A",
+                content: "Grade A packaging: fully recyclable by design, EPR fee multiplier 0.8× (20% discount). Achieved by using mono-material PE or PP, no mixed laminates, no functional barriers that inhibit sorting.",
+                category: "Recyclability"
+            },
+            {
+                id: 12,
+                title: "Recyclability Grade B",
+                content: "Grade B packaging: largely recyclable with minor constraints. EPR multiplier 0.9×. Example: cardboard carton with thin PE liner that is detachable at collection.",
+                category: "Recyclability"
+            },
+            {
+                id: 13,
+                title: "Recyclability Grade C",
+                content: "Grade C packaging: recyclable but with significant design barriers. EPR multiplier 1.0× (baseline). Mixed-material tray with lidding film that is not easily separated falls here.",
+                category: "Recyclability"
+            },
+            {
+                id: 14,
+                title: "Recyclability Grade D",
+                content: "Grade D packaging: difficult to recycle; banned from market after 1 January 2030. EPR multiplier 1.5×. Includes opaque black PE with carbon black pigment that blocks NIR sorting.",
+                category: "Recyclability"
+            },
+            {
+                id: 15,
+                title: "Recyclability Grade E",
+                content: "Grade E packaging: not recyclable at scale. EPR multiplier 2.0×. Banned from market after 1 January 2030. Applies to multi-material composites with no separation pathway (e.g., metallised PET/PE laminate with adhesive).",
+                category: "Recyclability"
+            },
+            {
+                id: 16,
+                title: "Recycled Content — PET Bottles",
+                content: "PET beverage bottles: 25% recycled content by 2025 (mandatory); 30% by 2030. Targets apply per unit placed on EU market. Declarations must be third-party verified.",
+                category: "Recycled Content"
+            },
+            {
+                id: 17,
+                title: "Recycled Content — Non-PET Plastic",
+                content: "Non-PET plastic packaging (PP, HDPE, LDPE, PS): 10% recycled content by 2030, 25% by 2040. Chemical recycling credits count if certified under ISO 15270 or equivalent.",
+                category: "Recycled Content"
+            },
+            {
+                id: 18,
+                title: "Reuse Targets — Transport Packaging",
+                content: "Transport packaging (pallets, crates, bulk containers): 50% of units placed on market must be reusable by 2030; 90% by 2040. Track via digital deposit or pallet-management system.",
+                category: "Reuse"
+            },
+            {
+                id: 19,
+                title: "HORECA Reuse Obligation (2027)",
+                content: "From 2027, catering and food-service operators (HORECA) must offer customers the option to receive hot and cold takeaway beverages and food in reusable packaging at no extra cost.",
+                category: "Reuse"
+            },
+            {
+                id: 20,
+                title: "Harmonised Labelling (2028)",
+                content: "From 1 January 2028, all packaging must carry the harmonised EU recyclability label (QR-linked to digital product passport) alongside waste-sorting symbol. Self-declaration labels are no longer valid.",
+                category: "Labels"
+            },
+            {
+                id: 21,
+                title: "Digital Product Passport (2030)",
+                content: "From 2030, packaging digital product passport (DPP) is mandatory for all B2B packaging above 5 kg. DPP must include: material composition, recyclability grade, recycled content percentage, and EPR registration number.",
+                category: "Documentation"
+            },
+            {
+                id: 22,
+                title: "Empty Space Rule — 2030 Tightening",
+                content: "From 2026 the maximum void (empty space) is 40% of pack volume. From 2030 this drops to 30%. Online retail: 2026 threshold is 50% void, falling to 35% in 2030. Non-compliance triggers Grade D/E assessment.",
+                category: "Design"
+            },
+            {
+                id: 23,
+                title: "Record Retention — 10-Year Rule",
+                content: "EPR registration records, fee calculations, and recycled-content declarations must be retained for 10 years (not 5). Technical design documentation, supplier conformity, and test reports: 5 years. Keep them separate.",
+                category: "Documentation"
+            },
+            {
+                id: 24,
+                title: "EPR Fee Modulation by Grade",
+                content: "From 2028 national EPR schemes must apply PPWR-aligned fee modulation: Grade A 0.8×, B 0.9×, C 1.0×, D 1.5×, E 2.0×. Fees are calculated on net weight of packaging placed on market per quarter.",
+                category: "EPR"
             }
         ];
 
@@ -1730,6 +1868,30 @@
                     { answer: "A", text: "Yes - they all follow PPWR rules", feedback: "❌ INCORRECT: UK has separate post-Brexit rules. Norway has specific PPWR implementation. Verify each market's requirements.", consequence: "40 points lost", impact: "Multi-Market Non-Compliance", riskRange: "€10,000 - €60,000", riskLevel: 80 },
                     { answer: "B", text: "Check regulations for each market and request market-specific testing", feedback: "✅ CORRECT: Always verify market-specific requirements. EU PPWR ≠ UK ≠ Norway. Test accordingly.", consequence: "100 points earned", correct: true, legalRef: "Article 2 - Scope and Article 3 - Market-Specific Implementation", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
                     { answer: "C", text: "Use the strictest standard to cover all markets", feedback: "⚠️ GOOD APPROACH: Yes, stricter standards help, but still verify each market's specific rules.", consequence: "80 points", impact: "Likely Compliant", riskRange: "€1,000 - €5,000", riskLevel: 20 }
+                ],
+                difficulty: "Medium"
+            },
+            {
+                id: 6,
+                title: "Packaging Redesign Decision",
+                description: "Your R&D team is pitching a new packaging format.",
+                situation: "R&D proposes switching from a multi-layer metallised PET/PE laminate pouch (current Grade E) to a mono-material HDPE pouch. The new design scores Grade B. Upfront tooling cost is €180,000. Your annual EPR fee on the laminate is €120,000. What do you do?",
+                choices: [
+                    { answer: "A", text: "Reject — the tooling cost is too high", feedback: "❌ SHORT-SIGHTED: The laminate is banned post-2030 AND costs 2.0× EPR. The mono-HDPE pays back in under 2 years via EPR savings alone, then reduces further to Grade B at 0.9×.", consequence: "40 points lost", impact: "Non-Compliance after 2030", riskRange: "€50,000+/yr after 2030 ban", riskLevel: 80 },
+                    { answer: "B", text: "Approve the redesign and start EPR grade re-registration", feedback: "✅ CORRECT: Grade E → B saves €132,000/yr (2.0× → 0.9× on €120k base). Tooling recoups in 16 months. And avoids the 2030 market ban on Grade D/E packaging.", consequence: "100 points earned", correct: true, legalRef: "Annex IV — Recyclability Grades & EPR Modulation; Article 7(2) — 2030 Ban on D/E grades", impact: "Full Compliance + Cost Savings", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Pilot in one SKU and review in 12 months", feedback: "⚠️ CAUTIOUS: Piloting is fine but the clock is ticking — 2030 ban applies to all SKUs, and EPR savings start only from go-live.", consequence: "70 points", impact: "Partial Progress", riskRange: "Ongoing Grade E costs", riskLevel: 30 }
+                ],
+                difficulty: "Hard"
+            },
+            {
+                id: 7,
+                title: "Transport Reuse Programme",
+                description: "Your logistics manager is reviewing pallet operations.",
+                situation: "Your distribution uses 80,000 one-way cardboard pallet pads per year. The 2030 reuse target for transport packaging is 50%. A pallet-pool provider offers washable polymer pads at 2.2× the one-way cost but certified for 60 uses. What's your decision?",
+                choices: [
+                    { answer: "A", text: "Stay with one-way cardboard — it's cheaper per unit", feedback: "❌ NON-COMPLIANT by 2030: You'll need 50% reusable. 80,000 one-way units = 0% reuse. You'll face EPR penalties AND a compliance gap at audit.", consequence: "50 points lost", impact: "Non-Compliance 2030", riskRange: "€15,000 - €80,000", riskLevel: 70 },
+                    { answer: "B", text: "Phase in polymer pads for 50% of volume now; full switch by 2029", feedback: "✅ CORRECT: 60-use lifespan makes the polymer pad cost €0.037 per use vs €0.017 for cardboard, but meets the 50% reuse target and avoids penalties. Log reuse cycles in your DPP from 2030.", consequence: "100 points earned", correct: true, legalRef: "Article 12 — Reuse Targets for Transport Packaging; Article 25 — Digital Product Passport", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Request an exemption — your products are fragile", feedback: "⚠️ UNLIKELY: Exemptions require formal application and are narrowly granted. Fragility is rarely sufficient for transport packaging. Plan the transition instead.", consequence: "20 points", impact: "High Risk", riskRange: "€20,000+", riskLevel: 75 }
                 ],
                 difficulty: "Medium"
             }
@@ -1800,6 +1962,125 @@
         ];
 
         // ============================================================================
+        // STRATEGIC DATA OBJECTS
+        // ============================================================================
+        const PPWR_ROADMAP = {
+            phases: [
+                {
+                    id: 'phase1',
+                    label: 'Phase 1 — Foundation (2024–2026)',
+                    color: '#E63946',
+                    milestones: [
+                        { date: '2024-07-12', label: 'PFAS ban in food contact packaging', article: 'Art.11' },
+                        { date: '2025-03-01', label: '25% recycled content in PET beverage bottles', article: 'Art.7' },
+                        { date: '2026-08-12', label: 'Full PPWR enforcement begins — all obligations active', article: 'Art.1' }
+                    ]
+                },
+                {
+                    id: 'phase2',
+                    label: 'Phase 2 — Digital & Reuse (2027–2028)',
+                    color: '#F4A261',
+                    milestones: [
+                        { date: '2027-01-01', label: 'HORECA reuse obligation — offer reusable at no extra cost', article: 'Art.16' },
+                        { date: '2028-01-01', label: 'Harmonised EU recyclability label mandatory (QR-linked)', article: 'Art.9' },
+                        { date: '2028-01-01', label: 'EPR fee modulation by recyclability grade (A–E)', article: 'Annex IV' }
+                    ]
+                },
+                {
+                    id: 'phase3',
+                    label: 'Phase 3 — Market Bans & Targets (2029–2030)',
+                    color: '#2A9D8F',
+                    milestones: [
+                        { date: '2030-01-01', label: 'Grade D & E packaging banned from EU market', article: 'Art.7(2)' },
+                        { date: '2030-01-01', label: '30% recycled content in PET bottles; 10% in non-PET plastics', article: 'Art.7' },
+                        { date: '2030-01-01', label: '50% transport packaging reuse target', article: 'Art.12' },
+                        { date: '2030-01-01', label: 'Digital Product Passport mandatory (B2B >5 kg)', article: 'Art.25' }
+                    ]
+                },
+                {
+                    id: 'phase4',
+                    label: 'Phase 4 — Long-Term Circularity (2035–2040)',
+                    color: '#457B9D',
+                    milestones: [
+                        { date: '2035-01-01', label: '25% recycled content in non-PET plastics', article: 'Art.7' },
+                        { date: '2040-01-01', label: '25% recycled content non-PET final target; 90% transport reuse', article: 'Art.12' }
+                    ]
+                }
+            ]
+        };
+
+        const RECYCLABILITY_GRADES = {
+            A: { label: 'Grade A — Fully Recyclable', eprMultiplier: 0.8, banned2030: false, color: '#2A9D8F', examples: 'Mono-material PE film, clear PP tray, aluminium can' },
+            B: { label: 'Grade B — Largely Recyclable', eprMultiplier: 0.9, banned2030: false, color: '#52B788', examples: 'Cardboard carton with detachable thin PE liner, clear PET bottle' },
+            C: { label: 'Grade C — Recyclable with Barriers', eprMultiplier: 1.0, banned2030: false, color: '#F4A261', examples: 'Mixed tray with non-separated lidding film, paper bag with PE window' },
+            D: { label: 'Grade D — Difficult to Recycle', eprMultiplier: 1.5, banned2030: true, color: '#E76F51', examples: 'Black PE with carbon black pigment, PVC shrink sleeve' },
+            E: { label: 'Grade E — Not Recyclable at Scale', eprMultiplier: 2.0, banned2030: true, color: '#E63946', examples: 'Metallised PET/PE laminate with adhesive, multi-layer composite (4+ materials)' }
+        };
+
+        const RECYCLED_CONTENT_TARGETS = {
+            PET_BEVERAGE: {
+                label: 'PET Beverage Bottles',
+                targets: { 2025: 25, 2030: 30, 2035: 30, 2040: 30 },
+                note: 'Per bottle by weight. Third-party verification required.'
+            },
+            NON_PET_PLASTIC: {
+                label: 'Non-PET Plastic Packaging (PP/HDPE/LDPE)',
+                targets: { 2025: 0, 2030: 10, 2035: 25, 2040: 25 },
+                note: 'Chemical recycling credits accepted if ISO 15270 certified.'
+            },
+            CONTACT_SENSITIVE: {
+                label: 'Food-Contact Sensitive Plastics',
+                targets: { 2025: 0, 2030: 10, 2035: 15, 2040: 15 },
+                note: 'Subject to food-safety derogation approval by EFSA.'
+            },
+            TRANSPORT: {
+                label: 'Reusable Transport Packaging',
+                targets: { 2025: 0, 2030: 50, 2035: 70, 2040: 90 },
+                note: 'Reuse % of units placed on market per year (not by weight).'
+            }
+        };
+
+        const GRADING_CASES = [
+            {
+                id: 'case1',
+                title: 'Clear PET Water Bottle',
+                description: 'Single-use 500 ml PET bottle, clear, no sleeve, snap-fit cap.',
+                correctGrade: 'B',
+                hint: 'PET is widely recycled — but the polyolefin cap is a different material.'
+            },
+            {
+                id: 'case2',
+                title: 'Mono-PP Yoghurt Pot',
+                description: 'White PP tub with PP lid, paper label glued with water-soluble adhesive.',
+                correctGrade: 'A',
+                hint: 'Mono-material PP with water-soluble adhesive label separates cleanly in sorting.'
+            },
+            {
+                id: 'case3',
+                title: 'Black Carbon-Black PE Tray',
+                description: 'Black PE ready-meal tray. Black pigment from carbon black (blocks NIR sorter).',
+                correctGrade: 'D',
+                hint: 'Carbon black absorbs near-infrared — sorters cannot detect the polymer. Banned post-2030.'
+            },
+            {
+                id: 'case4',
+                title: 'Metallised PET/PE Snack Pouch',
+                description: '3-layer metallised PET outer / PE sealant / aluminium mid-layer. No separation pathway.',
+                correctGrade: 'E',
+                hint: 'Four materials with no viable delamination process = not recyclable at scale. Banned post-2030.'
+            },
+            {
+                id: 'case5',
+                title: 'Cardboard Gift Box with PE Window',
+                description: 'Corrugated cardboard outer, PET window glued with hot-melt adhesive, tissue paper inner.',
+                correctGrade: 'C',
+                hint: 'The PET window and hot-melt adhesive create barriers. Largely recyclable but with significant constraints.'
+            }
+        ];
+
+        let gradingAnswers = {};
+
+        // ============================================================================
         // PAGE NAVIGATION
         // ============================================================================
         function showPage(pageName) {
@@ -1827,6 +2108,10 @@
             if (pageName === 'admin-analytics') loadAnalytics();
             if (pageName === 'admin-leads') loadLeads();
             if (pageName === 'certificates') loadCertificates();
+            if (pageName === 'roadmap')     renderRoadmap();
+            if (pageName === 'grading')     renderGradingModule();
+            if (pageName === 'calculator')  renderCalculator();
+            if (pageName === 'vault')       renderVault();
         }
 
         function updateNavigation() {
@@ -2220,35 +2505,136 @@
             const container = document.getElementById('certificates-list');
             container.innerHTML = '';
 
-            // Show certificate if readiness score >= 80
-            if (appState.dashboard.score >= 80) {
-                const certHTML = `
-                    <div class="certificate-container">
-                        <div class="certificate-header">Certificate of Completion</div>
-                        <div class="certificate-body">
-                            <p>This certifies that</p>
-                            <p style="font-size: 18px; font-weight: 700; margin: 16px 0;">${appState.user?.name || 'Participant'}</p>
-                            <p>has successfully completed the</p>
-                            <p style="font-size: 16px; font-weight: 600; margin: 16px 0;">PPWR Compliance Readiness Program</p>
-                            <p>and demonstrated a comprehensive understanding of the</p>
-                            <p style="font-size: 14px;">EU Packaging and Packaging Waste Regulation (PPWR)</p>
-                            <p style="margin-top: 24px; font-size: 13px;">Issued on ${new Date().toLocaleDateString()}</p>
-                        </div>
-                        <div class="certificate-name">PPWR Learning Hub</div>
-                        <div class="certificate-date">Certificate ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
-                        <button class="btn-primary" style="width: 100%; margin-top: 20px;">📥 Download Certificate</button>
-                    </div>
-                `;
-                container.innerHTML = certHTML;
+            const score = appState.dashboard.score || 0;
+            const modules = appState.dashboard.modulesCompleted || 0;
+            const userName = appState.user?.name || 'Participant';
+
+            if (score >= 80) {
+                // Build certificate using DOM nodes to avoid XSS
+                const certDiv = document.createElement('div');
+                certDiv.className = 'certificate-container';
+
+                const hdr = document.createElement('div');
+                hdr.className = 'certificate-header';
+                hdr.textContent = 'Certificate of Completion';
+
+                const body = document.createElement('div');
+                body.className = 'certificate-body';
+                const p1 = document.createElement('p'); p1.textContent = 'This certifies that';
+                const p2 = document.createElement('p'); p2.style.cssText = 'font-size:18px;font-weight:700;margin:16px 0;'; p2.textContent = userName;
+                const p3 = document.createElement('p'); p3.textContent = 'has successfully completed the';
+                const p4 = document.createElement('p'); p4.style.cssText = 'font-size:16px;font-weight:600;margin:16px 0;'; p4.textContent = 'PPWR Compliance Readiness Program';
+                const p5 = document.createElement('p'); p5.textContent = 'and demonstrated a comprehensive understanding of the';
+                const p6 = document.createElement('p'); p6.style.fontSize = '14px'; p6.textContent = 'EU Packaging and Packaging Waste Regulation (PPWR)';
+                const p7 = document.createElement('p'); p7.style.cssText = 'margin-top:24px;font-size:13px;'; p7.textContent = 'Issued on ' + new Date().toLocaleDateString();
+                [p1,p2,p3,p4,p5,p6,p7].forEach(p => body.appendChild(p));
+
+                const certName = document.createElement('div');
+                certName.className = 'certificate-name';
+                certName.textContent = 'PPWR Learning Hub';
+
+                const idBytes = new Uint8Array(5);
+                crypto.getRandomValues(idBytes);
+                const certId = Array.from(idBytes).map(b => b.toString(16).padStart(2,'0')).join('').toUpperCase();
+                const certDate = document.createElement('div');
+                certDate.className = 'certificate-date';
+                certDate.textContent = 'Certificate ID: ' + certId;
+
+                const dlBtn = document.createElement('button');
+                dlBtn.className = 'btn-primary';
+                dlBtn.style.cssText = 'width:100%;margin-top:20px;';
+                dlBtn.textContent = '📥 Download Certificate';
+
+                certDiv.appendChild(hdr);
+                certDiv.appendChild(body);
+                certDiv.appendChild(certName);
+                certDiv.appendChild(certDate);
+                certDiv.appendChild(dlBtn);
+                container.appendChild(certDiv);
             } else {
-                container.innerHTML = `
-                    <div class="card" style="grid-column: 1 / -1; text-align: center;">
-                        <p style="color: #666; margin-bottom: 16px;">Earn your certificate by reaching a readiness score of 80+</p>
-                        <p style="font-size: 12px; color: #999;">Current score: ${appState.dashboard.score}/100</p>
-                        <button class="btn-secondary page-link" data-page="learning" style="margin-top: 16px;">Continue Learning</button>
-                    </div>
-                `;
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.cssText = 'grid-column:1/-1;text-align:center;';
+                const msg = document.createElement('p');
+                msg.style.cssText = 'color:#666;margin-bottom:16px;';
+                msg.textContent = 'Earn your certificate by reaching a readiness score of 80+';
+                const scoreMsg = document.createElement('p');
+                scoreMsg.style.cssText = 'font-size:12px;color:#999;';
+                scoreMsg.textContent = 'Current score: ' + score + '/100';
+                const learnBtn = document.createElement('button');
+                learnBtn.className = 'btn-secondary page-link';
+                learnBtn.setAttribute('data-page', 'learning');
+                learnBtn.style.marginTop = '16px';
+                learnBtn.textContent = 'Continue Learning';
+                learnBtn.addEventListener('click', () => showPage('learning'));
+                card.appendChild(msg);
+                card.appendChild(scoreMsg);
+                card.appendChild(learnBtn);
+                container.appendChild(card);
             }
+
+            // Certification Maintenance section
+            const maintTitle = document.createElement('h3');
+            maintTitle.style.cssText = 'margin-top:32px;margin-bottom:16px;grid-column:1/-1;';
+            maintTitle.textContent = 'Certification Maintenance';
+            container.appendChild(maintTitle);
+
+            const tiers = [
+                {
+                    level: 'Organisation',
+                    status: score >= 85 && modules >= 8 ? 'PPWR Ready' : score >= 60 ? 'In Progress' : 'Not Started',
+                    color: score >= 85 && modules >= 8 ? '#2A9D8F' : score >= 60 ? '#F4A261' : '#E63946',
+                    requirements: [
+                        { label: 'All employees trained on current modules', met: modules >= 8 },
+                        { label: 'Assessment score ≥ 85', met: score >= 85 },
+                        { label: 'Annual renewal before August each year', met: false },
+                        { label: '2030 readiness modules completed', met: modules >= 12 }
+                    ]
+                },
+                {
+                    level: 'Employee',
+                    status: score >= 80 ? 'Certified' : score >= 50 ? 'Training' : 'Not Started',
+                    color: score >= 80 ? '#2A9D8F' : score >= 50 ? '#F4A261' : '#E63946',
+                    requirements: [
+                        { label: 'Complete all Foundation modules (1–10)', met: modules >= 5 },
+                        { label: 'Complete Strategic modules (11–24)', met: modules >= 12 },
+                        { label: 'Assessment score ≥ 80', met: score >= 80 },
+                        { label: 'Annual refresher (new milestones)', met: false }
+                    ]
+                }
+            ];
+
+            tiers.forEach(tier => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.marginBottom = '16px';
+
+                const topRow = document.createElement('div');
+                topRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;';
+                const tlbl = document.createElement('h4');
+                tlbl.style.margin = '0';
+                tlbl.textContent = tier.level + ' Certification';
+                const badge = document.createElement('span');
+                badge.style.cssText = 'padding:4px 14px;border-radius:12px;font-size:12px;font-weight:700;color:#fff;background:' + tier.color;
+                badge.textContent = tier.status;
+                topRow.appendChild(tlbl);
+                topRow.appendChild(badge);
+                card.appendChild(topRow);
+
+                tier.requirements.forEach(req => {
+                    const row = document.createElement('div');
+                    row.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:14px;';
+                    const icon = document.createElement('span');
+                    icon.textContent = req.met ? '✅' : '⬜';
+                    const text = document.createElement('span');
+                    text.style.color = req.met ? '#333' : '#999';
+                    text.textContent = req.label;
+                    row.appendChild(icon);
+                    row.appendChild(text);
+                    card.appendChild(row);
+                });
+                container.appendChild(card);
+            });
         }
 
         // ============================================================================
@@ -2265,6 +2651,9 @@
             document.getElementById('dashboard-progress').textContent = appState.dashboard.progress + '%';
             document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
+
+            renderMilestoneWidget();
+            renderCertificationStatus();
         }
 
         // ============================================================================
@@ -2783,6 +3172,556 @@
         // ============================================================================
         // END AI KNOWLEDGE NAVIGATOR
         // ============================================================================
+
+        // ============================================================================
+        // MILESTONE WIDGET
+        // ============================================================================
+        function renderMilestoneWidget() {
+            const el = document.getElementById('milestone-content');
+            if (!el) return;
+            const now = new Date();
+            let next = null;
+            for (const phase of PPWR_ROADMAP.phases) {
+                for (const m of phase.milestones) {
+                    const d = new Date(m.date);
+                    if (d > now && (!next || d < new Date(next.date))) {
+                        next = { ...m, phaseColor: phase.color };
+                    }
+                }
+            }
+            if (!next) {
+                el.innerHTML = '<p style="color:#2A9D8F;font-weight:600;">All milestones passed — full circularity targets active.</p>';
+                return;
+            }
+            const days = Math.ceil((new Date(next.date) - now) / 86400000);
+            el.innerHTML = '';
+            const badge = document.createElement('div');
+            badge.style.cssText = 'display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;color:#fff;margin-bottom:8px;background:' + next.phaseColor;
+            badge.textContent = next.article;
+            const title = document.createElement('p');
+            title.style.cssText = 'font-size:14px;font-weight:600;color:#333;margin-bottom:6px;';
+            title.textContent = next.label;
+            const countdown = document.createElement('p');
+            countdown.style.cssText = 'font-size:28px;font-weight:700;color:' + next.phaseColor + ';margin:0;';
+            countdown.textContent = days + ' days';
+            const dateStr = document.createElement('p');
+            dateStr.style.cssText = 'font-size:12px;color:#999;margin-top:4px;';
+            dateStr.textContent = new Date(next.date).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+            el.appendChild(badge);
+            el.appendChild(title);
+            el.appendChild(countdown);
+            el.appendChild(dateStr);
+        }
+
+        // ============================================================================
+        // CERTIFICATION STATUS WIDGET
+        // ============================================================================
+        function renderCertificationStatus() {
+            const el = document.getElementById('cert-status-content');
+            if (!el) return;
+            const score = appState.dashboard.score || 0;
+            const modules = appState.dashboard.modulesCompleted || 0;
+            let orgTier, orgColor, empTier, empColor;
+            if (score >= 85 && modules >= 8) { orgTier = 'PPWR Ready'; orgColor = '#2A9D8F'; }
+            else if (score >= 60 && modules >= 4) { orgTier = 'In Progress'; orgColor = '#F4A261'; }
+            else { orgTier = 'Not Started'; orgColor = '#E63946'; }
+            if (score >= 80) { empTier = 'Certified'; empColor = '#2A9D8F'; }
+            else if (score >= 50) { empTier = 'Training'; empColor = '#F4A261'; }
+            else { empTier = 'Not Started'; empColor = '#E63946'; }
+            el.innerHTML = '';
+            const rows = [
+                { label: 'Organisation', tier: orgTier, color: orgColor },
+                { label: 'Employee', tier: empTier, color: empColor }
+            ];
+            rows.forEach(r => {
+                const row = document.createElement('div');
+                row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;';
+                const lbl = document.createElement('span');
+                lbl.style.cssText = 'font-size:14px;color:#555;';
+                lbl.textContent = r.label;
+                const badge = document.createElement('span');
+                badge.style.cssText = 'padding:3px 12px;border-radius:12px;font-size:12px;font-weight:700;color:#fff;background:' + r.color;
+                badge.textContent = r.tier;
+                row.appendChild(lbl);
+                row.appendChild(badge);
+                el.appendChild(row);
+            });
+            const link = document.createElement('button');
+            link.className = 'btn-secondary page-link';
+            link.setAttribute('data-page', 'certificates');
+            link.style.cssText = 'width:100%;margin-top:8px;font-size:13px;';
+            link.textContent = 'View Certificates →';
+            link.addEventListener('click', () => showPage('certificates'));
+            el.appendChild(link);
+        }
+
+        // ============================================================================
+        // ROADMAP RENDERER
+        // ============================================================================
+        function renderRoadmap() {
+            const el = document.getElementById('roadmap-content');
+            if (!el) return;
+            el.innerHTML = '';
+            const now = new Date();
+            PPWR_ROADMAP.phases.forEach(phase => {
+                const section = document.createElement('div');
+                section.style.cssText = 'margin-bottom:32px;';
+                const header = document.createElement('div');
+                header.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:16px;';
+                const dot = document.createElement('div');
+                dot.style.cssText = 'width:14px;height:14px;border-radius:50%;background:' + phase.color + ';flex-shrink:0;';
+                const title = document.createElement('h3');
+                title.style.cssText = 'margin:0;font-size:16px;color:#333;';
+                title.textContent = phase.label;
+                header.appendChild(dot);
+                header.appendChild(title);
+                section.appendChild(header);
+                const grid = document.createElement('div');
+                grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;';
+                phase.milestones.forEach(m => {
+                    const mDate = new Date(m.date);
+                    const past = mDate <= now;
+                    const card = document.createElement('div');
+                    card.style.cssText = 'background:' + (past ? '#F5FBF9' : '#FFF') + ';border:1px solid ' + (past ? '#B7E4C7' : '#EFEFEB') + ';border-radius:10px;padding:16px;';
+                    const topRow = document.createElement('div');
+                    topRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;';
+                    const dateLbl = document.createElement('span');
+                    dateLbl.style.cssText = 'font-size:12px;color:#999;';
+                    dateLbl.textContent = mDate.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+                    const articleBadge = document.createElement('span');
+                    articleBadge.style.cssText = 'font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;color:' + phase.color + ';background:' + phase.color + '20;';
+                    articleBadge.textContent = m.article;
+                    topRow.appendChild(dateLbl);
+                    topRow.appendChild(articleBadge);
+                    const lbl = document.createElement('p');
+                    lbl.style.cssText = 'font-size:14px;color:#333;margin:0;line-height:1.4;';
+                    lbl.textContent = m.label;
+                    const status = document.createElement('p');
+                    status.style.cssText = 'font-size:12px;font-weight:600;margin-top:8px;color:' + (past ? '#2A9D8F' : '#F4A261') + ';';
+                    status.textContent = past ? '✅ Passed' : '⏳ Upcoming';
+                    card.appendChild(topRow);
+                    card.appendChild(lbl);
+                    card.appendChild(status);
+                    grid.appendChild(card);
+                });
+                section.appendChild(grid);
+                el.appendChild(section);
+            });
+        }
+
+        // ============================================================================
+        // GRADING LAB
+        // ============================================================================
+        function renderGradingModule() {
+            const el = document.getElementById('grading-content');
+            if (!el) return;
+            el.innerHTML = '';
+
+            // Grade reference table
+            const refCard = document.createElement('div');
+            refCard.className = 'card';
+            refCard.style.marginBottom = '24px';
+            const refTitle = document.createElement('h3');
+            refTitle.textContent = 'Grade Reference';
+            refTitle.style.marginBottom = '12px';
+            refCard.appendChild(refTitle);
+            const refGrid = document.createElement('div');
+            refGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;';
+            Object.entries(RECYCLABILITY_GRADES).forEach(([g, info]) => {
+                const gCard = document.createElement('div');
+                gCard.style.cssText = 'border:1px solid ' + info.color + ';border-radius:8px;padding:10px;';
+                const glbl = document.createElement('p');
+                glbl.style.cssText = 'font-size:13px;font-weight:700;color:' + info.color + ';margin-bottom:4px;';
+                glbl.textContent = 'Grade ' + g + ' — ' + (info.eprMultiplier < 1 ? info.eprMultiplier + '× EPR (discount)' : info.eprMultiplier + '× EPR') + (info.banned2030 ? ' 🚫 2030' : '');
+                const gex = document.createElement('p');
+                gex.style.cssText = 'font-size:11px;color:#666;margin:0;line-height:1.4;';
+                gex.textContent = info.examples;
+                gCard.appendChild(glbl);
+                gCard.appendChild(gex);
+                refGrid.appendChild(gCard);
+            });
+            refCard.appendChild(refGrid);
+            el.appendChild(refCard);
+
+            // Cases
+            const caseSection = document.createElement('div');
+            const caseTitle = document.createElement('h3');
+            caseTitle.style.marginBottom = '16px';
+            caseTitle.textContent = 'Grade these packaging designs:';
+            caseSection.appendChild(caseTitle);
+            GRADING_CASES.forEach(c => {
+                const cDiv = document.createElement('div');
+                cDiv.className = 'card';
+                cDiv.style.marginBottom = '16px';
+                cDiv.id = 'grading-case-' + c.id;
+                const ctitle = document.createElement('p');
+                ctitle.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:6px;';
+                ctitle.textContent = c.title;
+                const cdesc = document.createElement('p');
+                cdesc.style.cssText = 'font-size:14px;color:#555;margin-bottom:14px;';
+                cdesc.textContent = c.description;
+                const btnRow = document.createElement('div');
+                btnRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;';
+                ['A','B','C','D','E'].forEach(g => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-secondary';
+                    btn.style.cssText = 'padding:6px 16px;font-size:14px;font-weight:700;';
+                    btn.textContent = g;
+                    btn.onclick = () => gradePredict(c.id, g);
+                    btnRow.appendChild(btn);
+                });
+                const feedback = document.createElement('div');
+                feedback.id = 'grading-fb-' + c.id;
+                feedback.style.marginTop = '12px';
+                cDiv.appendChild(ctitle);
+                cDiv.appendChild(cdesc);
+                cDiv.appendChild(btnRow);
+                cDiv.appendChild(feedback);
+                caseSection.appendChild(cDiv);
+            });
+            el.appendChild(caseSection);
+
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'btn-secondary';
+            resetBtn.style.marginTop = '8px';
+            resetBtn.textContent = '↺ Reset All';
+            resetBtn.onclick = resetGrading;
+            el.appendChild(resetBtn);
+        }
+
+        function gradePredict(caseId, selectedGrade) {
+            const c = GRADING_CASES.find(x => x.id === caseId);
+            if (!c) return;
+            gradingAnswers[caseId] = selectedGrade;
+            const fb = document.getElementById('grading-fb-' + caseId);
+            if (!fb) return;
+            const correct = selectedGrade === c.correctGrade;
+            const info = RECYCLABILITY_GRADES[c.correctGrade];
+            fb.style.cssText = 'padding:12px;border-radius:8px;font-size:14px;line-height:1.5;background:' + (correct ? '#F0FBF5' : '#FFF5F5') + ';border:1px solid ' + (correct ? '#B7E4C7' : '#FFC0C0') + ';';
+            fb.textContent = (correct ? '✅ Correct! ' : '❌ Not quite. Correct grade: ' + c.correctGrade + '. ') + 'Hint: ' + c.hint + ' EPR multiplier: ' + info.eprMultiplier + '×' + (info.banned2030 ? ' — BANNED after 2030.' : '.');
+        }
+
+        function resetGrading() {
+            gradingAnswers = {};
+            renderGradingModule();
+        }
+
+        // ============================================================================
+        // CONTENT CALCULATOR
+        // ============================================================================
+        function renderCalculator() {
+            const el = document.getElementById('calculator-content');
+            if (!el) return;
+            el.innerHTML = '';
+
+            const tabs = document.createElement('div');
+            tabs.style.cssText = 'display:flex;gap:8px;margin-bottom:24px;';
+            [['rc','♻️ Recycled Content'],['es','📦 Empty Space']].forEach(([id, lbl]) => {
+                const btn = document.createElement('button');
+                btn.id = 'tab-btn-' + id;
+                btn.className = id === 'rc' ? 'btn-primary' : 'btn-secondary';
+                btn.style.cssText = 'padding:8px 20px;font-size:14px;';
+                btn.textContent = lbl;
+                btn.onclick = () => showCalcTab(id);
+                tabs.appendChild(btn);
+            });
+            el.appendChild(tabs);
+
+            const rcDiv = document.createElement('div');
+            rcDiv.id = 'calc-rc';
+            renderRCCalc(rcDiv);
+            el.appendChild(rcDiv);
+
+            const esDiv = document.createElement('div');
+            esDiv.id = 'calc-es';
+            esDiv.style.display = 'none';
+            renderESCalc(esDiv);
+            el.appendChild(esDiv);
+        }
+
+        function showCalcTab(tab) {
+            document.getElementById('calc-rc').style.display = tab === 'rc' ? '' : 'none';
+            document.getElementById('calc-es').style.display = tab === 'es' ? '' : 'none';
+            document.getElementById('tab-btn-rc').className = tab === 'rc' ? 'btn-primary' : 'btn-secondary';
+            document.getElementById('tab-btn-es').className = tab === 'es' ? 'btn-primary' : 'btn-secondary';
+        }
+
+        function renderRCCalc(container) {
+            container.innerHTML = '';
+            const title = document.createElement('h3');
+            title.style.marginBottom = '16px';
+            title.textContent = 'Recycled Content Compliance';
+            container.appendChild(title);
+
+            Object.entries(RECYCLED_CONTENT_TARGETS).forEach(([key, t]) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.marginBottom = '16px';
+                const clbl = document.createElement('p');
+                clbl.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;';
+                clbl.textContent = t.label;
+                const cnote = document.createElement('p');
+                cnote.style.cssText = 'font-size:12px;color:#888;margin-bottom:12px;';
+                cnote.textContent = t.note;
+
+                const inputRow = document.createElement('div');
+                inputRow.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;';
+                const inputLbl = document.createElement('label');
+                inputLbl.style.cssText = 'font-size:13px;color:#555;';
+                inputLbl.textContent = 'Your current %:';
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = '0';
+                input.max = '100';
+                input.value = '0';
+                input.id = 'rc-input-' + key;
+                input.style.cssText = 'width:80px;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:14px;';
+                input.oninput = () => calcRC(key, t.targets, input.id);
+                inputRow.appendChild(inputLbl);
+                inputRow.appendChild(input);
+
+                const barsDiv = document.createElement('div');
+                barsDiv.id = 'rc-bars-' + key;
+
+                const years = [2025, 2030, 2035, 2040];
+                years.forEach(yr => {
+                    if (t.targets[yr] === 0 && yr === 2025) return;
+                    const row = document.createElement('div');
+                    row.style.marginBottom = '8px';
+                    const rlbl = document.createElement('div');
+                    rlbl.style.cssText = 'display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:3px;';
+                    rlbl.innerHTML = '<span>' + yr + ' target: <strong>' + t.targets[yr] + '%</strong></span><span id="rc-status-' + key + '-' + yr + '"></span>';
+                    const track = document.createElement('div');
+                    track.style.cssText = 'background:#F0F0EE;border-radius:4px;height:8px;';
+                    const fill = document.createElement('div');
+                    fill.id = 'rc-fill-' + key + '-' + yr;
+                    fill.style.cssText = 'height:8px;border-radius:4px;width:0%;background:#EFEFEB;transition:width 0.3s;';
+                    track.appendChild(fill);
+                    row.appendChild(rlbl);
+                    row.appendChild(track);
+                    barsDiv.appendChild(row);
+                });
+
+                card.appendChild(clbl);
+                card.appendChild(cnote);
+                card.appendChild(inputRow);
+                card.appendChild(barsDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function calcRC(key, targets, inputId) {
+            const val = parseFloat(document.getElementById(inputId)?.value) || 0;
+            const years = [2025, 2030, 2035, 2040];
+            years.forEach(yr => {
+                const target = targets[yr];
+                if (target === 0 && yr === 2025) return;
+                const fillEl = document.getElementById('rc-fill-' + key + '-' + yr);
+                const statusEl = document.getElementById('rc-status-' + key + '-' + yr);
+                if (!fillEl || !statusEl) return;
+                const pct = target > 0 ? Math.min(100, (val / target) * 100) : 100;
+                const met = val >= target;
+                fillEl.style.width = pct + '%';
+                fillEl.style.background = met ? '#2A9D8F' : (pct > 60 ? '#F4A261' : '#E63946');
+                statusEl.textContent = met ? '✅' : '❌ gap: ' + (target - val).toFixed(1) + '%';
+                statusEl.style.color = met ? '#2A9D8F' : '#E63946';
+            });
+        }
+
+        function renderESCalc(container) {
+            container.innerHTML = '';
+            const title = document.createElement('h3');
+            title.style.marginBottom = '8px';
+            title.textContent = 'Empty Space Checker';
+            const subtitle = document.createElement('p');
+            subtitle.style.cssText = 'font-size:14px;color:#666;margin-bottom:20px;';
+            subtitle.textContent = 'PPWR 2026 limit: 40% void (50% online). 2030 tightening: 30% (35% online).';
+            container.appendChild(title);
+            container.appendChild(subtitle);
+
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const fields = [
+                { id: 'es-length', label: 'Pack length (cm)', placeholder: 'e.g. 30' },
+                { id: 'es-width',  label: 'Pack width (cm)',  placeholder: 'e.g. 20' },
+                { id: 'es-height', label: 'Pack height (cm)', placeholder: 'e.g. 15' },
+                { id: 'es-product', label: 'Product volume (cm³)', placeholder: 'e.g. 2400' }
+            ];
+            const grid = document.createElement('div');
+            grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;';
+            fields.forEach(f => {
+                const grp = document.createElement('div');
+                const lbl = document.createElement('label');
+                lbl.style.cssText = 'font-size:13px;color:#555;display:block;margin-bottom:4px;';
+                lbl.textContent = f.label;
+                const inp = document.createElement('input');
+                inp.type = 'number';
+                inp.min = '0';
+                inp.id = f.id;
+                inp.placeholder = f.placeholder;
+                inp.style.cssText = 'width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:14px;box-sizing:border-box;';
+                inp.oninput = calcES;
+                grp.appendChild(lbl);
+                grp.appendChild(inp);
+                grid.appendChild(grp);
+            });
+
+            const onlineLbl = document.createElement('label');
+            onlineLbl.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:14px;color:#555;margin-bottom:16px;cursor:pointer;';
+            const onlineCb = document.createElement('input');
+            onlineCb.type = 'checkbox';
+            onlineCb.id = 'es-online';
+            onlineCb.onchange = calcES;
+            onlineLbl.appendChild(onlineCb);
+            onlineLbl.appendChild(document.createTextNode('Online retail channel'));
+
+            const result = document.createElement('div');
+            result.id = 'es-result';
+            result.style.cssText = 'padding:16px;border-radius:8px;background:#F9F9F7;border:1px solid #EFEFEB;';
+            result.textContent = 'Enter dimensions above to check compliance.';
+
+            card.appendChild(grid);
+            card.appendChild(onlineLbl);
+            card.appendChild(result);
+            container.appendChild(card);
+        }
+
+        function calcES() {
+            const l = parseFloat(document.getElementById('es-length')?.value) || 0;
+            const w = parseFloat(document.getElementById('es-width')?.value) || 0;
+            const h = parseFloat(document.getElementById('es-height')?.value) || 0;
+            const prodVol = parseFloat(document.getElementById('es-product')?.value) || 0;
+            const online = document.getElementById('es-online')?.checked;
+            const result = document.getElementById('es-result');
+            if (!result) return;
+            if (!l || !w || !h || !prodVol) {
+                result.textContent = 'Enter dimensions above to check compliance.';
+                result.style.background = '#F9F9F7';
+                return;
+            }
+            const packVol = l * w * h;
+            const voidVol = packVol - prodVol;
+            const voidPct = (voidVol / packVol) * 100;
+            const limit2026 = online ? 50 : 40;
+            const limit2030 = online ? 35 : 30;
+            const pass2026 = voidPct <= limit2026;
+            const pass2030 = voidPct <= limit2030;
+            result.innerHTML = '';
+            const pctLine = document.createElement('p');
+            pctLine.style.cssText = 'font-size:22px;font-weight:700;margin-bottom:8px;color:' + (pass2026 ? '#2A9D8F' : '#E63946') + ';';
+            pctLine.textContent = voidPct.toFixed(1) + '% void';
+            const r2026 = document.createElement('p');
+            r2026.style.cssText = 'font-size:14px;margin-bottom:4px;';
+            r2026.textContent = (pass2026 ? '✅' : '❌') + ' 2026 limit (' + limit2026 + '%): ' + (pass2026 ? 'Compliant' : 'Exceeds by ' + (voidPct - limit2026).toFixed(1) + '%');
+            const r2030 = document.createElement('p');
+            r2030.style.cssText = 'font-size:14px;margin-bottom:0;';
+            r2030.textContent = (pass2030 ? '✅' : '❌') + ' 2030 limit (' + limit2030 + '%): ' + (pass2030 ? 'Compliant' : 'Exceeds by ' + (voidPct - limit2030).toFixed(1) + '%');
+            result.appendChild(pctLine);
+            result.appendChild(r2026);
+            result.appendChild(r2030);
+            result.style.background = pass2026 ? '#F0FBF5' : '#FFF5F5';
+            result.style.borderColor = pass2026 ? '#B7E4C7' : '#FFC0C0';
+        }
+
+        // ============================================================================
+        // RECORD VAULT
+        // ============================================================================
+        function renderVault() {
+            const el = document.getElementById('vault-content');
+            if (!el) return;
+            el.innerHTML = '';
+
+            // Retention rules table
+            const retTitle = document.createElement('h3');
+            retTitle.style.marginBottom = '12px';
+            retTitle.textContent = 'Document Retention Rules';
+            el.appendChild(retTitle);
+
+            const retentionRows = [
+                { doc: 'EPR registration records & fee calculations', years: 10, rule: 'Art.48' },
+                { doc: 'Recycled-content declarations (third-party verified)', years: 10, rule: 'Art.7' },
+                { doc: 'Digital product passport audit logs', years: 10, rule: 'Art.25' },
+                { doc: 'Technical packaging design documentation', years: 5, rule: 'Art.18' },
+                { doc: 'Supplier declarations of conformity', years: 5, rule: 'Art.11' },
+                { doc: 'PFAS / contaminant test reports', years: 5, rule: 'Art.11' },
+                { doc: 'Recyclability grade assessments', years: 5, rule: 'Annex IV' },
+                { doc: 'HORECA reuse programme records', years: 5, rule: 'Art.16' }
+            ];
+
+            const table = document.createElement('div');
+            table.style.cssText = 'border:1px solid #EFEFEB;border-radius:10px;overflow:hidden;margin-bottom:32px;';
+            const header = document.createElement('div');
+            header.style.cssText = 'display:grid;grid-template-columns:1fr 80px 70px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:#666;text-transform:uppercase;gap:8px;';
+            ['Document Type', 'Retain', 'Article'].forEach(h => {
+                const hCell = document.createElement('span');
+                hCell.textContent = h;
+                header.appendChild(hCell);
+            });
+            table.appendChild(header);
+            retentionRows.forEach((r, i) => {
+                const row = document.createElement('div');
+                row.style.cssText = 'display:grid;grid-template-columns:1fr 80px 70px;padding:12px 16px;gap:8px;font-size:14px;border-top:1px solid #EFEFEB;background:' + (i % 2 === 0 ? '#FFF' : '#FAFAF9') + ';';
+                const docCell = document.createElement('span');
+                docCell.style.color = '#333';
+                docCell.textContent = r.doc;
+                const yrsCell = document.createElement('span');
+                yrsCell.style.cssText = 'font-weight:700;color:' + (r.years === 10 ? '#E63946' : '#2A9D8F') + ';';
+                yrsCell.textContent = r.years + ' yrs';
+                const artCell = document.createElement('span');
+                artCell.style.cssText = 'font-size:12px;color:#888;';
+                artCell.textContent = r.rule;
+                row.appendChild(docCell);
+                row.appendChild(yrsCell);
+                row.appendChild(artCell);
+                table.appendChild(row);
+            });
+            el.appendChild(table);
+
+            // EPR fee modulation table
+            const eprTitle = document.createElement('h3');
+            eprTitle.style.marginBottom = '12px';
+            eprTitle.textContent = 'EPR Fee Modulation by Grade (from 2028)';
+            el.appendChild(eprTitle);
+
+            const eprCard = document.createElement('div');
+            eprCard.style.cssText = 'border:1px solid #EFEFEB;border-radius:10px;overflow:hidden;margin-bottom:32px;';
+            const eprHeader = document.createElement('div');
+            eprHeader.style.cssText = 'display:grid;grid-template-columns:60px 1fr 100px 120px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:#666;text-transform:uppercase;gap:8px;';
+            ['Grade','Description','Multiplier','2030 Status'].forEach(h => {
+                const hc = document.createElement('span');
+                hc.textContent = h;
+                eprHeader.appendChild(hc);
+            });
+            eprCard.appendChild(eprHeader);
+            Object.entries(RECYCLABILITY_GRADES).forEach(([g, info], i) => {
+                const row = document.createElement('div');
+                row.style.cssText = 'display:grid;grid-template-columns:60px 1fr 100px 120px;padding:12px 16px;gap:8px;font-size:14px;border-top:1px solid #EFEFEB;background:' + (i % 2 === 0 ? '#FFF' : '#FAFAF9') + ';align-items:center;';
+                const gCell = document.createElement('span');
+                gCell.style.cssText = 'font-weight:800;font-size:18px;color:' + info.color + ';';
+                gCell.textContent = g;
+                const descCell = document.createElement('span');
+                descCell.style.cssText = 'font-size:12px;color:#555;';
+                descCell.textContent = info.examples;
+                const multCell = document.createElement('span');
+                multCell.style.cssText = 'font-weight:700;color:' + (info.eprMultiplier <= 1 ? '#2A9D8F' : '#E63946') + ';';
+                multCell.textContent = info.eprMultiplier + '×';
+                const statusCell = document.createElement('span');
+                statusCell.style.cssText = 'font-size:12px;font-weight:600;color:' + (info.banned2030 ? '#E63946' : '#2A9D8F') + ';';
+                statusCell.textContent = info.banned2030 ? '🚫 Banned 2030' : '✅ Permitted';
+                row.appendChild(gCell);
+                row.appendChild(descCell);
+                row.appendChild(multCell);
+                row.appendChild(statusCell);
+                eprCard.appendChild(row);
+            });
+            el.appendChild(eprCard);
+
+            const note = document.createElement('p');
+            note.style.cssText = 'font-size:13px;color:#888;margin-top:8px;';
+            note.textContent = 'Fee multipliers are applied to the base EPR fee per tonne of packaging placed on market. Quarterly reporting required from 2028.';
+            el.appendChild(note);
+        }
 
         // Save state periodically
         setInterval(() => {
