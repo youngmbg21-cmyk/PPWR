@@ -7,129 +7,222 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            font-family: 'Outfit', sans-serif;
+        /* ═══ PPWR Design System ═══════════════════════════════════════
+           Fonts: Fraunces (editorial display), Inter Tight (body),
+           JetBrains Mono (labels, tags, code-like elements).
+           Color: deep navy dark mode / warm paper light mode.
+           Accent: sage green (PPWR brand identity).
+        ══════════════════════════════════════════════════════════════ */
+        :root {
+            /* Surfaces — dark mode defaults */
+            --bg0:#07090f; --bg1:#0d1117; --bg2:#141a24; --bg3:#1b2333; --bg4:#222d3f;
+            --bg:var(--bg1);
+            --border:#1d2a3a; --border2:#2a3d54;
+            --text:#dde5f0; --text2:#7d96b4; --text3:#415870;
+
+            /* Brand palette — sage green primary + warm amber accent */
+            --sage:#7da87b;          /* PPWR sage green */
+            --sage-deep:#5c8a5a;
+            --sage-dim:rgba(125,168,123,0.12);
+            --amber:#c8923a;         /* warm amber accent */
+            --amber-dim:rgba(200,146,58,0.14);
+            --rose:#d95f6e;
+            --rose-dim:rgba(217,95,110,0.12);
+            --teal:#3abfa4;
+            --teal-dim:rgba(58,191,164,0.12);
+            --plum:#9b6fd4;
+            --plum-dim:rgba(155,111,212,0.13);
+            --sand:#c8b99a;
+
+            /* Semantic tokens */
+            --accent:var(--sage);
+            --accent-dim:var(--sage-dim);
+            --positive:var(--teal);
+            --positive-dim:var(--teal-dim);
+            --warn:var(--amber);
+            --warn-dim:var(--amber-dim);
+            --critical:var(--rose);
+            --critical-dim:var(--rose-dim);
+            --premium:var(--plum);
+            --premium-dim:var(--plum-dim);
+
+            --focus-ring:0 0 0 2px rgba(125,168,123,0.40);
+            --card-shadow:0 1px 0 rgba(255,255,255,0.02) inset;
+            --card-shadow-hover:0 12px 32px -16px rgba(0,0,0,0.65);
+
+            /* Typography */
+            --ff-display:'Fraunces', Georgia, serif;
+            --ff-body:'Inter Tight', -apple-system, sans-serif;
+            --ff-mono:'JetBrains Mono', ui-monospace, monospace;
+
+            --r:10px; --rl:14px; --rxl:18px;
+            --sidebar-w:240px;
+
+            /* Legacy aliases for compatibility */
+            --color-sage:var(--sage);
+            --color-cream:var(--bg2);
+            --color-dark:var(--text);
         }
-        
+
+        /* Light mode — warm paper tones */
+        body.light {
+            --bg0:#f0ece0;
+            --bg1:#e8e2d1;
+            --bg2:#fdfaf3;
+            --bg3:#ebe4d0;
+            --bg4:#ddd5bc;
+            --bg:var(--bg2);
+            --border:#c8bc9a;
+            --border2:#a8956e;
+            --text:#1a120a;
+            --text2:#4a3820;
+            --text3:#7a6548;
+            --sage:#4a7a48;
+            --sage-deep:#336632;
+            --sage-dim:rgba(74,122,72,0.10);
+            --amber:#8a5c18;
+            --amber-dim:rgba(138,92,24,0.10);
+            --rose:#a02838;
+            --rose-dim:rgba(160,40,56,0.10);
+            --teal:#0a7a64;
+            --teal-dim:rgba(10,122,100,0.10);
+            --plum:#6040a8;
+            --plum-dim:rgba(96,64,168,0.10);
+            --card-shadow:0 1px 0 rgba(255,255,255,0.5) inset;
+            --card-shadow-hover:0 8px 22px -12px rgba(40,25,5,0.22);
+        }
+
+        * { box-sizing:border-box; }
+
+        * {
+            font-family: var(--ff-body);
+        }
+
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--ff-display);
             font-weight: 700;
             letter-spacing: -0.02em;
         }
         
-        :root {
-            --color-sage: #9CAF88;
-            --color-clay: #A88968;
-            --color-cream: #FAF8F3;
-            --color-dark: #1F1F1F;
-            --color-light: #F5F5F3;
-        }
-        
         body {
-            background: linear-gradient(135deg, #FAFAF8 0%, #F5F5F3 100%);
-            color: #3D3D3D;
+            background: var(--bg0);
+            color: var(--text);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            background-image:
+                radial-gradient(at 10% 5%, rgba(125,168,123,0.06), transparent 45%),
+                radial-gradient(at 90% 95%, rgba(200,146,58,0.04), transparent 50%);
         }
-        
+
+        body.light {
+            background-image:
+                radial-gradient(at 10% 5%, rgba(74,122,72,0.05), transparent 45%),
+                radial-gradient(at 90% 95%, rgba(138,92,24,0.04), transparent 50%);
+        }
+
         .btn-primary {
-            background: var(--color-sage);
-            color: white;
+            background: var(--accent);
+            color: #fff;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 10px 22px;
+            border-radius: var(--r);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(156, 175, 136, 0.15);
+            transition: all 0.2s ease;
+            font-family: var(--ff-body);
+            font-size: 14px;
         }
-        
+
         .btn-primary:hover {
-            background: #8A9975;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(156, 175, 136, 0.25);
+            background: var(--sage-deep);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px -4px rgba(125,168,123,0.4);
         }
-        
+
         .btn-secondary {
-            background: white;
-            color: var(--color-sage);
-            border: 2px solid var(--color-sage);
-            padding: 12px 24px;
-            border-radius: 8px;
+            background: var(--bg2);
+            color: var(--accent);
+            border: 1px solid var(--border2);
+            padding: 10px 22px;
+            border-radius: var(--r);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            font-family: var(--ff-body);
+            font-size: 14px;
         }
-        
+
         .btn-secondary:hover {
-            background: #F9F9F7;
-            border-color: #8A9975;
+            border-color: var(--accent);
+            background: var(--accent-dim);
         }
-        
+
         .btn-text {
             background: none;
             border: none;
-            color: var(--color-sage);
+            color: var(--accent);
             cursor: pointer;
             font-weight: 600;
             padding: 0;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
             font-size: 14px;
+            font-family: var(--ff-body);
         }
-        
+
         .btn-text:hover {
-            color: #8A9975;
+            color: var(--sage-deep);
         }
-        
+
         .card {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            border: 1px solid #EFEFEB;
-            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
-        
+
         .card:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border-color: #E8E8E4;
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--border2);
         }
-        
-        .status-green { color: #4CAF50; background: #E8F5E9; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
-        .status-amber { color: #FFA500; background: #FFF3E0; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
-        .status-red { color: #F44336; background: #FFEBEE; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
-        
+
+        .status-green { color: var(--positive); background: var(--positive-dim); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-block; font-family: var(--ff-mono); }
+        .status-amber { color: var(--warn); background: var(--warn-dim); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-block; font-family: var(--ff-mono); }
+        .status-red { color: var(--critical); background: var(--critical-dim); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-block; font-family: var(--ff-mono); }
+
         .progress-bar {
-            background: #EFEFEB;
+            background: var(--bg4);
             border-radius: 4px;
             height: 6px;
             overflow: hidden;
         }
-        
+
         .progress-bar-fill {
-            background: linear-gradient(90deg, var(--color-sage) 0%, var(--color-clay) 100%);
+            background: linear-gradient(90deg, var(--accent) 0%, var(--amber) 100%);
             height: 100%;
             transition: width 0.4s ease;
         }
-        
+
         .risk-gauge {
-            height: 12px;
-            border-radius: 6px;
-            background: linear-gradient(90deg, #4CAF50 0%, #FFA500 50%, #F44336 100%);
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--positive) 0%, var(--warn) 50%, var(--critical) 100%);
             position: relative;
             margin: 16px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0.8;
         }
-        
+
         .risk-indicator {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 4px;
-            height: 20px;
-            background: #1F1F1F;
+            width: 3px;
+            height: 18px;
+            background: var(--text);
             border-radius: 2px;
             transition: left 0.4s ease;
         }
@@ -153,8 +246,8 @@
         }
         
         .modal-overlay {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
             display: none;
             position: fixed;
             top: 0;
@@ -164,93 +257,121 @@
             z-index: 999;
             animation: fadeIn 0.3s ease;
         }
-        
+
         .modal-overlay.active {
             display: flex;
         }
-        
+
         .modal {
-            background: white;
-            border-radius: 16px;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: var(--rxl);
             padding: 32px;
             max-width: 500px;
             width: 90%;
             margin: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.6);
             animation: slideIn 0.4s ease;
         }
-        
+
         .navbar {
-            background: white;
-            border-bottom: 1px solid #EFEFEB;
-            padding: 16px 0;
+            background: var(--bg1);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
-        
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; top: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--amber) 100%);
+            opacity: 0.6;
+        }
+
         .navbar-inner {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .language-switcher {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             margin: 0 16px;
         }
-        
+
         .language-switcher button {
             background: none;
             border: none;
-            padding: 6px 10px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
-            color: #999;
-            transition: all 0.3s ease;
-            border-radius: 4px;
+            color: var(--text3);
+            transition: all 0.2s ease;
+            border-radius: var(--r);
+            font-family: var(--ff-mono);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
-        
+
         .language-switcher button.active {
-            color: var(--color-sage);
-            background: #F0F5EC;
+            color: var(--accent);
+            background: var(--accent-dim);
         }
-        
+
         .sidebar {
-            background: white;
-            border-right: 1px solid #EFEFEB;
-            width: 240px;
+            background: var(--bg1);
+            border-right: 1px solid var(--border);
+            width: var(--sidebar-w);
             height: calc(100vh - 60px);
-            padding: 24px 0;
+            padding: 16px 0;
             position: fixed;
             left: 0;
             top: 60px;
             overflow-y: auto;
         }
-        
+
         .sidebar-item {
-            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 16px;
+            margin: 1px 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-            color: #666;
+            transition: all 0.14s ease;
+            border-radius: var(--r);
+            border: 1px solid transparent;
+            color: var(--text2);
             font-weight: 500;
+            font-size: 13px;
         }
-        
-        .sidebar-item:hover, .sidebar-item.active {
-            color: var(--color-sage);
-            background: #F9F9F7;
-            border-left-color: var(--color-sage);
+
+        .sidebar-item:hover {
+            color: var(--text);
+            background: var(--bg3);
         }
-        
+
+        .sidebar-item.active {
+            color: var(--accent);
+            background: var(--bg4);
+            border-color: var(--border2);
+            box-shadow: inset 3px 0 0 var(--accent);
+        }
+
         .main-content {
-            margin-left: 240px;
+            margin-left: var(--sidebar-w);
             margin-top: 60px;
             padding: 32px;
             max-width: 1400px;
@@ -265,29 +386,29 @@
         }
         
         .scenario-choice {
-            background: white;
-            border: 2px solid #EFEFEB;
-            border-radius: 12px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--rl);
             padding: 20px;
-            margin: 16px 0;
+            margin: 12px 0;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        
+
         .scenario-choice:hover {
-            border-color: var(--color-sage);
-            background: #F9F9F7;
-            transform: translateX(4px);
+            border-color: var(--accent);
+            background: var(--bg4);
+            transform: translateX(3px);
         }
-        
+
         .scenario-choice.selected {
-            border-color: var(--color-sage);
-            background: #F0F5EC;
+            border-color: var(--accent);
+            background: var(--accent-dim);
         }
-        
+
         .learning-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 28px 24px;
             text-align: center;
             min-height: 220px;
@@ -295,18 +416,17 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: var(--card-shadow);
             cursor: pointer;
-            transition: all 0.35s ease;
-            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border);
             position: relative;
         }
 
         .learning-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(156,175,136,0.18);
-            border-color: var(--color-sage);
-            background: #F0F5EE;
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--accent);
         }
 
         .learning-card--expanded {
@@ -315,27 +435,37 @@
             align-items: flex-start;
             justify-content: flex-start;
             min-height: auto;
-            background: #F9FBF8;
-            border-color: var(--color-sage);
+            background: var(--bg3);
+            border-color: var(--accent);
             transform: none;
             cursor: default;
         }
 
         .learning-card--expanded:hover {
             transform: none;
-            border-color: var(--color-sage);
+            border-color: var(--accent);
         }
 
         .learning-card--read {
-            border-left: 4px solid var(--color-sage);
+            border-left: 3px solid var(--accent);
         }
 
         .learning-card--read::after {
-            content: '✅';
+            content: '✓';
             position: absolute;
             top: 12px;
             right: 14px;
-            font-size: 14px;
+            font-size: 13px;
+            font-family: var(--ff-mono);
+            font-weight: 700;
+            color: var(--positive);
+            background: var(--positive-dim);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .learning-card__detail {
@@ -343,7 +473,7 @@
             width: 100%;
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 1px solid #E8EDE5;
+            border-top: 1px solid var(--border);
         }
 
         .learning-card--expanded .learning-card__detail {
@@ -354,22 +484,22 @@
         }
 
         .learning-card h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: var(--color-dark);
+            font-size: 17px;
+            margin-bottom: 10px;
+            color: var(--text);
         }
 
         .learning-card p {
-            color: #666;
+            color: var(--text2);
             line-height: 1.6;
         }
-        
+
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
         }
-        
+
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -381,169 +511,180 @@
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px;
         }
-        
+
         .stat-box {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 24px;
-            border: 1px solid #EFEFEB;
+            border: 1px solid var(--border);
             text-align: center;
         }
-        
+
         .stat-number {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--ff-display);
             font-size: 32px;
             font-weight: 700;
-            color: var(--color-sage);
+            color: var(--accent);
             margin-bottom: 8px;
         }
-        
+
         .stat-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: var(--text2);
             font-weight: 500;
+            font-family: var(--ff-mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
-        
+
         .input-group {
             margin-bottom: 20px;
         }
-        
+
         .input-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--color-dark);
+            color: var(--text);
+            font-size: 13px;
         }
-        
+
         .input-group input,
         .input-group select,
         .input-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #EFEFEB;
-            border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            transition: border-color 0.3s ease;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: var(--bg3);
+            color: var(--text);
+            font-family: var(--ff-body);
+            transition: border-color 0.2s ease;
             font-size: 14px;
         }
-        
+
         .input-group input:focus,
         .input-group select:focus,
         .input-group textarea:focus {
             outline: none;
-            border-color: var(--color-sage);
-            box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.1);
+            border-color: var(--accent);
+            box-shadow: var(--focus-ring);
         }
-        
+
         .hero {
-            background: linear-gradient(135deg, #FAFAF8 0%, #F5F5F3 100%);
+            background: var(--bg1);
             padding: 80px 32px;
             text-align: center;
+            border-bottom: 1px solid var(--border);
         }
-        
+
         .hero h1 {
-            font-size: 48px;
+            font-size: 46px;
             margin-bottom: 16px;
-            color: var(--color-dark);
+            color: var(--text);
         }
-        
+
         .hero p {
-            font-size: 18px;
-            color: #666;
+            font-size: 17px;
+            color: var(--text2);
             margin-bottom: 32px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
-        
+
         .pricing-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 32px;
-            border: 2px solid #EFEFEB;
+            border: 1px solid var(--border);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        
+
         .pricing-card:hover {
-            border-color: var(--color-sage);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(156, 175, 136, 0.15);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow-hover);
         }
-        
+
         .pricing-card h3 {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 12px;
         }
-        
+
         .pricing-price {
-            font-family: 'Syne', sans-serif;
-            font-size: 32px;
+            font-family: var(--ff-display);
+            font-size: 34px;
             font-weight: 700;
-            color: var(--color-sage);
+            color: var(--accent);
             margin: 20px 0;
         }
-        
+
         .pricing-list {
             text-align: left;
             margin: 24px 0;
             padding: 0;
         }
-        
+
         .pricing-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #EFEFEB;
-            color: #666;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2);
+            font-size: 13px;
         }
-        
+
         .pricing-list li:last-child {
             border-bottom: none;
         }
-        
+
         .certificate-container {
-            background: white;
-            border: 3px solid var(--color-sage);
-            border-radius: 12px;
+            background: var(--bg2);
+            border: 2px solid var(--accent);
+            border-radius: var(--rl);
             padding: 40px;
             text-align: center;
             max-width: 600px;
             margin: 32px auto;
-            box-shadow: 0 10px 40px rgba(156, 175, 136, 0.2);
+            box-shadow: 0 0 40px -10px var(--accent-dim);
         }
-        
+
         .certificate-header {
-            font-family: 'Syne', sans-serif;
-            font-size: 32px;
-            color: var(--color-sage);
+            font-family: var(--ff-display);
+            font-size: 30px;
+            color: var(--accent);
             margin-bottom: 16px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
-        
+
         .certificate-body {
             margin: 32px 0;
             line-height: 1.8;
         }
-        
+
         .certificate-body p {
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 12px;
+            color: var(--text2);
         }
-        
+
         .certificate-name {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--ff-display);
             font-size: 20px;
             font-weight: 700;
             margin-top: 24px;
             padding-top: 24px;
-            border-top: 2px solid #EFEFEB;
-            color: var(--color-dark);
+            border-top: 1px solid var(--border);
+            color: var(--text);
         }
-        
+
         .certificate-date {
-            color: #999;
+            color: var(--text3);
             font-size: 12px;
             margin-top: 16px;
+            font-family: var(--ff-mono);
         }
         
         @media (max-width: 768px) {
@@ -590,67 +731,58 @@
             bottom: 28px;
             right: 28px;
             z-index: 900;
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--sage-deep) 100%);
             border: none;
             cursor: pointer;
-            display: none;               /* shown only when logged in via JS */
+            display: none;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(156, 175, 136, 0.40);
+            box-shadow: 0 6px 20px var(--accent-dim);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         #ai-nav-btn:hover {
-            transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 12px 28px rgba(156, 175, 136, 0.55);
+            transform: translateY(-4px) scale(1.07);
+            box-shadow: 0 12px 28px var(--accent-dim);
         }
 
-        #ai-nav-btn:active {
-            transform: translateY(-2px) scale(1.02);
-        }
+        #ai-nav-btn:active { transform: translateY(-2px) scale(1.02); }
 
-        #ai-nav-btn svg {
-            width: 26px;
-            height: 26px;
-            fill: white;
-            flex-shrink: 0;
-        }
+        #ai-nav-btn svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
 
-        /* Pulse ring when chat is closed */
         #ai-nav-btn::after {
             content: '';
             position: absolute;
             inset: -4px;
             border-radius: 50%;
-            border: 2px solid var(--color-sage);
+            border: 2px solid var(--accent);
             opacity: 0;
             animation: navPulse 2.8s ease-out infinite;
         }
 
         @keyframes navPulse {
-            0%   { opacity: 0.6; transform: scale(1);    }
-            100% { opacity: 0;   transform: scale(1.55); }
+            0%   { opacity: 0.5; transform: scale(1);    }
+            100% { opacity: 0;   transform: scale(1.6); }
         }
 
         /* Chat window */
         #ai-chat-window {
             position: fixed;
-            bottom: 96px;
+            bottom: 92px;
             right: 28px;
             z-index: 901;
             width: 360px;
             max-height: 540px;
             display: flex;
             flex-direction: column;
-            background: var(--color-cream);
-            border: 1.5px solid #D8E4CE;
-            border-radius: 16px;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: var(--rxl);
+            box-shadow: 0 20px 56px rgba(0,0,0,0.45);
             overflow: hidden;
-            /* start hidden */
             opacity: 0;
             pointer-events: none;
             transform: translateY(16px) scale(0.97);
@@ -663,9 +795,8 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Chat header */
         #ai-chat-header {
-            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--sage-deep) 100%);
             padding: 14px 18px;
             display: flex;
             align-items: center;
@@ -673,88 +804,59 @@
             flex-shrink: 0;
         }
 
-        #ai-chat-header .ai-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        #ai-chat-header .ai-header-left { display: flex; align-items: center; gap: 10px; }
 
         #ai-chat-header .ai-header-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.2);
+            width: 30px; height: 30px;
+            background: rgba(255,255,255,0.18);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        #ai-chat-header .ai-header-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
+        #ai-chat-header .ai-header-icon svg { width: 17px; height: 17px; fill: white; }
 
         #ai-chat-header h3 {
-            font-family: 'Syne', sans-serif;
+            font-family: var(--ff-display);
             font-size: 14px;
             font-weight: 700;
             color: white;
             margin: 0;
-            letter-spacing: -0.01em;
         }
 
-        #ai-chat-header p {
-            font-size: 11px;
-            color: rgba(255,255,255,0.75);
-            margin: 2px 0 0;
-        }
+        #ai-chat-header p { font-size: 11px; color: rgba(255,255,255,0.72); margin: 2px 0 0; }
 
         #ai-chat-close {
             background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-            line-height: 1;
-            padding: 0;
+            border: none; color: white;
+            width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; line-height: 1; padding: 0;
         }
 
-        #ai-chat-close:hover {
-            background: rgba(255,255,255,0.30);
-        }
+        #ai-chat-close:hover { background: rgba(255,255,255,0.28); }
 
-        /* Messages area */
         #ai-chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 13.5px;
+            gap: 10px;
+            font-size: 13px;
             line-height: 1.55;
             scroll-behavior: smooth;
+            background: var(--bg1);
         }
 
         #ai-chat-messages::-webkit-scrollbar { width: 4px; }
         #ai-chat-messages::-webkit-scrollbar-track { background: transparent; }
-        #ai-chat-messages::-webkit-scrollbar-thumb { background: #D8E4CE; border-radius: 4px; }
+        #ai-chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
-        /* Bubble base */
         .ai-bubble {
             max-width: 88%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-family: 'Outfit', sans-serif;
+            padding: 10px 13px;
+            border-radius: 10px;
             animation: bubblePop 0.22s ease;
         }
 
@@ -763,52 +865,46 @@
             to   { opacity: 1; transform: scale(1)    translateY(0);   }
         }
 
-        /* Bot bubble */
         .ai-bubble.bot {
-            background: white;
-            border: 1px solid #E4EDE0;
-            color: #2D2D2D;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text);
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 3px;
         }
 
         .ai-bubble.bot .ai-source {
             display: inline-block;
-            margin-top: 8px;
-            font-size: 11px;
-            color: var(--color-sage);
+            margin-top: 7px;
+            font-size: 10px;
+            color: var(--accent);
             font-weight: 600;
-            background: #F0F5EC;
+            background: var(--accent-dim);
             padding: 3px 8px;
             border-radius: 4px;
+            font-family: var(--ff-mono);
+            letter-spacing: 0.04em;
         }
 
-        /* User bubble */
         .ai-bubble.user {
-            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
-            color: white;
+            background: var(--accent);
+            color: #fff;
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 3px;
         }
 
-        /* Typing indicator */
         .ai-bubble.typing {
-            background: white;
-            border: 1px solid #E4EDE0;
+            background: var(--bg3);
+            border: 1px solid var(--border);
             align-self: flex-start;
             padding: 12px 16px;
         }
 
-        .typing-dots {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
+        .typing-dots { display: flex; gap: 5px; align-items: center; }
 
         .typing-dots span {
-            width: 7px;
-            height: 7px;
-            background: var(--color-sage);
+            width: 7px; height: 7px;
+            background: var(--accent);
             border-radius: 50%;
             animation: dotBounce 1.2s ease-in-out infinite;
         }
@@ -821,28 +917,21 @@
             30%            { transform: translateY(-6px); }
         }
 
-        /* Upgrade wall */
         .ai-upgrade-wall {
             margin: 4px 0;
-            background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%);
-            border: 1.5px solid #FFD699;
-            border-radius: 12px;
+            background: var(--warn-dim);
+            border: 1px solid var(--warn);
+            border-radius: 10px;
             padding: 14px;
             text-align: center;
-            font-family: 'Outfit', sans-serif;
             animation: bubblePop 0.22s ease;
         }
 
-        .ai-upgrade-wall p {
-            font-size: 13px;
-            color: #7A5200;
-            margin: 0 0 10px;
-            line-height: 1.5;
-        }
+        .ai-upgrade-wall p { font-size: 13px; color: var(--warn); margin: 0 0 10px; line-height: 1.5; }
 
         .ai-upgrade-wall button {
-            background: linear-gradient(135deg, var(--color-clay) 0%, #8E6E4C 100%);
-            color: white;
+            background: var(--warn);
+            color: var(--bg0);
             border: none;
             padding: 8px 18px;
             border-radius: 8px;
@@ -850,135 +939,114 @@
             font-weight: 700;
             cursor: pointer;
             transition: opacity 0.2s;
-            font-family: 'Outfit', sans-serif;
         }
 
-        .ai-upgrade-wall button:hover { opacity: 0.88; }
+        .ai-upgrade-wall button:hover { opacity: 0.85; }
 
-        /* Chat quota counter */
         .ai-quota-bar {
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 6px 16px;
-            background: #F5F5F3;
-            border-top: 1px solid #EFEFEB;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
             font-size: 11px;
-            color: #888;
-            font-family: 'Outfit', sans-serif;
+            color: var(--text3);
+            font-family: var(--ff-mono);
             flex-shrink: 0;
         }
 
-        .ai-quota-dots {
-            display: flex;
-            gap: 4px;
-        }
+        .ai-quota-dots { display: flex; gap: 4px; }
 
         .ai-quota-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px; height: 7px;
             border-radius: 50%;
-            background: var(--color-sage);
+            background: var(--accent);
             transition: background 0.3s;
         }
 
-        .ai-quota-dot.used {
-            background: #D0D0C8;
-        }
+        .ai-quota-dot.used { background: var(--bg4); }
 
-        /* Input area */
         #ai-chat-input-area {
             display: flex;
             gap: 8px;
-            padding: 12px 14px;
-            background: white;
-            border-top: 1px solid #E8E8E4;
+            padding: 10px 12px;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
             flex-shrink: 0;
         }
 
         #ai-chat-input {
             flex: 1;
-            border: 1.5px solid #E4EDE0;
-            border-radius: 10px;
-            padding: 9px 13px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 13.5px;
+            border: 1px solid var(--border2);
+            border-radius: var(--r);
+            padding: 8px 12px;
+            font-family: var(--ff-body);
+            font-size: 13px;
             outline: none;
-            background: var(--color-cream);
-            color: var(--color-dark);
+            background: var(--bg3);
+            color: var(--text);
             resize: none;
             transition: border-color 0.2s;
         }
 
         #ai-chat-input:focus {
-            border-color: var(--color-sage);
-            box-shadow: 0 0 0 3px rgba(156,175,136,0.12);
+            border-color: var(--accent);
+            box-shadow: var(--focus-ring);
         }
 
         #ai-chat-send {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 36px; height: 36px;
+            border-radius: var(--r);
             border: none;
-            background: var(--color-sage);
+            background: var(--accent);
             color: white;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
             transition: background 0.2s, transform 0.15s;
         }
 
-        #ai-chat-send:hover {
-            background: #8A9975;
-            transform: scale(1.06);
-        }
+        #ai-chat-send:hover { background: var(--sage-deep); transform: scale(1.06); }
+        #ai-chat-send svg { width: 15px; height: 15px; fill: white; }
 
-        #ai-chat-send svg {
-            width: 16px;
-            height: 16px;
-            fill: white;
-        }
-
-        /* Footer disclaimer */
         #ai-chat-footer {
-            padding: 7px 14px 9px;
-            background: white;
-            border-top: 1px solid #EFEFEB;
-            font-family: 'Outfit', sans-serif;
-            font-size: 10.5px;
-            color: #AAA;
+            padding: 6px 14px 8px;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            font-size: 10px;
+            color: var(--text3);
             text-align: center;
             flex-shrink: 0;
             line-height: 1.4;
         }
 
-        /* Suggested pills */
         .ai-suggestions {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            padding: 0 16px 12px;
+            padding: 0 14px 10px;
             flex-shrink: 0;
+            background: var(--bg2);
         }
 
         .ai-pill {
-            background: #F0F5EC;
-            border: 1px solid #D0DEC8;
-            color: #4A6840;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11.5px;
-            padding: 5px 11px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 11px;
+            padding: 4px 10px;
             border-radius: 20px;
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+            transition: background 0.2s;
             white-space: nowrap;
+            font-family: var(--ff-mono);
+            font-weight: 500;
         }
 
         .ai-pill:hover {
             background: #E0EDDA;
-            border-color: var(--color-sage);
+            border-color: var(--accent);
         }
 
         /* Mobile adjustments */
@@ -1011,13 +1079,14 @@
         }
         .card-modal-backdrop.open { display: flex; }
         .card-modal {
-            background: white;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
             border-radius: 18px;
             max-width: 760px;
             width: 100%;
             max-height: 88vh;
             overflow-y: auto;
-            box-shadow: 0 24px 64px rgba(13,17,23,0.22);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.5);
             animation: modalIn .22s ease;
         }
         @keyframes modalIn {
@@ -1032,15 +1101,15 @@
         }
         .card-modal-body { padding: 20px 28px 28px; }
         .card-modal-visual {
-            background: #F7FAF6;
-            border-radius: 12px;
+            background: var(--bg3);
+            border-radius: var(--r);
             padding: 20px;
             margin: 18px 0;
-            border: 1px solid #E8EDE5;
+            border: 1px solid var(--border);
         }
         .card-modal-plain {
             font-size: 15px;
-            color: #333;
+            color: var(--text);
             line-height: 1.75;
             margin-bottom: 18px;
         }
@@ -1050,22 +1119,23 @@
             gap: 6px;
             font-size: 12px;
             font-weight: 600;
-            color: #0369a1;
-            background: #e0f2fe;
-            padding: 6px 14px;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 5px 12px;
             border-radius: 6px;
             text-decoration: none;
-            border: 1px solid #bae6fd;
+            border: 1px solid var(--accent);
             transition: background .15s;
+            font-family: var(--ff-mono);
         }
-        .card-modal-regulation:hover { background: #bae6fd; }
+        .card-modal-regulation:hover { background: var(--bg4); }
         .ppwr-link {
             display: inline-flex;
             align-items: center;
             gap: 4px;
             font-size: 11px;
             font-weight: 600;
-            color: #0369a1;
+            color: var(--accent);
             text-decoration: none;
             white-space: nowrap;
         }
@@ -1076,33 +1146,34 @@
             display: none;
             align-items: center;
             gap: 8px;
-            background: #F5F5F3;
-            border: 1.5px solid #EFEFEB;
-            border-radius: 10px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
             padding: 7px 14px;
             cursor: pointer;
             font-size: 13px;
-            color: #999;
+            color: var(--text3);
             transition: border-color .15s, background .15s;
             white-space: nowrap;
         }
-        #gs-trigger:hover { border-color: var(--color-sage); background: white; }
+        #gs-trigger:hover { border-color: var(--accent); color: var(--text); }
         #gs-backdrop {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(13,17,23,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             padding: 80px 24px 24px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
         }
         #gs-backdrop.open { display: block; }
         #gs-box {
             max-width: 620px;
             margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 24px 64px rgba(13,17,23,0.24);
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: var(--rl);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.5);
             overflow: hidden;
             animation: modalIn .18s ease;
         }
@@ -1111,7 +1182,7 @@
             align-items: center;
             gap: 10px;
             padding: 16px 18px;
-            border-bottom: 1px solid #EFEFEB;
+            border-bottom: 1px solid var(--border);
         }
         #gs-input {
             flex: 1;
@@ -1120,19 +1191,17 @@
             font-size: 16px;
             font-family: inherit;
             background: transparent;
-            color: var(--color-dark);
+            color: var(--text);
         }
-        #gs-results {
-            max-height: 420px;
-            overflow-y: auto;
-        }
+        #gs-results { max-height: 420px; overflow-y: auto; }
         .gs-group-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: .08em;
-            color: #bbb;
+            letter-spacing: .1em;
+            color: var(--text3);
             padding: 12px 18px 4px;
+            font-family: var(--ff-mono);
         }
         .gs-item {
             display: flex;
@@ -1142,45 +1211,45 @@
             cursor: pointer;
             transition: background .12s;
         }
-        .gs-item:hover { background: #F5F5F3; }
-        .gs-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-        .gs-item-title { font-size: 13px; font-weight: 600; color: var(--color-dark); line-height: 1.3; }
-        .gs-item-sub   { font-size: 11px; color: #999; margin-top: 2px; line-height: 1.4; }
+        .gs-item:hover { background: var(--bg3); }
+        .gs-item-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+        .gs-item-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.3; }
+        .gs-item-sub   { font-size: 11px; color: var(--text2); margin-top: 2px; line-height: 1.4; }
         .gs-item-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
-        #gs-empty { padding: 32px; text-align: center; color: #bbb; font-size: 14px; }
+        #gs-empty { padding: 32px; text-align: center; color: var(--text3); font-size: 14px; }
         /* ── NARRATIVE STORY ARC ──────────────────────────────────── */
 
         /* Inline term tooltip — hover over jargon to see plain-English definition. */
         .term {
-            border-bottom: 1.5px dotted var(--color-sage);
+            border-bottom: 1.5px dotted var(--accent);
             cursor: help;
             position: relative;
             color: inherit;
             transition: color 0.2s;
         }
-        .term:hover { color: var(--color-sage); }
+        .term:hover { color: var(--accent); }
         .term-tip {
             display: none;
             position: absolute;
             bottom: calc(100% + 6px);
             left: 50%;
             transform: translateX(-50%);
-            background: #1F1F1F;
-            color: #F5F5F3;
-            border-radius: 8px;
+            background: var(--bg4);
+            color: var(--text);
+            border: 1px solid var(--border2);
+            border-radius: var(--r);
             padding: 10px 14px;
             font-size: 12px;
             line-height: 1.55;
             max-width: 260px;
             width: max-content;
             white-space: normal;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
             z-index: 9000;
             pointer-events: none;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--ff-body);
             font-style: normal;
             font-weight: 400;
-            border: 1px solid rgba(255,255,255,0.08);
         }
         .term-tip::after {
             content: '';
@@ -1189,28 +1258,28 @@
             left: 50%;
             transform: translateX(-50%);
             border: 6px solid transparent;
-            border-top-color: #1F1F1F;
+            border-top-color: var(--bg4);
         }
         .term:hover .term-tip { display: block; }
 
         /* Story arc journey steps */
         .journey-step {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 28px 24px;
-            border: 2px solid #EFEFEB;
+            border: 1px solid var(--border);
             text-align: center;
             position: relative;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.2s ease;
         }
-        .journey-step:hover { border-color: var(--color-sage); }
+        .journey-step:hover { border-color: var(--accent); }
         .journey-step-num {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: var(--color-sage);
-            color: white;
-            font-family: 'Syne', sans-serif;
+            background: var(--accent);
+            color: #fff;
+            font-family: var(--ff-display);
             font-weight: 700;
             font-size: 16px;
             display: flex;
@@ -1218,224 +1287,167 @@
             justify-content: center;
             margin: 0 auto 16px;
         }
-        .journey-step h3 {
-            font-size: 17px;
-            margin-bottom: 10px;
-            color: #1F1F1F;
-        }
-        .journey-step p {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
-        }
+        .journey-step h3 { font-size: 17px; margin-bottom: 10px; color: var(--text); }
+        .journey-step p { font-size: 13px; color: var(--text2); line-height: 1.6; margin: 0; }
         .journey-connector {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #CCC;
-            font-size: 22px;
+            color: var(--text3);
+            font-size: 20px;
             padding-top: 20px;
         }
 
-        /* Narrative hero — warm, story-first layout */
-        .narrative-hero {
-            text-align: center;
-            padding: 64px 32px 48px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .narrative-hero { text-align: center; padding: 64px 32px 48px; max-width: 700px; margin: 0 auto; }
         .narrative-eyebrow {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--color-sage);
-            margin-bottom: 16px;
-            display: block;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+            display: block; font-family: var(--ff-mono);
         }
-        .narrative-hero h1 {
-            font-size: 40px;
-            line-height: 1.15;
-            margin-bottom: 18px;
-            color: #1F1F1F;
-        }
-        .narrative-hero .lead {
-            font-size: 17px;
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 32px;
-        }
+        .narrative-hero h1 { font-size: 40px; line-height: 1.15; margin-bottom: 18px; color: var(--text); }
+        .narrative-hero .lead { font-size: 17px; color: var(--text2); line-height: 1.7; margin-bottom: 32px; }
 
-        /* Impact banner */
         .impact-banner {
-            background: linear-gradient(135deg, #F0F5EC 0%, #FFF8F0 100%);
-            border: 1px solid #E0DDD6;
-            border-left: 4px solid var(--color-sage);
-            border-radius: 10px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--r);
             padding: 20px 24px;
             display: flex;
             align-items: flex-start;
             gap: 16px;
             margin-bottom: 40px;
         }
-        .impact-banner-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+        .impact-banner-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
         .impact-banner-body { flex: 1; }
-        .impact-banner-body strong {
-            display: block;
-            font-size: 15px;
-            margin-bottom: 4px;
-            color: #1F1F1F;
-        }
-        .impact-banner-body p {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
-        }
+        .impact-banner-body strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+        .impact-banner-body p { font-size: 13px; color: var(--text2); line-height: 1.6; margin: 0; }
 
-        /* Who-is-this-for strip */
         .who-strip {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 28px 32px;
             margin-bottom: 40px;
-            border: 1px solid #EFEFEB;
+            border: 1px solid var(--border);
         }
-        .who-strip h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #1F1F1F;
-        }
-        .who-roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
+        .who-strip h2 { font-size: 19px; margin-bottom: 20px; text-align: center; color: var(--text); }
+        .who-roles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
         .who-role-chip {
-            background: #F0F5EC;
-            border: 1px solid #D0DEC8;
-            color: #3A5C30;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
+            color: var(--accent);
             border-radius: 20px;
-            padding: 7px 16px;
+            padding: 6px 16px;
             font-size: 13px;
             font-weight: 600;
         }
 
-        /* Outcome card */
         .outcome-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg2);
+            border-radius: var(--rl);
             padding: 24px;
-            border: 1px solid #EFEFEB;
-            border-top: 3px solid var(--color-sage);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
         }
-        .outcome-card .outcome-icon { font-size: 28px; margin-bottom: 12px; }
-        .outcome-card h3 { font-size: 16px; margin-bottom: 8px; color: #1F1F1F; }
-        .outcome-card p { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+        .outcome-card .outcome-icon { font-size: 26px; margin-bottom: 12px; }
+        .outcome-card h3 { font-size: 15px; margin-bottom: 8px; color: var(--text); }
+        .outcome-card p { font-size: 13px; color: var(--text2); line-height: 1.6; margin: 0; }
 
-        /* ── INLINE GLOSSARY DEFINITIONS ─── */
-        /* Used in page descriptions to expand acronyms on hover. */
-        abbr[title] {
-            text-decoration: underline dotted var(--color-sage);
-            cursor: help;
-        }
-        /* Celebration toast */
+        abbr[title] { text-decoration: underline dotted var(--accent); cursor: help; }
+
         #ppwr-toast {
             position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
-            background:#1F1F1F; color:#F5F5F3; border-radius:12px; padding:14px 22px;
+            background:var(--bg4); color:var(--text); border:1px solid var(--border2);
+            border-radius:var(--rl); padding:12px 22px;
             font-size:14px; font-weight:600; display:flex; align-items:center; gap:10px;
-            box-shadow:0 8px 32px rgba(0,0,0,.22); z-index:10000;
+            box-shadow:0 8px 32px rgba(0,0,0,.4); z-index:10000;
             transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
             opacity:0; pointer-events:none; white-space:nowrap;
         }
         #ppwr-toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
-        /* Knowledge check quiz */
-        .quiz-wrap { margin-top:14px; border-top:1px solid #EFEFEB; padding-top:14px; }
+
+        .quiz-wrap { margin-top:14px; border-top:1px solid var(--border); padding-top:14px; }
         .quiz-opt {
             display:block; width:100%; text-align:left; padding:9px 14px; margin-bottom:7px;
-            border:1.5px solid #E0DDD6; border-radius:8px; background:white; cursor:pointer;
-            font-size:13px; line-height:1.4; transition:border-color .15s, background .15s;
+            border:1px solid var(--border2); border-radius:var(--r); background:var(--bg3); cursor:pointer;
+            font-size:13px; line-height:1.4; transition:border-color .15s, background .15s; color:var(--text);
         }
-        .quiz-opt:hover:not(:disabled) { border-color:#9CAF88; background:#F8FBF6; }
-        .quiz-opt.correct  { border-color:#2A9D8F; background:#E8F5E9; color:#1B5E20; font-weight:600; }
-        .quiz-opt.wrong    { border-color:#E63946; background:#FFEBEE; color:#B71C1C; }
+        .quiz-opt:hover:not(:disabled) { border-color:var(--accent); background:var(--accent-dim); }
+        .quiz-opt.correct  { border-color:var(--positive); background:var(--positive-dim); color:var(--positive); font-weight:600; }
+        .quiz-opt.wrong    { border-color:var(--critical); background:var(--critical-dim); color:var(--critical); }
         .quiz-opt:disabled { cursor:default; }
-        .quiz-feedback { font-size:12px; line-height:1.6; padding:10px 14px; border-radius:8px; margin-top:4px; }
-        .quiz-feedback.correct { background:#E8F5E9; color:#1B5E20; border-left:3px solid #2A9D8F; }
-        .quiz-feedback.wrong   { background:#FFEBEE; color:#B71C1C; border-left:3px solid #E63946; }
+        .quiz-feedback { font-size:12px; line-height:1.6; padding:10px 14px; border-radius:var(--r); margin-top:4px; }
+        .quiz-feedback.correct { background:var(--positive-dim); color:var(--positive); border-left:3px solid var(--positive); }
+        .quiz-feedback.wrong   { background:var(--critical-dim); color:var(--critical); border-left:3px solid var(--critical); }
 
         /* ── Risk Calculator ── */
-        .rc-eyebrow { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.10em; color:var(--color-sage); margin-bottom:8px; }
-        .rc-section-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.10em; color:#aaa; margin-bottom:16px; display:block; }
+        .rc-eyebrow { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:8px; font-family:var(--ff-mono); }
+        .rc-section-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.14em; color:var(--text3); margin-bottom:16px; display:block; font-family:var(--ff-mono); }
         .rc-grid { display:grid; grid-template-columns:380px 1fr; gap:24px; align-items:start; }
         @media (max-width:900px) { .rc-grid { grid-template-columns:1fr; } }
         .rc-field { margin-bottom:20px; }
-        .rc-field-label { display:block; font-size:13px; font-weight:600; color:#444; margin-bottom:8px; }
-        .rc-select { width:100%; padding:11px 14px; border:1.5px solid #E0DDD6; border-radius:8px; font-size:14px; background:white; cursor:pointer; appearance:auto; }
-        .rc-select:focus { outline:none; border-color:var(--color-sage); box-shadow:0 0 0 3px rgba(156,175,136,.15); }
+        .rc-field-label { display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:8px; }
+        .rc-select { width:100%; padding:10px 14px; border:1px solid var(--border2); border-radius:var(--r); font-size:14px; background:var(--bg3); color:var(--text); cursor:pointer; appearance:auto; }
+        .rc-select:focus { outline:none; border-color:var(--accent); box-shadow:var(--focus-ring); }
         .rc-market-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .rc-market-tile { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1.5px solid #E0DDD6; border-radius:8px; cursor:pointer; font-size:13px; font-weight:400; transition:border-color .15s, background .15s; }
-        .rc-market-tile:hover { border-color:var(--color-sage); background:#F8FBF6; }
-        .rc-market-tile input { margin:0; accent-color:var(--color-sage); }
+        .rc-market-tile { display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border2); border-radius:var(--r); cursor:pointer; font-size:13px; font-weight:400; transition:border-color .15s, background .15s; background:var(--bg3); color:var(--text); }
+        .rc-market-tile:hover { border-color:var(--accent); background:var(--accent-dim); }
+        .rc-market-tile input { margin:0; accent-color:var(--accent); }
         .rc-score-ring { position:relative; width:96px; height:96px; flex-shrink:0; }
         .rc-ring-center { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
-        .rc-status-badge { display:inline-block; padding:5px 14px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; border:1.5px solid; }
-        .rc-status-critical { background:#FFEBEE; color:#C62828; border-color:#ef9a9a; }
-        .rc-status-risk     { background:#FFF3E0; color:#E65100; border-color:#ffcc80; }
-        .rc-status-moderate { background:#FFFDE7; color:#F57F17; border-color:#fff176; }
-        .rc-status-low      { background:#E8F5E9; color:#2E7D32; border-color:#a5d6a7; }
-        .rc-gap-count { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px; padding:0 7px; border-radius:12px; background:#FFEBEE; color:#C62828; font-size:11px; font-weight:700; }
-        .rc-gap-item { display:flex; justify-content:space-between; align-items:flex-start; padding:12px 14px 12px 16px; border-radius:8px; border-left:3px solid; background:#F9F9F7; margin-bottom:8px; gap:12px; }
+        .rc-status-badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; border:1px solid; font-family:var(--ff-mono); }
+        .rc-status-critical { background:var(--critical-dim); color:var(--critical); border-color:var(--critical); }
+        .rc-status-risk     { background:var(--warn-dim); color:var(--warn); border-color:var(--warn); }
+        .rc-status-moderate { background:var(--premium-dim); color:var(--premium); border-color:var(--premium); }
+        .rc-status-low      { background:var(--positive-dim); color:var(--positive); border-color:var(--positive); }
+        .rc-gap-count { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px; padding:0 7px; border-radius:12px; background:var(--critical-dim); color:var(--critical); font-size:11px; font-weight:700; font-family:var(--ff-mono); }
+        .rc-gap-item { display:flex; justify-content:space-between; align-items:flex-start; padding:12px 14px 12px 16px; border-radius:var(--r); border-left:3px solid; background:var(--bg3); margin-bottom:8px; gap:12px; }
         .rc-gap-item:last-child { margin-bottom:0; }
-        .rc-gap-text { font-size:13px; color:#333; line-height:1.5; flex:1; }
+        .rc-gap-text { font-size:13px; color:var(--text); line-height:1.5; flex:1; }
         .rc-gap-meta { display:flex; align-items:center; gap:8px; flex-shrink:0; padding-top:1px; }
-        .rc-severity { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:10px; }
-        .rc-sev-critical { background:#FFEBEE; color:#C62828; }
-        .rc-sev-high     { background:#FFF3E0; color:#E65100; }
-        .rc-sev-medium   { background:#FFFDE7; color:#F57F17; }
-        .rc-sev-low      { background:#E8F5E9; color:#2E7D32; }
-        .rc-article-link { font-size:11px; color:var(--color-sage); text-decoration:none; white-space:nowrap; }
+        .rc-severity { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:10px; font-family:var(--ff-mono); }
+        .rc-sev-critical { background:var(--critical-dim); color:var(--critical); }
+        .rc-sev-high     { background:var(--warn-dim); color:var(--warn); }
+        .rc-sev-medium   { background:var(--premium-dim); color:var(--premium); }
+        .rc-sev-low      { background:var(--positive-dim); color:var(--positive); }
+        .rc-article-link { font-size:11px; color:var(--accent); text-decoration:none; white-space:nowrap; }
         .rc-article-link:hover { text-decoration:underline; }
         .rc-substance-tag { padding:4px 10px; border-radius:6px; font-size:12px; font-weight:600; border:1px solid; cursor:default; }
 
         /* ── Full-page quiz engine ── */
         .kq-wrap { max-width:720px; margin:0 auto; }
         .kq-header { display:flex; align-items:center; gap:16px; margin-bottom:32px; }
-        .kq-counter { font-size:13px; color:#888; white-space:nowrap; }
-        .kq-bar-track { flex:1; height:6px; background:#EFEFEB; border-radius:3px; overflow:hidden; }
-        .kq-bar-fill { height:100%; background:var(--color-sage); border-radius:3px; transition:width .4s ease; }
-        .kq-question { font-size:19px; font-weight:600; line-height:1.45; margin-bottom:28px; color:#1a1a1a; }
+        .kq-counter { font-size:12px; color:var(--text3); white-space:nowrap; font-family:var(--ff-mono); }
+        .kq-bar-track { flex:1; height:5px; background:var(--bg4); border-radius:3px; overflow:hidden; }
+        .kq-bar-fill { height:100%; background:var(--accent); border-radius:3px; transition:width .4s ease; }
+        .kq-question { font-size:19px; font-weight:600; line-height:1.45; margin-bottom:28px; color:var(--text); font-family:var(--ff-display); }
         .kq-tile {
             display:block; width:100%; text-align:left; padding:16px 20px; margin-bottom:12px;
-            border:2px solid #E0DDD6; border-radius:12px; background:#fff; cursor:pointer;
+            border:1px solid var(--border2); border-radius:var(--rl); background:var(--bg2); cursor:pointer;
             font-size:15px; line-height:1.4; transition:border-color .15s, background .15s, transform .1s;
+            color:var(--text);
         }
-        .kq-tile:hover:not(:disabled) { border-color:#9CAF88; background:#F8FBF6; transform:translateY(-1px); }
-        .kq-tile.kq-correct { border-color:#2A9D8F; background:#E8F5E9; color:#1B5E20; font-weight:600; cursor:default; }
-        .kq-tile.kq-wrong   { border-color:#E63946; background:#FFEBEE; color:#B71C1C; cursor:default; }
-        .kq-tile.kq-reveal  { border-color:#2A9D8F; background:#E8F5E9; color:#1B5E20; cursor:default; }
+        .kq-tile:hover:not(:disabled) { border-color:var(--accent); background:var(--accent-dim); transform:translateY(-1px); }
+        .kq-tile.kq-correct { border-color:var(--positive); background:var(--positive-dim); color:var(--positive); font-weight:600; cursor:default; }
+        .kq-tile.kq-wrong   { border-color:var(--critical); background:var(--critical-dim); color:var(--critical); cursor:default; }
+        .kq-tile.kq-reveal  { border-color:var(--positive); background:var(--positive-dim); color:var(--positive); cursor:default; }
         .kq-tile:disabled   { cursor:default; }
-        .kq-inline-fb { font-size:13px; line-height:1.6; padding:12px 16px; border-radius:10px; margin:4px 0 16px; }
-        .kq-inline-fb.kq-correct { background:#E8F5E9; color:#1B5E20; border-left:3px solid #2A9D8F; }
-        .kq-inline-fb.kq-wrong   { background:#FFEBEE; color:#B71C1C; border-left:3px solid #E63946; }
+        .kq-inline-fb { font-size:13px; line-height:1.6; padding:12px 16px; border-radius:var(--r); margin:4px 0 16px; }
+        .kq-inline-fb.kq-correct { background:var(--positive-dim); color:var(--positive); border-left:3px solid var(--positive); }
+        .kq-inline-fb.kq-wrong   { background:var(--critical-dim); color:var(--critical); border-left:3px solid var(--critical); }
         .kq-next-btn { margin-top:8px; }
 
-        /* ── Score ring ── */
         .kq-ring-wrap { display:flex; flex-direction:column; align-items:center; margin:24px 0 32px; }
         .kq-ring { position:relative; width:140px; height:140px; }
         .kq-ring svg { transform:rotate(-90deg); }
-        .kq-ring-bg   { fill:none; stroke:#EFEFEB; stroke-width:10; }
+        .kq-ring-bg   { fill:none; stroke:var(--bg4); stroke-width:10; }
         .kq-ring-arc  { fill:none; stroke-width:10; stroke-linecap:round; transition:stroke-dashoffset .8s ease; }
         .kq-ring-label { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-        .kq-ring-score { font-size:32px; font-weight:700; line-height:1; }
-        .kq-ring-denom { font-size:14px; color:#888; }
+        .kq-ring-score { font-size:32px; font-weight:700; line-height:1; font-family:var(--ff-display); }
+        .kq-ring-denom { font-size:13px; color:var(--text3); font-family:var(--ff-mono); }
 
-        /* ── Breakdown list ── */
         .kq-breakdown { list-style:none; padding:0; margin:0 0 28px; }
-        .kq-breakdown li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid #EFEFEB; font-size:14px; }
+        .kq-breakdown li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px; }
         .kq-breakdown li:last-child { border-bottom:none; }
         .kq-bd-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
         .kq-bd-text { flex:1; color:#444; line-height:1.45; }
@@ -1448,10 +1460,10 @@
         /* ── Intro screen ── */
         .kq-intro { max-width:600px; margin:0 auto; }
         .kq-intro h1 { margin-bottom:8px; }
-        .kq-intro-meta { color:#888; font-size:15px; margin-bottom:32px; line-height:1.6; }
-        .kq-session-bar { background:#F9F9F7; border-radius:12px; padding:20px 24px; margin-bottom:28px; }
-        .kq-session-bar h4 { margin:0 0 4px; font-size:14px; color:#555; }
-        .kq-session-score { font-size:28px; font-weight:700; color:var(--color-sage); }
+        .kq-intro-meta { color:var(--text2); font-size:15px; margin-bottom:32px; line-height:1.6; }
+        .kq-session-bar { background:var(--bg3); border:1px solid var(--border); border-radius:var(--rl); padding:20px 24px; margin-bottom:28px; }
+        .kq-session-bar h4 { margin:0 0 4px; font-size:14px; color:var(--text2); }
+        .kq-session-score { font-size:28px; font-weight:700; color:var(--accent); font-family:var(--ff-display); }
     </style>
 </head>
 <body>
@@ -1461,8 +1473,8 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="flex items-center gap-3">
-                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-clay) 100%); border-radius: 8px;"></div>
-                <h1 style="margin: 0; font-size: 20px; color: var(--color-dark);">PPWR Learning Hub</h1>
+                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent) 0%, var(--sage-deep) 100%); border-radius: 8px; display:grid; place-items:center; font-family:var(--ff-display); font-weight:900; font-size:14px; color:#fff; letter-spacing:-0.02em;">P</div>
+                <h1 style="margin: 0; font-size: 18px; color: var(--text); font-family: var(--ff-display);">PPWR Learning Hub</h1>
             </div>
             <div class="flex items-center gap-4">
                 <div class="language-switcher">
@@ -1474,18 +1486,19 @@
                 </div>
                 <button id="gs-trigger" aria-label="Search" onclick="gsOpen()">
                     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><line x1="14" y1="14" x2="19" y2="19"/></svg>
-                    Search&nbsp;&nbsp;<kbd style="font-size:10px;padding:1px 5px;border:1px solid #ddd;border-radius:3px;color:#bbb;background:white">⌘K</kbd>
+                    Search&nbsp;&nbsp;<kbd style="font-size:10px;padding:1px 5px;border:1px solid var(--border2);border-radius:3px;color:var(--text3);background:var(--bg3);font-family:var(--ff-mono)">⌘K</kbd>
                 </button>
-                <span id="nav-tier-badge" style="display:none; font-size:12px; font-weight:700; padding:4px 12px; border-radius:12px; background:#F0F8F3; color:var(--color-sage); border:1px solid #C8DEC0;"></span>
-                <button class="btn-text page-link" id="nav-switch-tier" data-page="home" style="display:none; font-size:13px; color:#999;">Switch tier</button>
+                <span id="nav-tier-badge" style="display:none; font-size:11px; font-weight:700; padding:4px 12px; border-radius:20px; background:var(--accent-dim); color:var(--accent); border:1px solid var(--accent); font-family:var(--ff-mono); letter-spacing:0.05em;"></span>
+                <button class="btn-text page-link" id="nav-switch-tier" data-page="home" style="display:none; font-size:12px; color:var(--text3);">Switch tier</button>
+                <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" style="width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:border-color .15s;">🌙</button>
             </div>
         </div>
     </div>
 
     <!-- Sidebar (for logged-in users) -->
     <div class="sidebar" id="sidebar" style="display: none;">
-        <div style="padding: 0 24px; margin-bottom: 24px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Menu</p>
+        <div style="padding: 0 16px; margin-bottom: 16px;">
+            <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Menu</p>
         </div>
         <div class="sidebar-item active page-link" data-page="dashboard">📊 My Overview</div>
         <div class="sidebar-item page-link" data-page="learning">📚 Learning Cards</div>
@@ -1493,15 +1506,15 @@
         <div class="sidebar-item page-link" data-page="assessment">✅ Test Your Knowledge</div>
         <div class="sidebar-item page-link" data-page="certificates">🎓 My Certificates</div>
         <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Exposure Check</div>
-        <div class="sidebar-section-readiness" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Long-Term Planning</p>
+        <div class="sidebar-section-readiness" style="padding: 0 16px; margin-top: 16px; margin-bottom: 6px; border-top: 1px solid var(--border); padding-top: 16px;">
+            <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Long-Term Planning</p>
         </div>
         <div class="sidebar-item page-link" data-page="roadmap">📅 Key Dates &amp; Deadlines</div>
         <div class="sidebar-item page-link" data-page="grading">♻️ Packaging Grades (A–E)</div>
         <div class="sidebar-item page-link" data-page="calculator">🧮 Recycled Material Check</div>
         <div class="sidebar-item page-link" data-page="vault">📁 My Documents</div>
-        <div class="sidebar-section-tools" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Tools &amp; Calculators</p>
+        <div class="sidebar-section-tools" style="padding: 0 16px; margin-top: 16px; margin-bottom: 6px; border-top: 1px solid var(--border); padding-top: 16px;">
+            <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Tools &amp; Calculators</p>
         </div>
         <div class="sidebar-item page-link" data-page="scope">🔍 Does This Apply to Me?</div>
         <div class="sidebar-item page-link" data-page="glossary">📖 Plain-English Glossary</div>
@@ -1511,8 +1524,8 @@
         <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
         <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
         <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
-        <div class="sidebar-section-admin" style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
+        <div class="sidebar-section-admin" style="padding: 0 16px; margin-top: 20px; margin-bottom: 8px; border-top: 1px solid var(--border); padding-top: 16px;">
+            <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Admin</p>
         </div>
         <div class="sidebar-item page-link" data-page="admin-dashboard">👨‍💼 Company</div>
         <div class="sidebar-item page-link" data-page="admin-users">👥 Users</div>
@@ -1565,7 +1578,7 @@
                         <span class="who-role-chip">🏢 Brand Owners</span>
                         <span class="who-role-chip">🚚 Importers &amp; Distributors</span>
                     </div>
-                    <p style="text-align:center; font-size:13px; color:#999; margin-top:16px; margin-bottom:0;">If your organisation puts anything in a package, at least one of these roles applies to you.</p>
+                    <p style="text-align:center; font-size:13px; color:var(--text3); margin-top:16px; margin-bottom:0;">If your organisation puts anything in a package, at least one of these roles applies to you.</p>
                 </div>
             </div>
 
@@ -1579,8 +1592,8 @@
                         <h3>Understand what applies to you</h3>
                         <p>Start with our 2-minute role quiz and scoping check. Find out exactly which rules affect your products, markets, and responsibilities — before diving into the detail.</p>
                         <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">What's My Role?</span>
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Does This Apply to Me?</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">What's My Role?</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">Does This Apply to Me?</span>
                         </div>
                     </div>
 
@@ -1591,8 +1604,8 @@
                         <h3>Learn one topic at a time</h3>
                         <p>Work through bite-sized learning cards and scenario exercises. Each card covers one concept — no jargon, no walls of text. Practice with real decision scenarios before they happen in real life.</p>
                         <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Learning Cards</span>
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Practice Scenarios</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">Learning Cards</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">Practice Scenarios</span>
                         </div>
                     </div>
 
@@ -1603,8 +1616,8 @@
                         <h3>Prove it and stay ahead</h3>
                         <p>Take the assessment to earn a verified compliance certificate. Use the tools to check your packaging grades, calculate recycled material targets, and track every deadline through 2040.</p>
                         <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Test Yourself</span>
-                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Certificates</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">Test Yourself</span>
+                            <span style="font-size:11px; background:var(--accent-dim); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:600;">Certificates</span>
                         </div>
                     </div>
 
@@ -1651,57 +1664,57 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;align-items:start;max-width:900px;margin:0 auto;">
 
                 <!-- FREE -->
-                <div class="card" style="border-top:4px solid #EFEFEB;padding:28px 24px;display:flex;flex-direction:column;">
-                    <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#bbb;letter-spacing:.06em;margin-bottom:8px;">Free</p>
-                    <h2 style="font-size:28px;margin-bottom:4px;">€0</h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Try it out — no account needed</p>
+                <div class="card" style="border-top:3px solid var(--border2);padding:28px 24px;display:flex;flex-direction:column;">
+                    <p style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text3);letter-spacing:.10em;margin-bottom:8px;font-family:var(--ff-mono);">Free</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;font-family:var(--ff-display);">€0</h2>
+                    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;">Try it out — no account needed</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Overview dashboard</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ First 5 learning cards</li>
-                        <li style="font-size:14px;color:#bbb;padding:6px 0;border-bottom:1px solid #F5F5F3;">✗ Practice scenarios</li>
-                        <li style="font-size:14px;color:#bbb;padding:6px 0;">✗ AI compliance assistant</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Overview dashboard</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ First 5 learning cards</li>
+                        <li style="font-size:13px;color:var(--text3);padding:7px 0;border-bottom:1px solid var(--border);">✗ Practice scenarios</li>
+                        <li style="font-size:13px;color:var(--text3);padding:7px 0;">✗ AI compliance assistant</li>
                     </ul>
                     <button class="btn-secondary page-link" data-page="tier-detail" data-tier="free" style="width:100%;">Start for free →</button>
                 </div>
 
                 <!-- STARTER -->
-                <div class="card" style="border-top:4px solid #9CAF88;padding:28px 24px;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(156,175,136,.18);">
+                <div class="card" style="border-top:3px solid var(--accent);padding:28px 24px;display:flex;flex-direction:column;box-shadow:0 8px 32px var(--accent-dim);">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#9CAF88;letter-spacing:.06em;margin:0;">Starter</p>
-                        <span style="font-size:10px;font-weight:700;background:#9CAF88;color:white;padding:2px 8px;border-radius:10px;">MOST POPULAR</span>
+                        <p style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--accent);letter-spacing:.10em;margin:0;font-family:var(--ff-mono);">Starter</p>
+                        <span style="font-size:9px;font-weight:700;background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;font-family:var(--ff-mono);letter-spacing:.06em;">POPULAR</span>
                     </div>
-                    <h2 style="font-size:28px;margin-bottom:4px;">€99<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">For teams of up to 20 people</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;font-family:var(--ff-display);">€99<span style="font-size:15px;font-weight:400;color:var(--text2);">/mo</span></h2>
+                    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;">For teams of up to 20 people</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 24 learning cards</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 7 practice scenarios</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Knowledge test + certificates</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ AI assistant (3 questions/session)</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ All 24 learning cards</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ All 7 practice scenarios</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Knowledge test + certificates</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;">✓ AI assistant (3 questions/session)</li>
                     </ul>
                     <button class="btn-primary page-link" data-page="tier-detail" data-tier="starter" style="width:100%;">See Starter →</button>
                 </div>
 
                 <!-- PRO -->
-                <div class="card" style="border-top:4px solid var(--color-clay);padding:28px 24px;display:flex;flex-direction:column;">
-                    <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--color-clay);letter-spacing:.06em;margin-bottom:8px;">Pro</p>
-                    <h2 style="font-size:28px;margin-bottom:4px;">€249<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Unlimited users</p>
+                <div class="card" style="border-top:3px solid var(--amber);padding:28px 24px;display:flex;flex-direction:column;">
+                    <p style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--amber);letter-spacing:.10em;margin-bottom:8px;font-family:var(--ff-mono);">Pro</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;font-family:var(--ff-display);">€249<span style="font-size:15px;font-weight:400;color:var(--text2);">/mo</span></h2>
+                    <p style="font-size:13px;color:var(--text2);margin-bottom:20px;">Unlimited users</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Everything in Starter</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Long-term planning tools (to 2040)</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Unlimited AI assistant questions</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Company-wide progress dashboard</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ User roles &amp; access control</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Analytics &amp; leads dashboard</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Dedicated onboarding support</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ API, SSO &amp; custom modules (coming soon)</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Everything in Starter</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Long-term planning tools (to 2040)</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Unlimited AI assistant questions</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Company-wide progress dashboard</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ User roles &amp; access control</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Analytics &amp; leads dashboard</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);">✓ Dedicated onboarding support</li>
+                        <li style="font-size:13px;color:var(--text2);padding:7px 0;">✓ API, SSO &amp; custom modules (coming soon)</li>
                     </ul>
                     <button class="btn-primary page-link" data-page="tier-detail" data-tier="pro" style="width:100%;">See Pro →</button>
                 </div>
 
             </div>
 
-            <p style="text-align:center;color:#bbb;font-size:13px;margin-top:40px;">No credit card required for Free. Paid tiers: 14-day trial, cancel anytime.</p>
+            <p style="text-align:center;color:var(--text3);font-size:12px;margin-top:40px;font-family:var(--ff-mono);">No credit card required for Free. Paid tiers: 14-day trial, cancel anytime.</p>
         </div>
 
         <div style="max-width:1100px; margin:0 auto; padding:0 32px; margin-top:60px;">
@@ -1725,29 +1738,29 @@
                 </div>
             </div>
 
-            <div style="background:white; border-radius:12px; padding:40px 48px; text-align:center; margin-bottom:60px; border:1px solid #EFEFEB;">
+            <div style="background:var(--bg2); border-radius:var(--rl); padding:40px 48px; text-align:center; margin-bottom:60px; border:1px solid var(--border);">
                 <div style="font-size:48px; margin-bottom:16px;">⏳</div>
                 <h2 style="font-size:24px; margin-bottom:12px;">The enforcement clock is running</h2>
-                <p style="font-size:16px; color:#666; margin-bottom:20px; max-width:500px; margin-left:auto; margin-right:auto;">From August 12, 2026, packaging that doesn't meet the new requirements can be barred from sale. Regulators in each EU country will enforce the rules — including fines for non-compliance.</p>
+                <p style="font-size:16px; color:var(--text2); margin-bottom:20px; max-width:500px; margin-left:auto; margin-right:auto;">From August 12, 2026, packaging that doesn't meet the new requirements can be barred from sale. Regulators in each EU country will enforce the rules — including fines for non-compliance.</p>
                 <div class="status-amber" style="display:inline-block;" id="home-countdown">Calculating…</div>
             </div>
         </div>
 
-        <div style="background:var(--color-sage); color:white; padding:64px 32px; text-align:center; margin-top:60px;">
+        <div style="background:var(--accent); color:white; padding:64px 32px; text-align:center; margin-top:60px;">
             <h2 style="font-size:28px; margin-bottom:12px; color:white;">Your team can be ready. Let's start.</h2>
             <p style="margin-bottom:32px; font-size:16px; opacity:0.88; max-width:480px; margin-left:auto; margin-right:auto;">Join 200+ Nordic companies already building their compliance knowledge — one card at a time.</p>
-            <button class="btn-secondary page-link" data-page="tier-detail" data-tier="starter" style="background:white; color:var(--color-sage); border-color:white; font-size:15px; padding:14px 28px;">Get started free — no card needed</button>
+            <button class="btn-secondary page-link" data-page="tier-detail" data-tier="starter" style="background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.3); font-size:15px; padding:14px 28px;">Get started free — no card needed</button>
         </div>
 
         <div style="max-width:1100px; margin:0 auto; padding:32px;">
-            <p style="text-align:center; color:#bbb; font-size:13px;">PPWR Learning Hub © 2026 · Covering Sweden, Denmark, Norway, Finland, Estonia, Latvia, Lithuania</p>
+            <p style="text-align:center; color:var(--text3); font-size:13px;">PPWR Learning Hub © 2026 · Covering Sweden, Denmark, Norway, Finland, Estonia, Latvia, Lithuania</p>
         </div>
     </div>
 
     <!-- TIER DETAIL PAGE -->
     <div class="page" id="tier-detail-page">
         <div style="max-width:700px; margin:0 auto; padding:60px 32px;">
-            <button class="btn-text page-link" data-page="home" style="margin-bottom:24px; color:#999; font-size:14px;">← Back to plans</button>
+            <button class="btn-text page-link" data-page="home" style="margin-bottom:24px; color:var(--text3); font-size:14px;">← Back to plans</button>
             <div id="tier-detail-content"></div>
         </div>
     </div>
@@ -1778,11 +1791,11 @@
             <div class="grid-2" style="margin-bottom: 32px;">
                 <div class="card" id="milestone-widget">
                     <h3>⏱ Next PPWR Milestone</h3>
-                    <div id="milestone-content" style="margin-top: 12px; color: #666;">Loading…</div>
+                    <div id="milestone-content" style="margin-top: 12px; color: var(--text2);">Loading…</div>
                 </div>
                 <div class="card" id="cert-status-widget">
                     <h3>🏅 Certification Status</h3>
-                    <div id="cert-status-content" style="margin-top: 12px; color: #666;">Loading…</div>
+                    <div id="cert-status-content" style="margin-top: 12px; color: var(--text2);">Loading…</div>
                 </div>
             </div>
 
@@ -1792,27 +1805,27 @@
                     <button class="btn-secondary page-link" data-page="delegated-acts" style="font-size:12px; padding:6px 14px;">View All</button>
                 </div>
                 <div id="delegated-acts-widget-content">
-                    <p style="color:#666; font-size:14px;">Loading…</p>
+                    <p style="color:var(--text2); font-size:14px;">Loading…</p>
                 </div>
             </div>
 
             <!-- ONBOARDING CHECKLIST (shown until all steps complete) -->
-            <div class="card" id="onboarding-widget" style="margin-bottom:24px;display:none;border-left:4px solid var(--color-sage);">
+            <div class="card" id="onboarding-widget" style="margin-bottom:24px;display:none;border-left:4px solid var(--accent);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
                     <div>
                         <h3 style="margin:0;font-size:15px;">👋 Your first steps</h3>
-                        <p style="font-size:12px;color:#999;margin:2px 0 0">A quick path to understanding what you need to do and why.</p>
+                        <p style="font-size:12px;color:var(--text3);margin:2px 0 0">A quick path to understanding what you need to do and why.</p>
                     </div>
-                    <button onclick="dismissOnboarding()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#bbb;padding:4px 8px;">Hide</button>
+                    <button onclick="dismissOnboarding()" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--text3);padding:4px 8px;">Hide</button>
                 </div>
                 <div id="onboarding-steps"></div>
                 <div style="margin-top:12px;">
-                    <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-bottom:4px;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:4px;">
                         <span id="onboarding-progress-label">0 of 7 complete</span>
                         <span id="onboarding-pct">0%</span>
                     </div>
-                    <div style="background:#EFEFEB;border-radius:4px;height:6px;overflow:hidden;">
-                        <div id="onboarding-bar" style="height:100%;background:var(--color-sage);border-radius:4px;transition:width .4s ease;width:0%"></div>
+                    <div style="background:var(--bg4);border-radius:4px;height:6px;overflow:hidden;">
+                        <div id="onboarding-bar" style="height:100%;background:var(--accent);border-radius:4px;transition:width .4s ease;width:0%"></div>
                     </div>
                 </div>
             </div>
@@ -1821,7 +1834,7 @@
             <div id="compliance-summary-row" style="margin-bottom:24px; display:none;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
                     <h3 style="margin:0; font-size:16px;">⚡ Compliance Intelligence</h3>
-                    <span style="font-size:11px; color:#999;">Live from your portfolio data</span>
+                    <span style="font-size:11px; color:var(--text3);">Live from your portfolio data</span>
                 </div>
                 <div class="grid-4" id="compliance-kpi-row" style="gap:14px;"></div>
             </div>
@@ -1849,20 +1862,20 @@
             <div class="grid-2" style="margin-bottom:32px;">
                 <div class="card">
                     <h3>📚 Continue learning</h3>
-                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Each card takes about 2 minutes and covers one topic in plain language. Pick up where you left off.</p>
+                    <p style="color:var(--text2); margin-top:10px; font-size:14px; line-height:1.6;">Each card takes about 2 minutes and covers one topic in plain language. Pick up where you left off.</p>
                     <button class="btn-secondary page-link" data-page="learning" style="width:100%; margin-top:16px;">Open Learning Cards →</button>
                 </div>
 
                 <div class="card">
                     <h3>🎯 Practice a scenario</h3>
-                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Put yourself in a real compliance situation. Make decisions and see what happens — before it happens in real life.</p>
+                    <p style="color:var(--text2); margin-top:10px; font-size:14px; line-height:1.6;">Put yourself in a real compliance situation. Make decisions and see what happens — before it happens in real life.</p>
                     <button class="btn-secondary page-link" data-page="scenarios" style="width:100%; margin-top:16px;">Start a Practice Scenario →</button>
                 </div>
 
                 <div class="card">
                     <h3>📊 Your company's progress</h3>
                     <div style="margin-top:14px;">
-                        <p style="color:#666; font-size:14px; margin-bottom:10px;">Overall readiness across your team</p>
+                        <p style="color:var(--text2); font-size:14px; margin-bottom:10px;">Overall readiness across your team</p>
                         <div class="progress-bar" style="margin-bottom:14px;">
                             <div class="progress-bar-fill" id="dashboard-progress-bar" style="width:35%;"></div>
                         </div>
@@ -1872,7 +1885,7 @@
 
                 <div class="card">
                     <h3>✅ Test your knowledge</h3>
-                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Answer 10 questions to see how ready your company is — and earn a shareable compliance certificate.</p>
+                    <p style="color:var(--text2); margin-top:10px; font-size:14px; line-height:1.6;">Answer 10 questions to see how ready your company is — and earn a shareable compliance certificate.</p>
                     <button class="btn-secondary page-link" data-page="assessment" style="width:100%; margin-top:16px;">Take the Knowledge Test →</button>
                 </div>
             </div>
@@ -1885,11 +1898,11 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">Learning Cards</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Each card covers one topic — one concept at a time, in plain language. No prior knowledge needed.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Click any card to open it. There's no required order — start with whatever feels most relevant to your work.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Click any card to open it. There's no required order — start with whatever feels most relevant to your work.</p>
             </div>
 
             <div style="margin-bottom:24px;">
-                <input type="text" id="learning-filter" placeholder="Search by topic (e.g. recycled content, labelling, EPR fees)…" style="width:100%; padding:12px; border:1px solid #EFEFEB; border-radius:8px; font-family:'Outfit',sans-serif;">
+                <input type="text" id="learning-filter" placeholder="Search by topic (e.g. recycled content, labelling, EPR fees)…" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; font-family:var(--ff-body);">
             </div>
 
             <div id="learning-cards" class="grid-3">
@@ -1904,7 +1917,7 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">Practice Scenarios</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">You're the decision-maker. Each scenario puts you in a real situation — a supplier call, a product launch, an audit question. Choose what you'd do, and see the outcome.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Making the wrong choice in a scenario isn't a problem — that's how you learn. Nothing here counts against you.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Making the wrong choice in a scenario isn't a problem — that's how you learn. Nothing here counts against you.</p>
             </div>
 
             <div id="scenarios-list" class="grid-2">
@@ -1958,7 +1971,7 @@
                 <p style="color:#888; font-size:15px; max-width:580px; line-height:1.65; margin:0;">
                     Tell us about your packaging and markets. We'll identify which PPWR obligations apply and flag the highest-priority compliance gaps.
                 </p>
-                <p style="color:#bbb; font-size:12px; margin:8px 0 0;">Results are indicative — not legal advice.</p>
+                <p style="color:var(--text3); font-size:12px; margin:8px 0 0;">Results are indicative — not legal advice.</p>
             </div>
 
             <!-- Two-column grid -->
@@ -1991,7 +2004,7 @@
 
                     <div class="rc-field" style="margin-bottom:28px;">
                         <label class="rc-field-label">Markets you sell into <span style="font-weight:400;color:#aaa;">(select all that apply)</span></label>
-                        <p style="font-size:12px;color:#bbb;margin:0 0 10px;">PPWR covers all EU member states and Norway. The UK has separate rules.</p>
+                        <p style="font-size:12px;color:var(--text3);margin:0 0 10px;">PPWR covers all EU member states and Norway. The UK has separate rules.</p>
                         <div class="rc-market-grid">
                             <label class="rc-market-tile"><input type="checkbox" value="EU"> EU (any country)</label>
                             <label class="rc-market-tile"><input type="checkbox" value="UK"> UK (separate rules)</label>
@@ -2014,7 +2027,7 @@
                         <div style="display:flex; align-items:center; gap:24px; margin-bottom:20px;">
                             <div class="rc-score-ring">
                                 <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-                                    <circle cx="48" cy="48" r="38" fill="none" stroke="#EFEFEB" stroke-width="8"/>
+                                    <circle cx="48" cy="48" r="38" fill="none" stroke="var(--bg4)" stroke-width="8"/>
                                     <circle id="rc-ring-arc" cx="48" cy="48" r="38" fill="none" stroke-width="8"
                                         stroke-linecap="round" stroke-dasharray="0 239"
                                         style="transition:stroke-dasharray .7s ease"/>
@@ -2025,7 +2038,7 @@
                             </div>
                             <div>
                                 <div id="rc-status-badge" class="rc-status-badge" style="margin-bottom:10px;">—</div>
-                                <p id="rc-status-desc" style="font-size:13px; color:#666; line-height:1.6; max-width:240px; margin:0;"></p>
+                                <p id="rc-status-desc" style="font-size:13px; color:var(--text2); line-height:1.6; max-width:240px; margin:0;"></p>
                             </div>
                         </div>
                         <div id="risk-recommendations"></div>
@@ -2077,7 +2090,7 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">📅 Key Dates &amp; Deadlines</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Everything your company needs to do, and by when. From immediate requirements (August 2026) to long-term targets (2040).</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Scroll through the full timeline to see what's coming — and how much time you have.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Scroll through the full timeline to see what's coming — and how much time you have.</p>
             </div>
             <div id="roadmap-content"></div>
         </div>
@@ -2089,7 +2102,7 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">♻️ Packaging Grades (A–E)</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Under the new regulation, every piece of packaging gets a recyclability grade — A (best) to E (worst). Grade D and E packaging will be banned from 2030.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Use this lab to match your packaging materials against the grading criteria — and see how the grade affects your recycling fee.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Use this lab to match your packaging materials against the grading criteria — and see how the grade affects your recycling fee.</p>
             </div>
             <div id="grading-content"></div>
         </div>
@@ -2101,7 +2114,7 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">🧮 Recycled Material Check</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">The regulation sets minimum targets for how much recycled material must be in plastic packaging — starting from 2030. Check whether your packaging meets the current and future requirements.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Also checks your packaging's "empty space ratio" — the regulation limits how much wasted space is allowed in a box or container.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Also checks your packaging's "empty space ratio" — the regulation limits how much wasted space is allowed in a box or container.</p>
             </div>
             <div id="calculator-content"></div>
         </div>
@@ -2113,7 +2126,7 @@
             <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:6px;">📁 My Documents</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Compliance requires documentation — and auditors will ask for it. This section shows you which documents to keep, for how long, and how your recycling fee can be reduced by demonstrating eco-friendly packaging.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Use this as your reference guide for document retention and fee modulation requirements.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Use this as your reference guide for document retention and fee modulation requirements.</p>
             </div>
             <div id="vault-content"></div>
         </div>
@@ -2145,7 +2158,7 @@
                     <p><strong>Plan:</strong> <span id="admin-plan">Pro</span></p>
                     <p><strong>Users:</strong> <span id="admin-seats">5 / 75</span></p>
                     <p><strong>Renewal:</strong> <span id="admin-renewal">April 30, 2026</span></p>
-                    <p style="margin-top: 16px; color: #666;">Next invoice: €249</p>
+                    <p style="margin-top: 16px; color: var(--text2);">Next invoice: €249</p>
                 </div>
             </div>
         </div>
@@ -2205,7 +2218,7 @@
     <div class="page" id="admin-leads-page">
         <div class="main-content">
             <h1 style="margin-bottom: 32px;">Lead Captures</h1>
-            <p style="color: #666; margin-bottom: 32px;">Free trial signups from the public assessment tool.</p>
+            <p style="color: var(--text2); margin-bottom: 32px;">Free trial signups from the public assessment tool.</p>
 
             <div class="card">
                 <table style="width: 100%; border-collapse: collapse;">
@@ -2231,7 +2244,7 @@
     <div class="modal-overlay" id="bulk-invite-modal">
         <div class="modal">
             <h2 style="margin-bottom: 20px;">Bulk Invite Users</h2>
-            <p style="color: #666; margin-bottom: 16px;">Paste email addresses (one per line). We'll send invitations immediately.</p>
+            <p style="color: var(--text2); margin-bottom: 16px;">Paste email addresses (one per line). We'll send invitations immediately.</p>
             
             <div class="input-group">
                 <label>Email List</label>
@@ -2255,21 +2268,21 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">🔍 Does This Apply to Me?</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Not every type of packaging is covered by the regulation — and some types have different rules. This page explains what's in scope, what's out, and what special cases might affect your products.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">If you're unsure whether a specific packaging type applies, start here.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">If you're unsure whether a specific packaging type applies, start here.</p>
             </div>
             <div class="card" style="margin-bottom:24px;">
                 <h3 style="color:#15803d; margin-bottom:16px;">✅ In Scope</h3>
-                <p style="color:#666; font-size:13px; margin-bottom:16px;">All of the following are covered by PPWR and carry full compliance obligations.</p>
+                <p style="color:var(--text2); font-size:13px; margin-bottom:16px;">All of the following are covered by PPWR and carry full compliance obligations.</p>
                 <div id="scope-in-list-page"></div>
             </div>
             <div class="card" style="margin-bottom:24px;">
                 <h3 style="color:#dc2626; margin-bottom:16px;">🚫 Out of Scope</h3>
-                <p style="color:#666; font-size:13px; margin-bottom:16px;">These items are explicitly excluded from PPWR's definition of packaging.</p>
+                <p style="color:var(--text2); font-size:13px; margin-bottom:16px;">These items are explicitly excluded from PPWR's definition of packaging.</p>
                 <div id="scope-out-list-page"></div>
             </div>
             <div class="card" style="margin-bottom:24px;">
                 <h3 style="color:#d97706; margin-bottom:16px;">⚠️ Special Cases — Company A Relevant</h3>
-                <p style="color:#666; font-size:13px; margin-bottom:16px;">These packaging categories have modified or conditional obligations that may apply to your specific product lines.</p>
+                <p style="color:var(--text2); font-size:13px; margin-bottom:16px;">These packaging categories have modified or conditional obligations that may apply to your specific product lines.</p>
                 <div id="scope-ca-list-page"></div>
             </div>
         </div>
@@ -2281,7 +2294,7 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">📜 Upcoming Rule Changes</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">The core regulation is already in force, but many of the precise technical details are still being finalised by the European Commission. These "implementing rules" will arrive between 2025 and 2028.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Keep an eye on this page — when new rules are published, they may change specific requirements for your packaging.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Keep an eye on this page — when new rules are published, they may change specific requirements for your packaging.</p>
             </div>
             <div class="card">
                 <div id="delegated-acts-page-list"></div>
@@ -2295,14 +2308,14 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">⚖️ Penalty Calculator</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">What could non-compliance actually cost your company? Select a country, the type of violation, and whether it was a one-off mistake or a pattern — and we'll show you the potential fine range.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">These figures are indicative ranges based on available enforcement guidance. They are not legal advice.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">These figures are indicative ranges based on available enforcement guidance. They are not legal advice.</p>
             </div>
             <div class="grid-2" style="margin-bottom:24px; align-items:start;">
                 <div class="card">
                     <h3 style="margin-bottom:20px;">Configure scenario</h3>
                     <div style="margin-bottom:16px;">
                         <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Country</label>
-                        <select id="fe-country" style="width:100%; padding:10px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+                        <select id="fe-country" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:14px;">
                             <option value="">— Select country —</option>
                             <option value="SE">🇸🇪 Sweden</option>
                             <option value="NO">🇳🇴 Norway (EEA)</option>
@@ -2315,7 +2328,7 @@
                     </div>
                     <div style="margin-bottom:16px;">
                         <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Violation Type</label>
-                        <select id="fe-violation" style="width:100%; padding:10px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+                        <select id="fe-violation" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:14px;">
                             <option value="">— Select violation type —</option>
                             <option value="epr-missing">Not registered in country's recycling scheme (EPR)</option>
                             <option value="epr-underreport">Under-reporting packaging volumes to recycling scheme</option>
@@ -2331,15 +2344,15 @@
                         <div style="display:flex; flex-direction:column; gap:10px;">
                             <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
                                 <input type="radio" name="fe-scale" value="isolated" style="margin-top:2px;" checked>
-                                <span><strong>Isolated incident</strong><br><span style="color:#666; font-size:12px;">First offence, self-reported, remediated promptly</span></span>
+                                <span><strong>Isolated incident</strong><br><span style="color:var(--text2); font-size:12px;">First offence, self-reported, remediated promptly</span></span>
                             </label>
                             <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
                                 <input type="radio" name="fe-scale" value="persistent" style="margin-top:2px;">
-                                <span><strong>Persistent breach</strong><br><span style="color:#666; font-size:12px;">Repeated, not self-reported, slow to remediate</span></span>
+                                <span><strong>Persistent breach</strong><br><span style="color:var(--text2); font-size:12px;">Repeated, not self-reported, slow to remediate</span></span>
                             </label>
                             <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
                                 <input type="radio" name="fe-scale" value="systemic" style="margin-top:2px;">
-                                <span><strong>Systemic failure</strong><br><span style="color:#666; font-size:12px;">Deliberate, large-scale, cross-border pattern</span></span>
+                                <span><strong>Systemic failure</strong><br><span style="color:var(--text2); font-size:12px;">Deliberate, large-scale, cross-border pattern</span></span>
                             </label>
                         </div>
                     </div>
@@ -2358,16 +2371,16 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">📦 Packaging Review</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">A line-by-line review of your company's packaging formats — checked against the new regulation's requirements. Filter by packaging category, recyclability grade, or compliance status.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Use this to identify which packaging formats need attention before the August 2026 enforcement date.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Use this to identify which packaging formats need attention before the August 2026 enforcement date.</p>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
-                <select id="pa-filter-tier" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="pa-filter-tier" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Tiers</option>
                     <option value="sales">Sales</option>
                     <option value="grouped">Grouped</option>
                     <option value="transport">Transport</option>
                 </select>
-                <select id="pa-filter-grade" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="pa-filter-grade" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Grades</option>
                     <option value="A">Grade A</option>
                     <option value="B">Grade B</option>
@@ -2375,12 +2388,12 @@
                     <option value="D">Grade D</option>
                     <option value="E">Grade E</option>
                 </select>
-                <select id="pa-filter-risk" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="pa-filter-risk" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Status</option>
                     <option value="banned">Banned / At Risk</option>
                     <option value="ok">Compliant</option>
                 </select>
-                <span id="pa-count" style="font-size:13px; color:#666; margin-left:auto;"></span>
+                <span id="pa-count" style="font-size:13px; color:var(--text2); margin-left:auto;"></span>
             </div>
             <div id="pa-summary-bar" style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;"></div>
             <div id="packaging-audit-grid" class="grid-3"></div>
@@ -2393,23 +2406,23 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">📋 My Action Checklist</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Everything your company needs to do to comply — in one place. Filter by how urgent it is, who's responsible, and when the deadline falls.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Start with the "Critical" items due before 2026. Work through the rest in order of deadline.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Start with the "Critical" items due before 2026. Work through the rest in order of deadline.</p>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
-                <select id="ob-filter-sev" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="ob-filter-sev" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Severities</option>
                     <option value="critical">Critical</option>
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                 </select>
-                <select id="ob-filter-deadline" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="ob-filter-deadline" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Deadlines</option>
                     <option value="2025">Active now (2025)</option>
                     <option value="2028">By 2028</option>
                     <option value="2030">By 2030</option>
                 </select>
-                <select id="ob-filter-role" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                <select id="ob-filter-role" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Roles</option>
                     <option value="MANUFACTURER">Manufacturer</option>
                     <option value="PACKER">Packer</option>
@@ -2417,7 +2430,7 @@
                     <option value="DISTRIBUTOR">Distributor</option>
                     <option value="PRODUCER_EPR">EPR Producer</option>
                 </select>
-                <span id="ob-count" style="font-size:13px; color:#666; margin-left:auto;"></span>
+                <span id="ob-count" style="font-size:13px; color:var(--text2); margin-left:auto;"></span>
             </div>
             <div id="obligations-tracker-list"></div>
         </div>
@@ -2429,15 +2442,15 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">🎭 What's My Role?</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Different companies have different responsibilities under the new regulation. Answer 4 quick questions and we'll tell you exactly which category you fall into — and what that means for you.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Takes less than 2 minutes. Your answers won't be saved — it's just for your own understanding.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Takes less than 2 minutes. Your answers won't be saved — it's just for your own understanding.</p>
             </div>
             <div class="card" style="max-width:640px;">
                 <!-- Step indicators -->
                 <div style="display:flex; gap:8px; margin-bottom:28px;" id="wizard-steps">
                     <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#9CAF88; color:white; font-size:12px; font-weight:700;">1 Source</div>
-                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">2 Brand</div>
-                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">3 Modify</div>
-                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">4 Market</div>
+                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">2 Brand</div>
+                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">3 Modify</div>
+                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">4 Market</div>
                 </div>
                 <div id="wizard-body"></div>
                 <div style="display:flex; gap:10px; margin-top:24px;">
@@ -2455,7 +2468,7 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">🌍 My Country's Rules</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">The EU regulation is the same everywhere, but each country sets its own enforcement approach, fines, and fee structure. Select your country to see what applies specifically where you operate.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Covering Sweden, Norway, Denmark, Finland, Estonia, Latvia and Lithuania.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Covering Sweden, Norway, Denmark, Finland, Estonia, Latvia and Lithuania.</p>
             </div>
             <div id="countries-hub-grid" class="grid-2"></div>
         </div>
@@ -2467,10 +2480,10 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">📖 Plain-English Glossary</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">Compliance is full of terms that sound complicated but aren't. Here's every key term defined in plain English — with a note on what it means for your company specifically.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Search for any term you've seen and weren't sure about.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Search for any term you've seen and weren't sure about.</p>
             </div>
             <div style="margin-bottom:20px;">
-                <input type="text" id="glossary-page-search" placeholder="Search terms…" oninput="filterGlossaryPage()" style="width:100%; padding:12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+                <input type="text" id="glossary-page-search" placeholder="Search terms…" oninput="filterGlossaryPage()" style="width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:14px;">
             </div>
             <div id="glossary-page-list" class="grid-2"></div>
         </div>
@@ -2488,7 +2501,7 @@
             <div id="gs-input-row">
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="9" cy="9" r="6"/><line x1="14" y1="14" x2="19" y2="19"/></svg>
                 <input id="gs-input" placeholder="Search obligations, packaging, glossary, cards…" autocomplete="off" spellcheck="false">
-                <button onclick="gsClose()" style="background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;line-height:1;padding:0">✕</button>
+                <button onclick="gsClose()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);line-height:1;padding:0">✕</button>
             </div>
             <div id="gs-results"></div>
         </div>
@@ -2500,18 +2513,18 @@
             <div class="card-modal-header">
                 <div style="flex:1">
                     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-                        <span id="scenario-modal-diff" style="font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:#EFEFEB;color:#666"></span>
+                        <span id="scenario-modal-diff" style="font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:var(--bg4);color:var(--text2)"></span>
                         <span id="scenario-modal-legal" style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;background:#e0f2fe;color:#0369a1"></span>
                     </div>
                     <h2 id="scenario-modal-title" style="font-size:20px;line-height:1.3;margin:0"></h2>
                 </div>
-                <button onclick="closeScenarioModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:#999;padding:4px;line-height:1;margin-top:-4px">✕</button>
+                <button onclick="closeScenarioModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:var(--text3);padding:4px;line-height:1;margin-top:-4px">✕</button>
             </div>
             <div class="card-modal-body">
-                <p id="scenario-modal-desc" style="font-size:14px;color:#666;margin-bottom:16px;line-height:1.6"></p>
-                <div style="background:#FAFAF8;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:20px">
-                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px;letter-spacing:.06em">The situation</div>
-                    <p id="scenario-modal-situation" style="font-size:14px;color:#333;line-height:1.7;margin:0"></p>
+                <p id="scenario-modal-desc" style="font-size:14px;color:var(--text2);margin-bottom:16px;line-height:1.6"></p>
+                <div style="background:#FAFAF8;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:8px;letter-spacing:.06em">The situation</div>
+                    <p id="scenario-modal-situation" style="font-size:14px;color:var(--text);line-height:1.7;margin:0"></p>
                 </div>
                 <div id="scenario-modal-choices" style="margin-bottom:4px;"></div>
                 <div id="scenario-modal-feedback" style="display:none;margin-bottom:16px;"></div>
@@ -2528,10 +2541,10 @@
         <div class="card-modal" id="card-modal">
             <div class="card-modal-header">
                 <div style="flex:1">
-                    <span id="card-modal-badge" style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:4px;background:#EFEFEB;color:#666;margin-bottom:10px"></span>
+                    <span id="card-modal-badge" style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:4px;background:var(--bg4);color:var(--text2);margin-bottom:10px"></span>
                     <h2 id="card-modal-title" style="font-size:20px;line-height:1.3;margin:0"></h2>
                 </div>
-                <button onclick="closeCardModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:#999;padding:4px;line-height:1;margin-top:-4px">✕</button>
+                <button onclick="closeCardModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:var(--text3);padding:4px;line-height:1;margin-top:-4px">✕</button>
             </div>
             <div class="card-modal-body">
                 <div id="card-modal-visual" class="card-modal-visual" style="display:none"></div>
@@ -2543,7 +2556,7 @@
                     <button id="card-modal-read-btn" class="btn-primary" style="font-size:13px;padding:7px 16px"></button>
                     <button class="btn-secondary" id="card-modal-brain-btn" style="font-size:13px;padding:7px 16px">🧠 Ask the AI Assistant</button>
                 </div>
-                <div id="card-modal-next-wrap" style="display:none;margin-top:14px;padding:12px 16px;background:#F0F5EC;border-radius:10px;align-items:center;justify-content:space-between;gap:12px;">
+                <div id="card-modal-next-wrap" style="display:none;margin-top:14px;padding:12px 16px;background:var(--accent-dim);border-radius:10px;align-items:center;justify-content:space-between;gap:12px;">
                     <div>
                         <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9CAF88;margin:0 0 2px;">Up next</p>
                         <p id="card-modal-next-title" style="font-size:13px;font-weight:600;color:#2A4A22;margin:0;line-height:1.35;"></p>
@@ -3652,8 +3665,8 @@
           const caEl  = document.getElementById('scope-ca-list-page');
           if (!inEl || !outEl || !caEl) return;
           const row = (r, badge, badgeCls) => `
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid #F5F5F3;gap:12px">
-              <div style="flex:1"><span style="font-weight:600;font-size:13px">${r.item}</span><span style="display:block;font-size:12px;color:#666;margin-top:2px">${r.notes}</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);gap:12px">
+              <div style="flex:1"><span style="font-weight:600;font-size:13px">${r.item}</span><span style="display:block;font-size:12px;color:var(--text2);margin-top:2px">${r.notes}</span></div>
               <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
                 <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;${badgeCls}">${badge}</span>
                 ${ppwrLink(r.article)}
@@ -3665,16 +3678,16 @@
           const statusLabel  = { 'modified-obligations':'Modified obligations','lower-rc-threshold':'Lower RC threshold','labelling-exemption':'Labelling exemption','modified-epr':'Modified EPR','epr-exclusion':'EPR exclusion' };
           caEl.innerHTML = SCOPE_DATA.caRelevant.map(r => {
             const u = urgencyStyle[r.urgency]; const s = statusLabel[r.status] || r.status;
-            return `<div style="background:#FAFAF8;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:12px">
+            return `<div style="background:#FAFAF8;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap">
                 <span style="font-weight:600;font-size:13px;flex:1">${r.item}</span>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0">
                   <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${u.bg};color:${u.color}">${u.label}</span>
-                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${s}</span>
+                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:var(--text2)">${s}</span>
                   ${ppwrLink(r.article)}
                 </div>
               </div>
-              <p style="font-size:12px;color:#666;line-height:1.6;margin:0">${r.detail}</p>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6;margin:0">${r.detail}</p>
             </div>`;
           }).join('');
         }
@@ -3687,21 +3700,21 @@
             const badge = isPending
               ? `<span style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:#fef3c7;color:#d97706">PENDING</span>`
               : `<span style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:#dcfce7;color:#15803d">ADOPTED</span>`;
-            return `<div style="padding:16px 0;border-bottom:1px solid #F5F5F3">
+            return `<div style="padding:16px 0;border-bottom:1px solid var(--border)">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap">
                 <span style="font-weight:600;font-size:13px;flex:1">${a.title}</span>
-                <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">${badge}<span style="font-size:11px;color:#999">Expected ${a.expectedBy}</span></div>
+                <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">${badge}<span style="font-size:11px;color:var(--text3)">Expected ${a.expectedBy}</span></div>
               </div>
-              <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 6px">${a.notes}</p>
-              <div style="font-size:11px;color:#999;display:flex;gap:10px;flex-wrap:wrap;align-items:center">Affects: ${a.affects.join(' · ')} · ${ppwrLink('Full text','PPWR full text')}</div>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6;margin:0 0 6px">${a.notes}</p>
+              <div style="font-size:11px;color:var(--text3);display:flex;gap:10px;flex-wrap:wrap;align-items:center">Affects: ${a.affects.join(' · ')} · ${ppwrLink('Full text','PPWR full text')}</div>
             </div>`;
           }).join('');
           if (listEl)   listEl.innerHTML   = html;
           if (widgetEl) widgetEl.innerHTML = DELEGATED_ACTS.slice(0,3).map(a =>
-            `<div style="padding:8px 0;border-bottom:1px solid #F5F5F3;font-size:12px">
+            `<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
               <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#fef3c7;color:#d97706;margin-right:6px">PENDING</span>
               <span style="font-weight:500">${a.title.replace(/Delegated |Implementing /g,'').split('—')[0].trim()}</span>
-              <span style="color:#999;margin-left:6px">(exp. ${a.expectedBy})</span>
+              <span style="color:var(--text3);margin-left:6px">(exp. ${a.expectedBy})</span>
             </div>`).join('');
         }
 
@@ -3724,18 +3737,18 @@
           contentEl.innerHTML = termify(`
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
               <div style="width:48px;height:48px;border-radius:10px;background:${bs.bg};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${bs.icon}</div>
-              <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:2px">Risk Band</div>
+              <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:2px">Risk Band</div>
                 <div style="font-size:22px;font-weight:700;color:${bs.bg}">${bs.label}</div></div>
             </div>
-            <div style="font-size:12px;color:#666;margin-bottom:16px">${bs.desc}</div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:16px">${bs.desc}</div>
             <div style="background:#F5F5F3;border-radius:8px;padding:14px;margin-bottom:16px">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:4px">Indicative Fine Range — ${ce.flag} ${ce.name}</div>
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:4px">Indicative Fine Range — ${ce.flag} ${ce.name}</div>
               <div style="font-size:18px;font-weight:700">${range}</div>
-              <div style="font-size:11px;color:#999;margin-top:4px">Scale: ${scale} · Enforcement: ${ce.strictnessLabel}</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:4px">Scale: ${scale} · Enforcement: ${ce.strictnessLabel}</div>
             </div>
-            ${flags.length ? `<div style="margin-bottom:16px">${flags.map(f=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">${f}</div>`).join('')}</div>` : ''}
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px">Non-monetary consequences</div>
-            ${nonMon.map(c=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">• ${c}</div>`).join('')}
+            ${flags.length ? `<div style="margin-bottom:16px">${flags.map(f=>`<div style="font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)">${f}</div>`).join('')}</div>` : ''}
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Non-monetary consequences</div>
+            ${nonMon.map(c=>`<div style="font-size:12px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)">• ${c}</div>`).join('')}
             <div style="margin-top:16px;padding:10px;background:#fff8e1;border-radius:6px;font-size:11px;color:#92400e">Ranges are indicative only and not legal advice. Actual fines depend on individual circumstances, national transposition and judicial discretion.</div>`, true);
         }
 
@@ -3771,15 +3784,15 @@
                 <span style="padding:3px 8px;border-radius:6px;font-size:13px;font-weight:800;background:${gradeBg[m.grade]};color:${gradeColor[m.grade]};flex-shrink:0">Grade ${m.grade}</span>
               </div>
               <div style="display:flex;gap:6px;flex-wrap:wrap">
-                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555;text-transform:capitalize">${m.tier}</span>
-                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${m.material}</span>
+                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:var(--text2);text-transform:capitalize">${m.tier}</span>
+                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:var(--text2)">${m.material}</span>
                 ${m.ppwrBan ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;background:#fee2e2;color:#dc2626">⛔ ${m.banYear === 2025 ? 'BANNED NOW' : 'BANNED 2030'}</span>` : ''}
                 ${m.reusable ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#dcfce7;color:#15803d">♻️ Reusable</span>` : ''}
               </div>
-              <div style="font-size:11px;color:#666;line-height:1.5">${m.gradeRationale}</div>
+              <div style="font-size:11px;color:var(--text2);line-height:1.5">${m.gradeRationale}</div>
               ${m.issues.length ? `<div style="font-size:11px;color:#dc2626">${m.issues.map(i=>`• ${i}`).join('<br>')}</div>` : ''}
-              <div style="font-size:11px;padding:8px;background:#FAFAF8;border-radius:6px;border-left:3px solid ${gradeColor[m.grade]};color:#333;line-height:1.5">${m.sgRelevance}</div>
-              <div style="font-size:11px;color:#999;display:flex;gap:10px;align-items:center;flex-wrap:wrap">EPR fee direction: ${eprLabel[m.eprFeeDirection] || m.eprFeeDirection} · ${ppwrLink('Art. 6','PPWR Art. 6')}</div>
+              <div style="font-size:11px;padding:8px;background:#FAFAF8;border-radius:6px;border-left:3px solid ${gradeColor[m.grade]};color:var(--text);line-height:1.5">${m.sgRelevance}</div>
+              <div style="font-size:11px;color:var(--text3);display:flex;gap:10px;align-items:center;flex-wrap:wrap">EPR fee direction: ${eprLabel[m.eprFeeDirection] || m.eprFeeDirection} · ${ppwrLink('Art. 6','PPWR Art. 6')}</div>
             </div>`).join(''), true);
           if (barEl) {
             const counts = {};
@@ -3812,20 +3825,20 @@
               ? `<span style="font-size:10px;background:#e0f2fe;color:#0369a1;padding:2px 7px;border-radius:4px;font-weight:600">By ${o.deadline}</span>`
               : `<span style="font-size:10px;background:#fee2e2;color:#dc2626;padding:2px 7px;border-radius:4px;font-weight:600">Active now</span>`;
             const roleChips = o.roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:${m.bg};color:${m.color}">${m.label}</span>` : ''; }).join('');
-            return `<div style="background:white;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start">
+            return `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start">
               <span style="flex-shrink:0;padding:4px 9px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;background:${s.bg};color:${s.color};margin-top:2px">${s.label}</span>
               <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
                   <span style="font-weight:600;font-size:13px">${termify(o.title,false)}</span>${deadTag}
                 </div>
-                <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 8px">${termify(o.detail,false)}</p>
+                <p style="font-size:12px;color:var(--text2);line-height:1.6;margin:0 0 8px">${termify(o.detail,false)}</p>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
                   ${roleChips}
                   ${ppwrLink(o.article)}
                 </div>
               </div>
             </div>`;
-          }).join('') || '<div style="padding:24px;text-align:center;color:#999;font-size:13px">No obligations match the selected filters.</div>';
+          }).join('') || '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No obligations match the selected filters.</div>';
         }
 
         let _wizardAnswers = {};
@@ -3892,8 +3905,8 @@
               ${roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:5px 12px;border-radius:8px;background:${m.bg};color:${m.color};font-size:12px;font-weight:600;border:1.5px solid ${m.color}30">${m.label}</span>` : ''; }).join('')}
             </div>
             <div style="font-size:13px;color:#444;line-height:1.7;padding:12px;background:#FAFAF8;border-radius:8px;margin-bottom:16px">${termify(trace,true)}</div>
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:10px">Top obligations (${obs.length} total — ${critObs.length} critical)</div>
-            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${termify(o.title,false)}</strong><div style="color:#666;margin-top:3px">${o.article}</div></div>`).join('')}
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Top obligations (${obs.length} total — ${critObs.length} critical)</div>
+            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${termify(o.title,false)}</strong><div style="color:var(--text2);margin-top:3px">${o.article}</div></div>`).join('')}
             <button class="btn-secondary" onclick="showPage('obligations')" style="margin-top:12px;font-size:12px">View all ${obs.length} obligations →</button>`;
           resultEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
         }
@@ -3915,7 +3928,7 @@
               ${t.sg ? `<div style="font-size:12px;color:#9CAF88;padding:8px 10px;background:#F3F7F0;border-radius:6px;border-left:3px solid #9CAF88;line-height:1.5;margin-bottom:8px">→ CA Context: ${t.sg}</div>` : ''}
               ${ppwrLink('PPWR Regulation','📄 Read the full regulation ↗')}
             </div>`;
-          }).join('') || '<div style="padding:24px;text-align:center;color:#999;font-size:13px">No terms match your search.</div>';
+          }).join('') || '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No terms match your search.</div>';
         }
         function filterGlossaryPage() { renderGlossaryPageNew(); }
 
@@ -3943,23 +3956,23 @@
                 <span style="font-size:32px">${c.flag}</span>
                 <div>
                   <div style="font-weight:700;font-size:16px">${c.name}</div>
-                  <div style="font-size:11px;color:#999">${c.body}</div>
+                  <div style="font-size:11px;color:var(--text3)">${c.body}</div>
                 </div>
                 <span style="margin-left:auto;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:${strictBg[c.strictness]};color:${strictColor[c.strictness]}">${c.strictnessLabel}</span>
               </div>
-              <p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:12px">${c.approach}</p>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:12px">${c.approach}</p>
               <div style="margin-bottom:12px">
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:6px">Audit priorities</div>
-                ${c.priorities.map(p=>`<div style="font-size:12px;color:#333;padding:3px 0;border-bottom:1px solid #F5F5F3">• ${p}</div>`).join('')}
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Audit priorities</div>
+                ${c.priorities.map(p=>`<div style="font-size:12px;color:var(--text);padding:3px 0;border-bottom:1px solid var(--border)">• ${p}</div>`).join('')}
               </div>
               <div style="background:#FAFAF8;border-radius:8px;padding:12px;margin-bottom:12px">
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:6px">EPR Registration</div>
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:6px">EPR Registration</div>
                 <div style="font-size:12px;font-weight:600;margin-bottom:2px">${ep.scheme||''}</div>
-                <div style="font-size:11px;color:#666">Threshold: ${ep.threshold||'—'}</div>
+                <div style="font-size:11px;color:var(--text2)">Threshold: ${ep.threshold||'—'}</div>
                 <div style="font-size:11px;color:#dc2626;font-weight:600;margin-top:4px">Deadline: ${ep.deadline||'—'}</div>
               </div>
               <div style="display:flex;gap:6px;flex-wrap:wrap">
-                ${badges.map(b=>`<span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${b}</span>`).join('')}
+                ${badges.map(b=>`<span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:var(--text2)">${b}</span>`).join('')}
               </div>
             </div>`;
           }).join(''), true);
@@ -4209,7 +4222,7 @@
                 ]
             },
             pro: {
-                name: 'Pro', price: '€249/month', color: 'var(--color-clay)', accentColor: '#FDF3EE',
+                name: 'Pro', price: '€249/month', color: 'var(--amber)', accentColor: 'var(--amber-dim)',
                 tagline: 'Full-platform access with admin control — unlimited users',
                 included: [
                     'Everything in Starter',
@@ -4248,7 +4261,7 @@
             h1.style.cssText = 'font-size:32px;margin-bottom:8px;';
             h1.textContent = cfg.price ? cfg.name + ' — ' + cfg.price : cfg.name + ' — Free';
             const tagline = document.createElement('p');
-            tagline.style.cssText = 'font-size:16px;color:#666;';
+            tagline.style.cssText = 'font-size:16px;color:var(--text2);';
             tagline.textContent = cfg.tagline;
             header.appendChild(badge);
             header.appendChild(h1);
@@ -4262,9 +4275,9 @@
             const mkCol = (title, items, isIncluded) => {
                 const col = document.createElement('div');
                 col.className = 'card';
-                col.style.cssText = 'background:' + (isIncluded ? cfg.accentColor : '#FAFAF9') + ';border:1px solid ' + (isIncluded ? cfg.color.replace('var(--color-sage)', '#9CAF88').replace('var(--color-clay)', '#D4956A') : '#EFEFEB') + ';';
+                col.style.cssText = 'background:' + (isIncluded ? 'var(--bg3)' : 'var(--bg2)') + ';border:1px solid ' + (isIncluded ? 'var(--border2)' : 'var(--border)') + ';';
                 const colTitle = document.createElement('p');
-                colTitle.style.cssText = 'font-size:12px;font-weight:700;text-transform:uppercase;color:' + (isIncluded ? cfg.color.replace('var(--color-sage)','#6B8F5A').replace('var(--color-clay)','#B07040') : '#aaa') + ';margin-bottom:16px;letter-spacing:.05em;';
+                colTitle.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;color:' + (isIncluded ? cfg.color : 'var(--text3)') + ';margin-bottom:16px;letter-spacing:.10em;font-family:var(--ff-mono);';
                 colTitle.textContent = title;
                 col.appendChild(colTitle);
                 items.forEach(item => {
@@ -4715,7 +4728,7 @@
                 badgeRow.style.cssText = 'margin-top:16px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;';
 
                 const catBadge = document.createElement('span');
-                catBadge.style.cssText = 'font-size:12px;color:#999;background:#EFEFEB;padding:5px 12px;border-radius:4px;';
+                catBadge.style.cssText = 'font-size:12px;color:var(--text3);background:var(--bg4);padding:5px 12px;border-radius:4px;';
                 catBadge.textContent = card.category;
                 badgeRow.appendChild(catBadge);
 
@@ -4750,7 +4763,7 @@
                 const card = document.createElement('div');
                 card.className = 'card fade-in';
                 card.style.cssText = 'cursor:pointer;transition:all .2s;';
-                card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 8px 24px rgba(156,175,136,.18)'; card.style.borderColor = 'var(--color-sage)'; });
+                card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 8px 24px rgba(156,175,136,.18)'; card.style.borderColor = 'var(--accent)'; });
                 card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; card.style.borderColor = ''; });
 
                 const legalRef = scenario.choices.find(c => c.legalRef)?.legalRef || '';
@@ -4759,11 +4772,11 @@
                         <h3 style="margin:0;font-size:15px;line-height:1.3">${escapeHtml(scenario.title)}</h3>
                         <span style="flex-shrink:0;font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;background:${diffBg[scenario.difficulty]||'#EFEFEB'};color:${diffColor[scenario.difficulty]||'#666'}">${scenario.difficulty}</span>
                     </div>
-                    <p style="color:#666;font-size:13px;line-height:1.5;margin-bottom:14px">${escapeHtml(scenario.description)}</p>
+                    <p style="color:var(--text2);font-size:13px;line-height:1.5;margin-bottom:14px">${escapeHtml(scenario.description)}</p>
                     ${legalRef ? `<div style="font-size:11px;color:#0369a1;margin-bottom:12px;font-style:italic">${escapeHtml(legalRef)}</div>` : ''}
                     <div style="display:flex;justify-content:space-between;align-items:center">
-                        <span style="font-size:12px;color:#999">${scenario.choices.length} options</span>
-                        <span style="font-size:13px;font-weight:600;color:var(--color-sage)">Try it →</span>
+                        <span style="font-size:12px;color:var(--text3)">${scenario.choices.length} options</span>
+                        <span style="font-size:13px;font-weight:600;color:var(--accent)">Try it →</span>
                     </div>`;
 
                 card.addEventListener('click', () => openScenarioModal(scenario));
@@ -4778,7 +4791,7 @@
             const content = document.getElementById('scenario-content');
             content.innerHTML = `
                 <h2>${escapeHtml(scenario.title)}</h2>
-                <p style="color: #666; margin-top: 16px; font-size: 16px;">${escapeHtml(scenario.situation)}</p>
+                <p style="color: var(--text2); margin-top: 16px; font-size: 16px;">${escapeHtml(scenario.situation)}</p>
 
                 <div style="margin-top: 32px;" id="scenario-choices">
                     ${scenario.choices.map((choice, idx) => `
@@ -4791,9 +4804,9 @@
                 <div id="scenario-feedback" style="margin-top: 32px; display: none;">
                     <p id="feedback-text" style="font-size: 16px; margin-bottom: 16px;"></p>
 
-                    <div id="legal-ref-section" style="background: #F0F5EC; border-left: 4px solid var(--color-sage); padding: 16px; border-radius: 8px; margin-bottom: 20px; display: none;">
-                        <p style="font-size: 12px; font-weight: 600; color: var(--color-sage); margin-bottom: 8px;">📜 Regulatory Reference</p>
-                        <p id="legal-ref-text" style="font-size: 14px; color: #333; margin: 0;"></p>
+                    <div id="legal-ref-section" style="background: var(--accent-dim); border-left: 4px solid var(--accent); padding: 16px; border-radius: 8px; margin-bottom: 20px; display: none;">
+                        <p style="font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 8px;">📜 Regulatory Reference</p>
+                        <p id="legal-ref-text" style="font-size: 14px; color: var(--text); margin: 0;"></p>
                     </div>
 
                     <div style="background: #FFF9E6; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
@@ -4803,12 +4816,12 @@
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
                             <div>
-                                <p style="font-size: 12px; color: #666; margin-bottom: 4px;">Estimated Impact</p>
-                                <p style="font-weight: 600; color: #333;" id="feedback-impact"></p>
+                                <p style="font-size: 12px; color: var(--text2); margin-bottom: 4px;">Estimated Impact</p>
+                                <p style="font-weight: 600; color: var(--text);" id="feedback-impact"></p>
                             </div>
                             <div>
-                                <p style="font-size: 12px; color: #666; margin-bottom: 4px;">Fine Range</p>
-                                <p style="font-weight: 600; color: #333;" id="feedback-fine-range"></p>
+                                <p style="font-size: 12px; color: var(--text2); margin-bottom: 4px;">Fine Range</p>
+                                <p style="font-weight: 600; color: var(--text);" id="feedback-fine-range"></p>
                             </div>
                         </div>
                     </div>
@@ -5150,10 +5163,10 @@
                 card.className = 'card';
                 card.style.cssText = 'grid-column:1/-1;text-align:center;';
                 const msg = document.createElement('p');
-                msg.style.cssText = 'color:#666;margin-bottom:16px;';
+                msg.style.cssText = 'color:var(--text2);margin-bottom:16px;';
                 msg.textContent = 'Earn your certificate by reaching a readiness score of 80+';
                 const scoreMsg = document.createElement('p');
-                scoreMsg.style.cssText = 'font-size:12px;color:#999;';
+                scoreMsg.style.cssText = 'font-size:12px;color:var(--text3);';
                 scoreMsg.textContent = 'Current score: ' + score + '/100';
                 const learnBtn = document.createElement('button');
                 learnBtn.className = 'btn-secondary page-link';
@@ -5270,7 +5283,7 @@
 
             const tbody = document.getElementById('users-table-body');
             tbody.innerHTML = mockUsers.map(user => `
-                <tr style="border-bottom: 1px solid #EFEFEB;">
+                <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 12px;">${user.name}</td>
                     <td style="padding: 12px;">${user.email}</td>
                     <td style="padding: 12px;">${user.role}</td>
@@ -5370,7 +5383,7 @@
 
             const tbody = document.getElementById('leads-table-body');
             tbody.innerHTML = mockLeads.map(lead => `
-                <tr style="border-bottom: 1px solid #EFEFEB;">
+                <tr style="border-bottom: 1px solid var(--border);">
                     <td style="padding: 12px;">${lead.name}</td>
                     <td style="padding: 12px;">${lead.email}</td>
                     <td style="padding: 12px;">${lead.company}</td>
@@ -5378,7 +5391,7 @@
                     <td style="padding: 12px;">
                         <span class="${lead.score >= 60 ? 'status-green' : lead.score >= 40 ? 'status-amber' : 'status-red'}">${lead.score}%</span>
                     </td>
-                    <td style="padding: 12px; font-size: 12px; color: #999;">${lead.date}</td>
+                    <td style="padding: 12px; font-size: 12px; color: var(--text3);">${lead.date}</td>
                 </tr>
             `).join('');
         }
@@ -5430,9 +5443,9 @@
                         <span style="background:${bdr};color:#fff;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;margin-left:10px;">${s.status}</span>
                     </div>
                     <p style="font-size:12px; color:${col}; margin-bottom:6px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
-                    <p style="font-size:13px; color:#333; margin-bottom:8px;">${s.note}</p>
+                    <p style="font-size:13px; color:var(--text); margin-bottom:8px;">${s.note}</p>
                     <div style="background:rgba(255,255,255,0.7); border-radius:4px; padding:8px 12px;">
-                        <p style="font-size:12px; color:#555; margin:0;"><strong>Required action:</strong> ${s.action}</p>
+                        <p style="font-size:12px; color:var(--text2); margin:0;"><strong>Required action:</strong> ${s.action}</p>
                     </div>
                 </div>`;
             }).join('');
@@ -5532,7 +5545,7 @@
             const chips = [material, industry, ...(markets.length ? markets : ['No market selected'])];
             document.getElementById('risk-recommendations').innerHTML = `
                 <div style="display:flex; flex-wrap:wrap; gap:6px; padding-top:4px; border-top:1px solid #EFEFEB;">
-                    ${chips.map(c => `<span style="padding:3px 10px; border-radius:10px; background:#F5F5F3; font-size:12px; color:#555; font-weight:500;">${escapeHtml(c)}</span>`).join('')}
+                    ${chips.map(c => `<span style="padding:3px 10px; border-radius:10px; background:#F5F5F3; font-size:12px; color:var(--text2); font-weight:500;">${escapeHtml(c)}</span>`).join('')}
                 </div>`;
 
             // Gap list
@@ -5586,9 +5599,28 @@
             }
         });
 
+        // Light/dark mode toggle — icon shows what you'll switch TO
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle('light');
+            localStorage.setItem('ppwr-theme', isLight ? 'light' : 'dark');
+            const btn = document.getElementById('theme-toggle');
+            if (btn) btn.textContent = isLight ? '🌙' : '☀️';
+        }
+
         // Initial page load — deferred to DOMContentLoaded so all const declarations
         // (TRACKED_TOOLS, ONBOARDING_STEPS, etc.) are fully initialised before showPage runs.
         document.addEventListener('DOMContentLoaded', function initApp() {
+            // Restore theme preference
+            const savedTheme = localStorage.getItem('ppwr-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light');
+                const btn = document.getElementById('theme-toggle');
+                if (btn) btn.textContent = '🌙';
+            } else {
+                const btn = document.getElementById('theme-toggle');
+                if (btn) btn.textContent = '☀️';
+            }
+
             updateCountdowns();
             // Restore the last visited in-app page if available, otherwise use tier default.
             const inAppPages = ['home', 'tier-detail'];
@@ -5943,7 +5975,7 @@
                 <div class="card page-link" data-page="${k.page}" style="padding:18px;cursor:pointer;transition:all .2s;border:1.5px solid ${k.bg}">
                     <div style="font-size:22px;margin-bottom:6px">${k.icon}</div>
                     <div style="font-size:28px;font-weight:800;color:${k.color};line-height:1">${k.value}</div>
-                    <div style="font-size:11px;color:#666;margin-top:4px;line-height:1.3">${k.label}</div>
+                    <div style="font-size:11px;color:var(--text2);margin-top:4px;line-height:1.3">${k.label}</div>
                 </div>`).join('');
             summaryRow.style.display = 'block';
 
@@ -5964,7 +5996,7 @@
                         <div style="flex:1;background:#F5F5F3;border-radius:4px;height:14px;overflow:hidden">
                             <div style="width:${pct}%;background:${gColor[g]};height:100%;border-radius:4px;transition:width .6s ease"></div>
                         </div>
-                        <span style="font-size:12px;color:#666;min-width:60px;text-align:right;white-space:nowrap">${counts[g]} format${counts[g]!==1?'s':''}</span>
+                        <span style="font-size:12px;color:var(--text2);min-width:60px;text-align:right;white-space:nowrap">${counts[g]} format${counts[g]!==1?'s':''}</span>
                     </div>`;
                 }).join('');
                 const dangerCount = (counts['D'] || 0) + (counts['E'] || 0);
@@ -5989,7 +6021,7 @@
                         <div style="flex:1;background:#F5F5F3;border-radius:4px;height:14px;overflow:hidden">
                             <div style="width:${pct}%;background:${sColor[s]};height:100%;border-radius:4px"></div>
                         </div>
-                        <span style="font-size:12px;color:#666;width:24px;text-align:right">${count}</span>
+                        <span style="font-size:12px;color:var(--text2);width:24px;text-align:right">${count}</span>
                     </div>`;
                 }).join('');
                 if (deadlineEl) deadlineEl.innerHTML = `⏱ <strong>${daysLeft} days</strong> until EPR registration deadline (12 Aug 2026). ${activeObs} obligation${activeObs!==1?'s':''} active right now.`;
@@ -6024,13 +6056,13 @@
             badge.style.cssText = 'display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;color:#fff;margin-bottom:8px;background:' + next.phaseColor;
             badge.textContent = next.article;
             const title = document.createElement('p');
-            title.style.cssText = 'font-size:14px;font-weight:600;color:#333;margin-bottom:6px;';
+            title.style.cssText = 'font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;';
             title.textContent = next.label;
             const countdown = document.createElement('p');
             countdown.style.cssText = 'font-size:28px;font-weight:700;color:' + next.phaseColor + ';margin:0;';
             countdown.textContent = days + ' days';
             const dateStr = document.createElement('p');
-            dateStr.style.cssText = 'font-size:12px;color:#999;margin-top:4px;';
+            dateStr.style.cssText = 'font-size:12px;color:var(--text3);margin-top:4px;';
             dateStr.textContent = new Date(next.date).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
             el.appendChild(badge);
             el.appendChild(title);
@@ -6038,7 +6070,7 @@
             el.appendChild(dateStr);
             if (next.plain) {
                 const context = document.createElement('p');
-                context.style.cssText = 'font-size:12px;color:#666;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #EFEFEB;';
+                context.style.cssText = 'font-size:12px;color:var(--text2);line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #EFEFEB;';
                 context.textContent = next.plain;
                 el.appendChild(context);
             }
@@ -6068,7 +6100,7 @@
                 const row = document.createElement('div');
                 row.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;';
                 const lbl = document.createElement('span');
-                lbl.style.cssText = 'font-size:14px;color:#555;';
+                lbl.style.cssText = 'font-size:14px;color:var(--text2);';
                 lbl.textContent = r.label;
                 const badge = document.createElement('span');
                 badge.style.cssText = 'padding:3px 12px;border-radius:12px;font-size:12px;font-weight:700;color:#fff;background:' + r.color;
@@ -6102,7 +6134,7 @@
             const pct    = Math.round((passed / total) * 100);
 
             const summaryEl = document.createElement('div');
-            summaryEl.style.cssText = 'background:white;border:1px solid #EFEFEB;border-radius:12px;padding:20px 24px;margin-bottom:32px;';
+            summaryEl.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:32px;';
             summaryEl.innerHTML = `
                 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
                     <div>
@@ -6114,10 +6146,10 @@
                         <p id="roadmap-next-days" style="font-size:22px;font-weight:700;color:#E63946;margin:0;">—</p>
                     </div>
                 </div>
-                <div style="background:#EFEFEB;border-radius:4px;height:8px;overflow:hidden;">
+                <div style="background:var(--bg4);border-radius:4px;height:8px;overflow:hidden;">
                     <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#9CAF88,#2A9D8F);border-radius:4px;transition:width .4s ease;"></div>
                 </div>
-                <p style="font-size:12px;color:#bbb;margin:6px 0 0;">${pct}% of the regulatory timeline has elapsed</p>
+                <p style="font-size:12px;color:var(--text3);margin:6px 0 0;">${pct}% of the regulatory timeline has elapsed</p>
             `;
             el.appendChild(summaryEl);
 
@@ -6147,7 +6179,7 @@
                     <div style="flex:1;">
                         <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:${phase.color};margin:0 0 2px;">${phase.period}</p>
                         <p style="font-size:16px;font-weight:700;color:#1F1F1F;margin:0;">${phase.label}</p>
-                        <p style="font-size:13px;color:#666;margin:3px 0 0;">${phase.summary}</p>
+                        <p style="font-size:13px;color:var(--text2);margin:3px 0 0;">${phase.summary}</p>
                     </div>
                 `;
                 phaseEl.appendChild(phaseHeader);
@@ -6184,7 +6216,7 @@
                     const topRow = document.createElement('div');
                     topRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;';
                     topRow.innerHTML = `
-                        <span style="font-size:12px;color:#999;font-weight:500;">${mDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</span>
+                        <span style="font-size:12px;color:var(--text3);font-weight:500;">${mDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</span>
                         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
                             <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;color:${phase.color};background:${phase.color}18;">${m.article}</span>
                             ${isPast
@@ -6203,7 +6235,7 @@
 
                     // Plain-English explanation
                     const plainEl = document.createElement('p');
-                    plainEl.style.cssText = 'font-size:13px;color:#666;line-height:1.65;margin:0 0 10px;';
+                    plainEl.style.cssText = 'font-size:13px;color:var(--text2);line-height:1.65;margin:0 0 10px;';
                     plainEl.textContent = m.plain;
 
                     // Action note
@@ -6257,7 +6289,7 @@
                 glbl.style.cssText = 'font-size:13px;font-weight:700;color:' + info.color + ';margin-bottom:4px;';
                 glbl.textContent = 'Grade ' + g + ' — ' + (info.eprMultiplier < 1 ? info.eprMultiplier + '× EPR (discount)' : info.eprMultiplier + '× EPR') + (info.banned2030 ? ' 🚫 2030' : '');
                 const gex = document.createElement('p');
-                gex.style.cssText = 'font-size:11px;color:#666;margin:0;line-height:1.4;';
+                gex.style.cssText = 'font-size:11px;color:var(--text2);margin:0;line-height:1.4;';
                 gex.textContent = info.examples;
                 gCard.appendChild(glbl);
                 gCard.appendChild(gex);
@@ -6281,7 +6313,7 @@
                 ctitle.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:6px;';
                 ctitle.textContent = c.title;
                 const cdesc = document.createElement('p');
-                cdesc.style.cssText = 'font-size:14px;color:#555;margin-bottom:14px;';
+                cdesc.style.cssText = 'font-size:14px;color:var(--text2);margin-bottom:14px;';
                 cdesc.textContent = c.description;
                 const btnRow = document.createElement('div');
                 btnRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;';
@@ -6390,7 +6422,7 @@
                 const inputRow = document.createElement('div');
                 inputRow.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;';
                 const inputLbl = document.createElement('label');
-                inputLbl.style.cssText = 'font-size:13px;color:#555;';
+                inputLbl.style.cssText = 'font-size:13px;color:var(--text2);';
                 inputLbl.textContent = 'Your current %:';
                 const input = document.createElement('input');
                 input.type = 'number';
@@ -6412,13 +6444,13 @@
                     const row = document.createElement('div');
                     row.style.marginBottom = '8px';
                     const rlbl = document.createElement('div');
-                    rlbl.style.cssText = 'display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:3px;';
+                    rlbl.style.cssText = 'display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px;';
                     rlbl.innerHTML = '<span>' + yr + ' target: <strong>' + t.targets[yr] + '%</strong></span><span id="rc-status-' + key + '-' + yr + '"></span>';
                     const track = document.createElement('div');
                     track.style.cssText = 'background:#F0F0EE;border-radius:4px;height:8px;';
                     const fill = document.createElement('div');
                     fill.id = 'rc-fill-' + key + '-' + yr;
-                    fill.style.cssText = 'height:8px;border-radius:4px;width:0%;background:#EFEFEB;transition:width 0.3s;';
+                    fill.style.cssText = 'height:8px;border-radius:4px;width:0%;background:var(--bg4);transition:width 0.3s;';
                     track.appendChild(fill);
                     row.appendChild(rlbl);
                     row.appendChild(track);
@@ -6457,7 +6489,7 @@
             title.style.marginBottom = '8px';
             title.textContent = 'Empty Space Checker';
             const subtitle = document.createElement('p');
-            subtitle.style.cssText = 'font-size:14px;color:#666;margin-bottom:20px;';
+            subtitle.style.cssText = 'font-size:14px;color:var(--text2);margin-bottom:20px;';
             subtitle.textContent = 'PPWR 2026 limit: 40% void (50% online). 2030 tightening: 30% (35% online).';
             container.appendChild(title);
             container.appendChild(subtitle);
@@ -6476,7 +6508,7 @@
             fields.forEach(f => {
                 const grp = document.createElement('div');
                 const lbl = document.createElement('label');
-                lbl.style.cssText = 'font-size:13px;color:#555;display:block;margin-bottom:4px;';
+                lbl.style.cssText = 'font-size:13px;color:var(--text2);display:block;margin-bottom:4px;';
                 lbl.textContent = f.label;
                 const inp = document.createElement('input');
                 inp.type = 'number';
@@ -6491,7 +6523,7 @@
             });
 
             const onlineLbl = document.createElement('label');
-            onlineLbl.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:14px;color:#555;margin-bottom:16px;cursor:pointer;';
+            onlineLbl.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text2);margin-bottom:16px;cursor:pointer;';
             const onlineCb = document.createElement('input');
             onlineCb.type = 'checkbox';
             onlineCb.id = 'es-online';
@@ -6501,7 +6533,7 @@
 
             const result = document.createElement('div');
             result.id = 'es-result';
-            result.style.cssText = 'padding:16px;border-radius:8px;background:#F9F9F7;border:1px solid #EFEFEB;';
+            result.style.cssText = 'padding:16px;border-radius:8px;background:#F9F9F7;border:1px solid var(--border);';
             result.textContent = 'Enter dimensions above to check compliance.';
 
             card.appendChild(grid);
@@ -6573,9 +6605,9 @@
             ];
 
             const table = document.createElement('div');
-            table.style.cssText = 'border:1px solid #EFEFEB;border-radius:10px;overflow:hidden;margin-bottom:32px;';
+            table.style.cssText = 'border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:32px;';
             const header = document.createElement('div');
-            header.style.cssText = 'display:grid;grid-template-columns:1fr 80px 70px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:#666;text-transform:uppercase;gap:8px;';
+            header.style.cssText = 'display:grid;grid-template-columns:1fr 80px 70px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;gap:8px;';
             ['Document Type', 'Retain', 'Article'].forEach(h => {
                 const hCell = document.createElement('span');
                 hCell.textContent = h;
@@ -6608,9 +6640,9 @@
             el.appendChild(eprTitle);
 
             const eprCard = document.createElement('div');
-            eprCard.style.cssText = 'border:1px solid #EFEFEB;border-radius:10px;overflow:hidden;margin-bottom:32px;';
+            eprCard.style.cssText = 'border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:32px;';
             const eprHeader = document.createElement('div');
-            eprHeader.style.cssText = 'display:grid;grid-template-columns:60px 1fr 100px 120px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:#666;text-transform:uppercase;gap:8px;';
+            eprHeader.style.cssText = 'display:grid;grid-template-columns:60px 1fr 100px 120px;background:#F5F5F3;padding:10px 16px;font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;gap:8px;';
             ['Grade','Description','Multiplier','2030 Status'].forEach(h => {
                 const hc = document.createElement('span');
                 hc.textContent = h;
@@ -6624,7 +6656,7 @@
                 gCell.style.cssText = 'font-weight:800;font-size:18px;color:' + info.color + ';';
                 gCell.textContent = g;
                 const descCell = document.createElement('span');
-                descCell.style.cssText = 'font-size:12px;color:#555;';
+                descCell.style.cssText = 'font-size:12px;color:var(--text2);';
                 descCell.textContent = info.examples;
                 const multCell = document.createElement('span');
                 multCell.style.cssText = 'font-weight:700;color:' + (info.eprMultiplier <= 1 ? '#2A9D8F' : '#E63946') + ';';
@@ -6681,7 +6713,7 @@
             feedbackEl.innerHTML     = '';
             retryBtn.style.display   = 'none';
 
-            choicesEl.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:10px;letter-spacing:.06em">What would you do?</div>';
+            choicesEl.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:10px;letter-spacing:.06em">What would you do?</div>';
 
             scenario.choices.forEach(choice => {
                 const btn = document.createElement('button');
@@ -6718,7 +6750,7 @@
                     ${chosen.feedback}
                 </div>
                 ${chosen.legalRef ? `
-                <div style="background:#F0F5EC;border-left:3px solid #9CAF88;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#3A5C30;line-height:1.5;">
+                <div style="background:var(--accent-dim);border-left:3px solid #9CAF88;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#3A5C30;line-height:1.5;">
                     <span style="font-weight:700;">📜 Regulation:</span> ${chosen.legalRef}
                 </div>` : ''}
                 <div style="background:${riskBg};border:1px solid ${riskColor}22;border-radius:10px;padding:14px 16px;">
@@ -6728,7 +6760,7 @@
                     </div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                         <div><div style="font-size:11px;color:#888;margin-bottom:2px;">Impact</div><div style="font-size:13px;font-weight:600;color:${riskColor}">${chosen.impact || '—'}</div></div>
-                        <div><div style="font-size:11px;color:#888;margin-bottom:2px;">Fine range</div><div style="font-size:13px;font-weight:600;color:#333">${chosen.riskRange || 'No risk'}</div></div>
+                        <div><div style="font-size:11px;color:#888;margin-bottom:2px;">Fine range</div><div style="font-size:13px;font-weight:600;color:var(--text)">${chosen.riskRange || 'No risk'}</div></div>
                     </div>
                 </div>`;
             feedbackEl.style.display = 'block';
@@ -6797,7 +6829,7 @@
 
             stepsEl.innerHTML = ONBOARDING_STEPS.map(s => {
                 const complete = !!visited[s.key];
-                return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #F5F5F3">
+                return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)">
                     <span style="font-size:16px;flex-shrink:0">${complete ? '✅' : '⬜'}</span>
                     <span style="flex:1;font-size:13px;color:${complete?'#999':'#333'};${complete?'text-decoration:line-through;':''}">${s.icon} ${s.label}</span>
                     ${!complete ? `<button class="btn-secondary page-link" data-page="${s.page}" style="font-size:11px;padding:4px 10px;">Go →</button>` : ''}
@@ -6856,7 +6888,7 @@
             const resultsEl = document.getElementById('gs-results');
             const raw = q.trim().toLowerCase();
             if (!raw) {
-                resultsEl.innerHTML = `<div id="gs-empty" style="padding:24px;text-align:center;color:#bbb;font-size:13px">
+                resultsEl.innerHTML = `<div id="gs-empty" style="padding:24px;text-align:center;color:var(--text3);font-size:13px">
                     Type to search across learning cards, obligations, packaging formats, glossary and delegated acts.
                 </div>`;
                 return;
