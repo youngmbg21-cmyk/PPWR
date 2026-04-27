@@ -226,7 +226,7 @@
             background: white;
             border-right: 1px solid #EFEFEB;
             width: 240px;
-            min-height: 100vh;
+            height: calc(100vh - 60px);
             padding: 24px 0;
             position: fixed;
             left: 0;
@@ -2635,7 +2635,7 @@
             try {
                 const saved = JSON.parse(localStorage.getItem('appState') || 'null');
                 if (saved) {
-                    if (saved.currentTier)         appState.currentTier         = saved.currentTier;
+                    if (saved.currentTier)         appState.currentTier         = saved.currentTier === 'growth' ? 'pro' : saved.currentTier;
                     if (saved.currentPage)         appState.currentPage         = saved.currentPage;
                     if (saved.dashboard)           appState.dashboard           = saved.dashboard;
                     if (saved.readCards)           appState.readCards           = saved.readCards;
