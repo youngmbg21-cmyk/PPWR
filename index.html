@@ -1342,9 +1342,21 @@
             text-decoration: underline dotted var(--color-sage);
             cursor: help;
         }
+        /* Celebration toast */
+        #ppwr-toast {
+            position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
+            background:#1F1F1F; color:#F5F5F3; border-radius:12px; padding:14px 22px;
+            font-size:14px; font-weight:600; display:flex; align-items:center; gap:10px;
+            box-shadow:0 8px 32px rgba(0,0,0,.22); z-index:10000;
+            transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+            opacity:0; pointer-events:none; white-space:nowrap;
+        }
+        #ppwr-toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
     </style>
 </head>
 <body>
+    <div id="ppwr-toast" role="status" aria-live="polite"></div>
+
     <!-- Navigation -->
     <div class="navbar">
         <div class="navbar-inner">
@@ -2578,6 +2590,16 @@
         // ============================================================================
         // DYNAMIC COUNTDOWN CALCULATION
         // ============================================================================
+        let _toastTimer = null;
+        function showToast(emoji, msg) {
+            const el = document.getElementById('ppwr-toast');
+            if (!el) return;
+            el.innerHTML = `<span style="font-size:20px;">${emoji}</span><span>${msg}</span>`;
+            el.classList.add('show');
+            clearTimeout(_toastTimer);
+            _toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+        }
+
         function calculateDaysRemaining() {
             const today = new Date(2026, 3, 27); // April 27, 2026
             const deadline = new Date(2026, 7, 12); // August 12, 2026
@@ -3694,42 +3716,126 @@
             phases: [
                 {
                     id: 'phase1',
-                    label: 'Phase 1 — Foundation (2024–2026)',
+                    label: 'Phase 1 — Foundation',
+                    period: '2024–2026',
                     color: '#E63946',
+                    icon: '🏗',
+                    summary: 'The regulation is already partially in force. Some bans are already active.',
                     milestones: [
-                        { date: '2024-07-12', label: 'PFAS ban in food contact packaging', article: 'Art.11' },
-                        { date: '2025-03-01', label: '25% recycled content in PET beverage bottles', article: 'Art.7' },
-                        { date: '2026-08-12', label: 'Full PPWR enforcement begins — all obligations active', article: 'Art.1' }
+                        {
+                            date: '2024-07-12',
+                            label: 'PFAS ban in food contact packaging',
+                            article: 'Art. 5',
+                            plain: 'Packaging that touches food can no longer contain PFAS chemicals — "forever chemicals" linked to health risks. If your food packaging uses PFAS-based coatings (e.g. grease-resistant paper trays), this already applies to you.',
+                            action: 'Check: do any of your food-contact materials use PFAS coatings?'
+                        },
+                        {
+                            date: '2025-03-01',
+                            label: '25% recycled content in PET beverage bottles',
+                            article: 'Art. 7',
+                            plain: 'If you sell drinks in PET plastic bottles, at least 25% of the plastic must now come from recycled sources. This applies per bottle — not as an average across your range.',
+                            action: 'Check: do you sell beverages in PET bottles? Get recycled content declarations from your bottle supplier.'
+                        },
+                        {
+                            date: '2026-08-12',
+                            label: 'Full PPWR enforcement begins — all obligations active',
+                            article: 'Art. 1',
+                            plain: 'This is the main enforcement date. From this point, all remaining PPWR requirements apply across the EU. Regulators in each country can start issuing fines, blocking non-compliant packaging, and requiring registration in national recycling schemes.',
+                            action: 'This is the primary deadline. All other compliance tasks should be complete by this date.'
+                        }
                     ]
                 },
                 {
                     id: 'phase2',
-                    label: 'Phase 2 — Digital & Reuse (2027–2028)',
+                    label: 'Phase 2 — Digital & Reuse',
+                    period: '2027–2028',
                     color: '#F4A261',
+                    icon: '♻️',
+                    summary: 'New rules on how packaging must be labelled and how cafes/restaurants must offer reusable options.',
                     milestones: [
-                        { date: '2027-01-01', label: 'HORECA reuse obligation — offer reusable at no extra cost', article: 'Art.16' },
-                        { date: '2028-01-01', label: 'Harmonised EU recyclability label mandatory (QR-linked)', article: 'Art.9' },
-                        { date: '2028-01-01', label: 'EPR fee modulation by recyclability grade (A–E)', article: 'Annex IV' }
+                        {
+                            date: '2027-01-01',
+                            label: 'Hospitality reuse obligation — offer reusable containers at no extra cost',
+                            article: 'Art. 16',
+                            plain: 'If your company operates in hospitality (cafes, restaurants, catering), you must offer customers the option to bring their own container or use a reusable one — at no extra charge. This does not mean eliminating single-use cups; it means offering the alternative.',
+                            action: 'Check: does your business serve food or drinks for consumption? You may need a reusable container scheme.'
+                        },
+                        {
+                            date: '2028-01-01',
+                            label: 'Harmonised EU packaging label mandatory (QR code linked)',
+                            article: 'Art. 9',
+                            plain: 'All packaging sold in the EU must display a standardised recyclability label. The label uses a common EU symbol (not country-specific) and links to a QR code with sorting instructions. If you design packaging, this affects your artwork deadlines.',
+                            action: 'Plan label redesigns now — artwork lead times can be 12–18 months for major product lines.'
+                        },
+                        {
+                            date: '2028-01-01',
+                            label: 'Recycling fee adjusted by recyclability grade (A–E)',
+                            article: 'Annex IV',
+                            plain: 'The fee your company pays into national recycling schemes (EPR fees) will now vary based on your packaging\'s recyclability grade. Grade A packaging pays less; Grade D/E pays more. Better-designed packaging directly reduces your recycling costs.',
+                            action: 'Know your packaging grades now — upgrading to A or B grade saves money from 2028 onward.'
+                        }
                     ]
                 },
                 {
                     id: 'phase3',
-                    label: 'Phase 3 — Market Bans & Targets (2029–2030)',
+                    label: 'Phase 3 — Market Bans & Targets',
+                    period: '2029–2030',
                     color: '#2A9D8F',
+                    icon: '🚫',
+                    summary: 'Certain packaging types are banned. Plastic recycled content targets increase. Reuse targets kick in.',
                     milestones: [
-                        { date: '2030-01-01', label: 'Grade D & E packaging banned from EU market', article: 'Art.7(2)' },
-                        { date: '2030-01-01', label: '30% recycled content in PET bottles; 10% in non-PET plastics', article: 'Art.7' },
-                        { date: '2030-01-01', label: '50% transport packaging reuse target', article: 'Art.12' },
-                        { date: '2030-01-01', label: 'Digital Product Passport mandatory (B2B >5 kg)', article: 'Art.25' }
+                        {
+                            date: '2030-01-01',
+                            label: 'Grade D & E packaging banned from EU market',
+                            article: 'Art. 7(2)',
+                            plain: 'Packaging that cannot be recycled at scale (Grades D and E) is banned from sale across the EU. Examples: black carbon-black PE trays, metallised multi-layer laminates. If your current packaging is grade D or E, you need a redesign before 2030.',
+                            action: 'Identify all Grade D/E packaging in your portfolio now — a redesign can take 2–3 years.'
+                        },
+                        {
+                            date: '2030-01-01',
+                            label: '30% recycled content in PET bottles; 10% in other plastic packaging',
+                            article: 'Art. 7',
+                            plain: 'The recycled content targets increase. PET beverage bottles must now contain 30% recycled plastic. Other plastic packaging (HDPE containers, PP trays, etc.) must contain at least 10% recycled content for the first time.',
+                            action: 'Start supplier conversations about recycled plastic supply now — availability will be competitive.'
+                        },
+                        {
+                            date: '2030-01-01',
+                            label: '50% of transport packaging must be reusable',
+                            article: 'Art. 12',
+                            plain: 'Half of all transport packaging your company uses (pallets, crates, boxes for moving products between factories or warehouses) must be part of a reuse system rather than single-use. This affects how you ship goods between facilities.',
+                            action: 'Audit your logistics and transport packaging. Identify which can be switched to a reuse/return model.'
+                        },
+                        {
+                            date: '2030-01-01',
+                            label: 'Digital Product Passport mandatory for B2B packaging over 5 kg',
+                            article: 'Art. 25',
+                            plain: 'Large B2B packaging (anything over 5 kg used between businesses) must have a "digital product passport" — essentially a QR code or data carrier linking to information about the packaging\'s materials, recyclability, and recycled content.',
+                            action: 'If you use heavy transit packaging, plan for digital data systems that can generate and host passport data.'
+                        }
                     ]
                 },
                 {
                     id: 'phase4',
-                    label: 'Phase 4 — Long-Term Circularity (2035–2040)',
+                    label: 'Phase 4 — Long-Term Circularity',
+                    period: '2035–2040',
                     color: '#457B9D',
+                    icon: '🌍',
+                    summary: 'Final recycled content targets and near-full reuse of transport packaging.',
                     milestones: [
-                        { date: '2035-01-01', label: '25% recycled content in non-PET plastics', article: 'Art.7' },
-                        { date: '2040-01-01', label: '25% recycled content non-PET final target; 90% transport reuse', article: 'Art.12' }
+                        {
+                            date: '2035-01-01',
+                            label: '25% recycled content in non-PET plastic packaging',
+                            article: 'Art. 7',
+                            plain: 'Non-PET plastics (HDPE, LDPE, PP) must now contain 25% recycled content — up from 10% in 2030. This is a significant technical challenge for certain materials and applications.',
+                            action: 'Track recycling infrastructure development; supply of food-grade recycled PP in particular may be constrained.'
+                        },
+                        {
+                            date: '2040-01-01',
+                            label: '25% recycled content final target for non-PET plastics; 90% reuse of transport packaging',
+                            article: 'Art. 12',
+                            plain: 'The final long-term targets. Virtually all transport packaging must now be part of a reuse system. The EU aims to have a near-circular packaging economy by this date.',
+                            action: 'Long-term infrastructure investments (reuse logistics systems, material innovation) will need to start well before this date.'
+                        }
                     ]
                 }
             ]
@@ -4128,9 +4234,15 @@
             readBtn.textContent = isRead ? '✅ Marked as read' : 'Mark as read';
             readBtn.onclick = () => {
                 if (!appState.readCards) appState.readCards = {};
-                const nowRead = !!appState.readCards[card.id];
-                if (nowRead) { delete appState.readCards[card.id]; readBtn.textContent = 'Mark as read'; }
-                else         { appState.readCards[card.id] = true;  readBtn.textContent = '✅ Marked as read'; }
+                const wasRead = !!appState.readCards[card.id];
+                if (wasRead) { delete appState.readCards[card.id]; readBtn.textContent = 'Mark as read'; }
+                else {
+                    const isFirstEver = Object.keys(appState.readCards).length === 0;
+                    appState.readCards[card.id] = true;
+                    readBtn.textContent = '✅ Marked as read';
+                    if (isFirstEver) showToast('🎉', 'First card done! Keep going — you\'re building compliance knowledge.');
+                    else             showToast('✅', 'Marked as read');
+                }
                 const total = learningCards.length;
                 const count = Object.keys(appState.readCards).length;
                 appState.dashboard.modulesCompleted = count;
@@ -5433,6 +5545,12 @@
             el.appendChild(title);
             el.appendChild(countdown);
             el.appendChild(dateStr);
+            if (next.plain) {
+                const context = document.createElement('p');
+                context.style.cssText = 'font-size:12px;color:#666;line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid #EFEFEB;';
+                context.textContent = next.plain;
+                el.appendChild(context);
+            }
         }
 
         // ============================================================================
@@ -5478,56 +5596,148 @@
         }
 
         // ============================================================================
-        // ROADMAP RENDERER
+        // ROADMAP RENDERER — visual vertical timeline
         // ============================================================================
         function renderRoadmap() {
             const el = document.getElementById('roadmap-content');
             if (!el) return;
             el.innerHTML = '';
             const now = new Date();
-            PPWR_ROADMAP.phases.forEach(phase => {
-                const section = document.createElement('div');
-                section.style.cssText = 'margin-bottom:32px;';
-                const header = document.createElement('div');
-                header.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:16px;';
-                const dot = document.createElement('div');
-                dot.style.cssText = 'width:14px;height:14px;border-radius:50%;background:' + phase.color + ';flex-shrink:0;';
-                const title = document.createElement('h3');
-                title.style.cssText = 'margin:0;font-size:16px;color:#333;';
-                title.textContent = phase.label;
-                header.appendChild(dot);
-                header.appendChild(title);
-                section.appendChild(header);
-                const grid = document.createElement('div');
-                grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;';
-                phase.milestones.forEach(m => {
+
+            // ── Progress summary strip ────────────────────────────────────────
+            const allMilestones = PPWR_ROADMAP.phases.flatMap(p => p.milestones.map(m => ({ ...m, phase: p })));
+            const total  = allMilestones.length;
+            const passed = allMilestones.filter(m => new Date(m.date) <= now).length;
+            const pct    = Math.round((passed / total) * 100);
+
+            const summaryEl = document.createElement('div');
+            summaryEl.style.cssText = 'background:white;border:1px solid #EFEFEB;border-radius:12px;padding:20px 24px;margin-bottom:32px;';
+            summaryEl.innerHTML = `
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+                    <div>
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9CAF88;margin:0 0 4px;">Overall regulation progress</p>
+                        <p style="font-size:22px;font-weight:700;color:#1F1F1F;margin:0;">${passed} of ${total} milestones passed</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <p style="font-size:13px;color:#888;margin:0 0 2px;">Next milestone in</p>
+                        <p id="roadmap-next-days" style="font-size:22px;font-weight:700;color:#E63946;margin:0;">—</p>
+                    </div>
+                </div>
+                <div style="background:#EFEFEB;border-radius:4px;height:8px;overflow:hidden;">
+                    <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#9CAF88,#2A9D8F);border-radius:4px;transition:width .4s ease;"></div>
+                </div>
+                <p style="font-size:12px;color:#bbb;margin:6px 0 0;">${pct}% of the regulatory timeline has elapsed</p>
+            `;
+            el.appendChild(summaryEl);
+
+            // Populate next-milestone countdown
+            const nextM = allMilestones.filter(m => new Date(m.date) > now).sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+            if (nextM) {
+                const days = Math.ceil((new Date(nextM.date) - now) / 86400000);
+                const ndEl = summaryEl.querySelector('#roadmap-next-days');
+                if (ndEl) ndEl.textContent = days + (days === 1 ? ' day' : ' days');
+            }
+
+            // ── Phase sections ────────────────────────────────────────────────
+            PPWR_ROADMAP.phases.forEach((phase, phaseIdx) => {
+                const phaseEl = document.createElement('div');
+                phaseEl.style.cssText = 'margin-bottom:40px;';
+
+                // Phase header
+                const phaseHeader = document.createElement('div');
+                phaseHeader.style.cssText = `
+                    display:flex;align-items:center;gap:14px;padding:14px 20px;
+                    background:${phase.color}12;border:1px solid ${phase.color}30;
+                    border-radius:10px;margin-bottom:0;cursor:pointer;
+                    border-bottom-left-radius:0;border-bottom-right-radius:0;
+                `;
+                phaseHeader.innerHTML = `
+                    <span style="font-size:22px;">${phase.icon}</span>
+                    <div style="flex:1;">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:${phase.color};margin:0 0 2px;">${phase.period}</p>
+                        <p style="font-size:16px;font-weight:700;color:#1F1F1F;margin:0;">${phase.label}</p>
+                        <p style="font-size:13px;color:#666;margin:3px 0 0;">${phase.summary}</p>
+                    </div>
+                `;
+                phaseEl.appendChild(phaseHeader);
+
+                // Milestone list
+                const listEl = document.createElement('div');
+                listEl.style.cssText = `
+                    border:1px solid ${phase.color}30;border-top:none;
+                    border-radius:0 0 10px 10px;overflow:hidden;
+                `;
+
+                phase.milestones.forEach((m, mIdx) => {
                     const mDate = new Date(m.date);
-                    const past = mDate <= now;
-                    const card = document.createElement('div');
-                    card.style.cssText = 'background:' + (past ? '#F5FBF9' : '#FFF') + ';border:1px solid ' + (past ? '#B7E4C7' : '#EFEFEB') + ';border-radius:10px;padding:16px;';
+                    const isPast   = mDate <= now;
+                    const isNext   = nextM && m.date === nextM.date && !isPast;
+                    const days     = isPast ? null : Math.ceil((mDate - now) / 86400000);
+
+                    const itemEl = document.createElement('div');
+                    itemEl.style.cssText = `
+                        display:flex;gap:0;
+                        border-top:1px solid ${phase.color}20;
+                        background:${isPast ? '#F8FBF8' : isNext ? '#FFFBF0' : '#FFFFFF'};
+                    `;
+
+                    // Left accent bar
+                    const accentBar = document.createElement('div');
+                    accentBar.style.cssText = `width:4px;background:${isPast ? '#B7E4C7' : isNext ? '#F4A261' : phase.color + '40'};flex-shrink:0;`;
+
+                    // Main content
+                    const contentEl = document.createElement('div');
+                    contentEl.style.cssText = 'padding:18px 20px;flex:1;';
+
+                    // Top row: date + status chip
                     const topRow = document.createElement('div');
-                    topRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;';
-                    const dateLbl = document.createElement('span');
-                    dateLbl.style.cssText = 'font-size:12px;color:#999;';
-                    dateLbl.textContent = mDate.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
-                    const articleBadge = document.createElement('span');
-                    articleBadge.style.cssText = 'font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;color:' + phase.color + ';background:' + phase.color + '20;';
-                    articleBadge.textContent = m.article;
-                    topRow.appendChild(dateLbl);
-                    topRow.appendChild(articleBadge);
-                    const lbl = document.createElement('p');
-                    lbl.style.cssText = 'font-size:14px;color:#333;margin:0;line-height:1.4;';
-                    lbl.textContent = m.label;
-                    const status = document.createElement('p');
-                    status.style.cssText = 'font-size:12px;font-weight:600;margin-top:8px;color:' + (past ? '#2A9D8F' : '#F4A261') + ';';
-                    status.textContent = past ? '✅ Passed' : '⏳ Upcoming';
-                    card.appendChild(topRow);
-                    card.appendChild(lbl);
-                    card.appendChild(status);
-                    grid.appendChild(card);
+                    topRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;';
+                    topRow.innerHTML = `
+                        <span style="font-size:12px;color:#999;font-weight:500;">${mDate.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</span>
+                        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                            <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;color:${phase.color};background:${phase.color}18;">${m.article}</span>
+                            ${isPast
+                                ? '<span style="font-size:11px;font-weight:700;color:#2A9D8F;background:#E8F5E9;padding:2px 8px;border-radius:6px;">✅ Passed</span>'
+                                : isNext
+                                    ? `<span style="font-size:11px;font-weight:700;color:#C57700;background:#FFF3CD;padding:2px 8px;border-radius:6px;">⏳ Next — ${days} day${days===1?'':'s'}</span>`
+                                    : `<span style="font-size:11px;font-weight:600;color:#888;background:#F5F5F3;padding:2px 8px;border-radius:6px;">${days} days</span>`
+                            }
+                        </div>
+                    `;
+
+                    // Milestone heading
+                    const heading = document.createElement('p');
+                    heading.style.cssText = `font-size:15px;font-weight:700;color:${isPast?'#555':'#1F1F1F'};margin:0 0 8px;line-height:1.4;`;
+                    heading.textContent = m.label;
+
+                    // Plain-English explanation
+                    const plainEl = document.createElement('p');
+                    plainEl.style.cssText = 'font-size:13px;color:#666;line-height:1.65;margin:0 0 10px;';
+                    plainEl.textContent = m.plain;
+
+                    // Action note
+                    const actionEl = document.createElement('div');
+                    actionEl.style.cssText = `
+                        display:flex;align-items:flex-start;gap:8px;
+                        background:${isNext ? '#FFF8E6' : '#F5FAF3'};
+                        border-left:3px solid ${isNext ? '#F4A261' : '#9CAF88'};
+                        border-radius:0 6px 6px 0;
+                        padding:8px 12px;
+                        font-size:12px;color:#444;line-height:1.5;
+                    `;
+                    actionEl.innerHTML = `<span style="flex-shrink:0;font-weight:700;color:${isNext?'#C57700':'#4A7C3F'};">Action:</span> <span>${m.action}</span>`;
+
+                    contentEl.appendChild(topRow);
+                    contentEl.appendChild(heading);
+                    contentEl.appendChild(plainEl);
+                    contentEl.appendChild(actionEl);
+                    itemEl.appendChild(accentBar);
+                    itemEl.appendChild(contentEl);
+                    listEl.appendChild(itemEl);
                 });
-                section.appendChild(grid);
-                el.appendChild(section);
+
+                phaseEl.appendChild(listEl);
+                el.appendChild(phaseEl);
             });
         }
 
@@ -6016,13 +6226,13 @@
         // ONBOARDING CHECKLIST
         // ============================================================================
         const ONBOARDING_STEPS = [
-            { key:'learning',       icon:'📚', label:'Open Learning Modules',       page:'learning'       },
-            { key:'scenarios',      icon:'🎯', label:'Try a Simulation',             page:'scenarios'      },
-            { key:'scope',          icon:'🔍', label:'Check what packaging is in scope', page:'scope'     },
-            { key:'packaging-audit',icon:'📦', label:'Review your Packaging Audit',  page:'packaging-audit'},
-            { key:'obligations',    icon:'📋', label:'Explore the Obligations Tracker', page:'obligations' },
-            { key:'my-role',        icon:'🎭', label:'Run the Role Wizard',          page:'my-role'        },
-            { key:'countries',      icon:'🌍', label:'Visit the Country Hub',        page:'countries'      },
+            { key:'my-role',        icon:'🎭', label:'Find out what PPWR means for your role — 2 min',   page:'my-role'        },
+            { key:'scope',          icon:'🔍', label:'See which of your products are affected',           page:'scope'          },
+            { key:'learning',       icon:'📚', label:'Read your first learning card',                     page:'learning'       },
+            { key:'obligations',    icon:'📋', label:'Check your nearest compliance deadline',            page:'obligations'    },
+            { key:'packaging-audit',icon:'📦', label:'Review your packaging against the new rules',       page:'packaging-audit'},
+            { key:'scenarios',      icon:'🎯', label:'Practice a real compliance scenario',               page:'scenarios'      },
+            { key:'countries',      icon:'🌍', label:'See rules for the countries you sell into',         page:'countries'      },
         ];
 
         function renderOnboardingWidget() {
