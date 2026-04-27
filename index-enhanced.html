@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPWR Learning Hub | EU Packaging Compliance Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        :root {
+            --color-sage: #9CAF88;
+            --color-clay: #A88968;
+            --color-cream: #FAF8F3;
+            --color-dark: #1F1F1F;
+            --color-light: #F5F5F3;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FAFAF8 0%, #F5F5F3 100%);
+            color: #3D3D3D;
+            min-height: 100vh;
+        }
+        
+        .btn-primary {
+            background: var(--color-sage);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(156, 175, 136, 0.15);
+        }
+        
+        .btn-primary:hover {
+            background: #8A9975;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(156, 175, 136, 0.25);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--color-sage);
+            border: 2px solid var(--color-sage);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #F9F9F7;
+            border-color: #8A9975;
+        }
+        
+        .btn-text {
+            background: none;
+            border: none;
+            color: var(--color-sage);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0;
+            transition: color 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-text:hover {
+            color: #8A9975;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #EFEFEB;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: #E8E8E4;
+        }
+        
+        .status-green { color: #4CAF50; background: #E8F5E9; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
+        .status-amber { color: #FFA500; background: #FFF3E0; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
+        .status-red { color: #F44336; background: #FFEBEE; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block; }
+        
+        .progress-bar {
+            background: #EFEFEB;
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--color-sage) 0%, var(--color-clay) 100%);
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+        
+        .risk-gauge {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #4CAF50 0%, #FFA500 50%, #F44336 100%);
+            position: relative;
+            margin: 16px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .risk-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: #1F1F1F;
+            border-radius: 2px;
+            transition: left 0.4s ease;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.4s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.4s ease;
+        }
+        
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #EFEFEB;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        
+        .navbar-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            margin: 0 16px;
+        }
+        
+        .language-switcher button {
+            background: none;
+            border: none;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .language-switcher button.active {
+            color: var(--color-sage);
+            background: #F0F5EC;
+        }
+        
+        .sidebar {
+            background: white;
+            border-right: 1px solid #EFEFEB;
+            width: 240px;
+            min-height: 100vh;
+            padding: 24px 0;
+            position: fixed;
+            left: 0;
+            top: 60px;
+            overflow-y: auto;
+        }
+        
+        .sidebar-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .sidebar-item:hover, .sidebar-item.active {
+            color: var(--color-sage);
+            background: #F9F9F7;
+            border-left-color: var(--color-sage);
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            margin-top: 60px;
+            padding: 32px;
+            max-width: 1400px;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .scenario-choice {
+            background: white;
+            border: 2px solid #EFEFEB;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-choice:hover {
+            border-color: var(--color-sage);
+            background: #F9F9F7;
+            transform: translateX(4px);
+        }
+        
+        .scenario-choice.selected {
+            border-color: var(--color-sage);
+            background: #F0F5EC;
+        }
+        
+        .learning-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        
+        .learning-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .learning-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--color-dark);
+        }
+        
+        .learning-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #EFEFEB;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-sage);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-dark);
+        }
+        
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #EFEFEB;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            transition: border-color 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--color-sage);
+            box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #FAFAF8 0%, #F5F5F3 100%);
+            padding: 80px 32px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--color-dark);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            border: 2px solid #EFEFEB;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            border-color: var(--color-sage);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(156, 175, 136, 0.15);
+        }
+        
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        .pricing-price {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-sage);
+            margin: 20px 0;
+        }
+        
+        .pricing-list {
+            text-align: left;
+            margin: 24px 0;
+            padding: 0;
+        }
+        
+        .pricing-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #EFEFEB;
+            color: #666;
+        }
+        
+        .pricing-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .certificate-container {
+            background: white;
+            border: 3px solid var(--color-sage);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            margin: 32px auto;
+            box-shadow: 0 10px 40px rgba(156, 175, 136, 0.2);
+        }
+        
+        .certificate-header {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            color: var(--color-sage);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .certificate-body {
+            margin: 32px 0;
+            line-height: 1.8;
+        }
+        
+        .certificate-body p {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .certificate-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #EFEFEB;
+            color: var(--color-dark);
+        }
+        
+        .certificate-date {
+            color: #999;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-switcher {
+                display: flex;
+                gap: 4px;
+                margin: 0 8px;
+            }
+            
+            .language-switcher button {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+
+        /* ============================================================
+           AI KNOWLEDGE NAVIGATOR
+        ============================================================ */
+
+        /* Floating brain button */
+        #ai-nav-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 900;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
+            border: none;
+            cursor: pointer;
+            display: none;               /* shown only when logged in via JS */
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(156, 175, 136, 0.40);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        #ai-nav-btn:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 12px 28px rgba(156, 175, 136, 0.55);
+        }
+
+        #ai-nav-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        #ai-nav-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+            flex-shrink: 0;
+        }
+
+        /* Pulse ring when chat is closed */
+        #ai-nav-btn::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--color-sage);
+            opacity: 0;
+            animation: navPulse 2.8s ease-out infinite;
+        }
+
+        @keyframes navPulse {
+            0%   { opacity: 0.6; transform: scale(1);    }
+            100% { opacity: 0;   transform: scale(1.55); }
+        }
+
+        /* Chat window */
+        #ai-chat-window {
+            position: fixed;
+            bottom: 96px;
+            right: 28px;
+            z-index: 901;
+            width: 360px;
+            max-height: 540px;
+            display: flex;
+            flex-direction: column;
+            background: var(--color-cream);
+            border: 1.5px solid #D8E4CE;
+            border-radius: 16px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+            overflow: hidden;
+            /* start hidden */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(16px) scale(0.97);
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+
+        #ai-chat-window.open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Chat header */
+        #ai-chat-header {
+            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        #ai-chat-header .ai-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #ai-chat-header .ai-header-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #ai-chat-header .ai-header-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        #ai-chat-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        #ai-chat-header p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.75);
+            margin: 2px 0 0;
+        }
+
+        #ai-chat-close {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            line-height: 1;
+            padding: 0;
+        }
+
+        #ai-chat-close:hover {
+            background: rgba(255,255,255,0.30);
+        }
+
+        /* Messages area */
+        #ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13.5px;
+            line-height: 1.55;
+            scroll-behavior: smooth;
+        }
+
+        #ai-chat-messages::-webkit-scrollbar { width: 4px; }
+        #ai-chat-messages::-webkit-scrollbar-track { background: transparent; }
+        #ai-chat-messages::-webkit-scrollbar-thumb { background: #D8E4CE; border-radius: 4px; }
+
+        /* Bubble base */
+        .ai-bubble {
+            max-width: 88%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            animation: bubblePop 0.22s ease;
+        }
+
+        @keyframes bubblePop {
+            from { opacity: 0; transform: scale(0.94) translateY(6px); }
+            to   { opacity: 1; transform: scale(1)    translateY(0);   }
+        }
+
+        /* Bot bubble */
+        .ai-bubble.bot {
+            background: white;
+            border: 1px solid #E4EDE0;
+            color: #2D2D2D;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-bubble.bot .ai-source {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--color-sage);
+            font-weight: 600;
+            background: #F0F5EC;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        /* User bubble */
+        .ai-bubble.user {
+            background: linear-gradient(135deg, var(--color-sage) 0%, #7A9868 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Typing indicator */
+        .ai-bubble.typing {
+            background: white;
+            border: 1px solid #E4EDE0;
+            align-self: flex-start;
+            padding: 12px 16px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 7px;
+            height: 7px;
+            background: var(--color-sage);
+            border-radius: 50%;
+            animation: dotBounce 1.2s ease-in-out infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30%            { transform: translateY(-6px); }
+        }
+
+        /* Upgrade wall */
+        .ai-upgrade-wall {
+            margin: 4px 0;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%);
+            border: 1.5px solid #FFD699;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            animation: bubblePop 0.22s ease;
+        }
+
+        .ai-upgrade-wall p {
+            font-size: 13px;
+            color: #7A5200;
+            margin: 0 0 10px;
+            line-height: 1.5;
+        }
+
+        .ai-upgrade-wall button {
+            background: linear-gradient(135deg, var(--color-clay) 0%, #8E6E4C 100%);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .ai-upgrade-wall button:hover { opacity: 0.88; }
+
+        /* Chat quota counter */
+        .ai-quota-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: #F5F5F3;
+            border-top: 1px solid #EFEFEB;
+            font-size: 11px;
+            color: #888;
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
+        }
+
+        .ai-quota-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .ai-quota-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-sage);
+            transition: background 0.3s;
+        }
+
+        .ai-quota-dot.used {
+            background: #D0D0C8;
+        }
+
+        /* Input area */
+        #ai-chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 12px 14px;
+            background: white;
+            border-top: 1px solid #E8E8E4;
+            flex-shrink: 0;
+        }
+
+        #ai-chat-input {
+            flex: 1;
+            border: 1.5px solid #E4EDE0;
+            border-radius: 10px;
+            padding: 9px 13px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13.5px;
+            outline: none;
+            background: var(--color-cream);
+            color: var(--color-dark);
+            resize: none;
+            transition: border-color 0.2s;
+        }
+
+        #ai-chat-input:focus {
+            border-color: var(--color-sage);
+            box-shadow: 0 0 0 3px rgba(156,175,136,0.12);
+        }
+
+        #ai-chat-send {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: none;
+            background: var(--color-sage);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        #ai-chat-send:hover {
+            background: #8A9975;
+            transform: scale(1.06);
+        }
+
+        #ai-chat-send svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+
+        /* Footer disclaimer */
+        #ai-chat-footer {
+            padding: 7px 14px 9px;
+            background: white;
+            border-top: 1px solid #EFEFEB;
+            font-family: 'Outfit', sans-serif;
+            font-size: 10.5px;
+            color: #AAA;
+            text-align: center;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        /* Suggested pills */
+        .ai-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0 16px 12px;
+            flex-shrink: 0;
+        }
+
+        .ai-pill {
+            background: #F0F5EC;
+            border: 1px solid #D0DEC8;
+            color: #4A6840;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11.5px;
+            padding: 5px 11px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .ai-pill:hover {
+            background: #E0EDDA;
+            border-color: var(--color-sage);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            #ai-chat-window {
+                width: calc(100vw - 24px);
+                right: 12px;
+                bottom: 90px;
+                max-height: 65vh;
+            }
+
+            #ai-nav-btn {
+                right: 16px;
+                bottom: 16px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="flex items-center gap-3">
+                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-clay) 100%); border-radius: 8px;"></div>
+                <h1 style="margin: 0; font-size: 20px; color: var(--color-dark);">PPWR Learning Hub</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="language-switcher">
+                    <button data-lang="en" class="active">EN</button>
+                    <button data-lang="sv">SE</button>
+                    <button data-lang="da">DK</button>
+                    <button data-lang="no">NO</button>
+                    <button data-lang="fi">FI</button>
+                </div>
+                <button class="btn-text page-link" data-page="home" style="display: none;">Home</button>
+                <button class="btn-text page-link" data-page="features" style="display: none;">Features</button>
+                <button class="btn-text page-link" data-page="pricing" style="display: none;">Pricing</button>
+                <button class="btn-primary page-link" data-page="login" id="nav-login">Login</button>
+                <button class="btn-secondary page-link" data-page="signup" id="nav-signup" style="display: none;">Sign Up</button>
+                <button class="btn-text" id="logout-btn" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar (for logged-in users) -->
+    <div class="sidebar" id="sidebar" style="display: none;">
+        <div style="padding: 0 24px; margin-bottom: 24px;">
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Menu</p>
+        </div>
+        <div class="sidebar-item active page-link" data-page="dashboard">📊 Dashboard</div>
+        <div class="sidebar-item page-link" data-page="learning">📚 Learning Modules</div>
+        <div class="sidebar-item page-link" data-page="scenarios">🎯 Simulations</div>
+        <div class="sidebar-item page-link" data-page="assessment">✅ Assessment</div>
+        <div class="sidebar-item page-link" data-page="certificates">🎓 Certificates</div>
+        <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Calculator</div>
+        <div style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
+        </div>
+        <div class="sidebar-item page-link" data-page="admin-dashboard" id="admin-link" style="display: none;">👨‍💼 Company</div>
+        <div class="sidebar-item page-link" data-page="admin-users" id="admin-users-link" style="display: none;">👥 Users</div>
+        <div class="sidebar-item page-link" data-page="admin-analytics" id="admin-analytics-link" style="display: none;">📈 Analytics</div>
+        <div class="sidebar-item page-link" data-page="admin-leads" id="admin-leads-link" style="display: none;">💼 Leads</div>
+    </div>
+
+    <!-- Pages -->
+    
+    <!-- HOME PAGE -->
+    <div class="page active" id="home-page">
+        <div class="hero">
+            <h1>Master PPWR Before August 2026</h1>
+            <p>Interactive micro-learning and compliance readiness platform for Nordic SMEs. Prepare your team in minutes, not weeks.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 48px;">
+                <button class="btn-primary page-link" data-page="signup">Start Free Trial</button>
+                <button class="btn-secondary page-link" data-page="features">Learn More</button>
+            </div>
+        </div>
+
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 32px; margin-top: 60px;">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 48px;">Why PPWR Learning Hub?</h2>
+            
+            <div class="grid-3" style="margin-bottom: 60px;">
+                <div class="card">
+                    <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
+                    <h3>Learn in 2 Minutes</h3>
+                    <p>Bite-sized learning cards and interactive simulations. Not lengthy webinars.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 36px; margin-bottom: 16px;">📊</div>
+                    <h3>Real-Time Readiness</h3>
+                    <p>Instantly see your compliance score and identify risk gaps.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 36px; margin-bottom: 16px;">🎯</div>
+                    <h3>Scenario-Based</h3>
+                    <p>Learn through branching decision trees. See real consequences.</p>
+                </div>
+            </div>
+
+            <div style="background: white; border-radius: 12px; padding: 48px; text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 28px; margin-bottom: 16px;">The PPWR Deadline is Real</h2>
+                <p style="font-size: 16px; color: #666; margin-bottom: 24px;">Enforcement begins August 12, 2026. Non-compliant packaging can be rejected by retailers and incur fines.</p>
+                <div class="status-amber" style="display: inline-block;" id="home-countdown">72 days until enforcement</div>
+            </div>
+        </div>
+
+        <div style="background: var(--color-sage); color: white; padding: 60px 32px; text-align: center; margin-top: 60px;">
+            <h2 style="font-size: 32px; margin-bottom: 16px; color: white;">Ready to Get Compliant?</h2>
+            <p style="margin-bottom: 32px; font-size: 16px;">Join 200+ Nordic companies preparing for PPWR.</p>
+            <button class="btn-secondary page-link" data-page="signup" style="background: white; color: var(--color-sage); border-color: white;">Start Your Free Trial</button>
+        </div>
+
+        <div style="max-width: 1400px; margin: 0 auto; padding: 32px;">
+            <p style="text-align: center; color: #999; font-size: 14px;">PPWR Learning Hub © 2026 | Supporting Sweden, Denmark, Norway, Finland</p>
+        </div>
+    </div>
+
+    <!-- FEATURES PAGE -->
+    <div class="page" id="features-page">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 32px;">
+            <h1 style="text-align: center; font-size: 40px; margin-bottom: 48px;">Platform Features</h1>
+
+            <div class="grid-2" style="margin-bottom: 60px;">
+                <div class="card">
+                    <h3>Interactive Scenario Simulator</h3>
+                    <p style="margin-top: 16px;">Branching decision trees with instant feedback. See real consequences of PPWR compliance choices.</p>
+                    <ul style="margin-top: 16px; color: #666;">
+                        <li>✓ PFAS declarations</li>
+                        <li>✓ Empty space ratio decisions</li>
+                        <li>✓ Supplier verification</li>
+                        <li>✓ Score tracking</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Micro Learning Cards</h3>
+                    <p style="margin-top: 16px;">Swipeable, engaging flashcards covering all PPWR articles and requirements.</p>
+                    <ul style="margin-top: 16px; color: #666;">
+                        <li>✓ 50+ preloaded cards</li>
+                        <li>✓ Category filters</li>
+                        <li>✓ Save favorites</li>
+                        <li>✓ Mobile-friendly</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Readiness Assessment</h3>
+                    <p style="margin-top: 16px;">10-question company self-assessment with actionable recommendations.</p>
+                    <ul style="margin-top: 16px; color: #666;">
+                        <li>✓ Instant score (0-100)</li>
+                        <li>✓ Status badges</li>
+                        <li>✓ Gap analysis</li>
+                        <li>✓ Priority fixes</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Risk Exposure Calculator</h3>
+                    <p style="margin-top: 16px;">Visualize your compliance risks based on products, materials, and markets.</p>
+                    <ul style="margin-top: 16px; color: #666;">
+                        <li>✓ Industry context</li>
+                        <li>✓ Material risk mapping</li>
+                        <li>✓ Market-specific rules</li>
+                        <li>✓ PDF export</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn-primary page-link" data-page="signup" style="display: block; margin: 48px auto;">Get Started Free</button>
+        </div>
+    </div>
+
+    <!-- PRICING PAGE -->
+    <div class="page" id="pricing-page">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 60px 32px;">
+            <h1 style="text-align: center; font-size: 40px; margin-bottom: 16px;">Simple, Transparent Pricing</h1>
+            <p style="text-align: center; color: #666; font-size: 16px; margin-bottom: 60px;">Choose the plan that fits your team size.</p>
+
+            <div class="grid-3" style="margin-bottom: 60px;">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <p style="color: #666; margin-top: 8px;">For growing teams</p>
+                    <div class="pricing-price">€99<span style="font-size: 16px; font-weight: 400;">/month</span></div>
+                    <p style="color: #999; font-size: 14px;">Up to 20 users</p>
+                    <ul class="pricing-list">
+                        <li>✓ All learning modules</li>
+                        <li>✓ Scenario simulations</li>
+                        <li>✓ Readiness assessment</li>
+                        <li>✓ Basic analytics</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Start Free Trial</button>
+                </div>
+
+                <div class="pricing-card" style="border-color: var(--color-sage); transform: scale(1.05);">
+                    <div style="background: var(--color-sage); color: white; padding: 8px 12px; border-radius: 6px; display: inline-block; font-size: 12px; font-weight: 600; margin-bottom: 12px;">Most Popular</div>
+                    <h3>Growth</h3>
+                    <p style="color: #666; margin-top: 8px;">For scaling companies</p>
+                    <div class="pricing-price">€199<span style="font-size: 16px; font-weight: 400;">/month</span></div>
+                    <p style="color: #999; font-size: 14px;">Up to 75 users</p>
+                    <ul class="pricing-list">
+                        <li>✓ Everything in Starter</li>
+                        <li>✓ Admin dashboard</li>
+                        <li>✓ Employee progress tracking</li>
+                        <li>✓ Custom reports</li>
+                        <li>✓ Priority support</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Start Free Trial</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Pro</h3>
+                    <p style="color: #666; margin-top: 8px;">For enterprises</p>
+                    <div class="pricing-price">€399<span style="font-size: 16px; font-weight: 400;">/month</span></div>
+                    <p style="color: #999; font-size: 14px;">Unlimited users</p>
+                    <ul class="pricing-list">
+                        <li>✓ Everything in Growth</li>
+                        <li>✓ API access</li>
+                        <li>✓ SSO/SAML</li>
+                        <li>✓ Custom content</li>
+                        <li>✓ Dedicated support</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Contact Sales</button>
+                </div>
+            </div>
+
+            <div style="background: #F9F9F7; border-radius: 12px; padding: 32px; text-align: center;">
+                <h3>Frequently Asked Questions</h3>
+                <p style="margin-top: 16px; color: #666;">All plans include a 14-day free trial. No credit card required. Cancel anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div class="page" id="login-page">
+        <div style="max-width: 400px; margin: 60px auto; padding: 32px;">
+            <div class="card">
+                <h2 style="text-align: center; margin-bottom: 32px;">Welcome Back</h2>
+                
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="login-email" placeholder="your@company.com">
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••">
+                </div>
+
+                <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="login-btn">Sign In</button>
+                
+                <p style="text-align: center; color: #666;">Don't have an account? <button class="btn-text" style="padding: 0; text-decoration: underline; page-link" data-page="signup">Sign up</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE -->
+    <div class="page" id="signup-page">
+        <div style="max-width: 400px; margin: 40px auto; padding: 32px;">
+            <div class="card">
+                <h2 style="text-align: center; margin-bottom: 32px;">Create Your Account</h2>
+                
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signup-name" placeholder="John Doe">
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="signup-email" placeholder="your@company.com">
+                </div>
+
+                <div class="input-group">
+                    <label>Company Name</label>
+                    <input type="text" id="signup-company" placeholder="Acme Packaging">
+                </div>
+
+                <div class="input-group">
+                    <label>Country</label>
+                    <select id="signup-country">
+                        <option>Select a country</option>
+                        <option>Sweden</option>
+                        <option>Denmark</option>
+                        <option>Norway</option>
+                        <option>Finland</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" placeholder="••••••••">
+                </div>
+
+                <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="signup-btn">Create Account</button>
+                
+                <p style="text-align: center; color: #666;">Already have an account? <button class="btn-text" style="padding: 0; text-decoration: underline; page-link" data-page="login">Sign in</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div class="page" id="dashboard-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Dashboard</h1>
+
+            <div class="grid-3" style="margin-bottom: 32px;">
+                <div class="stat-box">
+                    <div class="stat-number" id="dashboard-score">0</div>
+                    <div class="stat-label">Readiness Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="dashboard-progress">0%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="dashboard-modules">0</div>
+                    <div class="stat-label">Modules Completed</div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card">
+                    <h3>Continue Learning</h3>
+                    <p style="color: #666; margin-top: 12px;">Pick up where you left off.</p>
+                    <button class="btn-secondary page-link" data-page="learning" style="width: 100%; margin-top: 16px;">Open Learning</button>
+                </div>
+
+                <div class="card">
+                    <h3>Try a Simulation</h3>
+                    <p style="color: #666; margin-top: 12px;">Test your PPWR knowledge with real scenarios.</p>
+                    <button class="btn-secondary page-link" data-page="scenarios" style="width: 100%; margin-top: 16px;">Start Simulation</button>
+                </div>
+
+                <div class="card">
+                    <h3>Company Status</h3>
+                    <div style="margin-top: 16px;">
+                        <p style="color: #666; font-size: 14px; margin-bottom: 12px;">Overall Readiness</p>
+                        <div class="progress-bar" style="margin-bottom: 16px;">
+                            <div class="progress-bar-fill" id="dashboard-progress-bar" style="width: 35%;"></div>
+                        </div>
+                        <div class="status-amber">In Progress</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Quick Actions</h3>
+                    <p style="color: #666; margin-top: 12px; font-size: 14px;">Complete your readiness assessment.</p>
+                    <button class="btn-secondary page-link" data-page="assessment" style="width: 100%; margin-top: 16px;">Take Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEARNING MODULES PAGE -->
+    <div class="page" id="learning-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Learning Modules</h1>
+
+            <div style="margin-bottom: 32px;">
+                <input type="text" id="learning-filter" placeholder="Filter by topic..." style="width: 100%; padding: 12px; border: 1px solid #EFEFEB; border-radius: 8px; font-family: 'Outfit', sans-serif;">
+            </div>
+
+            <div id="learning-cards" class="grid-3">
+                <!-- Cards will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENARIOS PAGE -->
+    <div class="page" id="scenarios-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">PPWR Simulations</h1>
+            <p style="color: #666; margin-bottom: 32px;">Test your knowledge through realistic decision scenarios.</p>
+
+            <div id="scenarios-list" class="grid-2">
+                <!-- Scenarios will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENARIO DETAIL PAGE -->
+    <div class="page" id="scenario-detail-page">
+        <div class="main-content">
+            <button class="btn-text page-link" data-page="scenarios" style="margin-bottom: 24px;">← Back to Simulations</button>
+            
+            <div id="scenario-content">
+                <!-- Scenario will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ASSESSMENT PAGE -->
+    <div class="page" id="assessment-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Company Readiness Assessment</h1>
+            <p style="color: #666; margin-bottom: 32px;">Answer 10 quick questions to understand your compliance readiness.</p>
+
+            <div class="card" style="max-width: 600px;">
+                <div id="assessment-content">
+                    <!-- Assessment will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CERTIFICATES PAGE -->
+    <div class="page" id="certificates-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Your Certificates</h1>
+            
+            <div id="certificates-list" class="grid-2">
+                <!-- Certificates will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- RISK CALCULATOR PAGE -->
+    <div class="page" id="risk-calculator-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Risk Exposure Calculator</h1>
+            <p style="color: #666; margin-bottom: 32px;">Identify your specific PPWR compliance risks.</p>
+
+            <div class="card" style="max-width: 600px;">
+                <div class="input-group">
+                    <label>Industry</label>
+                    <select id="risk-industry">
+                        <option>Food & Beverage</option>
+                        <option>E-commerce & Retail</option>
+                        <option>Consumer Goods</option>
+                        <option>Pharmaceuticals</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Primary Packaging Material</label>
+                    <select id="risk-material">
+                        <option>Plastic</option>
+                        <option>Paper/Cardboard</option>
+                        <option>Glass</option>
+                        <option>Metal</option>
+                        <option>Mixed</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Markets (Select all that apply)</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;">
+                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="EU"> EU</label>
+                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="UK"> UK</label>
+                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="Norway"> Norway</label>
+                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="Non-EU"> Non-EU</label>
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="width: 100%; margin-top: 24px;" id="calculate-risk-btn">Calculate Risk Profile</button>
+            </div>
+
+            <div id="risk-results" style="margin-top: 32px; display: none;">
+                <h3>Your Risk Profile</h3>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="stat-box">
+                        <div class="stat-number" id="risk-score">0%</div>
+                        <div class="stat-label">Risk Level</div>
+                    </div>
+                    <div class="stat-box">
+                        <div style="font-size: 24px; margin-bottom: 8px;" id="risk-status">●</div>
+                        <div class="stat-label">Status</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="risk-gaps">0</div>
+                        <div class="stat-label">Documentation Gaps</div>
+                    </div>
+                </div>
+                <div id="risk-recommendations" style="margin-top: 24px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD PAGE -->
+    <div class="page" id="admin-dashboard-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Company Administration</h1>
+
+            <div class="grid-3" style="margin-bottom: 32px;">
+                <div class="stat-box">
+                    <div class="stat-number" id="admin-users-count">0</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="admin-completion">0%</div>
+                    <div class="stat-label">Avg Completion Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="admin-avg-score">0</div>
+                    <div class="stat-label">Avg Readiness Score</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Subscription Information</h3>
+                <div style="margin-top: 20px;">
+                    <p><strong>Plan:</strong> <span id="admin-plan">Growth</span></p>
+                    <p><strong>Users:</strong> <span id="admin-seats">5 / 75</span></p>
+                    <p><strong>Renewal:</strong> <span id="admin-renewal">April 30, 2026</span></p>
+                    <p style="margin-top: 16px; color: #666;">Next invoice: €199</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN USERS PAGE -->
+    <div class="page" id="admin-users-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Manage Users</h1>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                <button class="btn-primary" id="add-user-btn">+ Add User</button>
+                <button class="btn-secondary" id="bulk-invite-btn">📧 Bulk Invite</button>
+            </div>
+
+            <div class="card">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #EFEFEB;">
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Name</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Email</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Role</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Status</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN ANALYTICS PAGE -->
+    <div class="page" id="admin-analytics-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Analytics</h1>
+
+            <div class="grid-2" style="margin-bottom: 32px;">
+                <div class="card">
+                    <h3>Module Completion Rate</h3>
+                    <canvas id="analytics-chart" style="margin-top: 16px;"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3>Most Failed Scenarios</h3>
+                    <div id="failed-scenarios" style="margin-top: 16px;">
+                        <!-- Data will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN LEADS PAGE -->
+    <div class="page" id="admin-leads-page">
+        <div class="main-content">
+            <h1 style="margin-bottom: 32px;">Lead Captures</h1>
+            <p style="color: #666; margin-bottom: 32px;">Free trial signups from the public assessment tool.</p>
+
+            <div class="card">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #EFEFEB;">
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Name</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Email</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Company</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Country</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Score</th>
+                            <th style="padding: 12px; text-align: left; font-weight: 600;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-table-body">
+                        <!-- Leads will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Invite Modal -->
+    <div class="modal-overlay" id="bulk-invite-modal">
+        <div class="modal">
+            <h2 style="margin-bottom: 20px;">Bulk Invite Users</h2>
+            <p style="color: #666; margin-bottom: 16px;">Paste email addresses (one per line). We'll send invitations immediately.</p>
+            
+            <div class="input-group">
+                <label>Email List</label>
+                <textarea id="bulk-emails" placeholder="john@company.com&#10;sarah@company.com&#10;michael@company.com" style="min-height: 150px;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-primary" id="send-bulk-invites" style="flex: 1;">Send Invites</button>
+                <button class="btn-secondary" id="close-bulk-modal" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // STATE MANAGEMENT
+        // ============================================================================
+        let appState = {
+            isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
+            user: JSON.parse(localStorage.getItem('user')) || null,
+            currentPage: 'home',
+            currentLanguage: 'en',
+            dashboard: {
+                score: 35,
+                progress: 35,
+                modulesCompleted: 2,
+                companyStatus: 'In Progress'
+            },
+            admin: {
+                usersCount: 5,
+                completionRate: 48,
+                avgScore: 52,
+                plan: 'Growth',
+                seats: '5 / 75',
+                renewal: 'April 30, 2026'
+            }
+        };
+
+        // ============================================================================
+        // DYNAMIC COUNTDOWN CALCULATION
+        // ============================================================================
+        function calculateDaysRemaining() {
+            const today = new Date(2026, 3, 27); // April 27, 2026
+            const deadline = new Date(2026, 7, 12); // August 12, 2026
+            const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+            return Math.max(0, daysLeft);
+        }
+
+        function updateCountdowns() {
+            const daysRemaining = calculateDaysRemaining();
+            const countdownElements = document.querySelectorAll('[id*="countdown"]');
+            countdownElements.forEach(el => {
+                el.textContent = daysRemaining + ' days until enforcement';
+            });
+        }
+
+        // ============================================================================
+        // LANGUAGE SWITCHING
+        // ============================================================================
+        const languageMap = {
+            en: 'English',
+            sv: 'Swedish',
+            da: 'Danish',
+            no: 'Norwegian',
+            fi: 'Finnish'
+        };
+
+        document.querySelectorAll('.language-switcher button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                appState.currentLanguage = lang;
+                
+                // Update active button
+                document.querySelectorAll('.language-switcher button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Here you would implement actual language switching
+                console.log('Language switched to:', languageMap[lang]);
+            });
+        });
+
+        // Learning cards data
+        const learningCards = [
+            {
+                id: 1,
+                title: "What is Article 10 Minimization?",
+                content: "Packaging must be minimal in weight and volume while still providing adequate protection. Empty space should not exceed 40% for most products.",
+                category: "Articles"
+            },
+            {
+                id: 2,
+                title: "PFAS Ban Deadline",
+                content: "PFAS (per- and polyfluorinated alkyl substances) used in food contact packaging are banned from July 12, 2024. Suppliers must declare compliance.",
+                category: "PFAS"
+            },
+            {
+                id: 3,
+                title: "Empty Space Ratio Explained",
+                content: "The ratio of empty space to product volume. For food packaging: maximum 40%. For non-food: maximum 50%. Measure from outside product to inside packaging edge.",
+                category: "Measurements"
+            },
+            {
+                id: 4,
+                title: "Recyclability Requirement",
+                content: "All packaging must be designed for recycling. Complex materials, mixed substrates, and non-removable labels reduce recyclability scores.",
+                category: "Recycling"
+            },
+            {
+                id: 5,
+                title: "Supplier Declaration of Conformity",
+                content: "Suppliers must provide written declaration that packaging meets PPWR. Document must be retained for 5 years. Request before accepting new materials.",
+                category: "Documentation"
+            },
+            {
+                id: 6,
+                title: "Labeling Obligations",
+                content: "Packaging must include: material type, recyclability mark, and waste sorting instruction. Labels must be permanent, visible, and in national language.",
+                category: "Labels"
+            },
+            {
+                id: 7,
+                title: "Market-Specific Rules",
+                content: "EU PPWR applies everywhere PPWR applies. UK has separate rules. Non-EU exports may have different requirements. Verify per destination.",
+                category: "Markets"
+            },
+            {
+                id: 8,
+                title: "Record Retention Period",
+                content: "Keep all packaging documentation for 5 years: supplier declarations, testing reports, conformity assessments, and production records.",
+                category: "Documentation"
+            },
+            {
+                id: 9,
+                title: "Plastic Film Restrictions",
+                content: "Ultra-thin plastic films (<20 microns) used for wrapping are banned unless necessary. Bags under 15 liters require thicker material.",
+                category: "Materials"
+            },
+            {
+                id: 10,
+                title: "Penalties for Non-Compliance",
+                content: "EU fines up to €50,000 per incident. Retailers can reject shipments. Production halt until compliant. Insurance may not cover non-compliance.",
+                category: "Penalties"
+            }
+        ];
+
+        // Scenarios data WITH LEGAL REFERENCES
+        const scenarios = [
+            {
+                id: 1,
+                title: "New Supplier Approval",
+                description: "You're reviewing a new food packaging supplier.",
+                situation: "A new supplier offers attractive pricing on PFAS-coated laminate film for frozen food packaging. They claim their product is 'industry standard'. Do you:",
+                choices: [
+                    { answer: "A", text: "Accept the quote immediately - it's cheaper", feedback: "❌ WRONG: PFAS is banned in food contact packaging as of July 2024. Accepting this violates PPWR and exposes you to fines and retailer rejection.", consequence: "20 points lost", impact: "Criminal Liability", riskRange: "€50,000 - €200,000", riskLevel: 95 },
+                    { answer: "B", text: "Request Declaration of Conformity and PFAS testing", feedback: "✅ CORRECT: Always request supplier documentation before new materials. This protects your company and ensures compliance.", consequence: "100 points earned", correct: true, legalRef: "Article 11 - PFAS Ban in Food Contact Materials", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Ask your packaging manager to handle it later", feedback: "⚠️ DELAYED: This creates compliance gaps. Approvals need documentation NOW.", consequence: "0 points - retry", impact: "Administrative Warning", riskRange: "€5,000 - €25,000", riskLevel: 60 }
+                ],
+                difficulty: "Medium"
+            },
+            {
+                id: 2,
+                title: "Empty Space Calculation",
+                description: "Your e-commerce team designed a new box.",
+                situation: "Your packaging team designs a shoe box with significant empty space for aesthetic reasons. Internal dimensions: 35 x 25 x 15 cm. Shoe volume: 0.08 m³. What's your action?",
+                choices: [
+                    { answer: "A", text: "Proceed - shoe size requires the space", feedback: "❌ PARTIAL: While shoe shape matters, PPWR requires minimization. You need to justify the empty space with product protection.", consequence: "50 points lost", impact: "Non-Compliance", riskRange: "€10,000 - €50,000", riskLevel: 70 },
+                    { answer: "B", text: "Calculate ratio and add protective filler to reduce empty space", feedback: "✅ CORRECT: Calculate empty space ratio and optimize packaging. Add protective material if necessary to meet 40% maximum for non-food.", consequence: "100 points earned", correct: true, legalRef: "Article 10 - Packaging Minimization Requirements", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Switch to a smaller box regardless of product damage risk", feedback: "⚠️ NOT OPTIMAL: Packaging must protect the product. Balance protection with minimization.", consequence: "60 points", impact: "Partial Compliance", riskRange: "€5,000 - €20,000", riskLevel: 45 }
+                ],
+                difficulty: "Hard"
+            },
+            {
+                id: 3,
+                title: "Material Recyclability",
+                description: "Your team is considering a new label material.",
+                situation: "A design agency proposes a multi-layer, non-removable holographic label for product differentiation. It looks premium but can't be removed easily. Do you:",
+                choices: [
+                    { answer: "A", text: "Approve - the branding benefit is worth it", feedback: "❌ WRONG: Non-removable complex labels reduce recyclability scores. PPWR requires designing for recycling.", consequence: "50 points lost", impact: "Non-Compliance", riskRange: "€8,000 - €40,000", riskLevel: 75 },
+                    { answer: "B", text: "Request a removable, single-material label alternative", feedback: "✅ CORRECT: Labels must not compromise recyclability. Push for designs that meet both branding and PPWR requirements.", consequence: "100 points earned", correct: true, legalRef: "Article 6 - Design for Recycling & Article 9 - Labeling", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Accept the label but note it in your compliance file", feedback: "⚠️ NOT COMPLIANT: Documenting non-compliance doesn't make it legal.", consequence: "10 points", impact: "Severe Non-Compliance", riskRange: "€20,000 - €100,000", riskLevel: 85 }
+                ],
+                difficulty: "Medium"
+            },
+            {
+                id: 4,
+                title: "Documentation Management",
+                description: "Your procurement team needs to organize supplier files.",
+                situation: "A major supplier sent packaging compliance documentation 3 years ago. Your new compliance officer asks where the records are. What's your response?",
+                choices: [
+                    { answer: "A", text: "The old documents are in email somewhere - we'll find them later", feedback: "❌ RISK: PPWR requires 5-year record retention. Email is not reliable storage.", consequence: "30 points lost", impact: "Documentation Gap", riskRange: "€3,000 - €15,000", riskLevel: 50 },
+                    { answer: "B", text: "Set up a centralized document management system with 5-year retention", feedback: "✅ CORRECT: Establish a system now to track supplier declarations, test reports, and conformity assessments for the required 5-year period.", consequence: "100 points earned", correct: true, legalRef: "Article 18 - Record Keeping Requirements (5-year minimum)", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Request fresh documentation from all suppliers immediately", feedback: "⚠️ GOOD START: Yes, refresh documentation, but also implement a management system for ongoing compliance.", consequence: "75 points", impact: "Partial Compliance", riskRange: "€2,000 - €10,000", riskLevel: 35 }
+                ],
+                difficulty: "Easy"
+            },
+            {
+                id: 5,
+                title: "Market-Specific Compliance",
+                description: "Your company exports to multiple markets.",
+                situation: "You sell packaged goods to EU, UK, and Norway. A supplier asks if one packaging solution works for all three markets. Do you:",
+                choices: [
+                    { answer: "A", text: "Yes - they all follow PPWR rules", feedback: "❌ INCORRECT: UK has separate post-Brexit rules. Norway has specific PPWR implementation. Verify each market's requirements.", consequence: "40 points lost", impact: "Multi-Market Non-Compliance", riskRange: "€10,000 - €60,000", riskLevel: 80 },
+                    { answer: "B", text: "Check regulations for each market and request market-specific testing", feedback: "✅ CORRECT: Always verify market-specific requirements. EU PPWR ≠ UK ≠ Norway. Test accordingly.", consequence: "100 points earned", correct: true, legalRef: "Article 2 - Scope and Article 3 - Market-Specific Implementation", impact: "Full Compliance", riskRange: "No Risk", riskLevel: 0 },
+                    { answer: "C", text: "Use the strictest standard to cover all markets", feedback: "⚠️ GOOD APPROACH: Yes, stricter standards help, but still verify each market's specific rules.", consequence: "80 points", impact: "Likely Compliant", riskRange: "€1,000 - €5,000", riskLevel: 20 }
+                ],
+                difficulty: "Medium"
+            }
+        ];
+
+        // Assessment questions
+        const assessmentQuestions = [
+            {
+                id: 1,
+                question: "Do you have documented declarations from all packaging suppliers?",
+                options: ["Yes", "Partially", "No"],
+                riskWeights: [0, 25, 50]
+            },
+            {
+                id: 2,
+                question: "Have you tested your packaging for PFAS presence?",
+                options: ["Yes", "Partially", "No"],
+                riskWeights: [0, 25, 50]
+            },
+            {
+                id: 3,
+                question: "Is your empty space ratio documented and within limits?",
+                options: ["Yes, documented", "Estimated", "Unknown"],
+                riskWeights: [0, 30, 60]
+            },
+            {
+                id: 4,
+                question: "Have your labels been assessed for removability?",
+                options: ["Yes", "Partially", "No"],
+                riskWeights: [0, 25, 50]
+            },
+            {
+                id: 5,
+                question: "Do you have a 5-year document retention system?",
+                options: ["Yes", "In development", "No"],
+                riskWeights: [0, 20, 40]
+            },
+            {
+                id: 6,
+                question: "Has your team received PPWR training?",
+                options: ["Yes, comprehensive", "Basic training", "No"],
+                riskWeights: [0, 25, 50]
+            },
+            {
+                id: 7,
+                question: "Do you have a compliance checklist for new packaging?",
+                options: ["Yes", "Partially", "No"],
+                riskWeights: [0, 30, 60]
+            },
+            {
+                id: 8,
+                question: "Are you tracking changes to PPWR regulations?",
+                options: ["Yes, actively", "Occasionally", "No"],
+                riskWeights: [0, 25, 50]
+            },
+            {
+                id: 9,
+                question: "Have you communicated PPWR requirements to customers?",
+                options: ["Yes", "Partially", "No"],
+                riskWeights: [0, 20, 40]
+            },
+            {
+                id: 10,
+                question: "What's your timeline to achieve full compliance?",
+                options: ["Before August 2026", "Uncertain", "After August 2026"],
+                riskWeights: [0, 35, 70]
+            }
+        ];
+
+        // ============================================================================
+        // PAGE NAVIGATION
+        // ============================================================================
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            
+            // Show requested page
+            const pageEl = document.getElementById(pageName + '-page');
+            if (pageEl) {
+                pageEl.classList.add('active');
+            }
+            
+            appState.currentPage = pageName;
+            
+            // Update navigation
+            updateNavigation();
+            
+            // Load page-specific content
+            if (pageName === 'learning') loadLearningCards();
+            if (pageName === 'scenarios') loadScenarios();
+            if (pageName === 'assessment') loadAssessment();
+            if (pageName === 'dashboard') updateDashboard();
+            if (pageName === 'admin-dashboard') updateAdminDashboard();
+            if (pageName === 'admin-users') loadAdminUsers();
+            if (pageName === 'admin-analytics') loadAnalytics();
+            if (pageName === 'admin-leads') loadLeads();
+            if (pageName === 'certificates') loadCertificates();
+        }
+
+        function updateNavigation() {
+            if (appState.isLoggedIn) {
+                document.getElementById('nav-login').style.display = 'none';
+                document.getElementById('nav-signup').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'block';
+                document.getElementById('sidebar').style.display = 'block';
+                
+                // Show admin links if user is owner/admin
+                if (appState.user?.role === 'owner' || appState.user?.role === 'admin') {
+                    document.getElementById('admin-link').style.display = 'block';
+                    document.getElementById('admin-users-link').style.display = 'block';
+                    document.getElementById('admin-analytics-link').style.display = 'block';
+                    document.getElementById('admin-leads-link').style.display = 'block';
+                }
+            } else {
+                document.getElementById('nav-login').style.display = 'block';
+                document.getElementById('nav-signup').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'none';
+                document.getElementById('sidebar').style.display = 'none';
+            }
+
+            // Adjust main content margin
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent && !appState.isLoggedIn) {
+                mainContent.style.marginLeft = '0';
+                mainContent.style.marginTop = '60px';
+            }
+
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === appState.currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // ============================================================================
+        // AUTHENTICATION
+        // ============================================================================
+        document.getElementById('login-btn')?.addEventListener('click', function() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Mock authentication
+            const user = {
+                id: 1,
+                name: 'John Doe',
+                email: email,
+                company: 'Test Company',
+                role: 'owner'
+            };
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('user', JSON.stringify(user));
+            appState.isLoggedIn = true;
+            appState.user = user;
+
+            showPage('dashboard');
+        });
+
+        document.getElementById('signup-btn')?.addEventListener('click', function() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const company = document.getElementById('signup-company').value;
+            const country = document.getElementById('signup-country').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (!name || !email || !company || !country || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Mock registration
+            const user = {
+                id: Math.random(),
+                name: name,
+                email: email,
+                company: company,
+                country: country,
+                role: 'owner'
+            };
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('user', JSON.stringify(user));
+            appState.isLoggedIn = true;
+            appState.user = user;
+
+            showPage('dashboard');
+        });
+
+        document.getElementById('logout-btn')?.addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('user');
+            appState.isLoggedIn = false;
+            appState.user = null;
+            showPage('home');
+        });
+
+        // ============================================================================
+        // LEARNING CARDS
+        // ============================================================================
+        function loadLearningCards() {
+            const container = document.getElementById('learning-cards');
+            container.innerHTML = '';
+
+            learningCards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'learning-card fade-in';
+                cardEl.innerHTML = `
+                    <h3>${card.title}</h3>
+                    <p style="margin-top: 16px;">${card.content}</p>
+                    <span style="margin-top: 16px; font-size: 12px; color: #999; background: #EFEFEB; padding: 6px 12px; border-radius: 4px; display: inline-block;">${card.category}</span>
+                `;
+                cardEl.addEventListener('click', function() {
+                    alert('Card saved to favorites!');
+                });
+                container.appendChild(cardEl);
+            });
+        }
+
+        // ============================================================================
+        // SCENARIOS
+        // ============================================================================
+        function loadScenarios() {
+            const container = document.getElementById('scenarios-list');
+            container.innerHTML = '';
+
+            scenarios.forEach(scenario => {
+                const card = document.createElement('div');
+                card.className = 'card fade-in';
+                card.innerHTML = `
+                    <h3>${scenario.title}</h3>
+                    <p style="color: #666; margin-top: 8px;">${scenario.description}</p>
+                    <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; padding: 4px 8px; background: #EFEFEB; border-radius: 4px;">${scenario.difficulty}</span>
+                        <button class="btn-text scenario-start-btn" data-id="${scenario.id}">Start Simulation →</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Attach event listeners
+            document.querySelectorAll('.scenario-start-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const scenarioId = this.getAttribute('data-id');
+                    startScenario(parseInt(scenarioId));
+                });
+            });
+        }
+
+        function startScenario(scenarioId) {
+            const scenario = scenarios.find(s => s.id === scenarioId);
+            if (!scenario) return;
+
+            const content = document.getElementById('scenario-content');
+            content.innerHTML = `
+                <h2>${scenario.title}</h2>
+                <p style="color: #666; margin-top: 16px; font-size: 16px;">${scenario.situation}</p>
+                
+                <div style="margin-top: 32px;" id="scenario-choices">
+                    ${scenario.choices.map((choice, idx) => `
+                        <div class="scenario-choice" onclick="selectChoice(${scenarioId}, ${idx})">
+                            <strong>${choice.answer}</strong> - ${choice.text}
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div id="scenario-feedback" style="margin-top: 32px; display: none;">
+                    <p id="feedback-text" style="font-size: 16px; margin-bottom: 16px;"></p>
+                    
+                    <div id="legal-ref-section" style="background: #F0F5EC; border-left: 4px solid var(--color-sage); padding: 16px; border-radius: 8px; margin-bottom: 20px; display: none;">
+                        <p style="font-size: 12px; font-weight: 600; color: var(--color-sage); margin-bottom: 8px;">📜 Regulatory Reference</p>
+                        <p id="legal-ref-text" style="font-size: 14px; color: #333; margin: 0;"></p>
+                    </div>
+                    
+                    <div style="background: #FFF9E6; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                        <p style="font-size: 12px; font-weight: 600; color: #FFA500; margin-bottom: 12px;">⚠️ Risk Gauge</p>
+                        <div class="risk-gauge" id="feedback-risk-gauge">
+                            <div class="risk-indicator" id="feedback-risk-indicator"></div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                            <div>
+                                <p style="font-size: 12px; color: #666; margin-bottom: 4px;">Estimated Impact</p>
+                                <p style="font-weight: 600; color: #333;" id="feedback-impact"></p>
+                            </div>
+                            <div>
+                                <p style="font-size: 12px; color: #666; margin-bottom: 4px;">Fine Range</p>
+                                <p style="font-weight: 600; color: #333;" id="feedback-fine-range"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p id="consequence-text" style="font-weight: 600; margin-bottom: 24px; padding: 12px; background: #F9F9F7; border-radius: 8px;"></p>
+                    <button class="btn-secondary page-link" data-page="scenarios">Back to Simulations</button>
+                </div>
+            `;
+
+            showPage('scenario-detail');
+        }
+
+        function selectChoice(scenarioId, choiceIdx) {
+            const scenario = scenarios.find(s => s.id === scenarioId);
+            const choice = scenario.choices[choiceIdx];
+
+            document.getElementById('scenario-choices').style.display = 'none';
+            document.getElementById('scenario-feedback').style.display = 'block';
+            document.getElementById('feedback-text').textContent = choice.feedback;
+            document.getElementById('consequence-text').textContent = choice.consequence;
+
+            // Display legal reference if available
+            const legalRefSection = document.getElementById('legal-ref-section');
+            if (choice.legalRef) {
+                legalRefSection.style.display = 'block';
+                document.getElementById('legal-ref-text').textContent = choice.legalRef;
+            } else {
+                legalRefSection.style.display = 'none';
+            }
+
+            // Display risk gauge
+            const riskLevel = choice.riskLevel || 0;
+            const riskPercentage = Math.min(100, riskLevel);
+            const indicator = document.getElementById('feedback-risk-indicator');
+            indicator.style.left = riskPercentage + '%';
+            
+            document.getElementById('feedback-impact').textContent = choice.impact || 'N/A';
+            document.getElementById('feedback-fine-range').textContent = choice.riskRange || 'No Risk';
+
+            // Update score if correct
+            if (choice.correct) {
+                appState.dashboard.score = Math.min(100, appState.dashboard.score + 10);
+                localStorage.setItem('appState', JSON.stringify(appState));
+            }
+        }
+
+        // ============================================================================
+        // ASSESSMENT
+        // ============================================================================
+        function loadAssessment() {
+            const container = document.getElementById('assessment-content');
+            let assessmentHTML = '';
+
+            assessmentQuestions.forEach((q, idx) => {
+                assessmentHTML += `
+                    <div style="margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #EFEFEB;">
+                        <h4 style="margin-bottom: 16px;">${idx + 1}. ${q.question}</h4>
+                        <div>
+                            ${q.options.map((opt, optIdx) => `
+                                <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; font-weight: 400;">
+                                    <input type="radio" name="question-${q.id}" value="${optIdx}" style="margin-right: 12px;"> ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            assessmentHTML += '<button class="btn-primary" style="width: 100%;" id="submit-assessment">Get Assessment Results</button>';
+            container.innerHTML = assessmentHTML;
+
+            document.getElementById('submit-assessment')?.addEventListener('click', submitAssessment);
+        }
+
+        function submitAssessment() {
+            let totalRisk = 0;
+            let answeredCount = 0;
+
+            assessmentQuestions.forEach(q => {
+                const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+                if (selected) {
+                    const optIdx = parseInt(selected.value);
+                    totalRisk += q.riskWeights[optIdx];
+                    answeredCount++;
+                }
+            });
+
+            if (answeredCount !== assessmentQuestions.length) {
+                alert('Please answer all questions');
+                return;
+            }
+
+            const avgRisk = Math.round(totalRisk / assessmentQuestions.length);
+            const readinessScore = 100 - avgRisk;
+            let status = '';
+            let statusClass = '';
+
+            if (readinessScore >= 70) {
+                status = 'Good';
+                statusClass = 'status-green';
+            } else if (readinessScore >= 50) {
+                status = 'At Risk';
+                statusClass = 'status-amber';
+            } else {
+                status = 'Critical';
+                statusClass = 'status-red';
+            }
+
+            // Update dashboard
+            appState.dashboard.score = readinessScore;
+            appState.dashboard.progress = Math.max(appState.dashboard.progress, 50);
+            localStorage.setItem('appState', JSON.stringify(appState));
+
+            // Show results
+            const container = document.getElementById('assessment-content');
+            container.innerHTML = `
+                <div style="text-align: center;">
+                    <h2 style="font-size: 36px; color: var(--color-sage); margin-bottom: 16px;">${readinessScore}/100</h2>
+                    <div class="${statusClass}" style="display: inline-block; margin-bottom: 32px;">${status}</div>
+                    
+                    <p style="color: #666; margin-bottom: 32px; font-size: 16px;">Your company's readiness for PPWR compliance.</p>
+                    
+                    <div style="background: #F9F9F7; border-radius: 12px; padding: 20px; text-align: left; margin-bottom: 24px;">
+                        <h4 style="margin-bottom: 16px;">Recommended Actions:</h4>
+                        <ul style="color: #666; line-height: 1.8;">
+                            <li>✓ Request Declarations of Conformity from all suppliers</li>
+                            <li>✓ Establish a document retention system (5-year minimum)</li>
+                            <li>✓ Conduct PFAS testing on food-contact materials</li>
+                            <li>✓ Calculate and document empty space ratios</li>
+                            <li>✓ Review label removability and recyclability</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn-primary page-link" data-page="dashboard" style="width: 100%;">Back to Dashboard</button>
+                </div>
+            `;
+        }
+
+        // ============================================================================
+        // CERTIFICATES
+        // ============================================================================
+        function loadCertificates() {
+            const container = document.getElementById('certificates-list');
+            container.innerHTML = '';
+
+            // Show certificate if readiness score >= 80
+            if (appState.dashboard.score >= 80) {
+                const certHTML = `
+                    <div class="certificate-container">
+                        <div class="certificate-header">Certificate of Completion</div>
+                        <div class="certificate-body">
+                            <p>This certifies that</p>
+                            <p style="font-size: 18px; font-weight: 700; margin: 16px 0;">${appState.user?.name || 'Participant'}</p>
+                            <p>has successfully completed the</p>
+                            <p style="font-size: 16px; font-weight: 600; margin: 16px 0;">PPWR Compliance Readiness Program</p>
+                            <p>and demonstrated a comprehensive understanding of the</p>
+                            <p style="font-size: 14px;">EU Packaging and Packaging Waste Regulation (PPWR)</p>
+                            <p style="margin-top: 24px; font-size: 13px;">Issued on ${new Date().toLocaleDateString()}</p>
+                        </div>
+                        <div class="certificate-name">PPWR Learning Hub</div>
+                        <div class="certificate-date">Certificate ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
+                        <button class="btn-primary" style="width: 100%; margin-top: 20px;">📥 Download Certificate</button>
+                    </div>
+                `;
+                container.innerHTML = certHTML;
+            } else {
+                container.innerHTML = `
+                    <div class="card" style="grid-column: 1 / -1; text-align: center;">
+                        <p style="color: #666; margin-bottom: 16px;">Earn your certificate by reaching a readiness score of 80+</p>
+                        <p style="font-size: 12px; color: #999;">Current score: ${appState.dashboard.score}/100</p>
+                        <button class="btn-secondary page-link" data-page="learning" style="margin-top: 16px;">Continue Learning</button>
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================================================
+        // DASHBOARD
+        // ============================================================================
+        function updateDashboard() {
+            // Load from localStorage if exists
+            const saved = localStorage.getItem('appState');
+            if (saved) {
+                appState = JSON.parse(saved);
+            }
+
+            document.getElementById('dashboard-score').textContent = appState.dashboard.score;
+            document.getElementById('dashboard-progress').textContent = appState.dashboard.progress + '%';
+            document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
+            document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
+        }
+
+        // ============================================================================
+        // ADMIN FUNCTIONS
+        // ============================================================================
+        function updateAdminDashboard() {
+            document.getElementById('admin-users-count').textContent = appState.admin.usersCount;
+            document.getElementById('admin-completion').textContent = appState.admin.completionRate + '%';
+            document.getElementById('admin-avg-score').textContent = appState.admin.avgScore;
+            document.getElementById('admin-plan').textContent = appState.admin.plan;
+            document.getElementById('admin-seats').textContent = appState.admin.seats;
+            document.getElementById('admin-renewal').textContent = appState.admin.renewal;
+        }
+
+        function loadAdminUsers() {
+            const mockUsers = [
+                { name: 'John Doe', email: 'john@company.com', role: 'Owner', status: 'Active' },
+                { name: 'Sarah Smith', email: 'sarah@company.com', role: 'Manager', status: 'Active' },
+                { name: 'Michael Brown', email: 'michael@company.com', role: 'Employee', status: 'Active' },
+                { name: 'Emma Wilson', email: 'emma@company.com', role: 'Employee', status: 'Pending' },
+                { name: 'David Lee', email: 'david@company.com', role: 'Employee', status: 'Active' }
+            ];
+
+            const tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = mockUsers.map(user => `
+                <tr style="border-bottom: 1px solid #EFEFEB;">
+                    <td style="padding: 12px;">${user.name}</td>
+                    <td style="padding: 12px;">${user.email}</td>
+                    <td style="padding: 12px;">${user.role}</td>
+                    <td style="padding: 12px;">
+                        <span class="${user.status === 'Active' ? 'status-green' : 'status-amber'}">${user.status}</span>
+                    </td>
+                    <td style="padding: 12px;">
+                        <button class="btn-text" style="margin-right: 12px;">Edit</button>
+                        <button class="btn-text" style="color: #F44336;">Remove</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Bulk invite functionality
+        document.getElementById('bulk-invite-btn')?.addEventListener('click', function() {
+            document.getElementById('bulk-invite-modal').classList.add('active');
+        });
+
+        document.getElementById('close-bulk-modal')?.addEventListener('click', function() {
+            document.getElementById('bulk-invite-modal').classList.remove('active');
+        });
+
+        document.getElementById('send-bulk-invites')?.addEventListener('click', function() {
+            const emailText = document.getElementById('bulk-emails').value;
+            const emails = emailText.split('\n').map(e => e.trim()).filter(e => e && e.includes('@'));
+
+            if (emails.length === 0) {
+                alert('Please enter valid email addresses');
+                return;
+            }
+
+            alert(`Sending invitations to ${emails.length} users:\n${emails.join(', ')}`);
+            document.getElementById('bulk-invite-modal').classList.remove('active');
+            document.getElementById('bulk-emails').value = '';
+        });
+
+        function loadAnalytics() {
+            const ctx = document.getElementById('analytics-chart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Module 1', 'Module 2', 'Module 3', 'Module 4', 'Module 5'],
+                    datasets: [{
+                        label: 'Completion %',
+                        data: [92, 78, 65, 48, 32],
+                        backgroundColor: '#9CAF88',
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Failed scenarios
+            const failedScenarios = document.getElementById('failed-scenarios');
+            failedScenarios.innerHTML = `
+                <div style="margin-bottom: 12px; padding: 12px; background: #FFEBEE; border-radius: 8px;">
+                    <p style="margin: 0; font-weight: 600; color: #F44336;">Material Recyclability (68% failure)</p>
+                </div>
+                <div style="margin-bottom: 12px; padding: 12px; background: #FFF3E0; border-radius: 8px;">
+                    <p style="margin: 0; font-weight: 600; color: #FFA500;">Empty Space Calculation (52% failure)</p>
+                </div>
+                <div style="padding: 12px; background: #FFFDE7; border-radius: 8px;">
+                    <p style="margin: 0; font-weight: 600; color: #FFB300;">Market-Specific Rules (45% failure)</p>
+                </div>
+            `;
+        }
+
+        function loadLeads() {
+            const mockLeads = [
+                { name: 'Anna Bergström', email: 'anna@packaging.se', company: 'Packaging AS', country: 'Sweden', score: 42, date: '2024-04-25' },
+                { name: 'Per Jensen', email: 'per@food.dk', company: 'Nordic Foods', country: 'Denmark', score: 58, date: '2024-04-24' },
+                { name: 'Hanna Olsen', email: 'hanna@retail.no', company: 'Oslo Retail', country: 'Norway', score: 35, date: '2024-04-23' }
+            ];
+
+            const tbody = document.getElementById('leads-table-body');
+            tbody.innerHTML = mockLeads.map(lead => `
+                <tr style="border-bottom: 1px solid #EFEFEB;">
+                    <td style="padding: 12px;">${lead.name}</td>
+                    <td style="padding: 12px;">${lead.email}</td>
+                    <td style="padding: 12px;">${lead.company}</td>
+                    <td style="padding: 12px;">${lead.country}</td>
+                    <td style="padding: 12px;">
+                        <span class="${lead.score >= 60 ? 'status-green' : lead.score >= 40 ? 'status-amber' : 'status-red'}">${lead.score}%</span>
+                    </td>
+                    <td style="padding: 12px; font-size: 12px; color: #999;">${lead.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        // ============================================================================
+        // RISK CALCULATOR
+        // ============================================================================
+        document.getElementById('calculate-risk-btn')?.addEventListener('click', function() {
+            const industry = document.getElementById('risk-industry').value;
+            const material = document.getElementById('risk-material').value;
+
+            let riskScore = Math.floor(Math.random() * 40) + 30;
+            let gaps = Math.floor(Math.random() * 4) + 2;
+            let status = 'At Risk';
+            let statusColor = '#FFA500';
+
+            if (riskScore < 40) {
+                status = 'Critical';
+                statusColor = '#F44336';
+            } else if (riskScore > 60) {
+                status = 'Manageable';
+                statusColor = '#4CAF50';
+            }
+
+            const resultsDiv = document.getElementById('risk-results');
+            resultsDiv.style.display = 'block';
+
+            document.getElementById('risk-score').textContent = riskScore + '%';
+            document.getElementById('risk-status').textContent = '●';
+            document.getElementById('risk-status').style.color = statusColor;
+            document.getElementById('risk-gaps').textContent = gaps;
+
+            const recommendations = document.getElementById('risk-recommendations');
+            recommendations.innerHTML = `
+                <h4 style="margin-bottom: 16px;">Key Areas to Address:</h4>
+                <div style="background: #F9F9F7; border-radius: 8px; padding: 16px;">
+                    <ul style="color: #666; line-height: 1.8; margin: 0; padding-left: 20px;">
+                        <li>Supplier declarations for <strong>${material}</strong> products</li>
+                        <li>Empty space ratio documentation</li>
+                        <li>PFAS testing and certification</li>
+                        <li>Recyclability assessment</li>
+                    </ul>
+                </div>
+            `;
+        });
+
+        // ============================================================================
+        // PAGE NAVIGATION SETUP
+        // ============================================================================
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                if (page === 'home' || page === 'features' || page === 'pricing') {
+                    if (appState.isLoggedIn && page !== 'home') {
+                        showPage('dashboard');
+                    } else {
+                        showPage(page);
+                    }
+                } else if (page === 'login' || page === 'signup') {
+                    showPage(page);
+                } else {
+                    if (!appState.isLoggedIn) {
+                        showPage('login');
+                    } else {
+                        showPage(page);
+                    }
+                }
+            });
+        });
+
+        // Initial page load and countdown
+        updateCountdowns();
+        if (appState.isLoggedIn) {
+            showPage('dashboard');
+        } else {
+            showPage('home');
+        }
+
+        // ============================================================================
+        // AI KNOWLEDGE NAVIGATOR
+        // ============================================================================
+
+        const aiNav = (() => {
+
+            // ── Plan quota config ─────────────────────────────────────────────
+            const STARTER_LIMIT = 3;
+
+            // Per-session question count (reset on page reload, not persisted)
+            let sessionQuestions = 0;
+
+            // Cached user plan – read from appState
+            function getUserPlan() {
+                return (appState.user?.plan || 'starter').toLowerCase();
+            }
+
+            function isStarterPlan() {
+                return getUserPlan() === 'starter';
+            }
+
+            // ── DOM refs ──────────────────────────────────────────────────────
+            const btn        = document.getElementById('ai-nav-btn');
+            const win        = document.getElementById('ai-chat-window');
+            const closeBtn   = document.getElementById('ai-chat-close');
+            const messages   = document.getElementById('ai-chat-messages');
+            const input      = document.getElementById('ai-chat-input');
+            const sendBtn    = document.getElementById('ai-chat-send');
+            const quotaBar   = document.getElementById('ai-quota-bar');
+            const quotaLabel = document.getElementById('ai-quota-label');
+            const suggWrap   = document.getElementById('ai-suggestions');
+
+            // ── Visibility gated by login ─────────────────────────────────────
+            function syncVisibility() {
+                btn.style.display = appState.isLoggedIn ? 'flex' : 'none';
+            }
+
+            // ── Open / close ──────────────────────────────────────────────────
+            function openChat() {
+                win.classList.add('open');
+                input.focus();
+                if (messages.children.length === 0) showWelcome();
+                syncQuotaBar();
+            }
+
+            function closeChat() {
+                win.classList.remove('open');
+            }
+
+            btn.addEventListener('click', () => {
+                win.classList.contains('open') ? closeChat() : openChat();
+            });
+
+            closeBtn.addEventListener('click', closeChat);
+
+            // Close on Escape key
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && win.classList.contains('open')) closeChat();
+            });
+
+            // ── Welcome message ───────────────────────────────────────────────
+            function showWelcome() {
+                appendBotBubble(
+                    'Hello! I\'m your <strong>PPWR Knowledge Navigator</strong>. Ask me anything about packaging compliance — I\'ll answer using the verified modules on this platform.',
+                    null, false
+                );
+            }
+
+            // ── Quota bar renderer ────────────────────────────────────────────
+            function syncQuotaBar() {
+                if (!isStarterPlan()) { quotaBar.style.display = 'none'; return; }
+                quotaBar.style.display = 'flex';
+                quotaLabel.textContent = `${Math.min(sessionQuestions, STARTER_LIMIT)} / ${STARTER_LIMIT}`;
+                ['ai-dot-1','ai-dot-2','ai-dot-3'].forEach((id, i) => {
+                    const dot = document.getElementById(id);
+                    if (dot) dot.classList.toggle('used', i >= STARTER_LIMIT - sessionQuestions);
+                });
+            }
+
+            // ── Bubble helpers ────────────────────────────────────────────────
+            function appendBotBubble(html, source, sourceVerified) {
+                const div = document.createElement('div');
+                div.className = 'ai-bubble bot';
+                div.innerHTML = html;
+                if (source) {
+                    const src = document.createElement('span');
+                    src.className = 'ai-source';
+                    // Show a lock/verified icon when the server confirmed the source module ID
+                    const icon = sourceVerified ? '✅' : '📌';
+                    src.textContent = icon + ' ' + source;
+                    div.appendChild(src);
+                }
+                messages.appendChild(div);
+                scrollBottom();
+                return div;
+            }
+
+            function appendUserBubble(text) {
+                const div = document.createElement('div');
+                div.className = 'ai-bubble user';
+                div.textContent = text;
+                messages.appendChild(div);
+                scrollBottom();
+            }
+
+            function appendUpgradeWall() {
+                const div = document.createElement('div');
+                div.className = 'ai-upgrade-wall';
+                div.innerHTML = `
+                    <p>🔒 You've used all <strong>${STARTER_LIMIT} questions</strong> on your Starter plan.<br>Upgrade to unlock unlimited questions.</p>
+                    <button onclick="aiNav.goUpgrade()">Upgrade to Growth — Unlimited Questions</button>
+                `;
+                messages.appendChild(div);
+                scrollBottom();
+            }
+
+            function showTyping() {
+                const div = document.createElement('div');
+                div.className = 'ai-bubble typing';
+                div.id = 'ai-typing';
+                div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+                messages.appendChild(div);
+                scrollBottom();
+                return div;
+            }
+
+            function removeTyping() {
+                const el = document.getElementById('ai-typing');
+                if (el) el.remove();
+            }
+
+            function scrollBottom() {
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            // ── Upgrade shortcut (exposed on aiNav object) ────────────────────
+            function goUpgrade() {
+                closeChat();
+                showPage('pricing');
+            }
+
+            // ── ────────────────────────────────────────────────────────────────
+            //    SECURE PROXY CLIENT
+            //
+            //    All Claude API logic now lives server-side in /api/chat.js
+            //    (or worker.js for static deployments).
+            //
+            //    This frontend ONLY:
+            //      1. Serialises the platform's knowledge arrays
+            //      2. Sends them + the query to the /api/chat endpoint
+            //      3. Renders the structured { answer, sourceId, sourceLabel }
+            //         response — the API key never touches this file.
+            //
+            //    HOW TO POINT THIS AT YOUR DEPLOYED PROXY
+            //    ─────────────────────────────────────────
+            //    • Next.js:           leave PROXY_ENDPOINT as '/api/chat'
+            //    • Cloudflare Worker: 'https://ppwr-chat-proxy.<sub>.workers.dev/api/chat'
+            //    • Netlify Function:  '/.netlify/functions/chat'
+            // ── ────────────────────────────────────────────────────────────────
+
+            const PROXY_ENDPOINT = '/api/chat'; // ← change for your hosting target
+
+            // Generate a stable session token for this browser session.
+            // In production, use the real JWT from your auth provider (Supabase, etc.).
+            function getSessionToken() {
+                let token = sessionStorage.getItem('ppwr-session-token');
+                if (!token) {
+                    // Cryptographically random token tied to this tab session
+                    const arr = new Uint8Array(24);
+                    crypto.getRandomValues(arr);
+                    token = 'ppwr-session-' + Array.from(arr)
+                        .map(b => b.toString(16).padStart(2, '0')).join('');
+                    sessionStorage.setItem('ppwr-session-token', token);
+                }
+                return token;
+            }
+
+            // Build a lean snapshot of platform content to send as RAG context.
+            // Only the fields the server needs — no UI state, no user PII.
+            function buildContextPayload() {
+                return {
+                    cards: learningCards.map(c => ({
+                        id:       c.id,
+                        title:    c.title,
+                        content:  c.content,
+                        category: c.category
+                    })),
+                    scenarios: scenarios.map(s => ({
+                        id:          s.id,
+                        title:       s.title,
+                        description: s.description,
+                        situation:   s.situation,
+                        difficulty:  s.difficulty,
+                        choices:     s.choices.map(ch => ({
+                            text:     ch.text,
+                            feedback: ch.feedback,
+                            correct:  ch.correct  || false,
+                            legalRef: ch.legalRef || null
+                        }))
+                    }))
+                };
+            }
+
+            // Core async call — returns { answer, sourceId, sourceLabel } or throws
+            async function callProxyAPI(query) {
+                const payload = {
+                    query,
+                    sessionToken: getSessionToken(),         // auth proof — never the API key
+                    plan:         getUserPlan(),
+                    context:      buildContextPayload()
+                };
+
+                const resp = await fetch(PROXY_ENDPOINT, {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(payload)
+                });
+
+                // Handle server-side quota exceeded (Starter plan, enforced at server)
+                if (resp.status === 429) {
+                    const data = await resp.json().catch(() => ({}));
+                    const err  = new Error('quota_exceeded');
+                    err.upgradeRequired = data.upgradeRequired || false;
+                    throw err;
+                }
+
+                // Handle auth rejection
+                if (resp.status === 401) {
+                    throw new Error('unauthorized');
+                }
+
+                if (!resp.ok) {
+                    throw new Error(`proxy_error_${resp.status}`);
+                }
+
+                return await resp.json();
+                // Shape: { answer, sourceId, sourceLabel, sourceVerified, timestamp }
+            }
+
+            // ── Handle user send (async) ──────────────────────────────────────
+            async function handleSend() {
+                const text = input.value.trim();
+                if (!text) return;
+
+                // Client-side early exit for Starter plan (mirrors server check)
+                if (isStarterPlan() && sessionQuestions >= STARTER_LIMIT) {
+                    appendUpgradeWall();
+                    input.value    = '';
+                    input.disabled = true;
+                    sendBtn.disabled = true;
+                    return;
+                }
+
+                // Hide suggestion pills on first real query
+                if (suggWrap) suggWrap.style.display = 'none';
+
+                appendUserBubble(text);
+                input.value      = '';
+                input.disabled   = true;   // prevent double-send while awaiting
+                sendBtn.disabled = true;
+                sessionQuestions++;
+                syncQuotaBar();
+                showTyping();
+
+                try {
+                    const result = await callProxyAPI(text);
+
+                    removeTyping();
+
+                    // Render answer — source badge uses structured sourceLabel from server
+                    appendBotBubble(
+                        result.answer,
+                        result.sourceLabel || null,
+                        result.sourceVerified
+                    );
+
+                } catch (err) {
+                    removeTyping();
+
+                    if (err.message === 'quota_exceeded' || err.upgradeRequired) {
+                        appendUpgradeWall();
+                    } else if (err.message === 'unauthorized') {
+                        appendBotBubble(
+                            '⚠️ Your session has expired. Please log out and log back in.',
+                            null, false
+                        );
+                    } else {
+                        // Network failure or proxy error — fall back to local knowledge search
+                        const local = localFallbackSearch(text);
+                        if (local) {
+                            appendBotBubble(
+                                local.answer + '<br><small style="color:#aaa">(Offline fallback — live AI unavailable)</small>',
+                                local.source, false
+                            );
+                        } else {
+                            appendBotBubble(
+                                "I'm sorry, I couldn't reach the knowledge service right now. " +
+                                "Please consult the official <strong>Regulation (EU) 2025/40</strong> text.",
+                                null, false
+                            );
+                        }
+                    }
+                } finally {
+                    // Re-enable input unless quota is exhausted
+                    const exhausted = isStarterPlan() && sessionQuestions >= STARTER_LIMIT;
+                    input.disabled   = exhausted;
+                    sendBtn.disabled = exhausted;
+                    if (exhausted) setTimeout(() => appendUpgradeWall(), 400);
+                    input.focus();
+                }
+            }
+
+            // ── Offline / no-proxy fallback (pure local keyword search) ───────
+            //    Used only when the proxy is unreachable (e.g., local file:// usage).
+            //    No API key involved — pure string matching on the in-memory arrays.
+            function localFallbackSearch(raw) {
+                const q = raw.toLowerCase();
+                const stop = new Set(['what','is','are','the','a','an','of','in','on','for',
+                    'to','do','does','how','when','where','which','can','tell','me','about']);
+                const tokens = q.split(/\s+/).filter(t => t.length > 1 && !stop.has(t));
+                if (!tokens.length) return null;
+
+                let best = null, bestScore = 0;
+
+                for (const c of learningCards) {
+                    const hay = (c.title + ' ' + c.content + ' ' + c.category).toLowerCase();
+                    const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0);
+                    if (score > bestScore) { bestScore = score; best = { answer: c.content, source: `Learning Card: "${c.title}"` }; }
+                }
+                for (const s of scenarios) {
+                    const hay = [s.title, s.situation, ...s.choices.map(c => c.text + ' ' + c.feedback)].join(' ').toLowerCase();
+                    const score = tokens.reduce((sc, t) => sc + (hay.includes(t) ? 1 : 0), 0);
+                    if (score > bestScore) {
+                        bestScore = score;
+                        const correct = s.choices.find(c => c.correct);
+                        best = { answer: correct ? correct.feedback : s.situation, source: `Scenario: "${s.title}"` };
+                    }
+                }
+                return bestScore > 0 ? best : null;
+            }
+
+            // ── Event wiring ──────────────────────────────────────────────────
+            sendBtn.addEventListener('click', () => handleSend().catch(console.error));
+
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend().catch(console.error); }
+            });
+
+            // Suggestion pills
+            suggWrap.querySelectorAll('.ai-pill').forEach(pill => {
+                pill.addEventListener('click', () => {
+                    input.value = pill.dataset.query;
+                    handleSend().catch(console.error);
+                });
+            });
+
+            // ── Re-sync button visibility whenever login state changes ─────────
+            // Patch showPage to call syncVisibility after each navigation
+            const _origShowPage = showPage;
+            window.showPage = function(page) {
+                _origShowPage(page);
+                syncVisibility();
+            };
+
+            // Initial sync
+            syncVisibility();
+
+            // Public API
+            return { goUpgrade, syncVisibility };
+        })();
+        // ============================================================================
+        // END AI KNOWLEDGE NAVIGATOR
+        // ============================================================================
+
+        // Save state periodically
+        setInterval(() => {
+            localStorage.setItem('appState', JSON.stringify(appState));
+        }, 5000);
+    </script>
+    <!-- ================================================================
+         AI KNOWLEDGE NAVIGATOR — Floating button + Chat window
+    ================================================================ -->
+
+    <!-- Floating Brain Button (visible when logged in) -->
+    <button id="ai-nav-btn" aria-label="Open PPWR Knowledge Navigator">
+        <!-- Brain SVG icon -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
+        </svg>
+    </button>
+
+    <!-- Chat Window -->
+    <div id="ai-chat-window" role="dialog" aria-label="PPWR Knowledge Navigator">
+
+        <!-- Header -->
+        <div id="ai-chat-header">
+            <div class="ai-header-left">
+                <div class="ai-header-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>PPWR Knowledge Navigator</h3>
+                    <p>Closed knowledge · Platform content only</p>
+                </div>
+            </div>
+            <button id="ai-chat-close" aria-label="Close chat">✕</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="ai-chat-messages"></div>
+
+        <!-- Suggested questions pills -->
+        <div class="ai-suggestions" id="ai-suggestions">
+            <button class="ai-pill" data-query="What is PFAS?">What is PFAS?</button>
+            <button class="ai-pill" data-query="Empty space limit">Empty space limit</button>
+            <button class="ai-pill" data-query="Recyclability rules">Recyclability rules</button>
+            <button class="ai-pill" data-query="Record retention">Record retention</button>
+        </div>
+
+        <!-- Quota bar (Starter plan only) -->
+        <div class="ai-quota-bar" id="ai-quota-bar" style="display:none;">
+            <span>Questions used:</span>
+            <div class="ai-quota-dots">
+                <div class="ai-quota-dot" id="ai-dot-1"></div>
+                <div class="ai-quota-dot" id="ai-dot-2"></div>
+                <div class="ai-quota-dot" id="ai-dot-3"></div>
+            </div>
+            <span id="ai-quota-label">0 / 3</span>
+        </div>
+
+        <!-- Input area -->
+        <div id="ai-chat-input-area">
+            <input
+                id="ai-chat-input"
+                type="text"
+                placeholder="Ask about PPWR…"
+                maxlength="200"
+                autocomplete="off"
+            />
+            <button id="ai-chat-send" aria-label="Send">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Footer disclaimer -->
+        <div id="ai-chat-footer">
+            I only answer based on verified platform content.
+        </div>
+
+    </div>
+
+</body>
+</html>
