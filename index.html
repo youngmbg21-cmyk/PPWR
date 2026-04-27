@@ -2623,220 +2623,146 @@
                 showPage('pricing');
             }
 
-            // ── ────────────────────────────────────────────────────────────────
-            //    SECURE PROXY CLIENT
-            //
-            //    All Claude API logic now lives server-side in /api/chat.js
-            //    (or worker.js for static deployments).
-            //
-            //    This frontend ONLY:
-            //      1. Serialises the platform's knowledge arrays
-            //      2. Sends them + the query to the /api/chat endpoint
-            //      3. Renders the structured { answer, sourceId, sourceLabel }
-            //         response — the API key never touches this file.
-            //
-            //    HOW TO POINT THIS AT YOUR DEPLOYED PROXY
-            //    ─────────────────────────────────────────
-            //    • Next.js:           leave PROXY_ENDPOINT as '/api/chat'
-            //    • Cloudflare Worker: 'https://ppwr-chat-proxy.<sub>.workers.dev/api/chat'
-            //    • Netlify Function:  '/.netlify/functions/chat'
-            // ── ────────────────────────────────────────────────────────────────
+            // ── Closed-knowledge search ───────────────────────────────────────
+            //    processChatQuery searches ONLY within learningCards and scenarios.
+            //    No external API calls are made. Returns null when no good match
+            //    is found, which triggers the strict "not covered" response.
+            function processChatQuery(raw) {
+                const STOP = new Set([
+                    'what','is','are','the','a','an','of','in','on','for','to','do','does',
+                    'how','when','where','which','can','tell','me','about','explain','give',
+                    'describe','define','should','must','will','would','could','please','help',
+                    'my','our','i','we','you','your','this','that','these','those','it',
+                    'be','has','have','had','with','from','at','by','up','out','if','any',
+                    'need','company','product','packaging','pack','package','ppwr','eu'
+                ]);
 
-            const PROXY_ENDPOINT = '/api/chat'; // ← change for your hosting target
+                const q = raw.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').trim();
+                const tokens = q.split(/\s+/).filter(t => t.length > 2 && !STOP.has(t));
+                if (tokens.length === 0) return null;
 
-            // Generate a stable session token for this browser session.
-            // In production, use the real JWT from your auth provider (Supabase, etc.).
-            function getSessionToken() {
-                let token = sessionStorage.getItem('ppwr-session-token');
-                if (!token) {
-                    // Cryptographically random token tied to this tab session
-                    const arr = new Uint8Array(24);
-                    crypto.getRandomValues(arr);
-                    token = 'ppwr-session-' + Array.from(arr)
-                        .map(b => b.toString(16).padStart(2, '0')).join('');
-                    sessionStorage.setItem('ppwr-session-token', token);
+                let best = null, bestScore = 0;
+
+                // Title hits carry 3× weight; word-boundary matches get an extra bonus.
+                function scoreText(title, body, extra) {
+                    let s = 0;
+                    const tl = title.toLowerCase();
+                    const bl = (body + ' ' + (extra || '')).toLowerCase();
+                    for (const t of tokens) {
+                        if (tl.includes(t)) {
+                            s += 3;
+                            if (new RegExp('\\b' + t + '\\b').test(tl)) s += 2;
+                        }
+                        if (bl.includes(t)) {
+                            s += 1;
+                            if (new RegExp('\\b' + t + '\\b').test(bl)) s += 1;
+                        }
+                    }
+                    return s;
                 }
-                return token;
+
+                // Search learning cards
+                for (const card of learningCards) {
+                    const s = scoreText(card.title, card.content, card.category);
+                    if (s > bestScore) {
+                        bestScore = s;
+                        best = {
+                            answer:   card.content,
+                            source:   'Learning Card: "' + card.title + '"',
+                            verified: true
+                        };
+                    }
+                }
+
+                // Search scenarios — title, situation, all choice text + feedback + legalRef
+                for (const sc of scenarios) {
+                    const choiceText = sc.choices
+                        .map(c => c.text + ' ' + c.feedback + ' ' + (c.legalRef || ''))
+                        .join(' ');
+                    const body = (sc.situation || '') + ' ' + (sc.description || '') + ' ' + choiceText;
+                    const s = scoreText(sc.title, body, sc.difficulty);
+                    if (s > bestScore) {
+                        bestScore = s;
+                        const correct = sc.choices.find(c => c.correct);
+                        let answer = sc.situation || sc.description || '';
+                        if (correct) {
+                            answer += '\n\nBest action: ' + correct.text + '. ' + correct.feedback;
+                            if (correct.legalRef) answer += ' (' + correct.legalRef + ')';
+                        }
+                        best = {
+                            answer,
+                            source:   'Scenario: "' + sc.title + '"',
+                            verified: true
+                        };
+                    }
+                }
+
+                // Require a meaningful match (score ≥ 2) to avoid returning noise
+                return bestScore >= 2 ? best : null;
             }
 
-            // Build a lean snapshot of platform content to send as RAG context.
-            // Only the fields the server needs — no UI state, no user PII.
-            function buildContextPayload() {
-                return {
-                    cards: learningCards.map(c => ({
-                        id:       c.id,
-                        title:    c.title,
-                        content:  c.content,
-                        category: c.category
-                    })),
-                    scenarios: scenarios.map(s => ({
-                        id:          s.id,
-                        title:       s.title,
-                        description: s.description,
-                        situation:   s.situation,
-                        difficulty:  s.difficulty,
-                        choices:     s.choices.map(ch => ({
-                            text:     ch.text,
-                            feedback: ch.feedback,
-                            correct:  ch.correct  || false,
-                            legalRef: ch.legalRef || null
-                        }))
-                    }))
-                };
-            }
-
-            // Core async call — returns { answer, sourceId, sourceLabel } or throws
-            async function callProxyAPI(query) {
-                const payload = {
-                    query,
-                    sessionToken: getSessionToken(),         // auth proof — never the API key
-                    plan:         getUserPlan(),
-                    context:      buildContextPayload()
-                };
-
-                const resp = await fetch(PROXY_ENDPOINT, {
-                    method:  'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify(payload)
-                });
-
-                // Handle server-side quota exceeded (Starter plan, enforced at server)
-                if (resp.status === 429) {
-                    const data = await resp.json().catch(() => ({}));
-                    const err  = new Error('quota_exceeded');
-                    err.upgradeRequired = data.upgradeRequired || false;
-                    throw err;
-                }
-
-                // Handle auth rejection
-                if (resp.status === 401) {
-                    throw new Error('unauthorized');
-                }
-
-                if (!resp.ok) {
-                    throw new Error(`proxy_error_${resp.status}`);
-                }
-
-                return await resp.json();
-                // Shape: { answer, sourceId, sourceLabel, sourceVerified, timestamp }
-            }
-
-            // ── Handle user send (async) ──────────────────────────────────────
-            async function handleSend() {
+            // ── Handle user send ──────────────────────────────────────────────
+            function handleSend() {
                 const text = input.value.trim();
                 if (!text) return;
 
-                // Client-side early exit for Starter plan (mirrors server check)
+                // Quota gate — Starter plan: 3 questions per session
                 if (isStarterPlan() && sessionQuestions >= STARTER_LIMIT) {
                     appendUpgradeWall();
-                    input.value    = '';
-                    input.disabled = true;
+                    input.value      = '';
+                    input.disabled   = true;
                     sendBtn.disabled = true;
                     return;
                 }
 
-                // Hide suggestion pills on first real query
+                // Hide suggestion pills after first real query
                 if (suggWrap) suggWrap.style.display = 'none';
 
                 appendUserBubble(text);
                 input.value      = '';
-                input.disabled   = true;   // prevent double-send while awaiting
+                input.disabled   = true;
                 sendBtn.disabled = true;
                 sessionQuestions++;
                 syncQuotaBar();
                 showTyping();
 
-                try {
-                    const result = await callProxyAPI(text);
-
+                // Brief delay for natural feel, then run the closed-knowledge search
+                setTimeout(() => {
                     removeTyping();
 
-                    // Render answer — source badge uses structured sourceLabel from server
-                    appendBotBubble(
-                        result.answer,
-                        result.sourceLabel || null,
-                        result.sourceVerified
-                    );
+                    const result = processChatQuery(text);
 
-                } catch (err) {
-                    removeTyping();
-
-                    if (err.message === 'quota_exceeded' || err.upgradeRequired) {
-                        appendUpgradeWall();
-                    } else if (err.message === 'unauthorized') {
+                    if (result) {
+                        appendBotBubble(result.answer, result.source, result.verified);
+                    } else {
                         appendBotBubble(
-                            '⚠️ Your session has expired. Please log out and log back in.',
+                            "I'm sorry, that specific detail is not covered in our current modules. Please consult the official Regulation (EU) 2025/40 text.",
                             null, false
                         );
-                    } else {
-                        // Network failure or proxy error — fall back to local knowledge search
-                        const local = localFallbackSearch(text);
-                        if (local) {
-                            const fallbackDiv = appendBotBubble(local.answer, local.source, false);
-                            const noteEl = document.createElement('small');
-                            noteEl.style.color = '#aaa';
-                            noteEl.textContent = '(Offline fallback — live AI unavailable)';
-                            fallbackDiv.insertBefore(document.createElement('br'), fallbackDiv.querySelector('.ai-source'));
-                            fallbackDiv.insertBefore(noteEl, fallbackDiv.querySelector('.ai-source'));
-                        } else {
-                            appendBotBubble(
-                                "I'm sorry, I couldn't reach the knowledge service right now. " +
-                                "Please consult the official Regulation (EU) 2025/40 text.",
-                                null, false
-                            );
-                        }
                     }
-                } finally {
-                    // Re-enable input unless quota is exhausted
+
+                    // Re-enable unless quota is now exhausted
                     const exhausted = isStarterPlan() && sessionQuestions >= STARTER_LIMIT;
                     input.disabled   = exhausted;
                     sendBtn.disabled = exhausted;
                     if (exhausted) setTimeout(() => appendUpgradeWall(), 400);
                     input.focus();
-                }
+                }, 650);
             }
 
-            // ── Offline / no-proxy fallback (pure local keyword search) ───────
-            //    Used only when the proxy is unreachable (e.g., local file:// usage).
-            //    No API key involved — pure string matching on the in-memory arrays.
-            function localFallbackSearch(raw) {
-                const q = raw.toLowerCase();
-                const stop = new Set(['what','is','are','the','a','an','of','in','on','for',
-                    'to','do','does','how','when','where','which','can','tell','me','about']);
-                const tokens = q.split(/\s+/).filter(t => t.length > 1 && !stop.has(t));
-                if (!tokens.length) return null;
-
-                let best = null, bestScore = 0;
-
-                for (const c of learningCards) {
-                    const hay = (c.title + ' ' + c.content + ' ' + c.category).toLowerCase();
-                    const score = tokens.reduce((s, t) => s + (hay.includes(t) ? 1 : 0), 0);
-                    if (score > bestScore) { bestScore = score; best = { answer: c.content, source: `Learning Card: "${c.title}"` }; }
-                }
-                for (const s of scenarios) {
-                    const hay = [s.title, s.situation, ...s.choices.map(c => c.text + ' ' + c.feedback)].join(' ').toLowerCase();
-                    const score = tokens.reduce((sc, t) => sc + (hay.includes(t) ? 1 : 0), 0);
-                    if (score > bestScore) {
-                        bestScore = score;
-                        const correct = s.choices.find(c => c.correct);
-                        best = { answer: correct ? correct.feedback : s.situation, source: `Scenario: "${s.title}"` };
-                    }
-                }
-                return bestScore > 0 ? best : null;
-            }
 
             // ── Event wiring ──────────────────────────────────────────────────
-            sendBtn.addEventListener('click', () => handleSend().catch(console.error));
+            sendBtn.addEventListener('click', handleSend);
 
             input.addEventListener('keydown', e => {
-                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend().catch(console.error); }
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
             });
 
             // Suggestion pills
             suggWrap.querySelectorAll('.ai-pill').forEach(pill => {
                 pill.addEventListener('click', () => {
                     input.value = pill.dataset.query;
-                    handleSend().catch(console.error);
+                    handleSend();
                 });
             });
 
