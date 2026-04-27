@@ -771,11 +771,11 @@
         /* Chat window */
         #ai-chat-window {
             position: fixed;
-            bottom: 92px;
+            bottom: 88px;
             right: 28px;
             z-index: 901;
-            width: 360px;
-            max-height: 540px;
+            width: 440px;
+            max-height: 640px;
             display: flex;
             flex-direction: column;
             background: var(--bg2);
@@ -839,12 +839,12 @@
         #ai-chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            font-size: 13px;
-            line-height: 1.55;
+            gap: 12px;
+            font-size: 14px;
+            line-height: 1.6;
             scroll-behavior: smooth;
             background: var(--bg1);
         }
@@ -854,10 +854,12 @@
         #ai-chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
         .ai-bubble {
-            max-width: 88%;
-            padding: 10px 13px;
-            border-radius: 10px;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 12px;
             animation: bubblePop 0.22s ease;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         @keyframes bubblePop {
@@ -969,8 +971,8 @@
 
         #ai-chat-input-area {
             display: flex;
-            gap: 8px;
-            padding: 10px 12px;
+            gap: 10px;
+            padding: 14px 16px;
             background: var(--bg2);
             border-top: 1px solid var(--border);
             flex-shrink: 0;
@@ -980,9 +982,9 @@
             flex: 1;
             border: 1px solid var(--border2);
             border-radius: var(--r);
-            padding: 8px 12px;
+            padding: 10px 14px;
             font-family: var(--ff-body);
-            font-size: 13px;
+            font-size: 14px;
             outline: none;
             background: var(--bg3);
             color: var(--text);
@@ -996,7 +998,7 @@
         }
 
         #ai-chat-send {
-            width: 36px; height: 36px;
+            width: 42px; height: 42px;
             border-radius: var(--r);
             border: none;
             background: var(--accent);
@@ -1007,8 +1009,8 @@
             transition: background 0.2s, transform 0.15s;
         }
 
-        #ai-chat-send:hover { background: var(--sage-deep); transform: scale(1.06); }
-        #ai-chat-send svg { width: 15px; height: 15px; fill: white; }
+        #ai-chat-send:hover { background: var(--sage-deep); transform: scale(1.05); }
+        #ai-chat-send svg { width: 17px; height: 17px; fill: white; }
 
         #ai-chat-footer {
             padding: 6px 14px 8px;
@@ -4650,11 +4652,10 @@
             const alreadyPassed = !!appState.quizResults[card.id];
 
             el.innerHTML = `
-                <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9CAF88;margin:0 0 8px;">🧠 Quick check</p>
-                <p style="font-size:13px;font-weight:600;color:#1F1F1F;margin:0 0 12px;line-height:1.4">${qdata.q}</p>
+                <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.10em;color:var(--accent);margin:0 0 8px;font-family:var(--ff-mono);">🧠 Quick check</p>
+                <p style="font-size:13px;font-weight:600;color:var(--text);margin:0 0 12px;line-height:1.4">${qdata.q}</p>
                 <div id="quiz-opts"></div>
-                <div id="quiz-feedback" style="display:none"></div>
-                ${alreadyPassed ? '<p style="font-size:11px;color:#2A9D8F;margin:8px 0 0;font-weight:600;">✓ You\'ve answered this correctly before</p>' : ''}
+                ${alreadyPassed ? '<p style="font-size:11px;color:var(--positive);margin:8px 0 0;font-weight:600;">✓ You\'ve answered this correctly before</p>' : ''}
             `;
 
             const optsEl = el.querySelector('#quiz-opts');
@@ -4668,10 +4669,13 @@
                         if (b === btn) b.classList.add(opt.c ? 'correct' : 'wrong');
                         else if (JSON.parse(b.dataset.correct)) b.classList.add('correct');
                     });
-                    const fb = el.querySelector('#quiz-feedback');
+                    // Remove any existing feedback
+                    optsEl.querySelectorAll('.quiz-feedback').forEach(f => f.remove());
+                    // Insert feedback directly after the clicked button
+                    const fb = document.createElement('div');
                     fb.className = 'quiz-feedback ' + (opt.c ? 'correct' : 'wrong');
                     fb.textContent = opt.f;
-                    fb.style.display = 'block';
+                    btn.insertAdjacentElement('afterend', fb);
                     if (opt.c && !appState.quizResults[card.id]) {
                         appState.quizResults[card.id] = true;
                         localStorage.setItem('appState', JSON.stringify(appState));
