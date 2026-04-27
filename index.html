@@ -1570,23 +1570,72 @@
                 <button class="btn-primary" style="width: 100%; margin-top: 24px;" id="calculate-risk-btn">Calculate Risk Profile</button>
             </div>
 
+            <!-- MODULE 1: MINIMIZATION LAB (Article 10) -->
+            <div class="card" style="max-width:600px; margin-top:24px;">
+                <h3 style="margin-bottom:6px;">📦 Minimization Lab</h3>
+                <p style="color:#888; font-size:13px; margin-bottom:18px;">PPWR Art. 10 — Empty space must not exceed 40% of outer packaging volume.</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                    <div>
+                        <label style="font-weight:600; font-size:13px; display:block; margin-bottom:8px;">Product Dimensions (mm)</label>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                            <div><label style="font-size:11px; color:#aaa; display:block;">L</label><input type="number" id="prod-l" min="1" placeholder="e.g. 120" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                            <div><label style="font-size:11px; color:#aaa; display:block;">W</label><input type="number" id="prod-w" min="1" placeholder="e.g. 80"  style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                            <div><label style="font-size:11px; color:#aaa; display:block;">H</label><input type="number" id="prod-h" min="1" placeholder="e.g. 60"  style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-weight:600; font-size:13px; display:block; margin-bottom:8px;">Outer Packaging (mm)</label>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+                            <div><label style="font-size:11px; color:#aaa; display:block;">L</label><input type="number" id="pkg-l" min="1" placeholder="e.g. 200" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                            <div><label style="font-size:11px; color:#aaa; display:block;">W</label><input type="number" id="pkg-w" min="1" placeholder="e.g. 150" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                            <div><label style="font-size:11px; color:#aaa; display:block;">H</label><input type="number" id="pkg-h" min="1" placeholder="e.g. 120" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:13px; margin-top:2px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="run-minlab-btn" style="width:100%; margin-top:20px;">Check Empty Space Ratio</button>
+                <div id="minlab-result" style="display:none; margin-top:20px;"></div>
+                <div id="minlab-justification-row" style="display:none; margin-top:16px;">
+                    <label style="font-weight:600; font-size:13px; display:block; margin-bottom:6px;">Justification for Excess Space</label>
+                    <p style="font-size:12px; color:#888; margin-bottom:8px;">Describe the functional reason (e.g. fragile product, regulatory headspace requirement, multi-SKU box).</p>
+                    <textarea id="minlab-justification" rows="3" placeholder="Enter justification here…" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-size:13px; resize:vertical; box-sizing:border-box;"></textarea>
+                    <p style="font-size:11px; color:#aaa; margin-top:4px;">This text will be used in your compliance documentation record.</p>
+                </div>
+            </div>
+
+            <!-- MODULE 1: SUBSTANCE RED LIST (Article 5 / REACH) -->
+            <div class="card" style="max-width:600px; margin-top:24px;">
+                <h3 style="margin-bottom:6px;">⚗️ Substance Red List</h3>
+                <p style="color:#888; font-size:13px; margin-bottom:18px;">PPWR Art. 5 / REACH — Cross-reference substances against prohibited and restricted chemicals.</p>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="substance-search" placeholder="Type substance name, e.g. PFAS, BPA, lead…" style="flex:1; padding:10px 14px; border:1px solid #ddd; border-radius:6px; font-size:14px;">
+                    <button class="btn-primary" id="substance-search-btn" style="white-space:nowrap; padding:10px 18px;">Check</button>
+                </div>
+                <div id="substance-result" style="display:none; margin-top:16px;"></div>
+                <div style="margin-top:16px;">
+                    <p style="font-size:11px; font-weight:700; color:#aaa; letter-spacing:0.05em; margin-bottom:8px; text-transform:uppercase;">All Regulated Substances:</p>
+                    <div id="substance-tags" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+                </div>
+            </div>
+
+            <!-- RISK RESULTS -->
             <div id="risk-results" style="margin-top: 32px; display: none;">
                 <h3>Your Risk Profile</h3>
                 <div class="grid-3" style="margin-top: 20px;">
                     <div class="stat-box">
                         <div class="stat-number" id="risk-score">0%</div>
-                        <div class="stat-label">Risk Level</div>
+                        <div class="stat-label">Risk Score</div>
                     </div>
                     <div class="stat-box">
                         <div style="font-size: 24px; margin-bottom: 8px;" id="risk-status">●</div>
-                        <div class="stat-label">Status</div>
+                        <div class="stat-label" id="risk-status-label">Status</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number" id="risk-gaps">0</div>
-                        <div class="stat-label">Documentation Gaps</div>
+                        <div class="stat-label">Compliance Gaps</div>
                     </div>
                 </div>
                 <div id="risk-recommendations" style="margin-top: 24px;"></div>
+                <div id="risk-gap-detail" style="margin-top: 20px;"></div>
             </div>
         </div>
     </div>
@@ -2897,6 +2946,58 @@
           { term:'Unnecessary Packaging', tag:'Prohibited', def:'PPWR prohibits packaging that exceeds what is functionally necessary to protect, contain, or transport the product. Over-packaging, excessive void fill, and decorative secondary packaging without function may be challenged.', sg:'CA should conduct a packaging minimisation review, particularly for own-manufactured products where CA controls the specification.' },
         ];
 
+        // ── Substance Red List (Art. 5, REACH, PFAS Regulation) ─────────────────
+        const SUBSTANCE_RED_LIST = [
+          { name:'PFAS (group)',       aliases:['perfluoroalkyl','polyfluoroalkyl','teflon','ptfe','pfoa','pfos','pfna','pfbs'],
+            status:'BANNED',        article:'Art. 5(1)',   since:'2024-07-12',
+            note:'Entire class of per- and polyfluoroalkyl substances banned in food-contact packaging. Includes PTFE-coated liners and fluorinated barrier coatings.',
+            action:'Obtain PFAS-free declaration from supplier. Replace fluorinated grease-barrier with silicone or bio-based alternatives.' },
+          { name:'Lead',              aliases:['lead','pb','lead compound','lead oxide'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            note:'Lead and lead compounds in packaging inks, pigments, and PVC stabilisers restricted to < 100 ppm (combined with Cd, Cr VI, Hg).',
+            action:'Request heavy-metal test certificate from packaging supplier confirming < 100 ppm combined.' },
+          { name:'Cadmium',           aliases:['cadmium','cd','cadmium pigment','cadmium sulfide'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            note:'Cadmium restricted to < 100 ppm combined. Common in yellow/red pigments and PVC stabilisers.',
+            action:'Audit pigment suppliers and request annual CoC for heavy-metal compliance.' },
+          { name:'Mercury',           aliases:['mercury','hg','mercuric','methylmercury'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            note:'Mercury restricted to < 100 ppm combined. Rarely used in modern packaging but still found in some specialty coatings.',
+            action:'Confirm with supplier that no mercury-based bacteriostats or pigments are present.' },
+          { name:'Hexavalent Chromium', aliases:['chromium vi','cr vi','chromate','dichromate','hexavalent'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            note:'Cr(VI) restricted to < 100 ppm combined. Found in some metallic coatings and anti-corrosion treatments.',
+            action:'Verify with metal packaging supplier that chromate conversion coatings are not used.' },
+          { name:'BPA (Bisphenol A)', aliases:['bpa','bisphenol a','bisphenol-a'],
+            status:'RESTRICTED',    article:'REACH Annex XVII / Art. 5', since:'2023-01-01',
+            note:'BPA restricted in food-contact materials. Many countries additionally restrict BPA in thermal paper and canned food linings.',
+            action:'Require BPA-free declaration for all can linings, jar lids, and food-contact plastic packaging.' },
+          { name:'Phthalates (group)',  aliases:['phthalate','dehp','dbp','bbp','dinp','didp','diop'],
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'2015-07-21',
+            note:'DEHP, DBP, BBP, and DIBP restricted to < 0.1% w/w in articles. DINP, DIDP, and DIHP restricted in childcare articles.',
+            action:'Confirm plasticiser identity in flexible PVC packaging. Demand REACH declaration from PVC compound supplier.' },
+          { name:'Formaldehyde',       aliases:['formaldehyde','methylene oxide','formalin'],
+            status:'RESTRICTED',    article:'REACH / EU 10/2011 (plastics)', since:'2011-01-14',
+            note:'Migration limits apply for food-contact plastics. Commonly released from melamine and phenol-formaldehyde resins.',
+            action:'Ensure food-contact plastic components are tested to EU 10/2011 migration limits.' },
+          { name:'Benzene',            aliases:['benzene','benzol'],
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'1994-01-01',
+            note:'Benzene restricted to < 0.1% in articles and mixtures. Residual solvent concern in printing inks and adhesives.',
+            action:'Request solvent residue test on printed packaging. Ensure water-based or benzene-free inks are used.' },
+          { name:'Oxo-degradable Additives', aliases:['oxo-degradable','oxo degradable','d2w','epi','prodegradant'],
+            status:'BANNED',        article:'PPWR Art. 5(2) / SUPD', since:'2025-01-01',
+            note:'Packaging containing oxo-degradable plastic (pro-oxidant additives that fragment plastic into microplastics) is banned.',
+            action:'Audit all plastic packaging for oxo-degradable additives. Remove from supply chain immediately.' },
+          { name:'Black Carbon Pigment (non-detectable)', aliases:['carbon black','non-detectable black','nir-absorbing black','cb'],
+            status:'RESTRICTED',    article:'PPWR Art. 6 (recyclability grade)',since:'2026-01-01',
+            note:'Carbon black pigments that absorb NIR light prevent sorting by near-infrared scanners, downgrading recyclability to Grade D/E.',
+            action:'Replace non-detectable carbon black with NIR-transparent black alternatives to maintain recyclability grade.' },
+          { name:'Chlorinated Paraffins (SCCP)', aliases:['sccp','chlorinated paraffin','short chain chlorinated'],
+            status:'RESTRICTED',    article:'REACH Annex XVII / POP Regulation', since:'2012-01-01',
+            note:'Short-chain chlorinated paraffins (SCCP) are Persistent Organic Pollutants restricted under REACH.',
+            action:'Verify plasticisers and flame retardants in PVC packaging are SCCP-free.' },
+        ];
+
         // ============================================================================
         // COMPLIANCE TOOL RENDER FUNCTIONS
         // ============================================================================
@@ -3540,6 +3641,7 @@
             if (pageName === 'my-role')         renderRoleWizardPage();
             if (pageName === 'countries')       renderCountriesHubPage();
             if (pageName === 'glossary')        renderGlossaryPageNew();
+            if (pageName === 'risk-calculator') renderSubstanceTags();
         }
 
         // Which sidebar pages each tier can access
@@ -4240,45 +4342,254 @@
         }
 
         // ============================================================================
-        // RISK CALCULATOR
+        // MODULE 1: MINIMIZATION LAB
+        // ============================================================================
+        // Stores the last minlab result so Module 2 can use it deterministically
+        window._minLabResult = null;
+
+        document.getElementById('run-minlab-btn')?.addEventListener('click', function() {
+            const pL = parseFloat(document.getElementById('prod-l').value);
+            const pW = parseFloat(document.getElementById('prod-w').value);
+            const pH = parseFloat(document.getElementById('prod-h').value);
+            const kL = parseFloat(document.getElementById('pkg-l').value);
+            const kW = parseFloat(document.getElementById('pkg-w').value);
+            const kH = parseFloat(document.getElementById('pkg-h').value);
+
+            const resultDiv = document.getElementById('minlab-result');
+            const justRow   = document.getElementById('minlab-justification-row');
+
+            if ([pL,pW,pH,kL,kW,kH].some(v => isNaN(v) || v <= 0)) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<div style="background:#FFF3CD; border-left:3px solid #FFC107; padding:12px 16px; border-radius:6px; font-size:13px; color:#664d03;">Please enter all six dimensions (L, W, H for both product and outer packaging).</div>`;
+                justRow.style.display = 'none';
+                window._minLabResult = null;
+                return;
+            }
+
+            const prodVol   = pL * pW * pH;
+            const outerVol  = kL * kW * kH;
+
+            if (outerVol <= prodVol) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `<div style="background:#FFF3CD; border-left:3px solid #FFC107; padding:12px 16px; border-radius:6px; font-size:13px; color:#664d03;">Outer packaging volume must be larger than product volume. Please check your dimensions.</div>`;
+                justRow.style.display = 'none';
+                window._minLabResult = null;
+                return;
+            }
+
+            const emptyVol  = outerVol - prodVol;
+            const ratio     = (emptyVol / outerVol) * 100;
+            const pass      = ratio <= 40;
+            const ratioFmt  = ratio.toFixed(1);
+
+            window._minLabResult = { pass, ratio, prodVol, outerVol, emptyVol };
+
+            const gaugeWidth = Math.min(ratio, 100);
+            const gaugeColor = pass ? '#9CAF88' : '#F44336';
+            const badge      = pass
+                ? `<span style="background:#E8F5E9; color:#2E7D32; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:700;">✓ PASS</span>`
+                : `<span style="background:#FFEBEE; color:#C62828; padding:4px 12px; border-radius:12px; font-size:12px; font-weight:700;">✗ FAIL</span>`;
+
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div style="background:#F9F9F7; border-radius:8px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span style="font-weight:700; font-size:15px;">Empty Space Ratio: ${ratioFmt}%</span>
+                        ${badge}
+                    </div>
+                    <div style="background:#E8E8E5; border-radius:4px; overflow:hidden; height:10px; margin-bottom:10px;">
+                        <div style="width:${gaugeWidth}%; height:100%; background:${gaugeColor}; border-radius:4px; transition:width 0.5s;"></div>
+                    </div>
+                    <div style="font-size:11px; color:#888; display:flex; justify-content:space-between; margin-bottom:12px;">
+                        <span>0%</span><span style="color:${pass?'#9CAF88':'#F44336'}; font-weight:600;">Threshold: 40%</span><span>100%</span>
+                    </div>
+                    <div style="font-size:12px; color:#666; line-height:1.6;">
+                        <strong>Product volume:</strong> ${(prodVol/1000).toFixed(1)} cm³ &nbsp;|&nbsp;
+                        <strong>Outer volume:</strong> ${(outerVol/1000).toFixed(1)} cm³ &nbsp;|&nbsp;
+                        <strong>Empty space:</strong> ${(emptyVol/1000).toFixed(1)} cm³
+                    </div>
+                    ${pass
+                        ? `<p style="margin-top:10px; font-size:13px; color:#2E7D32;">Your packaging meets the Art. 10 minimisation requirement. No justification needed.</p>`
+                        : `<p style="margin-top:10px; font-size:13px; color:#C62828;">Your empty space exceeds the 40% threshold by <strong>${(ratio-40).toFixed(1)} percentage points</strong>. A documented justification is required under Art. 10(2).</p>`
+                    }
+                </div>`;
+
+            justRow.style.display = pass ? 'none' : 'block';
+        });
+
+        // ============================================================================
+        // MODULE 1: SUBSTANCE RED LIST LOOKUP
+        // ============================================================================
+        function renderSubstanceTags() {
+            const tagsDiv = document.getElementById('substance-tags');
+            if (!tagsDiv) return;
+            tagsDiv.innerHTML = SUBSTANCE_RED_LIST.map(s => {
+                const bg = s.status === 'BANNED' ? '#FFEBEE' : '#FFF8E1';
+                const col = s.status === 'BANNED' ? '#C62828' : '#E65100';
+                return `<button onclick="fillSubstanceSearch('${s.name.replace(/'/g,"\\'")}','${s.status}')" style="background:${bg};color:${col};border:none;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;">${s.name}</button>`;
+            }).join('');
+        }
+
+        function fillSubstanceSearch(name) {
+            const inp = document.getElementById('substance-search');
+            if (inp) { inp.value = name; runSubstanceSearch(); }
+        }
+
+        function runSubstanceSearch() {
+            const q = (document.getElementById('substance-search')?.value || '').toLowerCase().trim();
+            const resultDiv = document.getElementById('substance-result');
+            if (!resultDiv) return;
+            if (!q) { resultDiv.style.display = 'none'; return; }
+
+            const matches = SUBSTANCE_RED_LIST.filter(s =>
+                s.name.toLowerCase().includes(q) ||
+                s.aliases.some(a => a.includes(q))
+            );
+
+            resultDiv.style.display = 'block';
+            if (matches.length === 0) {
+                resultDiv.innerHTML = `<div style="background:#E8F5E9; border-left:3px solid #9CAF88; padding:12px 16px; border-radius:6px; font-size:13px; color:#1B5E20;">No match found in the Red List for "<strong>${q}</strong>". This substance is not listed as restricted under PPWR Art. 5 or REACH at this time — but always verify with current ECHA guidance.</div>`;
+                return;
+            }
+
+            resultDiv.innerHTML = matches.map(s => {
+                const isBanned = s.status === 'BANNED';
+                const bg  = isBanned ? '#FFEBEE' : '#FFF8E1';
+                const bdr = isBanned ? '#F44336' : '#FFA000';
+                const col = isBanned ? '#C62828' : '#E65100';
+                return `<div style="background:${bg}; border-left:3px solid ${bdr}; padding:14px 16px; border-radius:6px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                        <strong style="font-size:14px;">${s.name}</strong>
+                        <span style="background:${bdr};color:#fff;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;margin-left:10px;">${s.status}</span>
+                    </div>
+                    <p style="font-size:12px; color:${col}; margin-bottom:6px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
+                    <p style="font-size:13px; color:#333; margin-bottom:8px;">${s.note}</p>
+                    <div style="background:rgba(255,255,255,0.7); border-radius:4px; padding:8px 12px;">
+                        <p style="font-size:12px; color:#555; margin:0;"><strong>Required action:</strong> ${s.action}</p>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        document.getElementById('substance-search-btn')?.addEventListener('click', runSubstanceSearch);
+        document.getElementById('substance-search')?.addEventListener('keydown', e => { if (e.key === 'Enter') runSubstanceSearch(); });
+
+        // ============================================================================
+        // MODULE 2: DETERMINISTIC RISK CALCULATOR
         // ============================================================================
         document.getElementById('calculate-risk-btn')?.addEventListener('click', function() {
             const industry = document.getElementById('risk-industry').value;
             const material = document.getElementById('risk-material').value;
+            const markets  = Array.from(document.querySelectorAll('#risk-calculator-page input[type="checkbox"]:checked')).map(c => c.value);
 
-            let riskScore = Math.floor(Math.random() * 40) + 30;
-            let gaps = Math.floor(Math.random() * 4) + 2;
-            let status = 'At Risk';
-            let statusColor = '#FFA500';
+            // ── Base risk by material ──────────────────────────────────────────────
+            const materialScore = { 'Plastic': 55, 'Mixed': 48, 'Paper/Cardboard': 28, 'Glass': 22, 'Metal': 30 };
+            let score = materialScore[material] ?? 40;
 
-            if (riskScore < 40) {
-                status = 'Critical';
-                statusColor = '#F44336';
-            } else if (riskScore > 60) {
-                status = 'Manageable';
-                statusColor = '#4CAF50';
+            // ── Industry modifier ──────────────────────────────────────────────────
+            const industryMod = { 'Food & Beverage': 18, 'Pharmaceuticals': 12, 'Consumer Goods': 8, 'E-commerce & Retail': 10 };
+            score += industryMod[industry] ?? 8;
+
+            // ── Market scope modifier ─────────────────────────────────────────────
+            if (markets.includes('EU'))     score += 10;
+            if (markets.includes('Norway')) score += 6;  // Norway mirrors PPWR
+            if (markets.includes('UK'))     score += 4;  // UK EPR overlap
+            if (markets.length === 0)       score += 5;  // No market selected = unknown = treated as risky
+
+            // ── Minimization Lab result modifier ──────────────────────────────────
+            const minResult = window._minLabResult;
+            if (minResult) {
+                if (!minResult.pass) score += 14;  // Art. 10 failure adds significant risk
+                else                 score -= 8;   // Passing minimization is a positive signal
+            } else {
+                score += 6; // Not run = unassessed = small penalty
             }
 
+            score = Math.max(5, Math.min(98, score));
+
+            // ── Determine compliance gaps deterministically ────────────────────────
+            const gapList = [];
+
+            if (material === 'Plastic' || material === 'Mixed') {
+                gapList.push({ label:'Recycled Content Declaration (Art. 7)', article:'Art. 7', severity:'high' });
+                gapList.push({ label:'Recyclability Grade Assessment (Art. 6)', article:'Art. 6', severity:'high' });
+                gapList.push({ label:'PFAS-Free Supplier Declaration (Art. 5)', article:'Art. 5', severity:'critical' });
+            }
+            if (material === 'Plastic') {
+                gapList.push({ label:'Post-Consumer Recycled (PCR) content target verification', article:'Art. 7(3)', severity:'medium' });
+            }
+            if (industry === 'Food & Beverage' || industry === 'Pharmaceuticals') {
+                gapList.push({ label:'Food-contact substance compliance (EU 10/2011 / Art. 5)', article:'Art. 5', severity:'high' });
+            }
+            if (markets.includes('EU') || markets.length === 0) {
+                gapList.push({ label:'EPR Registration — at least one EU market (Art. 44)', article:'Art. 44', severity:'high' });
+                gapList.push({ label:'Packaging labelling: material & sorting (Art. 12)', article:'Art. 12', severity:'medium' });
+            }
+            if (!minResult) {
+                gapList.push({ label:'Article 10 Minimisation Assessment not completed', article:'Art. 10', severity:'medium' });
+            } else if (!minResult.pass) {
+                gapList.push({ label:`Art. 10 Fail — empty space ${minResult.ratio.toFixed(1)}% exceeds 40% threshold`, article:'Art. 10', severity:'high' });
+            }
+            if (score > 65) {
+                gapList.push({ label:'Digital Product Passport programme (required by 2030, Art. 13)', article:'Art. 13', severity:'low' });
+            }
+            if (markets.length > 2) {
+                gapList.push({ label:'Multi-market EPR fee reporting obligations (Art. 45)', article:'Art. 45', severity:'medium' });
+            }
+
+            // ── Status label ───────────────────────────────────────────────────────
+            let status, statusColor, statusBg;
+            if (score >= 75) {
+                status = 'Critical'; statusColor = '#C62828'; statusBg = '#FFEBEE';
+            } else if (score >= 50) {
+                status = 'At Risk';  statusColor = '#E65100'; statusBg = '#FFF3E0';
+            } else if (score >= 30) {
+                status = 'Moderate'; statusColor = '#F9A825'; statusBg = '#FFFDE7';
+            } else {
+                status = 'Low Risk'; statusColor = '#2E7D32'; statusBg = '#E8F5E9';
+            }
+
+            // ── Render results ─────────────────────────────────────────────────────
             const resultsDiv = document.getElementById('risk-results');
             resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            document.getElementById('risk-score').textContent = riskScore + '%';
+            document.getElementById('risk-score').textContent = score + '%';
             document.getElementById('risk-status').textContent = '●';
             document.getElementById('risk-status').style.color = statusColor;
-            document.getElementById('risk-gaps').textContent = gaps;
+            document.getElementById('risk-status-label').textContent = status;
+            document.getElementById('risk-gaps').textContent = gapList.length;
 
+            const sevMeta = { critical:'#C62828', high:'#E65100', medium:'#F9A825', low:'#2E7D32' };
             const recommendations = document.getElementById('risk-recommendations');
             recommendations.innerHTML = `
-                <h4 style="margin-bottom: 16px;">Key Areas to Address:</h4>
-                <div style="background: #F9F9F7; border-radius: 8px; padding: 16px;">
-                    <ul style="color: #666; line-height: 1.8; margin: 0; padding-left: 20px;">
-                        <li>Supplier declarations for <strong>${material}</strong> products</li>
-                        <li>Empty space ratio documentation</li>
-                        <li>PFAS testing and certification</li>
-                        <li>Recyclability assessment</li>
-                    </ul>
-                </div>
-            `;
+                <div style="background:${statusBg}; border-left:4px solid ${statusColor}; padding:14px 18px; border-radius:8px; margin-bottom:16px;">
+                    <strong style="color:${statusColor}; font-size:15px;">Overall Status: ${status}</strong>
+                    <p style="margin:6px 0 0; font-size:13px; color:#555;">
+                        Risk score <strong>${score}%</strong> based on material type (${material}), industry (${industry}),
+                        ${markets.length ? 'markets (' + markets.join(', ') + ')' : 'no market selected'},
+                        and minimisation lab ${minResult ? (minResult.pass ? 'pass' : 'fail') : 'not assessed'}.
+                    </p>
+                </div>`;
+
+            const gapDetail = document.getElementById('risk-gap-detail');
+            if (gapList.length) {
+                const PPWR_BASE = 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040';
+                gapDetail.innerHTML = `
+                    <h4 style="margin-bottom:12px;">Compliance Gaps Identified:</h4>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        ${gapList.map(g => `
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#F9F9F7; border-radius:6px; padding:10px 14px; border-left:3px solid ${sevMeta[g.severity]};">
+                            <span style="font-size:13px;">${g.label}</span>
+                            <div style="display:flex; align-items:center; gap:8px; flex-shrink:0; margin-left:12px;">
+                                <span style="background:${sevMeta[g.severity]}20; color:${sevMeta[g.severity]}; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; text-transform:uppercase;">${g.severity}</span>
+                                <a href="${PPWR_BASE}" target="_blank" rel="noopener" style="font-size:11px; color:#9CAF88; text-decoration:none;">📄 ${g.article} ↗</a>
+                            </div>
+                        </div>`).join('')}
+                    </div>`;
+            } else {
+                gapDetail.innerHTML = `<div style="background:#E8F5E9; border-left:3px solid #9CAF88; padding:12px 16px; border-radius:6px; font-size:13px; color:#2E7D32;">No critical gaps detected for this profile. Continue monitoring delegated acts for 2026.</div>`;
+            }
         });
 
         // ============================================================================
