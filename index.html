@@ -288,29 +288,76 @@
         .learning-card {
             background: white;
             border-radius: 12px;
-            padding: 32px 24px;
+            padding: 28px 24px;
             text-align: center;
-            min-height: 300px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.35s ease;
+            border: 2px solid transparent;
+            position: relative;
         }
-        
+
         .learning-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: #EFEFEB;
         }
-        
+
+        .learning-card--expanded {
+            grid-column: 1 / -1;
+            text-align: left;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: auto;
+            background: #F9FBF8;
+            border-color: var(--color-sage);
+            transform: none;
+            cursor: default;
+        }
+
+        .learning-card--expanded:hover {
+            transform: none;
+            border-color: var(--color-sage);
+        }
+
+        .learning-card--read {
+            border-left: 4px solid var(--color-sage);
+        }
+
+        .learning-card--read::after {
+            content: '✅';
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 14px;
+        }
+
+        .learning-card__detail {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #E8EDE5;
+        }
+
+        .learning-card--expanded .learning-card__detail {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
         .learning-card h3 {
             font-size: 18px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: var(--color-dark);
         }
-        
+
         .learning-card p {
             color: #666;
             line-height: 1.6;
@@ -1679,6 +1726,7 @@
             user: JSON.parse(localStorage.getItem('user')) || null,
             currentPage: 'home',
             currentLanguage: 'en',
+            readCards: {},
             dashboard: {
                 score: 35,
                 progress: 35,
@@ -2323,33 +2371,119 @@
         // LEARNING CARDS
         // ============================================================================
         function loadLearningCards() {
+            if (!appState.readCards) appState.readCards = {};
+
             const container = document.getElementById('learning-cards');
             container.innerHTML = '';
 
-            learningCards.forEach(card => {
-                const cardEl = document.createElement('div');
-                cardEl.className = 'learning-card fade-in';
+            let expandedId = null;
 
+            learningCards.forEach(card => {
+                const isRead = !!appState.readCards[card.id];
+
+                const cardEl = document.createElement('div');
+                cardEl.className = 'learning-card fade-in' + (isRead ? ' learning-card--read' : '');
+                cardEl.dataset.cardId = card.id;
+
+                // ── Collapsed content ──────────────────────────────────────
                 const h3 = document.createElement('h3');
                 h3.textContent = card.title;
 
                 const p = document.createElement('p');
-                p.style.marginTop = '16px';
+                p.style.marginTop = '12px';
                 p.textContent = card.content;
 
-                const span = document.createElement('span');
-                span.style.cssText = 'margin-top: 16px; font-size: 12px; color: #999; background: #EFEFEB; padding: 6px 12px; border-radius: 4px; display: inline-block;';
-                span.textContent = card.category;
+                const catBadge = document.createElement('span');
+                catBadge.style.cssText = 'margin-top: 16px; font-size: 12px; color: #999; background: #EFEFEB; padding: 5px 12px; border-radius: 4px; display: inline-block;';
+                catBadge.textContent = card.category;
+
+                // ── Expanded detail strip ──────────────────────────────────
+                const detail = document.createElement('div');
+                detail.className = 'learning-card__detail';
+
+                const brainBtn = document.createElement('button');
+                brainBtn.className = 'btn-secondary';
+                brainBtn.style.cssText = 'font-size: 13px; padding: 8px 16px;';
+                brainBtn.textContent = '🧠 Ask the Brain';
+                brainBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const chatInput = document.getElementById('ai-chat-input');
+                    const chatWin   = document.getElementById('ai-chat-window');
+                    if (chatInput && chatWin) {
+                        chatInput.value = card.title;
+                        chatWin.classList.add('open');
+                        chatInput.focus();
+                    }
+                });
+
+                const readBtn = document.createElement('button');
+                readBtn.className = 'btn-primary';
+                readBtn.style.cssText = 'font-size: 13px; padding: 8px 16px;';
+                readBtn.textContent = isRead ? '✅ Marked as read' : 'Mark as read';
+                readBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const alreadyRead = !!appState.readCards[card.id];
+                    if (alreadyRead) {
+                        delete appState.readCards[card.id];
+                        cardEl.classList.remove('learning-card--read');
+                        readBtn.textContent = 'Mark as read';
+                    } else {
+                        appState.readCards[card.id] = true;
+                        cardEl.classList.add('learning-card--read');
+                        readBtn.textContent = '✅ Marked as read';
+                    }
+                    // Recompute progress from read count
+                    const readCount = Object.keys(appState.readCards).length;
+                    const total = learningCards.length;
+                    appState.dashboard.modulesCompleted = readCount;
+                    appState.dashboard.progress = Math.round((readCount / total) * 100);
+                    appState.dashboard.score = Math.min(100, 10 + Math.round((readCount / total) * 90));
+                    localStorage.setItem('appState', JSON.stringify(appState));
+                });
+
+                const collapseBtn = document.createElement('button');
+                collapseBtn.className = 'btn-text';
+                collapseBtn.style.cssText = 'font-size: 13px; margin-left: auto; color: #999;';
+                collapseBtn.textContent = '✕ Close';
+                collapseBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    collapseCard(cardEl);
+                    expandedId = null;
+                });
+
+                detail.appendChild(brainBtn);
+                detail.appendChild(readBtn);
+                detail.appendChild(collapseBtn);
 
                 cardEl.appendChild(h3);
                 cardEl.appendChild(p);
-                cardEl.appendChild(span);
+                cardEl.appendChild(catBadge);
+                cardEl.appendChild(detail);
 
+                // ── Click to expand ────────────────────────────────────────
                 cardEl.addEventListener('click', function() {
-                    alert('Card saved to favorites!');
+                    if (cardEl.classList.contains('learning-card--expanded')) return;
+
+                    // Collapse any currently open card
+                    if (expandedId !== null) {
+                        const prev = container.querySelector('[data-card-id="' + expandedId + '"]');
+                        if (prev) collapseCard(prev);
+                    }
+
+                    // Expand this card
+                    cardEl.classList.add('learning-card--expanded');
+                    cardEl.style.cursor = 'default';
+                    expandedId = card.id;
+                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 });
+
                 container.appendChild(cardEl);
             });
+
+            function collapseCard(el) {
+                el.classList.remove('learning-card--expanded');
+                el.style.cursor = 'pointer';
+            }
         }
 
         // ============================================================================
@@ -2722,6 +2856,7 @@
             const saved = localStorage.getItem('appState');
             if (saved) {
                 appState = JSON.parse(saved);
+                if (!appState.readCards) appState.readCards = {};
             }
 
             document.getElementById('dashboard-score').textContent = appState.dashboard.score;
