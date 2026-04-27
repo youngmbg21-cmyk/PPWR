@@ -2308,6 +2308,33 @@
             trace:(s,c)=>`The EU supplier retains Manufacturer status. CA neither brands nor modifies the packaging — CA is a <strong>Distributor</strong> under Art. 3(13). CA is still the <strong>EPR Producer</strong> in ${c}.` },
         ];
 
+        const OBLIGATION_DB = [
+          { id:'epr-register', roles:['PRODUCER_EPR','MANUFACTURER','IMPORTER'], pkgTypes:['all'], deadline:2025, severity:'critical',
+            title:'EPR Registration — required in each country where you place packaging on the market',
+            detail:'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale. Most EU Member States require registration by 12 August 2026. Non-registration is the highest-penalty violation across all 7 cluster markets.',
+            article:'Art. 44' },
+          { id:'epr-report', roles:['PRODUCER_EPR','MANUFACTURER','IMPORTER'], pkgTypes:['all'], deadline:2025, severity:'critical',
+            title:'EPR Annual Reporting — weights by packaging tier and material, per country of sale',
+            detail:'Report annually to each national EPR scheme: total weight of packaging placed on the market broken down by tier (sales / grouped / transport) and material (plastic, paper/cardboard, glass, metal, wood, composite). Capture destination country per shipment in your ERP from day one.',
+            article:'Art. 44–46' },
+          { id:'epr-fees', roles:['PRODUCER_EPR'], pkgTypes:['all'], deadline:2025, severity:'high',
+            title:'EPR Fees — modulated by recyclability grade (Grade A = lowest, Grade E = highest)',
+            detail:'PPWR Art. 45: EPR fees must be modulated by recyclability grade. Switching from Grade D to Grade A packaging reduces your EPR fee exposure. Grade D and E packaging attracts the highest fee band until banned in 2030.',
+            article:'Art. 45' },
+          { id:'recyclability-grade', roles:['MANUFACTURER','PACKER'], pkgTypes:['all'], deadline:2030, severity:'critical',
+            title:'Recyclability: minimum Grade C required from 2030 — Grades D and E banned',
+            detail:'PPWR Art. 6: from 2030, all packaging placed on the EU market must achieve at least Grade C. Grades D and E are prohibited — any packaging currently at Grade D or E must be redesigned or replaced before 2030. Design target: Grade A or B.',
+            article:'Art. 6' },
+          { id:'no-pfas', roles:['MANUFACTURER','PACKER','IMPORTER'], pkgTypes:['all'], deadline:2025, severity:'high',
+            title:'Prohibited substances — no PFAS, oxo-degradable plastics, or recyclability-disrupting inks',
+            detail:'PPWR Art. 5 + Annex V (applies now): packaging must not contain PFAS above threshold levels, any oxo-degradable plastic, or inks/adhesives/additives that prevent recycling. Oxo-degradable film is banned immediately.',
+            article:'Art. 5, Annex V' },
+          { id:'rc-non-contact-2030', roles:['MANUFACTURER','PACKER'], pkgTypes:['sales','grouped','transport'], deadline:2030, severity:'high',
+            title:'Recycled content: ≥30% in non-contact plastic packaging by 2030 (→40% by 2035, →55% by 2040)',
+            detail:'PPWR Art. 7 + Annex II: plastic packaging not in direct food/pharma contact must contain at least 30% recycled plastic by weight from 2030. Certificates of conformity from packaging material suppliers are required.',
+            article:'Art. 7, Annex II' },
+        ];
+
         // ============================================================================
         // STRATEGIC DATA OBJECTS
         // ============================================================================
