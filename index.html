@@ -2207,6 +2207,7 @@
                 const saved = JSON.parse(localStorage.getItem('appState') || 'null');
                 if (saved) {
                     if (saved.currentTier)         appState.currentTier         = saved.currentTier;
+                    if (saved.currentPage)         appState.currentPage         = saved.currentPage;
                     if (saved.dashboard)           appState.dashboard           = saved.dashboard;
                     if (saved.readCards)           appState.readCards           = saved.readCards;
                     if (saved.toolsVisited)        appState.toolsVisited        = saved.toolsVisited;
@@ -3615,7 +3616,8 @@
 
             appState.currentPage = pageName;
             trackToolVisit(pageName);
-            
+            localStorage.setItem('appState', JSON.stringify(appState));
+
             // Update navigation
             updateNavigation();
             
@@ -4196,11 +4198,8 @@
             document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
 
-            // Sync plan switcher
-            if (['starter', 'growth', 'pro'].includes(appState.currentTier || 'free')) {
-                renderMilestoneWidget();
-                renderCertificationStatus();
-            }
+            renderMilestoneWidget();
+            renderCertificationStatus();
             renderOnboardingWidget();
             renderComplianceSummary();
         }
@@ -4622,10 +4621,13 @@
 
         // Initial page load
         updateCountdowns();
-        if (appState.currentTier && appState.currentTier !== 'free') {
-            showPage('dashboard');
-        } else if (appState.currentTier === 'free' && appState.currentPage === 'dashboard') {
-            // Free tier returning to app
+        // If user has a saved page that is NOT home/tier-detail, restore it.
+        // This ensures all tiers (including free) resume their session on reload.
+        const _inAppPages = ['home', 'tier-detail'];
+        const _savedPage  = appState.currentPage;
+        if (_savedPage && !_inAppPages.includes(_savedPage)) {
+            showPage(_savedPage);
+        } else if (appState.currentTier && appState.currentTier !== 'free') {
             showPage('dashboard');
         } else {
             showPage('home');
