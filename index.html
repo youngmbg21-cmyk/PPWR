@@ -1366,6 +1366,58 @@
         .quiz-feedback { font-size:12px; line-height:1.6; padding:10px 14px; border-radius:8px; margin-top:4px; }
         .quiz-feedback.correct { background:#E8F5E9; color:#1B5E20; border-left:3px solid #2A9D8F; }
         .quiz-feedback.wrong   { background:#FFEBEE; color:#B71C1C; border-left:3px solid #E63946; }
+
+        /* ── Full-page quiz engine ── */
+        .kq-wrap { max-width:720px; margin:0 auto; }
+        .kq-header { display:flex; align-items:center; gap:16px; margin-bottom:32px; }
+        .kq-counter { font-size:13px; color:#888; white-space:nowrap; }
+        .kq-bar-track { flex:1; height:6px; background:#EFEFEB; border-radius:3px; overflow:hidden; }
+        .kq-bar-fill { height:100%; background:var(--color-sage); border-radius:3px; transition:width .4s ease; }
+        .kq-question { font-size:19px; font-weight:600; line-height:1.45; margin-bottom:28px; color:#1a1a1a; }
+        .kq-tile {
+            display:block; width:100%; text-align:left; padding:16px 20px; margin-bottom:12px;
+            border:2px solid #E0DDD6; border-radius:12px; background:#fff; cursor:pointer;
+            font-size:15px; line-height:1.4; transition:border-color .15s, background .15s, transform .1s;
+        }
+        .kq-tile:hover:not(:disabled) { border-color:#9CAF88; background:#F8FBF6; transform:translateY(-1px); }
+        .kq-tile.kq-correct { border-color:#2A9D8F; background:#E8F5E9; color:#1B5E20; font-weight:600; cursor:default; }
+        .kq-tile.kq-wrong   { border-color:#E63946; background:#FFEBEE; color:#B71C1C; cursor:default; }
+        .kq-tile.kq-reveal  { border-color:#2A9D8F; background:#E8F5E9; color:#1B5E20; cursor:default; }
+        .kq-tile:disabled   { cursor:default; }
+        .kq-inline-fb { font-size:13px; line-height:1.6; padding:12px 16px; border-radius:10px; margin:4px 0 16px; }
+        .kq-inline-fb.kq-correct { background:#E8F5E9; color:#1B5E20; border-left:3px solid #2A9D8F; }
+        .kq-inline-fb.kq-wrong   { background:#FFEBEE; color:#B71C1C; border-left:3px solid #E63946; }
+        .kq-next-btn { margin-top:8px; }
+
+        /* ── Score ring ── */
+        .kq-ring-wrap { display:flex; flex-direction:column; align-items:center; margin:24px 0 32px; }
+        .kq-ring { position:relative; width:140px; height:140px; }
+        .kq-ring svg { transform:rotate(-90deg); }
+        .kq-ring-bg   { fill:none; stroke:#EFEFEB; stroke-width:10; }
+        .kq-ring-arc  { fill:none; stroke-width:10; stroke-linecap:round; transition:stroke-dashoffset .8s ease; }
+        .kq-ring-label { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .kq-ring-score { font-size:32px; font-weight:700; line-height:1; }
+        .kq-ring-denom { font-size:14px; color:#888; }
+
+        /* ── Breakdown list ── */
+        .kq-breakdown { list-style:none; padding:0; margin:0 0 28px; }
+        .kq-breakdown li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid #EFEFEB; font-size:14px; }
+        .kq-breakdown li:last-child { border-bottom:none; }
+        .kq-bd-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+        .kq-bd-text { flex:1; color:#444; line-height:1.45; }
+        .kq-bd-correct-ans { font-size:12px; color:#2A9D8F; margin-top:3px; }
+
+        /* ── Result actions ── */
+        .kq-actions { display:flex; gap:12px; flex-wrap:wrap; }
+        .kq-actions .btn-primary, .kq-actions .btn-secondary { flex:1; min-width:140px; }
+
+        /* ── Intro screen ── */
+        .kq-intro { max-width:600px; margin:0 auto; }
+        .kq-intro h1 { margin-bottom:8px; }
+        .kq-intro-meta { color:#888; font-size:15px; margin-bottom:32px; line-height:1.6; }
+        .kq-session-bar { background:#F9F9F7; border-radius:12px; padding:20px 24px; margin-bottom:28px; }
+        .kq-session-bar h4 { margin:0 0 4px; font-size:14px; color:#555; }
+        .kq-session-score { font-size:28px; font-weight:700; color:var(--color-sage); }
     </style>
 </head>
 <body>
@@ -1851,16 +1903,8 @@
     <!-- ASSESSMENT PAGE -->
     <div class="page" id="assessment-page">
         <div class="main-content">
-            <div style="margin-bottom:28px;">
-                <h1 style="margin-bottom:6px;">How prepared is your company?</h1>
-                <p style="color:#888; font-size:15px; margin:0 0 4px;">Answer 10 short questions to get a personalised readiness score — and identify the most important gaps to close before August 2026.</p>
-                <p style="color:#bbb; font-size:13px; margin:0;">Takes about 3 minutes. You'll receive a score and a certificate you can share with your team and management.</p>
-            </div>
-
-            <div class="card" style="max-width: 600px;">
-                <div id="assessment-content">
-                    <!-- Assessment will be loaded here -->
-                </div>
+            <div id="assessment-content">
+                <!-- Quiz renders here -->
             </div>
         </div>
     </div>
@@ -3075,67 +3119,207 @@
         ];
 
         // Assessment questions
-        const assessmentQuestions = [
-            {
-                id: 1,
-                question: "Do you have documented declarations from all packaging suppliers?",
-                options: ["Yes", "Partially", "No"],
-                riskWeights: [0, 25, 50]
-            },
-            {
-                id: 2,
-                question: "Have you tested your packaging for PFAS presence?",
-                options: ["Yes", "Partially", "No"],
-                riskWeights: [0, 25, 50]
-            },
-            {
-                id: 3,
-                question: "Is your empty space ratio documented and within limits?",
-                options: ["Yes, documented", "Estimated", "Unknown"],
-                riskWeights: [0, 30, 60]
-            },
-            {
-                id: 4,
-                question: "Have your labels been assessed for removability?",
-                options: ["Yes", "Partially", "No"],
-                riskWeights: [0, 25, 50]
-            },
-            {
-                id: 5,
-                question: "Do you have a 5-year document retention system?",
-                options: ["Yes", "In development", "No"],
-                riskWeights: [0, 20, 40]
-            },
-            {
-                id: 6,
-                question: "Has your team received PPWR training?",
-                options: ["Yes, comprehensive", "Basic training", "No"],
-                riskWeights: [0, 25, 50]
-            },
-            {
-                id: 7,
-                question: "Do you have a compliance checklist for new packaging?",
-                options: ["Yes", "Partially", "No"],
-                riskWeights: [0, 30, 60]
-            },
-            {
-                id: 8,
-                question: "Are you tracking changes to PPWR regulations?",
-                options: ["Yes, actively", "Occasionally", "No"],
-                riskWeights: [0, 25, 50]
-            },
-            {
-                id: 9,
-                question: "Have you communicated PPWR requirements to customers?",
-                options: ["Yes", "Partially", "No"],
-                riskWeights: [0, 20, 40]
-            },
-            {
-                id: 10,
-                question: "What's your timeline to achieve full compliance?",
-                options: ["Before August 2026", "Uncertain", "After August 2026"],
-                riskWeights: [0, 35, 70]
-            }
+        const QUIZ_POOL = [
+            { id:1,  q:'What is the maximum empty space allowed in most product packaging today?',
+              opts:[{ t:'50%', c:false, f:'50% applies to e-commerce packaging — for standard products the limit is 40%.' },
+                    { t:'40%', c:true,  f:'Correct. The current limit is 40% empty space for most products. From 2030 it tightens to 30%.' },
+                    { t:'25%', c:false, f:'Not yet — 25% is below any current PPWR threshold. The current ceiling is 40%.' }]},
+            { id:2,  q:'A supplier cannot show you a PFAS-free declaration. What should you do?',
+              opts:[{ t:'Accept the order — it\'s probably standard material', c:false, f:'Never assume. PFAS is banned in food-contact packaging and the liability falls on you, not the supplier.' },
+                    { t:'Stop the order and require written proof of compliance', c:true,  f:'Correct. Always get a PFAS-free declaration before accepting new materials. "Industry standard" is not a legal defence.' },
+                    { t:'Ask for a discount to compensate for the compliance risk', c:false, f:'A discount doesn\'t protect you from a fine or retailer rejection. You need the declaration, not a lower price.' }]},
+            { id:3,  q:'How do you calculate the empty space ratio?',
+              opts:[{ t:'Divide the product volume by the total box volume', c:false, f:'That gives the fill ratio, not the empty space ratio. You need (empty air ÷ total internal volume).' },
+                    { t:'Divide the empty air by the total internal box volume', c:true,  f:'Correct. (Internal volume − product volume) ÷ internal volume = empty space ratio.' },
+                    { t:'Measure the height difference between the product top and box lid', c:false, f:'Height difference alone doesn\'t account for product shape or box width. Use volumes, not heights.' }]},
+            { id:4,  q:'What happens to Grade D and E packaging from 2030?',
+              opts:[{ t:'It attracts higher EPR fees but remains on the market', c:false, f:'Grade D already attracts 1.5× fees and Grade E 2.0×, but from 2030 both are fully banned — not just fined.' },
+                    { t:'It is banned from the EU market entirely', c:true,  f:'Correct. From 1 January 2030, placing Grade D or E packaging on the EU market is illegal, regardless of EPR fee payment.' },
+                    { t:'Companies receive an automatic 2-year grace period', c:false, f:'There is no grace period in the current regulation text. The 2030 ban date is firm.' }]},
+            { id:5,  q:'During a regulatory audit you cannot produce the supplier\'s Declaration of Conformity. Who faces the fine?',
+              opts:[{ t:'The supplier — it was their declaration to provide', c:false, f:'Wrong. The obligation to hold the document is yours. You face the fine even if the packaging genuinely complies.' },
+                    { t:'Your company — the obligation to hold the document is yours', c:true,  f:'Correct. "We couldn\'t find the file" is treated the same as not having it. Keep DoCs for at least 5 years.' },
+                    { t:'The case is dropped without the document as evidence', c:false, f:'Regulators do not need the document to issue a fine — absence of the document is itself the violation.' }]},
+            { id:6,  q:'From 2030, what must be added to packaging labels alongside recyclability information?',
+              opts:[{ t:'A carbon footprint score', c:false, f:'Carbon footprint labelling is separate legislation. PPWR requires a QR code linking to the Digital Product Passport.' },
+                    { t:'A QR code linking to the Digital Product Passport', c:true,  f:'Correct. From 2030 all packaging needs a QR code giving anyone instant access to the full material and compliance data.' },
+                    { t:'The EPR registration number printed in plain text', c:false, f:'The EPR number is one field inside the DPP, not a standalone label requirement.' }]},
+            { id:7,  q:'Does compliance with PPWR mean you automatically comply with UK packaging rules?',
+              opts:[{ t:'Yes — the UK still follows EU regulations post-Brexit', c:false, f:'The UK left the EU in 2020 and has its own Extended Producer Responsibility framework, which differs from PPWR.' },
+                    { t:'No — the UK has its own separate packaging rules', c:true,  f:'Correct. Always verify compliance requirements per destination country. UK rules are independent of PPWR.' },
+                    { t:'Only for products physically exported from an EU Member State', c:false, f:'Place of manufacture doesn\'t matter. UK rules apply to products sold on the UK market, full stop.' }]},
+            { id:8,  q:'How long must EPR records (registrations, fee calculations, annual reports) be kept?',
+              opts:[{ t:'5 years', c:false, f:'5 years applies to design records and supplier declarations — EPR financial and registration records require 10 years.' },
+                    { t:'7 years', c:false, f:'There is no 7-year period in PPWR. EPR records are 10 years; design/supplier records are 5 years.' },
+                    { t:'10 years', c:true,  f:'Correct. EPR registrations, annual reports, and fee calculations must be retained for 10 years.' }]},
+            { id:9,  q:'Below what thickness is plastic film banned unless technically necessary?',
+              opts:[{ t:'10 microns', c:false, f:'The threshold in PPWR is 20 microns, not 10. Film thinner than 20 microns is banned unless you can justify the technical need.' },
+                    { t:'20 microns', c:true,  f:'Correct. Plastic film below 20 microns is banned unless technically necessary for product protection.' },
+                    { t:'50 microns', c:false, f:'50 microns is well above the threshold. The ban targets very thin films — below 20 microns.' }]},
+            { id:10, q:'A retailer discovers your packaging is non-compliant at delivery. What can they do?',
+              opts:[{ t:'Accept the goods and charge you a compliance penalty fee', c:false, f:'Retailers have no obligation to accept non-compliant goods. Rejection — not a penalty fee — is the typical response.' },
+                    { t:'Refuse the entire shipment with no compensation to you', c:true,  f:'Correct. A non-compliance finding means the retailer can turn the whole shipment around, at your cost.' },
+                    { t:'Hold the goods in bonded storage until a fine is paid', c:false, f:'Bonded storage is a customs mechanism. Retailers simply reject and return the shipment.' }]},
+            { id:11, q:'What EPR fee multiplier does Grade A packaging receive?',
+              opts:[{ t:'1.0× — the baseline, no change', c:false, f:'Grade C is the baseline at 1.0×. Grade A gets a 20% discount, giving a multiplier of 0.8×.' },
+                    { t:'0.8× — a 20% discount off the baseline', c:true,  f:'Correct. Grade A packaging earns a 20% reduction in EPR fees — the best multiplier available.' },
+                    { t:'0.5× — a 50% discount off the baseline', c:false, f:'The PPWR fee schedule goes from 0.8× (Grade A) to 2.0× (Grade E). There is no 0.5× band.' }]},
+            { id:12, q:'What is the most direct route from Grade B to Grade A recyclability?',
+              opts:[{ t:'Switch to a heavier, more durable packaging material', c:false, f:'Durability isn\'t the issue — Grade B packaging already works. The problem is a minor design element creating recycling friction.' },
+                    { t:'Remove the minor problematic element (e.g. replace a plastic window with paper)', c:true,  f:'Correct. Grade B is almost there. A small redesign — removing a window or switching to a removable label — is often all it takes.' },
+                    { t:'Increase recycled content above 50%', c:false, f:'Recycled content and recyclability grade are separate measures. High PCR content doesn\'t change the sorting behaviour of the pack.' }]},
+            { id:13, q:'Why should Grade C not be treated as a permanent endpoint for your packaging?',
+              opts:[{ t:'Grade C is already banned and will be withdrawn imminently', c:false, f:'Grade C is not currently banned. Only Grade D and E face a 2030 ban. The risk comes from future regulation.' },
+                    { t:'A future delegated act may confirm Grade C faces phase-out pressure after 2030', c:true,  f:'Correct. The regulation signals Grade C is a transition state, not a destination. Treat it as a stepping stone toward B or A.' },
+                    { t:'Grade C packaging cannot qualify for any EPR fee reduction at all', c:false, f:'Technically true (it\'s the 1.0× baseline), but the main reason not to stay at C is the regulatory trajectory, not the fee level.' }]},
+            { id:14, q:'Why do black PE trays with carbon black pigment get classified Grade D?',
+              opts:[{ t:'They are heavier and require extra transport packaging', c:false, f:'Weight doesn\'t determine recyclability grade. The issue is how the material behaves on a sorting line.' },
+                    { t:'Carbon black absorbs NIR light, making them invisible to sorting machines', c:true,  f:'Correct. Automated sorting uses near-infrared lasers to identify plastics. Carbon black absorbs this light so the machine can\'t classify the material.' },
+                    { t:'They always contain PFAS coatings for heat resistance', c:false, f:'PFAS is a separate substance ban issue. Carbon black trays are Grade D because of NIR-blocking, not chemical coatings.' }]},
+            { id:15, q:'What EPR fee multiplier does Grade E packaging carry right now?',
+              opts:[{ t:'1.5×', c:false, f:'1.5× is the multiplier for Grade D. Grade E — the worst classification — carries 2.0×.' },
+                    { t:'1.8×', c:false, f:'There is no 1.8× band in the PPWR fee schedule. Grades go: A=0.8×, B=0.9×, C=1.0×, D=1.5×, E=2.0×.' },
+                    { t:'2.0×', c:true,  f:'Correct. Grade E packaging currently pays double the baseline EPR fee — and from 2030 it is banned entirely.' }]},
+            { id:16, q:'What recycled content percentage is required in PET beverage bottles right now?',
+              opts:[{ t:'25%', c:true,  f:'Correct. The 25% recycled content target for PET bottles is already mandatory. 30% applies from 2030, and 65% from 2040.' },
+                    { t:'30%', c:false, f:'30% is the 2030 target, not the current requirement. 25% is mandatory today.' },
+                    { t:'10%', c:false, f:'10% applies to contact-sensitive non-PET plastic packaging from 2030. PET bottles must already hit 25%.' }]},
+            { id:17, q:'From 2030, what recycled content must non-contact plastic packaging (e.g. outer wrapping) contain?',
+              opts:[{ t:'10%', c:false, f:'10% is the target for contact-sensitive food-touching packaging from 2030, not general non-contact packaging.' },
+                    { t:'25%', c:false, f:'25% is the current PET bottle requirement. Non-contact plastic packaging faces a 30% target from 2030.' },
+                    { t:'30%', c:true,  f:'Correct. Non-contact plastic packaging must contain 30% recycled content by 2030, rising to 55% by 2040.' }]},
+            { id:18, q:'Your company uses euro-pallets for all outbound shipments. Is that enough to prove reuse compliance?',
+              opts:[{ t:'Yes — euro-pallets are inherently reusable and that\'s sufficient', c:false, f:'Euro-pallets do qualify as reusable, but you also need documented trip counts and return rates from your pallet pool provider.' },
+                    { t:'No — you also need documented trip counts and return rates from the pool provider', c:true,  f:'Correct. "We use euro-pallets" is not enough. You need data showing actual reuse rates to demonstrate compliance.' },
+                    { t:'Only if the pallets are owned outright, not leased', c:false, f:'Ownership doesn\'t determine compliance — documented reuse rates do. Leased pool pallets are fine with proper records.' }]},
+            { id:19, q:'What does PPWR require HORECA operators to offer from 2027?',
+              opts:[{ t:'Eliminate single-use packaging entirely', c:false, f:'PPWR does not require eliminating single-use — it requires offering a reusable alternative. Single-use can co-exist.' },
+                    { t:'A reusable container option at no extra charge to the customer', c:true,  f:'Correct. The reusable option must always be available and cannot be priced higher than the single-use alternative.' },
+                    { t:'Display the recyclability grade on all takeaway packaging', c:false, f:'The harmonised recyclability label (from 2028) is a separate obligation. The 2027 HORECA rule is about offering reusable containers.' }]},
+            { id:20, q:'From 2028, what happens to self-declared recycling claims like "this packaging is recyclable"?',
+              opts:[{ t:'They remain valid if independently certified', c:false, f:'Even certified self-declarations are invalid from 2028. The harmonised EU label replaces all previous claim formats.' },
+                    { t:'They are no longer valid — the harmonised EU label is required', c:true,  f:'Correct. From 2028 only the official harmonised PPWR label is acceptable. All self-declared claims must be replaced.' },
+                    { t:'They can remain until the DPP QR code is also added in 2030', c:false, f:'The label transition happens in 2028. You cannot wait until 2030 to replace self-declared recycling claims.' }]},
+            { id:21, q:'Who can scan the QR code on a Digital Product Passport?',
+              opts:[{ t:'Only registered producers and competent authorities', c:false, f:'The DPP is a public transparency tool. Anyone with a smartphone can scan it — that is the point.' },
+                    { t:'Anyone — consumers, waste collectors, and regulators', c:true,  f:'Correct. Full public accessibility is a core design principle of the DPP.' },
+                    { t:'Only logistics partners registered with the EPR scheme', c:false, f:'EPR registration is a separate system. DPP scanning requires no registration or credentials.' }]},
+            { id:22, q:'Your e-commerce packaging has 42% void space. Will it be compliant in 2030?',
+              opts:[{ t:'Yes — 42% is below the current 50% e-commerce threshold', c:false, f:'It\'s compliant today, but from 2030 the e-commerce threshold drops to 35%. At 42% you would be non-compliant.' },
+                    { t:'No — the e-commerce void space limit drops to 35% in 2030', c:true,  f:'Correct. You\'d need to reduce void space below 35% by 2030. Redesign now so you\'re not scrambling later.' },
+                    { t:'It depends on what product category the packaging is for', c:false, f:'The 35% 2030 ceiling applies to all e-commerce packaging. There are no product-category exemptions.' }]},
+            { id:23, q:'Which documents must be retained for 10 years rather than 5?',
+              opts:[{ t:'Technical design files and supplier conformity declarations', c:false, f:'Design files and supplier declarations are on the 5-year clock. The 10-year rule applies to EPR financial records.' },
+                    { t:'EPR registrations, annual reports, and fee calculations', c:true,  f:'Correct. EPR records are 10 years because regulators may audit historic annual submissions years after submission.' },
+                    { t:'PFAS test reports and recyclability certifications', c:false, f:'Material test reports and certifications fall under the 5-year design records category.' }]},
+            { id:24, q:'What EPR fee multiplier does Grade B packaging carry?',
+              opts:[{ t:'0.8×', c:false, f:'0.8× is the Grade A multiplier. Grade B, one step below, sits at 0.9×.' },
+                    { t:'0.9×', c:true,  f:'Correct. Grade B earns a 10% EPR fee discount vs the 1.0× baseline. Grade A gets a 20% discount at 0.8×.' },
+                    { t:'1.0×', c:false, f:'1.0× is the Grade C baseline. Grade B is one step better and gets a 10% discount.' }]},
+            { id:25, q:'What EPR fee multiplier does Grade C packaging carry?',
+              opts:[{ t:'0.9×', c:false, f:'0.9× is Grade B. Grade C is the reference point — no discount, no surcharge.' },
+                    { t:'1.0×', c:true,  f:'Correct. Grade C is the baseline. All other grades are measured relative to it: A=0.8×, B=0.9×, D=1.5×, E=2.0×.' },
+                    { t:'1.2×', c:false, f:'There is no 1.2× band. The next step above Grade C baseline (1.0×) is Grade D at 1.5×.' }]},
+            { id:26, q:'What does "PPWR" stand for?',
+              opts:[{ t:'Packaging Policy and Waste Regulation', c:false, f:'Close, but not quite. The correct name is the Packaging and Packaging Waste Regulation.' },
+                    { t:'Packaging and Packaging Waste Regulation', c:true,  f:'Correct. PPWR is the EU Packaging and Packaging Waste Regulation, replacing the 1994 Directive.' },
+                    { t:'Producer Products and Waste Regulation', c:false, f:'Incorrect. The full name is Packaging and Packaging Waste Regulation.' }]},
+            { id:27, q:'From what date does primary PPWR compliance become enforceable?',
+              opts:[{ t:'1 January 2025', c:false, f:'January 2025 is not the enforcement date. PPWR enforcement begins in August 2026.' },
+                    { t:'12 August 2026', c:true,  f:'Correct. 12 August 2026 is the main enforcement start date. Packaging placed on the market from that date must comply.' },
+                    { t:'1 January 2028', c:false, f:'2028 is when the harmonised recyclability labelling regime begins. The main enforcement date is August 2026.' }]},
+            { id:28, q:'What recycled content target applies to contact-sensitive (food-touching) plastic packaging from 2030?',
+              opts:[{ t:'5%', c:false, f:'5% is below any threshold set by PPWR. The 2030 target for food-contact plastics is 10%.' },
+                    { t:'10%', c:true,  f:'Correct. Contact-sensitive plastic packaging (food-touching) must contain at least 10% recycled content from 2030.' },
+                    { t:'25%', c:false, f:'25% is the current mandatory target for PET beverage bottles, not the 2030 food-contact target.' }]},
+            { id:29, q:'By which year must all relevant packaging carry a Digital Product Passport accessible via QR code?',
+              opts:[{ t:'2027', c:false, f:'2027 is when HORECA must offer reusable containers. The DPP QR code obligation begins in 2030.' },
+                    { t:'2028', c:false, f:'2028 is when the harmonised recyclability label regime starts. The DPP QR code requirement begins in 2030.' },
+                    { t:'2030', c:true,  f:'Correct. From 2030, all packaging in scope must carry a QR code giving access to the full Digital Product Passport.' }]},
+            { id:30, q:'A company sells packaged goods in France, Germany, and Spain. How many national EPR schemes must it register with?',
+              opts:[{ t:'One — there is a single pan-EU EPR register', c:false, f:'There is no single EU register. EPR is administered nationally, so you must register in each country you sell into.' },
+                    { t:'Three — one per country', c:true,  f:'Correct. EPR registration is country-by-country. Selling into three EU markets means three separate registrations.' },
+                    { t:'Two — only countries above 1,000 tonnes of packaging per year', c:false, f:'The obligation does not depend on volume thresholds of that kind. Every market you sell into requires its own EPR registration.' }]},
+            { id:31, q:'What recycled content target applies to PET beverage bottles from 2040?',
+              opts:[{ t:'50%', c:false, f:'50% is not a PPWR milestone for PET. The progression is 25% now → 30% in 2030 → 65% in 2040.' },
+                    { t:'65%', c:true,  f:'Correct. PET beverage bottles must contain 65% recycled content by 2040, up from 30% in 2030.' },
+                    { t:'75%', c:false, f:'75% is above any PPWR target. The 2040 figure for PET bottles is 65%.' }]},
+            { id:32, q:'What recycled content target applies to non-contact plastic packaging from 2040?',
+              opts:[{ t:'40%', c:false, f:'40% is not a PPWR milestone. Non-contact plastic packaging must hit 55% recycled content by 2040.' },
+                    { t:'55%', c:true,  f:'Correct. Non-contact plastic packaging must reach 55% recycled content by 2040, up from 30% in 2030.' },
+                    { t:'65%', c:false, f:'65% is the 2040 target for PET beverage bottles, not for general non-contact plastic packaging.' }]},
+            { id:33, q:'Norway is not an EU member. Does PPWR apply to goods sold there?',
+              opts:[{ t:'No — Norway is outside the EU so PPWR does not apply', c:false, f:'Norway is part of the European Economic Area (EEA) and adopts EU single-market legislation including PPWR.' },
+                    { t:'Yes — Norway is in the EEA and subject to PPWR', c:true,  f:'Correct. EEA membership means Norway adopts core EU market regulations. PPWR applies to packaging sold in Norway.' },
+                    { t:'Only for goods imported into Norway from EU countries', c:false, f:'PPWR applies to all packaging placed on the Norwegian market regardless of where it was manufactured.' }]},
+            { id:34, q:'From 2030, what is the void space limit for standard (non-e-commerce) product packaging?',
+              opts:[{ t:'25%', c:false, f:'25% is below the 2030 limit. Standard packaging must achieve 30% or less empty space from 2030.' },
+                    { t:'30%', c:true,  f:'Correct. The general void space limit tightens from 40% today to 30% from 2030 (and the e-commerce limit drops separately to 35%).' },
+                    { t:'35%', c:false, f:'35% is the 2030 limit for e-commerce packaging. Standard packaging faces a tighter 30% limit.' }]},
+            { id:35, q:'What is the EU reuse target for transport packaging by 2030?',
+              opts:[{ t:'20%', c:false, f:'20% applies to certain HORECA and takeaway contexts. The transport packaging reuse target for 2030 is 40%.' },
+                    { t:'40%', c:true,  f:'Correct. At least 40% of transport packaging placed on the market must be reusable by 2030.' },
+                    { t:'60%', c:false, f:'60% is above the 2030 target. The requirement is 40% reusable transport packaging by 2030.' }]},
+            { id:36, q:'A restaurant chain offers takeaway coffee. From 2027, what must it offer every customer?',
+              opts:[{ t:'Serve all beverages exclusively in reusable cups', c:false, f:'PPWR does not ban single-use. It requires that a reusable alternative is offered — single-use can still be provided.' },
+                    { t:'A reusable cup option at no extra charge', c:true,  f:'Correct. The reusable option must be available and must not cost more than the single-use alternative.' },
+                    { t:'A recyclability grade label printed on every cup', c:false, f:'The harmonised recyclability label (from 2028) is a separate obligation. The 2027 HORECA rule is about offering reusable containers.' }]},
+            { id:37, q:'From 2028, the harmonised EU recyclability label must replace what?',
+              opts:[{ t:'The CE mark on food-contact packaging', c:false, f:'The CE mark is a separate product-safety framework unrelated to PPWR recyclability labelling.' },
+                    { t:'All self-declared recycling claims on packaging', c:true,  f:'Correct. From 2028, any self-declared claim — however worded — must be replaced by the official harmonised label.' },
+                    { t:'QR codes and barcodes currently printed on packaging', c:false, f:'QR codes are not replaced; the DPP QR code is actually required from 2030. The label change replaces recyclability claims only.' }]},
+            { id:38, q:'Packaging made of compostable bioplastic incompatible with standard recycling is typically graded:',
+              opts:[{ t:'Grade C', c:false, f:'Grade C packaging is recyclable but with design compromises. Compostable-only packaging that cannot enter recycling streams is Grade E.' },
+                    { t:'Grade D', c:false, f:'Grade D is assigned to packaging that is not practically recyclable in current systems but may recover value. Compostable-only material grades as E.' },
+                    { t:'Grade E', c:true,  f:'Correct. Grade E means the packaging cannot be recycled in conventional waste streams. Compostable bioplastics that contaminate recycling flows fall here.' }]},
+            { id:39, q:'Under PPWR, who qualifies as a "producer" with EPR obligations?',
+              opts:[{ t:'Only the company that physically manufactures the packaging', c:false, f:'The manufacturer is just one type of producer. Anyone who fills, imports, or places packaged goods on the EU market carries EPR obligations.' },
+                    { t:'Any company that fills, imports, or places packaged goods on the EU market', c:true,  f:'Correct. The producer definition is broad. If your company places packaged goods on the EU market, EPR obligations attach to you.' },
+                    { t:'Only companies producing more than 1,000 tonnes of packaging per year', c:false, f:'There is no 1,000-tonne threshold for EPR producer status. Volume affects fee levels, not whether you are a producer.' }]},
+            { id:40, q:'A manufacturer based in China sells packaged goods directly to French retailers. Does PPWR apply?',
+              opts:[{ t:'No — PPWR only applies to EU-based producers', c:false, f:'Location of the manufacturer is irrelevant. PPWR applies to anyone who places packaging on the EU market.' },
+                    { t:'Yes — PPWR applies to anyone placing packaging on the EU market', c:true,  f:'Correct. A Chinese supplier selling directly into France must either register for EPR in France or appoint an authorised representative.' },
+                    { t:'Only if French import duties were paid by the Chinese company', c:false, f:'Tax treatment has no bearing on PPWR obligations. Placing packaged goods on the EU market triggers EPR responsibility.' }]},
+            { id:41, q:'Which record category is subject to the 5-year retention rule (not 10 years)?',
+              opts:[{ t:'EPR annual report submissions', c:false, f:'EPR annual reports are on the 10-year clock, not 5 years. Regulators need to audit historic submissions.' },
+                    { t:'Supplier Declarations of Conformity', c:true,  f:'Correct. Design records and supplier declarations (DoCs) must be kept for 5 years from the last date the packaging was placed on the market.' },
+                    { t:'EPR fee calculation worksheets', c:false, f:'Fee calculations are EPR financial records and fall under the 10-year retention rule.' }]},
+            { id:42, q:'What must a packaging supplier provide to the business purchasing their packaging?',
+              opts:[{ t:'A purchase receipt listing materials used', c:false, f:'A receipt is not sufficient. The formal compliance document required is a Declaration of Conformity.' },
+                    { t:'A Declaration of Conformity confirming PPWR compliance', c:true,  f:'Correct. Suppliers must issue a Declaration of Conformity for each packaging type sold. Buyers must hold it for at least 5 years.' },
+                    { t:'A copy of their national EPR registration certificate', c:false, f:'EPR registration is a separate obligation. The document required when supplying packaging is a Declaration of Conformity.' }]},
+            { id:43, q:'What EPR fee multiplier does Grade D packaging currently attract?',
+              opts:[{ t:'1.0×', c:false, f:'1.0× is the Grade C baseline. Grade D — not practically recyclable — carries a 1.5× surcharge.' },
+                    { t:'1.5×', c:true,  f:'Correct. Grade D packaging pays 1.5× the baseline EPR fee. From 2030, it is banned entirely regardless of fee payment.' },
+                    { t:'2.0×', c:false, f:'2.0× is the Grade E multiplier. Grade D sits below that at 1.5×.' }]},
+            { id:44, q:'A company is EPR-registered in Germany. Can it use that registration when selling into the Netherlands?',
+              opts:[{ t:'Yes — one EU country registration covers the whole single market', c:false, f:'There is no mutual recognition of EPR registrations. Each country requires its own separate registration.' },
+                    { t:'No — it must register separately in the Netherlands', c:true,  f:'Correct. EPR is administered nationally. Each EU market you sell into requires its own registration with that country\'s EPR scheme.' },
+                    { t:'Only if Germany and the Netherlands use the same EPR scheme operator', c:false, f:'Even shared operators would not remove the country-specific registration requirement under PPWR.' }]},
+            { id:45, q:'What key change does the 2028 harmonised labelling regime bring to packaging?',
+              opts:[{ t:'A minimum font size for all text printed on packaging', c:false, f:'Font size requirements are not the core change. The 2028 regime requires a standardised recyclability grade (A–E) on all packaging.' },
+                    { t:'A standardised A–E recyclability grade must appear on all packaging', c:true,  f:'Correct. From 2028, all packaging must display the official harmonised recyclability grade. Self-declared claims are no longer permitted.' },
+                    { t:'An obligation to print the recycled content percentage on the label', c:false, f:'Recycled content labelling requirements are separate from the harmonised grade label introduced in 2028.' }]},
+            { id:46, q:'What is the current maximum void space allowed in e-commerce packaging?',
+              opts:[{ t:'40% — the same as standard packaging', c:false, f:'Standard packaging has a 40% limit, but e-commerce packaging gets a higher current allowance of 50% to account for transit protection needs.' },
+                    { t:'50%', c:true,  f:'Correct. E-commerce packaging currently has a 50% void space ceiling, recognising transit protection needs. This drops to 35% from 2030.' },
+                    { t:'60%', c:false, f:'60% is above any PPWR threshold. The current e-commerce ceiling is 50%.' }]},
+            { id:47, q:'Which PPWR article specifically covers record keeping obligations?',
+              opts:[{ t:'Article 6 — Recyclability Requirements', c:false, f:'Article 6 covers recyclability design requirements. Record keeping is covered in Article 18.' },
+                    { t:'Article 13 — Digital Product Passport', c:false, f:'Article 13 covers the Digital Product Passport. Record keeping obligations are in Article 18.' },
+                    { t:'Article 18 — Record Keeping', c:true,  f:'Correct. Article 18 specifies the retention periods and document categories — 5 years for design/supplier records, 10 years for EPR records.' }]},
+            { id:48, q:'What does PFAS stand for?',
+              opts:[{ t:'Packaging Films and Adhesive Substances', c:false, f:'Incorrect. PFAS refers to a family of synthetic chemicals, not a packaging category.' },
+                    { t:'Per- and Polyfluoroalkyl Substances', c:true,  f:'Correct. PFAS are synthetic chemical coatings used in some food-contact packaging. They are banned in food-contact packaging under PPWR.' },
+                    { t:'Plastic Film Application Standards', c:false, f:'Incorrect. PFAS is a chemical abbreviation for Per- and Polyfluoroalkyl Substances.' }]},
+            { id:49, q:'What is the first formal consequence for failing to register with a national EPR scheme?',
+              opts:[{ t:'A warning letter with a 90-day cure period, and no fine', c:false, f:'First-time violations can immediately trigger corrective orders and, in persistent cases, sales bans — not just a warning letter.' },
+                    { t:'A corrective order requiring registration, potentially followed by a sales ban', c:true,  f:'Correct. Non-registration can trigger an immediate corrective order. Persistent non-registration can result in a sales ban on your product lines.' },
+                    { t:'Mandatory third-party audit of all your packaging documentation', c:false, f:'Third-party audits are typically reserved for persistent or systemic violations such as under-reporting, not initial non-registration.' }]},
+            { id:50, q:'A company\'s packaging declaration states recycled content of 20%, but lab testing shows only 8%. What category of violation is this?',
+              opts:[{ t:'No violation — a 12% gap is within acceptable measurement tolerance', c:false, f:'PPWR does not provide a 12% tolerance band. Material misrepresentation of recycled content is a serious violation.' },
+                    { t:'EPR under-reporting / misrepresentation, subject to corrective assessment and audit', c:true,  f:'Correct. Stating materially higher recycled content than is present constitutes EPR under-reporting, triggering corrective assessments and potentially mandatory third-party audits.' },
+                    { t:'Only a violation if the packaging is also Grade D or E', c:false, f:'Recycled content and recyclability grade are separate obligations. Misrepresenting recycled content is a violation regardless of the recyclability grade.' }]},
         ];
 
         // ============================================================================
@@ -4666,95 +4850,239 @@
         }
 
         // ============================================================================
-        // ASSESSMENT
+        // ASSESSMENT — one-question-at-a-time quiz engine
         // ============================================================================
-        function loadAssessment() {
-            const container = document.getElementById('assessment-content');
-            let assessmentHTML = '';
 
-            assessmentQuestions.forEach((q, idx) => {
-                assessmentHTML += `
-                    <div style="margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #EFEFEB;">
-                        <h4 style="margin-bottom: 16px;">${escapeHtml(idx + 1)}. ${escapeHtml(q.question)}</h4>
-                        <div>
-                            ${q.options.map((opt, optIdx) => `
-                                <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; font-weight: 400;">
-                                    <input type="radio" name="question-${escapeHtml(q.id)}" value="${escapeHtml(optIdx)}" style="margin-right: 12px;"> ${escapeHtml(opt)}
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            });
+        // Quiz session state (reset on each new session start)
+        let _kqState = null;
 
-            assessmentHTML += '<button class="btn-primary" style="width: 100%;" id="submit-assessment">Get Assessment Results</button>';
-            container.innerHTML = assessmentHTML;
-
-            document.getElementById('submit-assessment')?.addEventListener('click', submitAssessment);
+        function _kqShuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
         }
 
-        function submitAssessment() {
-            let totalRisk = 0;
-            let answeredCount = 0;
+        function loadAssessment() {
+            // If a session is in progress mid-round, resume it; otherwise show intro
+            if (_kqState && _kqState.phase === 'question') {
+                _kqRenderQuestion();
+            } else {
+                _kqShowIntro();
+            }
+        }
 
-            assessmentQuestions.forEach(q => {
-                const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
-                if (selected) {
-                    const optIdx = parseInt(selected.value);
-                    totalRisk += q.riskWeights[optIdx];
-                    answeredCount++;
+        function _kqShowIntro() {
+            const hasPrev = _kqState && _kqState.sessionCorrect > 0;
+            const container = document.getElementById('assessment-content');
+            container.innerHTML = `
+                <div class="kq-intro">
+                    <h1 style="margin-bottom:8px;">Test Your PPWR Knowledge</h1>
+                    <p class="kq-intro-meta">
+                        10 questions drawn randomly from a pool of 50 — covering recycled content targets,
+                        EPR fees, void space rules, record keeping, recyclability grades, and more.<br>
+                        Score 7 or more to pass. Pass a round to unlock 10 more, up to 50 questions total.
+                    </p>
+                    ${hasPrev ? `
+                    <div class="kq-session-bar">
+                        <h4>Previous session</h4>
+                        <div class="kq-session-score">${_kqState.sessionCorrect} correct from ${_kqState.sessionAnswered} questions</div>
+                    </div>` : ''}
+                    <button class="btn-primary" id="kq-start-btn" style="width:100%; font-size:16px; padding:16px;">Start Quiz →</button>
+                </div>`;
+            document.getElementById('kq-start-btn').addEventListener('click', _kqStartRound);
+        }
+
+        function _kqStartRound() {
+            // Build or extend the session pool
+            if (!_kqState) {
+                _kqState = {
+                    pool: _kqShuffle(QUIZ_POOL),   // shuffled copy of all 50
+                    usedCount: 0,                   // how many we've drawn so far
+                    round: [],                      // current 10 questions
+                    roundIdx: 0,                    // index within round (0–9)
+                    answers: [],                    // {q, chosen, correct} per question
+                    sessionCorrect: 0,
+                    sessionAnswered: 0,
+                    phase: 'question',
+                };
+            } else {
+                // Continue: draw next 10 from where we left off
+                _kqState.round = [];
+                _kqState.roundIdx = 0;
+                _kqState.answers = [];
+                _kqState.phase = 'question';
+            }
+            // Draw 10 questions from the pool (no repeats across the session)
+            const start = _kqState.usedCount;
+            _kqState.round = _kqState.pool.slice(start, start + 10);
+            _kqState.usedCount = start + _kqState.round.length;
+            _kqRenderQuestion();
+        }
+
+        function _kqRenderQuestion() {
+            const s = _kqState;
+            const q = s.round[s.roundIdx];
+            const totalDone = s.sessionAnswered + s.roundIdx;
+            const totalTarget = s.usedCount;
+            const progressPct = totalTarget > 0 ? Math.round((totalDone / totalTarget) * 100) : 0;
+            const container = document.getElementById('assessment-content');
+            container.innerHTML = `
+                <div class="kq-wrap">
+                    <div class="kq-header">
+                        <span class="kq-counter">Question ${s.roundIdx + 1} of ${s.round.length}</span>
+                        <div class="kq-bar-track">
+                            <div class="kq-bar-fill" id="kq-bar" style="width:${progressPct}%"></div>
+                        </div>
+                        ${totalDone > 0 ? `<span class="kq-counter">${s.sessionCorrect + _kqRoundCorrectSoFar()} correct</span>` : ''}
+                    </div>
+                    <p class="kq-question">${escapeHtml(q.q)}</p>
+                    <div id="kq-tiles">
+                        ${q.opts.map((o, i) => `
+                            <button class="kq-tile" data-idx="${i}">${escapeHtml(o.t)}</button>
+                        `).join('')}
+                    </div>
+                    <div id="kq-feedback" style="display:none"></div>
+                    <div id="kq-next-wrap" style="display:none">
+                        <button class="btn-primary kq-next-btn" id="kq-next-btn" style="width:100%;">
+                            ${s.roundIdx < s.round.length - 1 ? 'Next Question →' : 'See Results →'}
+                        </button>
+                    </div>
+                </div>`;
+
+            document.querySelectorAll('.kq-tile').forEach(btn => {
+                btn.addEventListener('click', () => _kqAnswer(parseInt(btn.dataset.idx)));
+            });
+        }
+
+        function _kqRoundCorrectSoFar() {
+            return (_kqState.answers || []).filter(a => a.correct).length;
+        }
+
+        function _kqAnswer(chosenIdx) {
+            const s = _kqState;
+            const q = s.round[s.roundIdx];
+            const chosen = q.opts[chosenIdx];
+            const isCorrect = chosen.c;
+            const correctIdx = q.opts.findIndex(o => o.c);
+
+            s.answers.push({ q: q.q, chosen: chosen.t, correct: isCorrect, correctText: q.opts[correctIdx].t, feedback: chosen.f });
+
+            // Lock all tiles and highlight result
+            document.querySelectorAll('.kq-tile').forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === chosenIdx) btn.classList.add(isCorrect ? 'kq-correct' : 'kq-wrong');
+                if (!isCorrect && i === correctIdx) btn.classList.add('kq-reveal');
+            });
+
+            // Show inline feedback
+            const fb = document.getElementById('kq-feedback');
+            fb.className = 'kq-inline-fb ' + (isCorrect ? 'kq-correct' : 'kq-wrong');
+            fb.textContent = chosen.f;
+            fb.style.display = 'block';
+            document.getElementById('kq-next-wrap').style.display = 'block';
+
+            document.getElementById('kq-next-btn').addEventListener('click', _kqNext);
+        }
+
+        function _kqNext() {
+            const s = _kqState;
+            if (s.roundIdx < s.round.length - 1) {
+                s.roundIdx++;
+                _kqRenderQuestion();
+            } else {
+                _kqShowResults();
+            }
+        }
+
+        function _kqShowResults() {
+            const s = _kqState;
+            const roundCorrect = s.answers.filter(a => a.correct).length;
+            const roundTotal   = s.answers.length;
+            const passed       = roundCorrect >= 7;
+
+            s.sessionCorrect  += roundCorrect;
+            s.sessionAnswered += roundTotal;
+            s.phase = 'results';
+
+            // Update dashboard score based on best round
+            const pct = Math.round((roundCorrect / roundTotal) * 100);
+            if (pct > (appState.dashboard.score || 0)) {
+                appState.dashboard.score = pct;
+            }
+            appState.dashboard.progress = Math.max(appState.dashboard.progress || 0, 50);
+            localStorage.setItem('appState', JSON.stringify(appState));
+
+            const canContinue = s.usedCount < QUIZ_POOL.length;
+            const circumference = 2 * Math.PI * 54; // r=54
+            const arcLen = circumference * (roundCorrect / roundTotal);
+            const arcColor = passed ? '#2A9D8F' : '#E63946';
+
+            const breakdownRows = s.answers.map(a => `
+                <li>
+                    <span class="kq-bd-icon">${a.correct ? '✅' : '❌'}</span>
+                    <span class="kq-bd-text">
+                        ${escapeHtml(a.q)}
+                        ${!a.correct ? `<div class="kq-bd-correct-ans">Correct answer: ${escapeHtml(a.correctText)}</div>` : ''}
+                    </span>
+                </li>`).join('');
+
+            const container = document.getElementById('assessment-content');
+            container.innerHTML = `
+                <div class="kq-wrap">
+                    <div class="kq-ring-wrap">
+                        <div class="kq-ring">
+                            <svg width="140" height="140" viewBox="0 0 140 140">
+                                <circle class="kq-ring-bg" cx="70" cy="70" r="54"/>
+                                <circle class="kq-ring-arc" cx="70" cy="70" r="54"
+                                    stroke="${arcColor}"
+                                    stroke-dasharray="${arcLen} ${circumference}"
+                                    stroke-dashoffset="0"/>
+                            </svg>
+                            <div class="kq-ring-label">
+                                <span class="kq-ring-score" style="color:${arcColor}">${roundCorrect}</span>
+                                <span class="kq-ring-denom">out of ${roundTotal}</span>
+                            </div>
+                        </div>
+                        <p style="margin:12px 0 4px; font-size:18px; font-weight:600;">
+                            ${passed ? 'Well done — you passed!' : 'Not quite — give it another go'}
+                        </p>
+                        <p style="color:#888; font-size:14px; margin:0;">
+                            ${passed ? `${roundCorrect}/10 correct · Pass threshold is 7/10` : `${roundCorrect}/10 correct · You need 7 to pass`}
+                            ${s.sessionAnswered > roundTotal ? ` · Session total: ${s.sessionCorrect}/${s.sessionAnswered}` : ''}
+                        </p>
+                    </div>
+
+                    <h4 style="margin-bottom:12px;">Question breakdown</h4>
+                    <ul class="kq-breakdown">${breakdownRows}</ul>
+
+                    <div class="kq-actions">
+                        ${passed && canContinue
+                            ? `<button class="btn-primary" id="kq-continue-btn">Continue — 10 more questions →</button>`
+                            : ''}
+                        <button class="${passed && canContinue ? 'btn-secondary' : 'btn-primary'}" id="kq-retry-btn">
+                            ${passed ? 'Finish' : 'Try again →'}
+                        </button>
+                    </div>
+                </div>`;
+
+            document.getElementById('kq-retry-btn')?.addEventListener('click', () => {
+                if (passed) {
+                    // Finish — reset state and go to dashboard
+                    _kqState = null;
+                    showPage('dashboard');
+                } else {
+                    // Retry — full reset so they get a fresh shuffle
+                    _kqState = null;
+                    _kqStartRound();
                 }
             });
 
-            if (answeredCount !== assessmentQuestions.length) {
-                alert('Please answer all questions');
-                return;
-            }
-
-            const avgRisk = Math.round(totalRisk / assessmentQuestions.length);
-            const readinessScore = 100 - avgRisk;
-            let status = '';
-            let statusClass = '';
-
-            if (readinessScore >= 70) {
-                status = 'Good';
-                statusClass = 'status-green';
-            } else if (readinessScore >= 50) {
-                status = 'At Risk';
-                statusClass = 'status-amber';
-            } else {
-                status = 'Critical';
-                statusClass = 'status-red';
-            }
-
-            // Update dashboard
-            appState.dashboard.score = readinessScore;
-            appState.dashboard.progress = Math.max(appState.dashboard.progress, 50);
-            localStorage.setItem('appState', JSON.stringify(appState));
-
-            // Show results
-            const container = document.getElementById('assessment-content');
-            container.innerHTML = `
-                <div style="text-align: center;">
-                    <h2 style="font-size: 36px; color: var(--color-sage); margin-bottom: 16px;">${readinessScore}/100</h2>
-                    <div class="${statusClass}" style="display: inline-block; margin-bottom: 32px;">${status}</div>
-                    
-                    <p style="color: #666; margin-bottom: 32px; font-size: 16px;">Your company's readiness for PPWR compliance.</p>
-                    
-                    <div style="background: #F9F9F7; border-radius: 12px; padding: 20px; text-align: left; margin-bottom: 24px;">
-                        <h4 style="margin-bottom: 16px;">Recommended Actions:</h4>
-                        <ul style="color: #666; line-height: 1.8;">
-                            <li>✓ Request Declarations of Conformity from all suppliers</li>
-                            <li>✓ Establish a document retention system (5-year minimum)</li>
-                            <li>✓ Conduct <span class="term">PFAS<span class="term-tip">Per- and polyfluoroalkyl substances — chemical coatings used in some food-contact packaging. Banned in food-contact packaging under PPWR from July 2024.</span></span> testing on food-contact materials</li>
-                            <li>✓ Calculate and document empty space ratios</li>
-                            <li>✓ Review label removability and recyclability</li>
-                        </ul>
-                    </div>
-                    
-                    <button class="btn-primary page-link" data-page="dashboard" style="width: 100%;">Back to Dashboard</button>
-                </div>
-            `;
+            document.getElementById('kq-continue-btn')?.addEventListener('click', () => {
+                _kqStartRound();
+            });
         }
 
         // ============================================================================
