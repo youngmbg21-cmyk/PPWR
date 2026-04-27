@@ -1283,7 +1283,17 @@
     <!-- DASHBOARD PAGE -->
     <div class="page" id="dashboard-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">Dashboard</h1>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
+                <h1 style="margin:0;">Dashboard</h1>
+                <div id="plan-switcher" style="display:flex; align-items:center; gap:10px; background:#F9F9F7; border:1px solid #EFEFEB; border-radius:8px; padding:8px 14px; font-size:13px;">
+                    <span style="color:#999; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.04em;">Active Plan</span>
+                    <select id="plan-select" style="border:none; background:transparent; font-family:inherit; font-size:14px; font-weight:700; color:var(--color-sage); cursor:pointer; outline:none;">
+                        <option value="starter">Starter</option>
+                        <option value="growth">Growth</option>
+                        <option value="pro">Pro</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="grid-3" style="margin-bottom: 32px;">
                 <div class="stat-box">
@@ -2863,6 +2873,23 @@
             document.getElementById('dashboard-progress').textContent = appState.dashboard.progress + '%';
             document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
+
+            // Sync plan switcher
+            const planSelect = document.getElementById('plan-select');
+            if (planSelect) {
+                const currentPlan = (appState.user?.plan || 'starter').toLowerCase();
+                planSelect.value = currentPlan;
+                if (!planSelect._wired) {
+                    planSelect._wired = true;
+                    planSelect.addEventListener('change', function() {
+                        if (!appState.user) appState.user = {};
+                        appState.user.plan = this.value;
+                        localStorage.setItem('appState', JSON.stringify(appState));
+                        // Refresh chatbot quota state
+                        if (window.aiNav?.syncVisibility) aiNav.syncVisibility();
+                    });
+                }
+            }
 
             renderMilestoneWidget();
             renderCertificationStatus();
