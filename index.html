@@ -5525,6 +5525,33 @@
                 statusDesc = `Relatively low PPWR exposure for this profile. Continue monitoring delegated acts expected in 2026.`;
             }
 
+            // ── Risk driver explanations ───────────────────────────────────────────
+            const materialBase = materialScore[material] ?? 40;
+            const industryAdd  = industryMod[industry] ?? 8;
+            const marketAdd    = (markets.includes('EU') ? 10 : 0) + (markets.includes('Norway') ? 6 : 0) + (markets.includes('UK') ? 4 : 0) || (markets.length === 0 ? 5 : 0);
+
+            const MATERIAL_WHY = {
+                'Plastic':        { icon:'🔴', why:'Plastic triggers the most PPWR obligations — mandatory recycled content targets, recyclability grading (A–E), PFAS-free declarations, and minimisation rules all apply directly.' },
+                'Mixed':          { icon:'🟠', why:'Mixed-material packaging must comply with recyclability grading and PFAS rules, and can be difficult to grade above C — increasing EPR fees.' },
+                'Paper/Cardboard':{ icon:'🟡', why:'Paper and cardboard have lower chemical obligations but must still meet recyclability standards, and EPR fees apply. Fibre-based targets may tighten from 2028.' },
+                'Glass':          { icon:'🟢', why:'Glass has no mandatory recycled content targets under PPWR and no PFAS concern — the primary obligations are EPR registration and labelling.' },
+                'Metal':          { icon:'🟡', why:'Metal is generally recyclable, but steel and aluminium still require EPR registration and must display sorting instructions under Art. 12.' },
+            };
+            const INDUSTRY_WHY = {
+                'Food & Beverage':    { icon:'🔴', why:'Food contact rules overlap with PPWR — EU Reg. 10/2011 applies alongside Art. 5 restrictions. Reuse targets for beverage packaging are stricter.' },
+                'Pharmaceuticals':    { icon:'🟠', why:'Pharma packaging has Art. 5 substance restrictions and must balance PPWR minimisation rules against patient safety requirements.' },
+                'Consumer Goods':     { icon:'🟡', why:'Consumer goods packaging must meet minimisation rules (Art. 10) and labelling (Art. 12), but has fewer sector-specific obligations than food or pharma.' },
+                'E-commerce & Retail':{ icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope.' },
+            };
+            const matWhy = MATERIAL_WHY[material] || { icon:'⚪', why:'Your material has standard PPWR obligations.' };
+            const indWhy = INDUSTRY_WHY[industry] || { icon:'⚪', why:'Your industry has standard obligations.' };
+
+            const marketLines = [];
+            if (markets.includes('EU'))     marketLines.push('EPR registration is required <strong>per EU member state</strong> where you place packaging on the market — not a single EU-wide registration.');
+            if (markets.includes('Norway')) marketLines.push('Norway has adopted PPWR via the EEA Agreement. Norwegian EPR is managed through <strong>Grønt Punkt Norge</strong>.');
+            if (markets.includes('UK'))     marketLines.push('<strong>UK EPR is entirely separate</strong> from EU EPR — different thresholds, different reporting, different producer register.');
+            if (markets.length === 0)       marketLines.push('No market selected — obligations will depend on where you sell. EU EPR applies from the first unit placed on any EU market.');
+
             // ── Render ────────────────────────────────────────────────────────────
             const resultsDiv = document.getElementById('risk-results');
             resultsDiv.style.display = 'block';
@@ -5545,30 +5572,61 @@
 
             document.getElementById('rc-status-desc').textContent = statusDesc;
 
-            // Summary chip row
-            const chips = [material, industry, ...(markets.length ? markets : ['No market selected'])];
+            // Score driver breakdown + market context
             document.getElementById('risk-recommendations').innerHTML = `
-                <div style="display:flex; flex-wrap:wrap; gap:6px; padding-top:4px; border-top:1px solid #EFEFEB;">
-                    ${chips.map(c => `<span style="padding:3px 10px; border-radius:10px; background:#F5F5F3; font-size:12px; color:var(--text2); font-weight:500;">${escapeHtml(c)}</span>`).join('')}
+                <div style="display:flex; flex-wrap:wrap; gap:6px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+                    ${[material, industry, ...(markets.length ? markets : ['No market selected'])].map(c => `<span style="padding:3px 10px; border-radius:10px; background:var(--bg3); border:1px solid var(--border2); font-size:12px; color:var(--text2); font-weight:500; font-family:var(--ff-mono);">${escapeHtml(c)}</span>`).join('')}
+                </div>
+
+                <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:18px 0 12px;">Why this score?</p>
+
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:8px;">
+
+                    <div style="background:var(--bg3);border:1px solid var(--border);border-left:3px solid ${arcColor};border-radius:8px;padding:14px 16px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                            <span style="font-size:12px;font-weight:700;color:var(--text);font-family:var(--ff-mono);">${matWhy.icon} Material — ${escapeHtml(material)}</span>
+                            <span style="font-size:11px;font-weight:700;color:${arcColor};font-family:var(--ff-mono);">+${materialBase} pts</span>
+                        </div>
+                        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin:0;">${matWhy.why}</p>
+                    </div>
+
+                    <div style="background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:8px;padding:14px 16px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                            <span style="font-size:12px;font-weight:700;color:var(--text);font-family:var(--ff-mono);">${indWhy.icon} Industry — ${escapeHtml(industry)}</span>
+                            <span style="font-size:11px;font-weight:700;color:var(--text2);font-family:var(--ff-mono);">+${industryAdd} pts</span>
+                        </div>
+                        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin:0;">${indWhy.why}</p>
+                    </div>
+
+                    <div style="background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:8px;padding:14px 16px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                            <span style="font-size:12px;font-weight:700;color:var(--text);font-family:var(--ff-mono);">🌍 Markets</span>
+                            <span style="font-size:11px;font-weight:700;color:var(--text2);font-family:var(--ff-mono);">+${marketAdd} pts</span>
+                        </div>
+                        <ul style="margin:0;padding:0 0 0 16px;font-size:13px;color:var(--text2);line-height:1.7;">
+                            ${marketLines.map(l => `<li>${l}</li>`).join('')}
+                        </ul>
+                    </div>
+
                 </div>`;
 
             // Gap list
             const PPWR_BASE = 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0040';
-            const sevBorderColor = { critical:'#C62828', high:'#E65100', medium:'#F9A825', low:'#2E7D32' };
-            const sevClass       = { critical:'rc-sev-critical', high:'rc-sev-high', medium:'rc-sev-medium', low:'rc-sev-low' };
+            const sevBorderCss = { critical:'var(--critical)', high:'var(--warn)', medium:'var(--premium)', low:'var(--positive)' };
+            const sevClass     = { critical:'rc-sev-critical', high:'rc-sev-high', medium:'rc-sev-medium', low:'rc-sev-low' };
             const gapDetail = document.getElementById('risk-gap-detail');
             if (gapList.length) {
                 gapDetail.innerHTML = gapList.map(g => `
-                    <div class="rc-gap-item" style="border-left-color:${sevBorderColor[g.severity]}">
+                    <div class="rc-gap-item" style="border-left-color:${sevBorderCss[g.severity]}">
                         <span class="rc-gap-text">${escapeHtml(g.label)}</span>
                         <div class="rc-gap-meta">
-                            <span class="rc-severity ${sevClass[g.severity]}">${g.severity}</span>
+                            <span class="rc-severity ${sevClass[g.severity]}">${g.severity.toUpperCase()}</span>
                             <a class="rc-article-link" href="${PPWR_BASE}" target="_blank" rel="noopener">${escapeHtml(g.article)} ↗</a>
                         </div>
                     </div>`).join('');
             } else {
-                gapDetail.innerHTML = `<div class="rc-gap-item" style="border-left-color:#2E7D32; background:#E8F5E9;">
-                    <span class="rc-gap-text" style="color:#2E7D32; font-weight:600;">No critical gaps detected for this profile — continue monitoring delegated acts expected in 2026.</span>
+                gapDetail.innerHTML = `<div class="rc-gap-item" style="border-left-color:var(--positive); background:var(--positive-dim);">
+                    <span class="rc-gap-text" style="color:var(--positive); font-weight:600;">No critical gaps detected for this profile — continue monitoring delegated acts expected in 2026.</span>
                 </div>`;
             }
 
