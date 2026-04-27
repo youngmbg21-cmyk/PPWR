@@ -1008,12 +1008,8 @@
                     <button data-lang="no">NO</button>
                     <button data-lang="fi">FI</button>
                 </div>
-                <button class="btn-text page-link" data-page="home" style="display: none;">Home</button>
-                <button class="btn-text page-link" data-page="features" style="display: none;">Features</button>
-                <button class="btn-text page-link" data-page="pricing" style="display: none;">Pricing</button>
-                <button class="btn-primary page-link" data-page="login" id="nav-login">Login</button>
-                <button class="btn-secondary page-link" data-page="signup" id="nav-signup" style="display: none;">Sign Up</button>
-                <button class="btn-text" id="logout-btn" style="display: none;">Logout</button>
+                <span id="nav-tier-badge" style="display:none; font-size:12px; font-weight:700; padding:4px 12px; border-radius:12px; background:#F0F8F3; color:var(--color-sage); border:1px solid #C8DEC0;"></span>
+                <button class="btn-text page-link" id="nav-switch-tier" data-page="home" style="display:none; font-size:13px; color:#999;">Switch tier</button>
             </div>
         </div>
     </div>
@@ -1029,33 +1025,99 @@
         <div class="sidebar-item page-link" data-page="assessment">✅ Assessment</div>
         <div class="sidebar-item page-link" data-page="certificates">🎓 Certificates</div>
         <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Calculator</div>
-        <div style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
+        <div class="sidebar-section-readiness" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">2030+ Readiness</p>
         </div>
         <div class="sidebar-item page-link" data-page="roadmap">📅 Roadmap 2024–2040</div>
         <div class="sidebar-item page-link" data-page="grading">♻️ Grading Lab</div>
         <div class="sidebar-item page-link" data-page="calculator">🧮 Content Calculator</div>
         <div class="sidebar-item page-link" data-page="vault">📁 Record Vault</div>
-        <div style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
+        <div class="sidebar-section-admin" style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
         </div>
-        <div class="sidebar-item page-link" data-page="admin-dashboard" id="admin-link" style="display: none;">👨‍💼 Company</div>
-        <div class="sidebar-item page-link" data-page="admin-users" id="admin-users-link" style="display: none;">👥 Users</div>
+        <div class="sidebar-item page-link" data-page="admin-dashboard">👨‍💼 Company</div>
+        <div class="sidebar-item page-link" data-page="admin-users">👥 Users</div>
         <div class="sidebar-item page-link" data-page="admin-analytics" id="admin-analytics-link" style="display: none;">📈 Analytics</div>
         <div class="sidebar-item page-link" data-page="admin-leads" id="admin-leads-link" style="display: none;">💼 Leads</div>
     </div>
 
     <!-- Pages -->
     
-    <!-- HOME PAGE -->
+    <!-- HOME PAGE — Tier Selection -->
     <div class="page active" id="home-page">
-        <div class="hero">
-            <h1>Master PPWR Before August 2026</h1>
-            <p>Interactive micro-learning and compliance readiness platform for Nordic SMEs. Prepare your team in minutes, not weeks.</p>
-            <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 48px;">
-                <button class="btn-primary page-link" data-page="signup">Start Free Trial</button>
-                <button class="btn-secondary page-link" data-page="features">Learn More</button>
+        <div style="max-width:1100px; margin:0 auto; padding:60px 32px;">
+            <div style="text-align:center; margin-bottom:16px;">
+                <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--color-sage) 0%,var(--color-clay) 100%);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                    <span style="color:white;font-size:22px;">📦</span>
+                </div>
+                <h1 style="font-size:38px;margin-bottom:12px;">PPWR Learning Hub</h1>
+                <p style="font-size:17px;color:#666;max-width:520px;margin:0 auto 48px;">Choose your access level and start learning PPWR compliance — the EU packaging regulation that takes full effect August 2026.</p>
             </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;align-items:start;">
+
+                <!-- FREE -->
+                <div class="card" style="border-top:4px solid #EFEFEB;padding:28px 24px;display:flex;flex-direction:column;">
+                    <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#bbb;letter-spacing:.06em;margin-bottom:8px;">Free</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;">€0</h2>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Try the basics, no sign-up</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Dashboard</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ First 5 Learning Cards</li>
+                        <li style="font-size:14px;color:#bbb;padding:6px 0;border-bottom:1px solid #F5F5F3;">✗ Scenarios</li>
+                        <li style="font-size:14px;color:#bbb;padding:6px 0;">✗ AI Navigator</li>
+                    </ul>
+                    <button class="btn-secondary page-link" data-page="tier-detail" data-tier="free" style="width:100%;">Explore Free →</button>
+                </div>
+
+                <!-- STARTER -->
+                <div class="card" style="border-top:4px solid #9CAF88;padding:28px 24px;display:flex;flex-direction:column;">
+                    <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#9CAF88;letter-spacing:.06em;margin-bottom:8px;">Starter</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;">€99<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Up to 20 users</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 24 Learning Cards</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 7 Simulations</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Assessment + Certificates</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ AI Brain (3 q/session)</li>
+                    </ul>
+                    <button class="btn-primary page-link" data-page="tier-detail" data-tier="starter" style="width:100%;">See Starter →</button>
+                </div>
+
+                <!-- GROWTH -->
+                <div class="card" style="border-top:4px solid var(--color-sage);padding:28px 24px;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(156,175,136,.18);">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--color-sage);letter-spacing:.06em;margin:0;">Growth</p>
+                        <span style="font-size:10px;font-weight:700;background:var(--color-sage);color:white;padding:2px 8px;border-radius:10px;">POPULAR</span>
+                    </div>
+                    <h2 style="font-size:28px;margin-bottom:4px;">€199<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Up to 75 users</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Everything in Starter</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ 2030+ Readiness Tools</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ AI Brain (unlimited)</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Company Dashboard</li>
+                    </ul>
+                    <button class="btn-primary page-link" data-page="tier-detail" data-tier="growth" style="width:100%;">See Growth →</button>
+                </div>
+
+                <!-- PRO -->
+                <div class="card" style="border-top:4px solid var(--color-clay);padding:28px 24px;display:flex;flex-direction:column;">
+                    <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--color-clay);letter-spacing:.06em;margin-bottom:8px;">Pro</p>
+                    <h2 style="font-size:28px;margin-bottom:4px;">€399<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Unlimited users</p>
+                    <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Everything in Growth</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ User Management</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Analytics + Leads</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Dedicated Support</li>
+                    </ul>
+                    <button class="btn-primary page-link" data-page="tier-detail" data-tier="pro" style="width:100%;">See Pro →</button>
+                </div>
+
+            </div>
+
+            <p style="text-align:center;color:#bbb;font-size:13px;margin-top:40px;">No credit card required for Free. Paid tiers: 14-day trial, cancel anytime.</p>
         </div>
 
         <div style="max-width: 1400px; margin: 0 auto; padding: 0 32px; margin-top: 60px;">
@@ -1097,192 +1159,11 @@
         </div>
     </div>
 
-    <!-- FEATURES PAGE -->
-    <div class="page" id="features-page">
-        <div style="max-width: 1400px; margin: 0 auto; padding: 32px;">
-            <h1 style="text-align: center; font-size: 40px; margin-bottom: 48px;">Platform Features</h1>
-
-            <div class="grid-2" style="margin-bottom: 60px;">
-                <div class="card">
-                    <h3>Interactive Scenario Simulator</h3>
-                    <p style="margin-top: 16px;">Branching decision trees with instant feedback. See real consequences of PPWR compliance choices.</p>
-                    <ul style="margin-top: 16px; color: #666;">
-                        <li>✓ PFAS declarations</li>
-                        <li>✓ Empty space ratio decisions</li>
-                        <li>✓ Supplier verification</li>
-                        <li>✓ Score tracking</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Micro Learning Cards</h3>
-                    <p style="margin-top: 16px;">Swipeable, engaging flashcards covering all PPWR articles and requirements.</p>
-                    <ul style="margin-top: 16px; color: #666;">
-                        <li>✓ 50+ preloaded cards</li>
-                        <li>✓ Category filters</li>
-                        <li>✓ Save favorites</li>
-                        <li>✓ Mobile-friendly</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Readiness Assessment</h3>
-                    <p style="margin-top: 16px;">10-question company self-assessment with actionable recommendations.</p>
-                    <ul style="margin-top: 16px; color: #666;">
-                        <li>✓ Instant score (0-100)</li>
-                        <li>✓ Status badges</li>
-                        <li>✓ Gap analysis</li>
-                        <li>✓ Priority fixes</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Risk Exposure Calculator</h3>
-                    <p style="margin-top: 16px;">Visualize your compliance risks based on products, materials, and markets.</p>
-                    <ul style="margin-top: 16px; color: #666;">
-                        <li>✓ Industry context</li>
-                        <li>✓ Material risk mapping</li>
-                        <li>✓ Market-specific rules</li>
-                        <li>✓ PDF export</li>
-                    </ul>
-                </div>
-            </div>
-
-            <button class="btn-primary page-link" data-page="signup" style="display: block; margin: 48px auto;">Get Started Free</button>
-        </div>
-    </div>
-
-    <!-- PRICING PAGE -->
-    <div class="page" id="pricing-page">
-        <div style="max-width: 1400px; margin: 0 auto; padding: 60px 32px;">
-            <h1 style="text-align: center; font-size: 40px; margin-bottom: 16px;">Simple, Transparent Pricing</h1>
-            <p style="text-align: center; color: #666; font-size: 16px; margin-bottom: 60px;">Choose the plan that fits your team size.</p>
-
-            <div class="grid-3" style="margin-bottom: 60px;">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <p style="color: #666; margin-top: 8px;">For growing teams</p>
-                    <div class="pricing-price">€99<span style="font-size: 16px; font-weight: 400;">/month</span></div>
-                    <p style="color: #999; font-size: 14px;">Up to 20 users</p>
-                    <ul class="pricing-list">
-                        <li>✓ All learning modules</li>
-                        <li>✓ Scenario simulations</li>
-                        <li>✓ Readiness assessment</li>
-                        <li>✓ Basic analytics</li>
-                        <li>✓ Email support</li>
-                    </ul>
-                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="starter">Start Free Trial</button>
-                </div>
-
-                <div class="pricing-card" style="border-color: var(--color-sage); transform: scale(1.05);">
-                    <div style="background: var(--color-sage); color: white; padding: 8px 12px; border-radius: 6px; display: inline-block; font-size: 12px; font-weight: 600; margin-bottom: 12px;">Most Popular</div>
-                    <h3>Growth</h3>
-                    <p style="color: #666; margin-top: 8px;">For scaling companies</p>
-                    <div class="pricing-price">€199<span style="font-size: 16px; font-weight: 400;">/month</span></div>
-                    <p style="color: #999; font-size: 14px;">Up to 75 users</p>
-                    <ul class="pricing-list">
-                        <li>✓ Everything in Starter</li>
-                        <li>✓ Admin dashboard</li>
-                        <li>✓ Employee progress tracking</li>
-                        <li>✓ Custom reports</li>
-                        <li>✓ Priority support</li>
-                    </ul>
-                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="growth">Start Free Trial</button>
-                </div>
-
-                <div class="pricing-card">
-                    <h3>Pro</h3>
-                    <p style="color: #666; margin-top: 8px;">For enterprises</p>
-                    <div class="pricing-price">€399<span style="font-size: 16px; font-weight: 400;">/month</span></div>
-                    <p style="color: #999; font-size: 14px;">Unlimited users</p>
-                    <ul class="pricing-list">
-                        <li>✓ Everything in Growth</li>
-                        <li>✓ API access</li>
-                        <li>✓ SSO/SAML</li>
-                        <li>✓ Custom content</li>
-                        <li>✓ Dedicated support</li>
-                    </ul>
-                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="pro">Contact Sales</button>
-                </div>
-            </div>
-
-            <div style="background: #F9F9F7; border-radius: 12px; padding: 32px; text-align: center;">
-                <h3>Frequently Asked Questions</h3>
-                <p style="margin-top: 16px; color: #666;">All plans include a 14-day free trial. No credit card required. Cancel anytime.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- LOGIN PAGE -->
-    <div class="page" id="login-page">
-        <div style="max-width: 400px; margin: 60px auto; padding: 32px;">
-            <div class="card">
-                <h2 style="text-align: center; margin-bottom: 32px;">Welcome Back</h2>
-                
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" id="login-email" placeholder="your@company.com">
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="login-password" placeholder="••••••••">
-                </div>
-
-                <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="login-btn">Sign In</button>
-                
-                <p style="text-align: center; color: #666;">Don't have an account? <button class="btn-text page-link" style="padding: 0; text-decoration: underline;" data-page="signup">Sign up</button></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- SIGNUP PAGE -->
-    <div class="page" id="signup-page">
-        <div style="max-width: 400px; margin: 40px auto; padding: 32px;">
-            <div class="card">
-                <h2 style="text-align: center; margin-bottom: 16px;">Create Your Account</h2>
-
-                <div id="signup-plan-banner" style="display:none; background:#F0F8F3; border:1px solid #B7E4C7; border-radius:8px; padding:10px 16px; margin-bottom:20px; text-align:center;">
-                    <span style="font-size:13px; color:#555;">Signing up for</span>
-                    <span id="signup-plan-label" style="font-weight:700; color:var(--color-sage); margin-left:6px;"></span>
-                    <span style="font-size:12px; color:#888; display:block; margin-top:2px;">14-day free trial · No credit card required</span>
-                </div>
-
-                <div class="input-group">
-                    <label>Full Name</label>
-                    <input type="text" id="signup-name" placeholder="John Doe">
-                </div>
-
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" id="signup-email" placeholder="your@company.com">
-                </div>
-
-                <div class="input-group">
-                    <label>Company Name</label>
-                    <input type="text" id="signup-company" placeholder="Acme Packaging">
-                </div>
-
-                <div class="input-group">
-                    <label>Country</label>
-                    <select id="signup-country">
-                        <option>Select a country</option>
-                        <option>Sweden</option>
-                        <option>Denmark</option>
-                        <option>Norway</option>
-                        <option>Finland</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" id="signup-password" placeholder="••••••••">
-                </div>
-
-                <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="signup-btn">Create Account</button>
-                
-                <p style="text-align: center; color: #666;">Already have an account? <button class="btn-text page-link" style="padding: 0; text-decoration: underline;" data-page="login">Sign in</button></p>
-            </div>
+    <!-- TIER DETAIL PAGE -->
+    <div class="page" id="tier-detail-page">
+        <div style="max-width:700px; margin:0 auto; padding:60px 32px;">
+            <button class="btn-text page-link" data-page="home" style="margin-bottom:24px; color:#999; font-size:14px;">← Back to plans</button>
+            <div id="tier-detail-content"></div>
         </div>
     </div>
 
@@ -1291,14 +1172,6 @@
         <div class="main-content">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
                 <h1 style="margin:0;">Dashboard</h1>
-                <div id="plan-switcher" style="display:flex; align-items:center; gap:10px; background:#F9F9F7; border:1px solid #EFEFEB; border-radius:8px; padding:8px 14px; font-size:13px;">
-                    <span style="color:#999; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.04em;">Active Plan</span>
-                    <select id="plan-select" style="border:none; background:transparent; font-family:inherit; font-size:14px; font-weight:700; color:var(--color-sage); cursor:pointer; outline:none;">
-                        <option value="starter">Starter</option>
-                        <option value="growth">Growth</option>
-                        <option value="pro">Pro</option>
-                    </select>
-                </div>
             </div>
 
             <div class="grid-3" style="margin-bottom: 32px;">
@@ -1738,16 +1611,15 @@
         // STATE MANAGEMENT
         // ============================================================================
         let appState = {
-            isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-            user: JSON.parse(localStorage.getItem('user')) || null,
+            currentTier: 'free',
             currentPage: 'home',
             currentLanguage: 'en',
             readCards: {},
             dashboard: {
-                score: 35,
-                progress: 35,
-                modulesCompleted: 2,
-                companyStatus: 'In Progress'
+                score: 0,
+                progress: 0,
+                modulesCompleted: 0,
+                companyStatus: 'Not Started'
             },
             admin: {
                 usersCount: 5,
@@ -1759,20 +1631,17 @@
             }
         };
 
-        // Restore persisted dashboard/readCards state without touching login state
+        // Restore persisted state (tier + progress)
         (function restorePersistedState() {
             try {
                 const saved = JSON.parse(localStorage.getItem('appState') || 'null');
                 if (saved) {
-                    if (saved.dashboard)  appState.dashboard  = saved.dashboard;
-                    if (saved.readCards)  appState.readCards  = saved.readCards;
-                    if (saved.user?.plan && appState.user) appState.user.plan = saved.user.plan;
+                    if (saved.currentTier) appState.currentTier = saved.currentTier;
+                    if (saved.dashboard)   appState.dashboard   = saved.dashboard;
+                    if (saved.readCards)   appState.readCards   = saved.readCards;
                 }
             } catch(e) {}
         })();
-
-        // Pending plan chosen on the pricing page (used by signup form)
-        let pendingPlan = 'starter';
 
         // ============================================================================
         // DYNAMIC COUNTDOWN CALCULATION
@@ -2237,6 +2106,166 @@
         let gradingAnswers = {};
 
         // ============================================================================
+        // TIER CONFIG
+        // ============================================================================
+        const TIER_CONFIG = {
+            free: {
+                name: 'Free', price: null, color: '#999', accentColor: '#EFEFEB',
+                tagline: 'Try the basics — no sign-up required',
+                included: [
+                    'Basic dashboard',
+                    'First 5 learning cards (foundation topics)',
+                ],
+                excluded: [
+                    'Cards 6–24 (advanced PFAS, recyclability, 2030 targets)',
+                    'Scenario simulations',
+                    'Readiness assessment',
+                    'Certificates',
+                    'Risk calculator',
+                    'AI Knowledge Navigator',
+                    '2030+ Readiness tools (Roadmap, Grading Lab, Calculator, Vault)',
+                    'Admin / company dashboard',
+                ]
+            },
+            starter: {
+                name: 'Starter', price: '€99/month', color: '#9CAF88', accentColor: '#F0F8F3',
+                tagline: 'Full compliance learning for teams up to 20 users',
+                included: [
+                    'Dashboard with Next Milestone + Certification Status widgets',
+                    'All 24 learning cards (foundation + strategic topics)',
+                    'All 7 scenario simulations with legal references',
+                    'Readiness assessment (10 questions, scored)',
+                    'Certificates of completion',
+                    'Risk calculator',
+                    'AI Knowledge Navigator (3 questions per session)',
+                ],
+                excluded: [
+                    '2030+ Readiness tools (Roadmap, Grading Lab, Calculator, Vault)',
+                    'Company admin dashboard',
+                    'User management, analytics, leads',
+                ]
+            },
+            growth: {
+                name: 'Growth', price: '€199/month', color: 'var(--color-sage)', accentColor: '#EAF3E4',
+                tagline: 'Strategic readiness platform for scaling companies up to 75 users',
+                included: [
+                    'Everything in Starter',
+                    'Roadmap 2024–2040 (full regulatory lifecycle)',
+                    'Recyclability Grading Lab (A–E simulation)',
+                    'Content Calculator (recycled content + empty space checker)',
+                    'Record Vault (retention rules + EPR fee table)',
+                    'AI Knowledge Navigator (unlimited questions)',
+                    'Company admin dashboard',
+                ],
+                excluded: [
+                    'User management',
+                    'Analytics dashboard',
+                    'Leads dashboard',
+                ]
+            },
+            pro: {
+                name: 'Pro', price: '€399/month', color: 'var(--color-clay)', accentColor: '#FDF3EE',
+                tagline: 'Enterprise platform with full admin control — unlimited users',
+                included: [
+                    'Everything in Growth',
+                    'User management (invite, roles, progress per employee)',
+                    'Analytics dashboard',
+                    'Leads dashboard',
+                    'Dedicated support',
+                    'API access (coming soon)',
+                    'SSO/SAML (coming soon)',
+                    'Custom content modules (coming soon)',
+                ],
+                excluded: []
+            }
+        };
+
+        function renderTierDetail(tier) {
+            const el = document.getElementById('tier-detail-content');
+            if (!el) return;
+            const cfg = TIER_CONFIG[tier];
+            if (!cfg) return;
+            el.innerHTML = '';
+
+            // Header
+            const header = document.createElement('div');
+            header.style.cssText = 'margin-bottom:32px;';
+            const badge = document.createElement('span');
+            badge.style.cssText = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:12px;font-weight:700;color:white;background:' + cfg.color + ';margin-bottom:12px;';
+            badge.textContent = cfg.name;
+            const h1 = document.createElement('h1');
+            h1.style.cssText = 'font-size:32px;margin-bottom:8px;';
+            h1.textContent = cfg.price ? cfg.name + ' — ' + cfg.price : cfg.name + ' — Free';
+            const tagline = document.createElement('p');
+            tagline.style.cssText = 'font-size:16px;color:#666;';
+            tagline.textContent = cfg.tagline;
+            header.appendChild(badge);
+            header.appendChild(h1);
+            header.appendChild(tagline);
+            el.appendChild(header);
+
+            // Included / excluded columns
+            const grid = document.createElement('div');
+            grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;';
+
+            const mkCol = (title, items, isIncluded) => {
+                const col = document.createElement('div');
+                col.className = 'card';
+                col.style.cssText = 'background:' + (isIncluded ? cfg.accentColor : '#FAFAF9') + ';border:1px solid ' + (isIncluded ? cfg.color.replace('var(--color-sage)', '#9CAF88').replace('var(--color-clay)', '#D4956A') : '#EFEFEB') + ';';
+                const colTitle = document.createElement('p');
+                colTitle.style.cssText = 'font-size:12px;font-weight:700;text-transform:uppercase;color:' + (isIncluded ? cfg.color.replace('var(--color-sage)','#6B8F5A').replace('var(--color-clay)','#B07040') : '#aaa') + ';margin-bottom:16px;letter-spacing:.05em;';
+                colTitle.textContent = title;
+                col.appendChild(colTitle);
+                items.forEach(item => {
+                    const row = document.createElement('div');
+                    row.style.cssText = 'display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:14px;color:' + (isIncluded ? '#333' : '#aaa') + ';';
+                    const icon = document.createElement('span');
+                    icon.style.cssText = 'flex-shrink:0;font-size:15px;';
+                    icon.textContent = isIncluded ? '✅' : '✗';
+                    const txt = document.createElement('span');
+                    txt.textContent = item;
+                    row.appendChild(icon);
+                    row.appendChild(txt);
+                    col.appendChild(row);
+                });
+                if (items.length === 0) {
+                    const none = document.createElement('p');
+                    none.style.cssText = 'font-size:14px;color:#aaa;font-style:italic;';
+                    none.textContent = 'Nothing excluded — full access.';
+                    col.appendChild(none);
+                }
+                return col;
+            };
+
+            grid.appendChild(mkCol("What's included", cfg.included, true));
+            grid.appendChild(mkCol("Not in this tier", cfg.excluded, false));
+            el.appendChild(grid);
+
+            // CTA
+            const ctaDiv = document.createElement('div');
+            ctaDiv.style.cssText = 'text-align:center;';
+            const ctaBtn = document.createElement('button');
+            ctaBtn.className = 'btn-primary';
+            ctaBtn.style.cssText = 'font-size:16px;padding:14px 40px;';
+            ctaBtn.textContent = tier === 'free' ? 'Enter Free Tier →' : 'Enter ' + cfg.name + ' Tier →';
+            ctaBtn.addEventListener('click', () => enterTier(tier));
+            const note = document.createElement('p');
+            note.style.cssText = 'font-size:13px;color:#aaa;margin-top:12px;';
+            note.textContent = tier === 'free' ? 'No sign-up needed.' : '14-day free trial · No credit card required';
+            ctaDiv.appendChild(ctaBtn);
+            ctaDiv.appendChild(note);
+            el.appendChild(ctaDiv);
+        }
+
+        function enterTier(tier) {
+            appState.currentTier = tier;
+            // Reset dashboard progress when switching tiers
+            if (!appState.readCards) appState.readCards = {};
+            localStorage.setItem('appState', JSON.stringify(appState));
+            showPage('dashboard');
+        }
+
+        // ============================================================================
         // PAGE NAVIGATION
         // ============================================================================
         function showPage(pageName) {
@@ -2270,35 +2299,67 @@
             if (pageName === 'vault')       renderVault();
         }
 
+        // Which sidebar pages each tier can access
+        const TIER_ACCESS = {
+            free:    ['dashboard', 'learning'],
+            starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator'],
+            growth:  ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
+                      'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard'],
+            pro:     ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
+                      'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
+                      'admin-users', 'admin-analytics', 'admin-leads']
+        };
+
+        function tierHasAccess(page) {
+            const tier = appState.currentTier || 'free';
+            const allowed = TIER_ACCESS[tier] || TIER_ACCESS.free;
+            return allowed.includes(page);
+        }
+
         function updateNavigation() {
-            if (appState.isLoggedIn) {
-                document.getElementById('nav-login').style.display = 'none';
-                document.getElementById('nav-signup').style.display = 'none';
-                document.getElementById('logout-btn').style.display = 'block';
-                document.getElementById('sidebar').style.display = 'block';
-                
-                // Show admin links if user is owner/admin
-                if (appState.user?.role === 'owner' || appState.user?.role === 'admin') {
-                    document.getElementById('admin-link').style.display = 'block';
-                    document.getElementById('admin-users-link').style.display = 'block';
-                    document.getElementById('admin-analytics-link').style.display = 'block';
-                    document.getElementById('admin-leads-link').style.display = 'block';
-                }
-            } else {
-                document.getElementById('nav-login').style.display = 'block';
-                document.getElementById('nav-signup').style.display = 'block';
-                document.getElementById('logout-btn').style.display = 'none';
-                document.getElementById('sidebar').style.display = 'none';
+            const tier = appState.currentTier || 'free';
+            const inApp = ['home', 'tier-detail'].indexOf(appState.currentPage) === -1;
+
+            // Navbar tier badge + switch-tier button
+            const badge = document.getElementById('nav-tier-badge');
+            const switchBtn = document.getElementById('nav-switch-tier');
+            if (badge) {
+                badge.style.display = inApp ? 'inline-block' : 'none';
+                const tierLabels = { free: 'Free', starter: 'Starter', growth: 'Growth', pro: 'Pro' };
+                badge.textContent = tierLabels[tier] || tier;
+            }
+            if (switchBtn) switchBtn.style.display = inApp ? 'inline-block' : 'none';
+
+            // Sidebar visibility
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.style.display = inApp ? 'block' : 'none';
+
+            // Show/hide each sidebar item based on tier
+            document.querySelectorAll('.sidebar-item[data-page]').forEach(item => {
+                const page = item.getAttribute('data-page');
+                item.style.display = tierHasAccess(page) ? '' : 'none';
+            });
+
+            // Show/hide 2030+ readiness section header
+            const readinessHeader = document.querySelector('.sidebar-section-readiness');
+            if (readinessHeader) {
+                readinessHeader.style.display = tierHasAccess('roadmap') ? '' : 'none';
             }
 
-            // Adjust main content margin
+            // Show/hide admin section header
+            const adminHeader = document.querySelector('.sidebar-section-admin');
+            if (adminHeader) {
+                adminHeader.style.display = tierHasAccess('admin-dashboard') ? '' : 'none';
+            }
+
+            // Main content margin
             const mainContent = document.querySelector('.main-content');
-            if (mainContent && !appState.isLoggedIn) {
-                mainContent.style.marginLeft = '0';
-                mainContent.style.marginTop = '60px';
+            if (mainContent) {
+                mainContent.style.marginLeft = inApp ? '' : '0';
+                mainContent.style.marginTop  = inApp ? '' : '60px';
             }
 
-            // Update sidebar active state
+            // Sidebar active state
             document.querySelectorAll('.sidebar-item').forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('data-page') === appState.currentPage) {
@@ -2310,96 +2371,7 @@
         // ============================================================================
         // AUTHENTICATION
         // ============================================================================
-        // TODO: Replace this entire mock auth block with a real backend (Supabase, Auth0, etc.)
-        // before production. Currently there is no server-side verification.
-        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        document.getElementById('login-btn')?.addEventListener('click', function() {
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
-            if (!EMAIL_RE.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            if (password.length < 8) {
-                alert('Password must be at least 8 characters');
-                return;
-            }
-
-            // Mock authentication — replace with real backend auth in production
-            const user = {
-                id: 1,
-                name: 'John Doe',
-                email: email,
-                company: 'Test Company',
-                role: 'user'
-            };
-
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('user', JSON.stringify(user));
-            appState.isLoggedIn = true;
-            appState.user = user;
-            localStorage.setItem('appState', JSON.stringify(appState));
-
-            showPage('dashboard');
-        });
-
-        document.getElementById('signup-btn')?.addEventListener('click', function() {
-            const name = document.getElementById('signup-name').value.trim();
-            const email = document.getElementById('signup-email').value.trim();
-            const company = document.getElementById('signup-company').value.trim();
-            const country = document.getElementById('signup-country').value;
-            const password = document.getElementById('signup-password').value;
-
-            if (!name || !email || !company || !country || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
-            if (!EMAIL_RE.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            if (password.length < 8) {
-                alert('Password must be at least 8 characters');
-                return;
-            }
-
-            // Mock registration — replace with real backend auth in production
-            const idBytes = new Uint8Array(8);
-            crypto.getRandomValues(idBytes);
-            const userId = Array.from(idBytes).map(b => b.toString(16).padStart(2, '0')).join('');
-
-            const user = {
-                id: userId,
-                name: name,
-                email: email,
-                company: company,
-                country: country,
-                role: 'user',
-                plan: pendingPlan
-            };
-
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('user', JSON.stringify(user));
-            appState.isLoggedIn = true;
-            appState.user = user;
-            localStorage.setItem('appState', JSON.stringify(appState));
-
-            showPage('dashboard');
-        });
-
-        document.getElementById('logout-btn')?.addEventListener('click', function() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('user');
-            appState.isLoggedIn = false;
-            appState.user = null;
-            showPage('home');
-        });
+        // No auth handlers — tier is selected on the landing page.
 
         // ============================================================================
         // LEARNING CARDS
@@ -2412,7 +2384,8 @@
 
             let expandedId = null;
 
-            learningCards.forEach(card => {
+            const visibleCards = appState.currentTier === 'free' ? learningCards.slice(0, 5) : learningCards;
+            visibleCards.forEach(card => {
                 const isRead = !!appState.readCards[card.id];
 
                 const cardEl = document.createElement('div');
@@ -2752,7 +2725,8 @@
 
             const score = appState.dashboard.score || 0;
             const modules = appState.dashboard.modulesCompleted || 0;
-            const userName = appState.user?.name || 'Participant';
+            const tierLabel = (appState.currentTier || 'free').charAt(0).toUpperCase() + (appState.currentTier || 'free').slice(1);
+            const userName = tierLabel + ' User';
 
             if (score >= 80) {
                 // Build certificate using DOM nodes to avoid XSS
@@ -2893,24 +2867,10 @@
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
 
             // Sync plan switcher
-            const planSelect = document.getElementById('plan-select');
-            if (planSelect) {
-                const currentPlan = (appState.user?.plan || 'starter').toLowerCase();
-                planSelect.value = currentPlan;
-                if (!planSelect._wired) {
-                    planSelect._wired = true;
-                    planSelect.addEventListener('change', function() {
-                        if (!appState.user) appState.user = {};
-                        appState.user.plan = this.value;
-                        localStorage.setItem('appState', JSON.stringify(appState));
-                        // Refresh chatbot quota state
-                        if (window.aiNav?.syncVisibility) aiNav.syncVisibility();
-                    });
-                }
+            if (['starter', 'growth', 'pro'].includes(appState.currentTier || 'free')) {
+                renderMilestoneWidget();
+                renderCertificationStatus();
             }
-
-            renderMilestoneWidget();
-            renderCertificationStatus();
         }
 
         // ============================================================================
@@ -3099,39 +3059,32 @@
             if (!link) return;
             const page = link.getAttribute('data-page');
             if (!page) return;
-            if (page === 'home' || page === 'features' || page === 'pricing') {
-                if (appState.isLoggedIn && page !== 'home') {
-                    showPage('dashboard');
-                } else {
-                    showPage(page);
+
+            if (page === 'tier-detail') {
+                const tier = link.getAttribute('data-tier');
+                if (tier) {
+                    showPage('tier-detail');
+                    renderTierDetail(tier);
                 }
-            } else if (page === 'login') {
-                showPage('login');
-            } else if (page === 'signup') {
-                // Capture which plan the user clicked from the pricing page
-                const plan = link.getAttribute('data-plan');
-                if (plan) pendingPlan = plan;
-                showPage('signup');
-                // Update the plan banner on the signup form
-                const banner = document.getElementById('signup-plan-banner');
-                const planLabel = document.getElementById('signup-plan-label');
-                if (banner && planLabel) {
-                    const names = { starter: 'Starter — €99/month', growth: 'Growth — €199/month', pro: 'Pro — €399/month' };
-                    planLabel.textContent = names[pendingPlan] || 'Starter — €99/month';
-                    banner.style.display = plan ? 'block' : 'none';
-                }
+            } else if (page === 'home') {
+                showPage('home');
             } else {
-                if (!appState.isLoggedIn) {
-                    showPage('login');
+                // Inside-app navigation: check tier access
+                if (!tierHasAccess(page)) {
+                    // Quietly redirect to home to pick a tier with access
+                    showPage('home');
                 } else {
                     showPage(page);
                 }
             }
         });
 
-        // Initial page load and countdown
+        // Initial page load
         updateCountdowns();
-        if (appState.isLoggedIn) {
+        if (appState.currentTier && appState.currentTier !== 'free') {
+            showPage('dashboard');
+        } else if (appState.currentTier === 'free' && appState.currentPage === 'dashboard') {
+            // Free tier returning to app
             showPage('dashboard');
         } else {
             showPage('home');
@@ -3149,9 +3102,8 @@
             // Per-session question count (reset on page reload, not persisted)
             let sessionQuestions = 0;
 
-            // Cached user plan – read from appState
             function getUserPlan() {
-                return (appState.user?.plan || 'starter').toLowerCase();
+                return (appState.currentTier || 'starter').toLowerCase();
             }
 
             function isStarterPlan() {
@@ -3169,9 +3121,12 @@
             const quotaLabel = document.getElementById('ai-quota-label');
             const suggWrap   = document.getElementById('ai-suggestions');
 
-            // ── Visibility gated by login ─────────────────────────────────────
+            // ── Visibility gated by tier (Starter+ only, hidden on landing pages) ──
             function syncVisibility() {
-                btn.style.display = appState.isLoggedIn ? 'flex' : 'none';
+                const tier = appState.currentTier || 'free';
+                const onLanding = ['home', 'tier-detail'].includes(appState.currentPage);
+                const hasBrain = ['starter', 'growth', 'pro'].includes(tier);
+                btn.style.display = (!onLanding && hasBrain) ? 'flex' : 'none';
             }
 
             // ── Open / close ──────────────────────────────────────────────────
