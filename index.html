@@ -375,6 +375,12 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
         
         .stat-box {
             background: white;
@@ -1292,6 +1298,35 @@
                 </div>
                 <div id="delegated-acts-widget-content">
                     <p style="color:#666; font-size:14px;">Loading…</p>
+                </div>
+            </div>
+
+            <!-- COMPLIANCE INTELLIGENCE SUMMARY -->
+            <div id="compliance-summary-row" style="margin-bottom:24px; display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                    <h3 style="margin:0; font-size:16px;">⚡ Compliance Intelligence</h3>
+                    <span style="font-size:11px; color:#999;">Live from your portfolio data</span>
+                </div>
+                <div class="grid-4" id="compliance-kpi-row" style="gap:14px;"></div>
+            </div>
+
+            <!-- PORTFOLIO RISK CARD -->
+            <div class="grid-2" id="portfolio-risk-row" style="margin-bottom:32px; display:none;">
+                <div class="card" id="portfolio-grade-widget">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="margin:0; font-size:15px;">📦 Portfolio Grade Distribution</h3>
+                        <button class="btn-secondary page-link" data-page="packaging-audit" style="font-size:11px; padding:5px 12px;">Full audit →</button>
+                    </div>
+                    <div id="portfolio-grade-bars"></div>
+                    <div id="portfolio-grade-alert" style="margin-top:14px;"></div>
+                </div>
+                <div class="card" id="obligations-heat-widget">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                        <h3 style="margin:0; font-size:15px;">📋 Obligations by Severity</h3>
+                        <button class="btn-secondary page-link" data-page="obligations" style="font-size:11px; padding:5px 12px;">Full list →</button>
+                    </div>
+                    <div id="obligations-heat-bars"></div>
+                    <div style="margin-top:14px; padding:10px; background:#fff8e1; border-radius:8px; font-size:12px; color:#92400e;" id="obligations-deadline-note"></div>
                 </div>
             </div>
 
@@ -2730,7 +2765,7 @@
               <div style="flex:1"><span style="font-weight:600;font-size:13px">${r.item}</span><span style="display:block;font-size:12px;color:#666;margin-top:2px">${r.notes}</span></div>
               <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
                 <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;${badgeCls}">${badge}</span>
-                <span style="font-size:10px;color:#999">${r.article}</span>
+                ${ppwrLink(r.article)}
               </div>
             </div>`;
           inEl.innerHTML  = SCOPE_DATA.inScope.map(r => row(r,'IN SCOPE','background:#dcfce7;color:#15803d')).join('');
@@ -2745,7 +2780,7 @@
                 <div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0">
                   <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${u.bg};color:${u.color}">${u.label}</span>
                   <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${s}</span>
-                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#e0f2fe;color:#0369a1">${r.article}</span>
+                  ${ppwrLink(r.article)}
                 </div>
               </div>
               <p style="font-size:12px;color:#666;line-height:1.6;margin:0">${r.detail}</p>
@@ -2986,7 +3021,8 @@
                 <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${c}18;color:${c};flex-shrink:0">${t.tag}</span>
               </div>
               <p style="font-size:13px;color:#444;line-height:1.6;margin:0 0 ${t.sg?'10px':'0'}">${t.def}</p>
-              ${t.sg ? `<div style="font-size:12px;color:#9CAF88;padding:8px 10px;background:#F3F7F0;border-radius:6px;border-left:3px solid #9CAF88;line-height:1.5">→ CA Context: ${t.sg}</div>` : ''}
+              ${t.sg ? `<div style="font-size:12px;color:#9CAF88;padding:8px 10px;background:#F3F7F0;border-radius:6px;border-left:3px solid #9CAF88;line-height:1.5;margin-bottom:8px">→ CA Context: ${t.sg}</div>` : ''}
+              ${ppwrLink('PPWR Regulation','📄 Read the full regulation ↗')}
             </div>`;
           }).join('') || '<div style="padding:24px;text-align:center;color:#999;font-size:13px">No terms match your search.</div>';
         }
@@ -3928,6 +3964,7 @@
                 renderMilestoneWidget();
                 renderCertificationStatus();
             }
+            renderComplianceSummary();
         }
 
         // ============================================================================
@@ -4455,6 +4492,91 @@
         // ============================================================================
         // END AI KNOWLEDGE NAVIGATOR
         // ============================================================================
+
+        // ============================================================================
+        // COMPLIANCE INTELLIGENCE DASHBOARD
+        // ============================================================================
+        function renderComplianceSummary() {
+            const kpiRow     = document.getElementById('compliance-kpi-row');
+            const summaryRow = document.getElementById('compliance-summary-row');
+            const riskRow    = document.getElementById('portfolio-risk-row');
+            if (!kpiRow || !summaryRow) return;
+
+            // ── KPI calculations ────────────────────────────────────────────
+            const atRisk       = PACKAGING_MATERIALS.filter(m => m.ppwrBan).length;
+            const bannedNow    = PACKAGING_MATERIALS.filter(m => m.ppwrBan && m.banYear === 2025).length;
+            const criticalObs  = OBLIGATION_DB.filter(o => o.severity === 'critical').length;
+            const activeObs    = OBLIGATION_DB.filter(o => o.deadline <= 2025).length;
+            const pendingActs  = DELEGATED_ACTS.filter(a => a.status === 'pending').length;
+            const deadline2026 = new Date('2026-08-12');
+            const today        = new Date();
+            const daysLeft     = Math.max(0, Math.ceil((deadline2026 - today) / 86400000));
+
+            // ── KPI cards ───────────────────────────────────────────────────
+            const kpis = [
+                { icon:'⛔', value:atRisk,      label:'Formats banned by 2030',   color:'#dc2626', bg:'#fee2e2', page:'packaging-audit' },
+                { icon:'🔴', value:criticalObs, label:'Critical obligations',      color:'#dc2626', bg:'#fff1f1', page:'obligations'     },
+                { icon:'📜', value:pendingActs, label:'Delegated acts pending',    color:'#d97706', bg:'#fffbeb', page:'delegated-acts'  },
+                { icon:'📅', value:daysLeft,    label:'Days to EPR deadline',      color:'#0369a1', bg:'#e0f2fe', page:'countries'       },
+            ];
+            kpiRow.innerHTML = kpis.map(k => `
+                <div class="card page-link" data-page="${k.page}" style="padding:18px;cursor:pointer;transition:all .2s;border:1.5px solid ${k.bg}">
+                    <div style="font-size:22px;margin-bottom:6px">${k.icon}</div>
+                    <div style="font-size:28px;font-weight:800;color:${k.color};line-height:1">${k.value}</div>
+                    <div style="font-size:11px;color:#666;margin-top:4px;line-height:1.3">${k.label}</div>
+                </div>`).join('');
+            summaryRow.style.display = 'block';
+
+            // ── Grade distribution bars ─────────────────────────────────────
+            const gradeEl = document.getElementById('portfolio-grade-bars');
+            const alertEl = document.getElementById('portfolio-grade-alert');
+            if (gradeEl) {
+                const grades   = ['A','B','C','D','E'];
+                const gColor   = { A:'#15803d', B:'#0369a1', C:'#d97706', D:'#dc2626', E:'#7f1d1d' };
+                const gBg      = { A:'#dcfce7', B:'#dbeafe', C:'#fef3c7', D:'#fee2e2', E:'#fee2e2' };
+                const total    = PACKAGING_MATERIALS.length;
+                const counts   = {};
+                grades.forEach(g => counts[g] = PACKAGING_MATERIALS.filter(m => m.grade === g).length);
+                gradeEl.innerHTML = grades.map(g => {
+                    const pct = Math.round((counts[g] / total) * 100);
+                    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                        <span style="font-size:12px;font-weight:700;width:18px;color:${gColor[g]}">Grade ${g}</span>
+                        <div style="flex:1;background:#F5F5F3;border-radius:4px;height:14px;overflow:hidden">
+                            <div style="width:${pct}%;background:${gColor[g]};height:100%;border-radius:4px;transition:width .6s ease"></div>
+                        </div>
+                        <span style="font-size:12px;color:#666;width:52px;text-align:right">${counts[g]} format${counts[g]!==1?'s':''}</span>
+                    </div>`;
+                }).join('');
+                const dangerCount = (counts['D'] || 0) + (counts['E'] || 0);
+                if (alertEl) alertEl.innerHTML = dangerCount > 0
+                    ? `<div style="padding:10px 12px;background:#fee2e2;border-radius:8px;font-size:12px;color:#dc2626;font-weight:600">⛔ ${dangerCount} format${dangerCount!==1?'s':''} at Grade D/E — banned from market from 2030. <span class="page-link" data-page="packaging-audit" style="text-decoration:underline;cursor:pointer">Review now →</span></div>`
+                    : `<div style="padding:10px 12px;background:#dcfce7;border-radius:8px;font-size:12px;color:#15803d;font-weight:600">✅ No Grade D/E formats detected in portfolio.</div>`;
+            }
+
+            // ── Obligations heat ─────────────────────────────────────────────
+            const heatEl    = document.getElementById('obligations-heat-bars');
+            const deadlineEl = document.getElementById('obligations-deadline-note');
+            if (heatEl) {
+                const sevs   = ['critical','high','medium','low'];
+                const sColor = { critical:'#dc2626', high:'#d97706', medium:'#0369a1', low:'#15803d' };
+                const sLabel = { critical:'Critical', high:'High', medium:'Medium', low:'Low' };
+                const total  = OBLIGATION_DB.length;
+                heatEl.innerHTML = sevs.map(s => {
+                    const count = OBLIGATION_DB.filter(o => o.severity === s).length;
+                    const pct   = Math.round((count / total) * 100);
+                    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                        <span style="font-size:11px;font-weight:700;width:54px;color:${sColor[s]}">${sLabel[s]}</span>
+                        <div style="flex:1;background:#F5F5F3;border-radius:4px;height:14px;overflow:hidden">
+                            <div style="width:${pct}%;background:${sColor[s]};height:100%;border-radius:4px"></div>
+                        </div>
+                        <span style="font-size:12px;color:#666;width:24px;text-align:right">${count}</span>
+                    </div>`;
+                }).join('');
+                if (deadlineEl) deadlineEl.innerHTML = `⏱ <strong>${daysLeft} days</strong> until EPR registration deadline (12 Aug 2026). ${activeObs} obligation${activeObs!==1?'s':''} active right now.`;
+            }
+
+            if (riskRow) riskRow.style.display = 'grid';
+        }
 
         // ============================================================================
         // MILESTONE WIDGET
