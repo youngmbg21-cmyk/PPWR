@@ -1070,6 +1070,84 @@
             white-space: nowrap;
         }
         .ppwr-link:hover { text-decoration: underline; }
+
+        /* ── GLOBAL SEARCH ── */
+        #gs-trigger {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: #F5F5F3;
+            border: 1.5px solid #EFEFEB;
+            border-radius: 10px;
+            padding: 7px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #999;
+            transition: border-color .15s, background .15s;
+            white-space: nowrap;
+        }
+        #gs-trigger:hover { border-color: var(--color-sage); background: white; }
+        #gs-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(13,17,23,0.5);
+            z-index: 2000;
+            padding: 80px 24px 24px;
+            backdrop-filter: blur(4px);
+        }
+        #gs-backdrop.open { display: block; }
+        #gs-box {
+            max-width: 620px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(13,17,23,0.24);
+            overflow: hidden;
+            animation: modalIn .18s ease;
+        }
+        #gs-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 18px;
+            border-bottom: 1px solid #EFEFEB;
+        }
+        #gs-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            font-family: inherit;
+            background: transparent;
+            color: var(--color-dark);
+        }
+        #gs-results {
+            max-height: 420px;
+            overflow-y: auto;
+        }
+        .gs-group-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: #bbb;
+            padding: 12px 18px 4px;
+        }
+        .gs-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 18px;
+            cursor: pointer;
+            transition: background .12s;
+        }
+        .gs-item:hover { background: #F5F5F3; }
+        .gs-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+        .gs-item-title { font-size: 13px; font-weight: 600; color: var(--color-dark); line-height: 1.3; }
+        .gs-item-sub   { font-size: 11px; color: #999; margin-top: 2px; line-height: 1.4; }
+        .gs-item-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+        #gs-empty { padding: 32px; text-align: center; color: #bbb; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -1088,6 +1166,10 @@
                     <button data-lang="no">NO</button>
                     <button data-lang="fi">FI</button>
                 </div>
+                <button id="gs-trigger" aria-label="Search" onclick="gsOpen()">
+                    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><line x1="14" y1="14" x2="19" y2="19"/></svg>
+                    Search&nbsp;&nbsp;<kbd style="font-size:10px;padding:1px 5px;border:1px solid #ddd;border-radius:3px;color:#bbb;background:white">⌘K</kbd>
+                </button>
                 <span id="nav-tier-badge" style="display:none; font-size:12px; font-weight:700; padding:4px 12px; border-radius:12px; background:#F0F8F3; color:var(--color-sage); border:1px solid #C8DEC0;"></span>
                 <button class="btn-text page-link" id="nav-switch-tier" data-page="home" style="display:none; font-size:13px; color:#999;">Switch tier</button>
             </div>
@@ -1878,6 +1960,18 @@
          Placed BEFORE <script> so getElementById finds these elements
          when the aiNav IIFE runs during script parsing.
     ================================================================ -->
+
+    <!-- ── GLOBAL SEARCH ───────────────────────────────────────────────── -->
+    <div id="gs-backdrop" role="dialog" aria-modal="true" aria-label="Search">
+        <div id="gs-box">
+            <div id="gs-input-row">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="9" cy="9" r="6"/><line x1="14" y1="14" x2="19" y2="19"/></svg>
+                <input id="gs-input" placeholder="Search obligations, packaging, glossary, cards…" autocomplete="off" spellcheck="false">
+                <button onclick="gsClose()" style="background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;line-height:1;padding:0">✕</button>
+            </div>
+            <div id="gs-results"></div>
+        </div>
+    </div>
 
     <!-- ── LEARNING CARD MODAL ─────────────────────────────────────────── -->
     <div class="card-modal-backdrop" id="card-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="card-modal-title">
@@ -3434,6 +3528,7 @@
             // Sidebar visibility
             const sidebar = document.getElementById('sidebar');
             if (sidebar) sidebar.style.display = inApp ? 'block' : 'none';
+            gsShowTrigger(inApp);
 
             // Show/hide each sidebar item based on tier
             document.querySelectorAll('.sidebar-item[data-page]').forEach(item => {
@@ -5132,6 +5227,185 @@
         setInterval(() => {
             localStorage.setItem('appState', JSON.stringify(appState));
         }, 5000);
+
+        // ============================================================================
+        // GLOBAL SEARCH
+        // ============================================================================
+        function gsOpen() {
+            document.getElementById('gs-backdrop').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            const input = document.getElementById('gs-input');
+            input.value = '';
+            gsRender('');
+            setTimeout(() => input.focus(), 60);
+        }
+
+        function gsClose() {
+            document.getElementById('gs-backdrop').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function gsShowTrigger(show) {
+            const t = document.getElementById('gs-trigger');
+            if (t) t.style.display = show ? 'flex' : 'none';
+        }
+
+        document.getElementById('gs-backdrop').addEventListener('click', e => {
+            if (e.target === document.getElementById('gs-backdrop')) gsClose();
+        });
+        document.getElementById('gs-input').addEventListener('input', e => gsRender(e.target.value));
+        document.addEventListener('keydown', e => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); gsOpen(); }
+            if (e.key === 'Escape') gsClose();
+        });
+
+        function gsRender(q) {
+            const resultsEl = document.getElementById('gs-results');
+            const raw = q.trim().toLowerCase();
+            if (!raw) {
+                resultsEl.innerHTML = `<div id="gs-empty" style="padding:24px;text-align:center;color:#bbb;font-size:13px">
+                    Type to search across learning cards, obligations, packaging formats, glossary and delegated acts.
+                </div>`;
+                return;
+            }
+
+            const sections = [];
+
+            // ── Learning cards ──────────────────────────────────────────────
+            const cards = learningCards.filter(c =>
+                c.title.toLowerCase().includes(raw) ||
+                c.content.toLowerCase().includes(raw) ||
+                (c.plainEnglish || '').toLowerCase().includes(raw) ||
+                c.category.toLowerCase().includes(raw)
+            ).slice(0, 4);
+            if (cards.length) sections.push({
+                label: 'Learning Cards',
+                items: cards.map(c => ({
+                    icon: '📚',
+                    title: c.title,
+                    sub: c.content.slice(0, 90) + '…',
+                    badge: c.category,
+                    badgeColor: '#9CAF88',
+                    badgeBg: '#F0F8F3',
+                    action: () => { gsClose(); showPage('learning'); setTimeout(() => openCardModal(c), 300); }
+                }))
+            });
+
+            // ── Obligations ─────────────────────────────────────────────────
+            const sevColor = { critical:'#dc2626', high:'#d97706', medium:'#0369a1', low:'#15803d' };
+            const sevBg    = { critical:'#fee2e2', high:'#fef3c7', medium:'#e0f2fe', low:'#dcfce7' };
+            const obs = OBLIGATION_DB.filter(o =>
+                o.title.toLowerCase().includes(raw) ||
+                o.detail.toLowerCase().includes(raw) ||
+                o.article.toLowerCase().includes(raw)
+            ).slice(0, 4);
+            if (obs.length) sections.push({
+                label: 'Obligations',
+                items: obs.map(o => ({
+                    icon: '📋',
+                    title: o.title,
+                    sub: o.article + ' · Deadline: ' + (o.deadline <= 2025 ? 'Active now' : o.deadline),
+                    badge: o.severity,
+                    badgeColor: sevColor[o.severity],
+                    badgeBg: sevBg[o.severity],
+                    action: () => { gsClose(); showPage('obligations'); }
+                }))
+            });
+
+            // ── Packaging formats ───────────────────────────────────────────
+            const gradeColor = { A:'#15803d', B:'#0369a1', C:'#d97706', D:'#dc2626', E:'#7f1d1d' };
+            const gradeBg    = { A:'#dcfce7', B:'#dbeafe', C:'#fef3c7', D:'#fee2e2', E:'#fee2e2' };
+            const pkgs = PACKAGING_MATERIALS.filter(m =>
+                m.label.toLowerCase().includes(raw) ||
+                m.material.toLowerCase().includes(raw) ||
+                m.sgRelevance.toLowerCase().includes(raw)
+            ).slice(0, 4);
+            if (pkgs.length) sections.push({
+                label: 'Packaging Formats',
+                items: pkgs.map(m => ({
+                    icon: '📦',
+                    title: m.label,
+                    sub: m.material + ' · ' + m.tier + ' · ' + (m.ppwrBan ? '⛔ Banned ' + m.banYear : '✓ Permitted'),
+                    badge: 'Grade ' + m.grade,
+                    badgeColor: gradeColor[m.grade],
+                    badgeBg: gradeBg[m.grade],
+                    action: () => { gsClose(); showPage('packaging-audit'); }
+                }))
+            });
+
+            // ── Glossary ────────────────────────────────────────────────────
+            const terms = GLOSSARY_TERMS.filter(t =>
+                t.term.toLowerCase().includes(raw) ||
+                t.def.toLowerCase().includes(raw) ||
+                t.tag.toLowerCase().includes(raw)
+            ).slice(0, 3);
+            if (terms.length) sections.push({
+                label: 'Glossary',
+                items: terms.map(t => ({
+                    icon: '📖',
+                    title: t.term,
+                    sub: t.def.slice(0, 90) + '…',
+                    badge: t.tag,
+                    badgeColor: '#4c1d95',
+                    badgeBg: '#ede9fe',
+                    action: () => { gsClose(); showPage('glossary'); }
+                }))
+            });
+
+            // ── Delegated acts ──────────────────────────────────────────────
+            const acts = DELEGATED_ACTS.filter(a =>
+                a.title.toLowerCase().includes(raw) ||
+                a.notes.toLowerCase().includes(raw)
+            ).slice(0, 2);
+            if (acts.length) sections.push({
+                label: 'Delegated Acts',
+                items: acts.map(a => ({
+                    icon: '📜',
+                    title: a.title.replace(/^(Delegated|Implementing) (Regulation|Act) — /, ''),
+                    sub: 'Expected ' + a.expectedBy,
+                    badge: 'Pending',
+                    badgeColor: '#d97706',
+                    badgeBg: '#fef3c7',
+                    action: () => { gsClose(); showPage('delegated-acts'); }
+                }))
+            });
+
+            if (!sections.length) {
+                resultsEl.innerHTML = `<div id="gs-empty">No results for "<strong>${q}</strong>"</div>`;
+                return;
+            }
+
+            resultsEl.innerHTML = sections.map(sec => `
+                <div class="gs-group-label">${sec.label}</div>
+                ${sec.items.map((item, idx) => `
+                    <div class="gs-item" data-sec="${sec.label}" data-idx="${idx}">
+                        <span class="gs-item-icon">${item.icon}</span>
+                        <div style="flex:1;min-width:0">
+                            <div class="gs-item-title">${item.title}</div>
+                            <div class="gs-item-sub">${item.sub}</div>
+                        </div>
+                        <span class="gs-item-badge" style="background:${item.badgeBg};color:${item.badgeColor}">${item.badge}</span>
+                    </div>`).join('')}
+            `).join('');
+
+            // Attach click handlers from the action closures
+            let itemIdx = 0;
+            const allActions = sections.flatMap(s => s.items.map(i => i.action));
+            resultsEl.querySelectorAll('.gs-item').forEach((el, i) => {
+                el.addEventListener('click', allActions[i]);
+            });
+        }
+
+        // Show search trigger when user enters the app
+        document.addEventListener('DOMContentLoaded', () => {
+            const orig = window.showPage;
+            if (orig) {
+                window.showPage = function(page, ...args) {
+                    orig(page, ...args);
+                    gsShowTrigger(page !== 'home');
+                };
+            }
+        });
     </script>
 
 </body>
