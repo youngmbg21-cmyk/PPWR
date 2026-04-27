@@ -1584,6 +1584,83 @@
         </div>
     </div>
 
+    <!-- ================================================================
+         AI KNOWLEDGE NAVIGATOR — Floating button + Chat window
+         Placed BEFORE <script> so getElementById finds these elements
+         when the aiNav IIFE runs during script parsing.
+    ================================================================ -->
+
+    <!-- Floating Brain Button (visible when logged in) -->
+    <button id="ai-nav-btn" aria-label="Open PPWR Knowledge Navigator">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
+        </svg>
+    </button>
+
+    <!-- Chat Window -->
+    <div id="ai-chat-window" role="dialog" aria-label="PPWR Knowledge Navigator">
+
+        <!-- Header -->
+        <div id="ai-chat-header">
+            <div class="ai-header-left">
+                <div class="ai-header-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>PPWR Knowledge Navigator</h3>
+                    <p>Closed knowledge · Platform content only</p>
+                </div>
+            </div>
+            <button id="ai-chat-close" aria-label="Close chat">✕</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="ai-chat-messages"></div>
+
+        <!-- Suggested questions pills -->
+        <div class="ai-suggestions" id="ai-suggestions">
+            <button class="ai-pill" data-query="What is PFAS?">What is PFAS?</button>
+            <button class="ai-pill" data-query="Empty space limit">Empty space limit</button>
+            <button class="ai-pill" data-query="Recyclability rules">Recyclability rules</button>
+            <button class="ai-pill" data-query="Record retention">Record retention</button>
+        </div>
+
+        <!-- Quota bar (Starter plan only) -->
+        <div class="ai-quota-bar" id="ai-quota-bar" style="display:none;">
+            <span>Questions used:</span>
+            <div class="ai-quota-dots">
+                <div class="ai-quota-dot" id="ai-dot-1"></div>
+                <div class="ai-quota-dot" id="ai-dot-2"></div>
+                <div class="ai-quota-dot" id="ai-dot-3"></div>
+            </div>
+            <span id="ai-quota-label">0 / 3</span>
+        </div>
+
+        <!-- Input area -->
+        <div id="ai-chat-input-area">
+            <input
+                id="ai-chat-input"
+                type="text"
+                placeholder="Ask about PPWR…"
+                maxlength="200"
+                autocomplete="off"
+            />
+            <button id="ai-chat-send" aria-label="Send">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Footer disclaimer -->
+        <div id="ai-chat-footer">
+            I only answer based on verified platform content.
+        </div>
+
+    </div>
+
     <script>
         // ============================================================================
         // SECURITY UTILITIES
@@ -2835,27 +2912,28 @@
         });
 
         // ============================================================================
-        // PAGE NAVIGATION SETUP
+        // PAGE NAVIGATION SETUP — delegated so dynamic buttons work too
         // ============================================================================
-        document.querySelectorAll('.page-link').forEach(link => {
-            link.addEventListener('click', function() {
-                const page = this.getAttribute('data-page');
-                if (page === 'home' || page === 'features' || page === 'pricing') {
-                    if (appState.isLoggedIn && page !== 'home') {
-                        showPage('dashboard');
-                    } else {
-                        showPage(page);
-                    }
-                } else if (page === 'login' || page === 'signup') {
-                    showPage(page);
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('.page-link');
+            if (!link) return;
+            const page = link.getAttribute('data-page');
+            if (!page) return;
+            if (page === 'home' || page === 'features' || page === 'pricing') {
+                if (appState.isLoggedIn && page !== 'home') {
+                    showPage('dashboard');
                 } else {
-                    if (!appState.isLoggedIn) {
-                        showPage('login');
-                    } else {
-                        showPage(page);
-                    }
+                    showPage(page);
                 }
-            });
+            } else if (page === 'login' || page === 'signup') {
+                showPage(page);
+            } else {
+                if (!appState.isLoggedIn) {
+                    showPage('login');
+                } else {
+                    showPage(page);
+                }
+            }
         });
 
         // Initial page load and countdown
@@ -3728,81 +3806,6 @@
             localStorage.setItem('appState', JSON.stringify(appState));
         }, 5000);
     </script>
-    <!-- ================================================================
-         AI KNOWLEDGE NAVIGATOR — Floating button + Chat window
-    ================================================================ -->
-
-    <!-- Floating Brain Button (visible when logged in) -->
-    <button id="ai-nav-btn" aria-label="Open PPWR Knowledge Navigator">
-        <!-- Brain SVG icon -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
-        </svg>
-    </button>
-
-    <!-- Chat Window -->
-    <div id="ai-chat-window" role="dialog" aria-label="PPWR Knowledge Navigator">
-
-        <!-- Header -->
-        <div id="ai-chat-header">
-            <div class="ai-header-left">
-                <div class="ai-header-icon">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
-                    </svg>
-                </div>
-                <div>
-                    <h3>PPWR Knowledge Navigator</h3>
-                    <p>Closed knowledge · Platform content only</p>
-                </div>
-            </div>
-            <button id="ai-chat-close" aria-label="Close chat">✕</button>
-        </div>
-
-        <!-- Messages -->
-        <div id="ai-chat-messages"></div>
-
-        <!-- Suggested questions pills -->
-        <div class="ai-suggestions" id="ai-suggestions">
-            <button class="ai-pill" data-query="What is PFAS?">What is PFAS?</button>
-            <button class="ai-pill" data-query="Empty space limit">Empty space limit</button>
-            <button class="ai-pill" data-query="Recyclability rules">Recyclability rules</button>
-            <button class="ai-pill" data-query="Record retention">Record retention</button>
-        </div>
-
-        <!-- Quota bar (Starter plan only) -->
-        <div class="ai-quota-bar" id="ai-quota-bar" style="display:none;">
-            <span>Questions used:</span>
-            <div class="ai-quota-dots">
-                <div class="ai-quota-dot" id="ai-dot-1"></div>
-                <div class="ai-quota-dot" id="ai-dot-2"></div>
-                <div class="ai-quota-dot" id="ai-dot-3"></div>
-            </div>
-            <span id="ai-quota-label">0 / 3</span>
-        </div>
-
-        <!-- Input area -->
-        <div id="ai-chat-input-area">
-            <input
-                id="ai-chat-input"
-                type="text"
-                placeholder="Ask about PPWR…"
-                maxlength="200"
-                autocomplete="off"
-            />
-            <button id="ai-chat-send" aria-label="Send">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Footer disclaimer -->
-        <div id="ai-chat-footer">
-            I only answer based on verified platform content.
-        </div>
-
-    </div>
 
 </body>
 </html>
