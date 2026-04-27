@@ -1171,7 +1171,7 @@
                         <li>✓ Basic analytics</li>
                         <li>✓ Email support</li>
                     </ul>
-                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Start Free Trial</button>
+                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="starter">Start Free Trial</button>
                 </div>
 
                 <div class="pricing-card" style="border-color: var(--color-sage); transform: scale(1.05);">
@@ -1187,7 +1187,7 @@
                         <li>✓ Custom reports</li>
                         <li>✓ Priority support</li>
                     </ul>
-                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Start Free Trial</button>
+                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="growth">Start Free Trial</button>
                 </div>
 
                 <div class="pricing-card">
@@ -1202,7 +1202,7 @@
                         <li>✓ Custom content</li>
                         <li>✓ Dedicated support</li>
                     </ul>
-                    <button class="btn-primary" style="width: 100%; margin-top: 20px; page-link" data-page="signup">Contact Sales</button>
+                    <button class="btn-primary page-link" style="width: 100%; margin-top: 20px;" data-page="signup" data-plan="pro">Contact Sales</button>
                 </div>
             </div>
 
@@ -1231,7 +1231,7 @@
 
                 <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="login-btn">Sign In</button>
                 
-                <p style="text-align: center; color: #666;">Don't have an account? <button class="btn-text" style="padding: 0; text-decoration: underline; page-link" data-page="signup">Sign up</button></p>
+                <p style="text-align: center; color: #666;">Don't have an account? <button class="btn-text page-link" style="padding: 0; text-decoration: underline;" data-page="signup">Sign up</button></p>
             </div>
         </div>
     </div>
@@ -1240,8 +1240,14 @@
     <div class="page" id="signup-page">
         <div style="max-width: 400px; margin: 40px auto; padding: 32px;">
             <div class="card">
-                <h2 style="text-align: center; margin-bottom: 32px;">Create Your Account</h2>
-                
+                <h2 style="text-align: center; margin-bottom: 16px;">Create Your Account</h2>
+
+                <div id="signup-plan-banner" style="display:none; background:#F0F8F3; border:1px solid #B7E4C7; border-radius:8px; padding:10px 16px; margin-bottom:20px; text-align:center;">
+                    <span style="font-size:13px; color:#555;">Signing up for</span>
+                    <span id="signup-plan-label" style="font-weight:700; color:var(--color-sage); margin-left:6px;"></span>
+                    <span style="font-size:12px; color:#888; display:block; margin-top:2px;">14-day free trial · No credit card required</span>
+                </div>
+
                 <div class="input-group">
                     <label>Full Name</label>
                     <input type="text" id="signup-name" placeholder="John Doe">
@@ -1275,7 +1281,7 @@
 
                 <button class="btn-primary" style="width: 100%; margin-bottom: 16px;" id="signup-btn">Create Account</button>
                 
-                <p style="text-align: center; color: #666;">Already have an account? <button class="btn-text" style="padding: 0; text-decoration: underline; page-link" data-page="login">Sign in</button></p>
+                <p style="text-align: center; color: #666;">Already have an account? <button class="btn-text page-link" style="padding: 0; text-decoration: underline;" data-page="login">Sign in</button></p>
             </div>
         </div>
     </div>
@@ -1752,6 +1758,21 @@
                 renewal: 'April 30, 2026'
             }
         };
+
+        // Restore persisted dashboard/readCards state without touching login state
+        (function restorePersistedState() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('appState') || 'null');
+                if (saved) {
+                    if (saved.dashboard)  appState.dashboard  = saved.dashboard;
+                    if (saved.readCards)  appState.readCards  = saved.readCards;
+                    if (saved.user?.plan && appState.user) appState.user.plan = saved.user.plan;
+                }
+            } catch(e) {}
+        })();
+
+        // Pending plan chosen on the pricing page (used by signup form)
+        let pendingPlan = 'starter';
 
         // ============================================================================
         // DYNAMIC COUNTDOWN CALCULATION
@@ -2323,6 +2344,7 @@
             localStorage.setItem('user', JSON.stringify(user));
             appState.isLoggedIn = true;
             appState.user = user;
+            localStorage.setItem('appState', JSON.stringify(appState));
 
             showPage('dashboard');
         });
@@ -2358,13 +2380,15 @@
                 email: email,
                 company: company,
                 country: country,
-                role: 'user'
+                role: 'user',
+                plan: pendingPlan
             };
 
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('user', JSON.stringify(user));
             appState.isLoggedIn = true;
             appState.user = user;
+            localStorage.setItem('appState', JSON.stringify(appState));
 
             showPage('dashboard');
         });
@@ -2862,12 +2886,6 @@
         // DASHBOARD
         // ============================================================================
         function updateDashboard() {
-            // Load from localStorage if exists
-            const saved = localStorage.getItem('appState');
-            if (saved) {
-                appState = JSON.parse(saved);
-                if (!appState.readCards) appState.readCards = {};
-            }
 
             document.getElementById('dashboard-score').textContent = appState.dashboard.score;
             document.getElementById('dashboard-progress').textContent = appState.dashboard.progress + '%';
@@ -3087,8 +3105,21 @@
                 } else {
                     showPage(page);
                 }
-            } else if (page === 'login' || page === 'signup') {
-                showPage(page);
+            } else if (page === 'login') {
+                showPage('login');
+            } else if (page === 'signup') {
+                // Capture which plan the user clicked from the pricing page
+                const plan = link.getAttribute('data-plan');
+                if (plan) pendingPlan = plan;
+                showPage('signup');
+                // Update the plan banner on the signup form
+                const banner = document.getElementById('signup-plan-banner');
+                const planLabel = document.getElementById('signup-plan-label');
+                if (banner && planLabel) {
+                    const names = { starter: 'Starter — €99/month', growth: 'Growth — €199/month', pro: 'Pro — €399/month' };
+                    planLabel.textContent = names[pendingPlan] || 'Starter — €99/month';
+                    banner.style.display = plan ? 'block' : 'none';
+                }
             } else {
                 if (!appState.isLoggedIn) {
                     showPage('login');
