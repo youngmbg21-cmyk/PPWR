@@ -2600,6 +2600,31 @@
             _toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
         }
 
+        // ── Inline term tooltips ─────────────────────────────────────────────
+        const TERM_DEFS = {
+            EPR:   'Extended Producer Responsibility — your company pays annual fees into a national recycling programme based on how much packaging you place on the market each year.',
+            DPP:   'Digital Product Passport — a mandatory digital record (QR code) containing material composition, recyclability grade, and EPR registration details. Required for B2B packaging over 5 kg from 2030.',
+            PCR:   'Post-Consumer Recycled content — material that has been collected from consumers, recycled, and used again in new packaging. PPWR sets minimum PCR percentages by material type from 2030.',
+            PFAS:  'Per- and polyfluoroalkyl substances — chemical coatings used in some food-contact packaging (e.g. grease-resistant wrappers). Banned in food-contact packaging under PPWR from July 2024.',
+            REACH: 'EU chemicals regulation (EC 1907/2006). PPWR adds packaging-specific substance bans on top of REACH — both frameworks apply when reviewing your materials.',
+            NIR:   'Near-Infrared sorting — the technology recycling facilities use to identify and separate plastic types. Dark pigments like carbon black block NIR light, making packaging impossible to sort and forcing a lower recyclability grade.',
+        };
+
+        function termify(input, isHtml) {
+            if (!input) return input;
+            const str = isHtml ? input : input.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            return str.replace(/(<[^>]+>)|([^<]+)/g, (match, tag, text) => {
+                if (tag) return tag;
+                if (!text) return match;
+                return text.replace(/\b(EPR|DPP|PCR|PFAS|REACH|NIR)\b/g, term => {
+                    const def = TERM_DEFS[term];
+                    return def
+                        ? `<span class="term">${term}<span class="term-tip">${def}</span></span>`
+                        : term;
+                });
+            });
+        }
+
         function calculateDaysRemaining() {
             const today = new Date(2026, 3, 27); // April 27, 2026
             const deadline = new Date(2026, 7, 12); // August 12, 2026
@@ -3465,7 +3490,7 @@
           const nonMon   = vp.nonMonetary[scale] || [];
           const flags    = [ce.dailyPenalty && '📅 Daily accumulating penalty possible', ce.publicNaming && '📢 Public naming on non-compliance register', ce.criminalReferral && '⚖️ Criminal referral possible for serious cases'].filter(Boolean);
           resultEl.style.display = 'block';
-          contentEl.innerHTML = `
+          contentEl.innerHTML = termify(`
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
               <div style="width:48px;height:48px;border-radius:10px;background:${bs.bg};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${bs.icon}</div>
               <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:2px">Risk Band</div>
@@ -3480,7 +3505,7 @@
             ${flags.length ? `<div style="margin-bottom:16px">${flags.map(f=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">${f}</div>`).join('')}</div>` : ''}
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px">Non-monetary consequences</div>
             ${nonMon.map(c=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">• ${c}</div>`).join('')}
-            <div style="margin-top:16px;padding:10px;background:#fff8e1;border-radius:6px;font-size:11px;color:#92400e">Ranges are indicative only and not legal advice. Actual fines depend on individual circumstances, national transposition and judicial discretion.</div>`;
+            <div style="margin-top:16px;padding:10px;background:#fff8e1;border-radius:6px;font-size:11px;color:#92400e">Ranges are indicative only and not legal advice. Actual fines depend on individual circumstances, national transposition and judicial discretion.</div>`, true);
         }
 
         function renderFineEstimatorPage() { /* static HTML — runFineEstimator() handles interaction */ }
@@ -3508,7 +3533,7 @@
           const gradeColor = { A:'#15803d', B:'#0369a1', C:'#d97706', D:'#dc2626', E:'#7f1d1d' };
           const gradeBg    = { A:'#dcfce7', B:'#dbeafe', C:'#fef3c7', D:'#fee2e2', E:'#fee2e2' };
           const eprLabel   = { 'lowest':'Lowest fees', 'low':'Low fees', 'medium-rising':'Rising fees', 'highest-banned':'Highest / banned' };
-          grid.innerHTML = items.map(m => `
+          grid.innerHTML = termify(items.map(m => `
             <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:10px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
                 <span style="font-weight:600;font-size:13px;flex:1;line-height:1.4">${m.label}</span>
@@ -3524,7 +3549,7 @@
               ${m.issues.length ? `<div style="font-size:11px;color:#dc2626">${m.issues.map(i=>`• ${i}`).join('<br>')}</div>` : ''}
               <div style="font-size:11px;padding:8px;background:#FAFAF8;border-radius:6px;border-left:3px solid ${gradeColor[m.grade]};color:#333;line-height:1.5">${m.sgRelevance}</div>
               <div style="font-size:11px;color:#999;display:flex;gap:10px;align-items:center;flex-wrap:wrap">EPR fee direction: ${eprLabel[m.eprFeeDirection] || m.eprFeeDirection} · ${ppwrLink('Art. 6','PPWR Art. 6')}</div>
-            </div>`).join('');
+            </div>`).join(''), true);
           if (barEl) {
             const counts = {};
             all.forEach(m => { counts[m.grade] = (counts[m.grade]||0)+1; });
@@ -3560,9 +3585,9 @@
               <span style="flex-shrink:0;padding:4px 9px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;background:${s.bg};color:${s.color};margin-top:2px">${s.label}</span>
               <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-                  <span style="font-weight:600;font-size:13px">${o.title}</span>${deadTag}
+                  <span style="font-weight:600;font-size:13px">${termify(o.title,false)}</span>${deadTag}
                 </div>
-                <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 8px">${o.detail}</p>
+                <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 8px">${termify(o.detail,false)}</p>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
                   ${roleChips}
                   ${ppwrLink(o.article)}
@@ -3635,9 +3660,9 @@
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
               ${roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:5px 12px;border-radius:8px;background:${m.bg};color:${m.color};font-size:12px;font-weight:600;border:1.5px solid ${m.color}30">${m.label}</span>` : ''; }).join('')}
             </div>
-            <div style="font-size:13px;color:#444;line-height:1.7;padding:12px;background:#FAFAF8;border-radius:8px;margin-bottom:16px">${trace}</div>
+            <div style="font-size:13px;color:#444;line-height:1.7;padding:12px;background:#FAFAF8;border-radius:8px;margin-bottom:16px">${termify(trace,true)}</div>
             <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:10px">Top obligations (${obs.length} total — ${critObs.length} critical)</div>
-            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${o.title}</strong><div style="color:#666;margin-top:3px">${o.article}</div></div>`).join('')}
+            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${termify(o.title,false)}</strong><div style="color:#666;margin-top:3px">${o.article}</div></div>`).join('')}
             <button class="btn-secondary" onclick="showPage('obligations')" style="margin-top:12px;font-size:12px">View all ${obs.length} obligations →</button>`;
           resultEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
         }
@@ -3678,7 +3703,7 @@
           };
           const strictColor = { high:'#dc2626', medium:'#d97706' };
           const strictBg    = { high:'#fee2e2', medium:'#fef3c7' };
-          grid.innerHTML = order.map(code => {
+          grid.innerHTML = termify(order.map(code => {
             const c  = COUNTRY_ENFORCEMENT[code];
             const ep = eprInfo[code] || {};
             const badges = [c.dailyPenalty&&'📅 Daily penalty', c.publicNaming&&'📢 Public naming', c.criminalReferral&&'⚖️ Criminal referral', c.eea&&'🇪🇺 EEA (not EU)'].filter(Boolean);
@@ -3706,7 +3731,7 @@
                 ${badges.map(b=>`<span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${b}</span>`).join('')}
               </div>
             </div>`;
-          }).join('');
+          }).join(''), true);
         }
 
         // ============================================================================
@@ -4221,7 +4246,7 @@
             const backdrop = document.getElementById('card-modal-backdrop');
             document.getElementById('card-modal-title').textContent  = card.title;
             document.getElementById('card-modal-badge').textContent  = card.category;
-            document.getElementById('card-modal-plain').textContent  = card.plainEnglish || card.content;
+            document.getElementById('card-modal-plain').innerHTML = termify(card.plainEnglish || card.content, false);
             const visualEl = document.getElementById('card-modal-visual');
             if (card.visual) { visualEl.innerHTML = card.visual; visualEl.style.display = 'block'; }
             else              { visualEl.style.display = 'none'; }
@@ -4513,7 +4538,7 @@
                         <ul style="color: #666; line-height: 1.8;">
                             <li>✓ Request Declarations of Conformity from all suppliers</li>
                             <li>✓ Establish a document retention system (5-year minimum)</li>
-                            <li>✓ Conduct PFAS testing on food-contact materials</li>
+                            <li>✓ Conduct <span class="term">PFAS<span class="term-tip">Per- and polyfluoroalkyl substances — chemical coatings used in some food-contact packaging. Banned in food-contact packaging under PPWR from July 2024.</span></span> testing on food-contact materials</li>
                             <li>✓ Calculate and document empty space ratios</li>
                             <li>✓ Review label removability and recyclability</li>
                         </ul>
