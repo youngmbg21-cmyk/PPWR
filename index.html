@@ -4347,6 +4347,11 @@
             appState.currentPage = pageName;
             trackToolVisit(pageName);
 
+            // Scroll main content area back to top on every navigation
+            const mc = document.querySelector('.main-content');
+            if (mc) mc.scrollTop = 0;
+            window.scrollTo(0, 0);
+
             // Update navigation
             updateNavigation();
             
