@@ -1383,6 +1383,27 @@
                 </div>
             </div>
 
+            <!-- ONBOARDING CHECKLIST (shown until all steps complete) -->
+            <div class="card" id="onboarding-widget" style="margin-bottom:24px;display:none;border-left:4px solid var(--color-sage);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                    <div>
+                        <h3 style="margin:0;font-size:15px;">🚀 Getting Started</h3>
+                        <p style="font-size:12px;color:#999;margin:2px 0 0">Complete these steps to explore the full platform</p>
+                    </div>
+                    <button onclick="dismissOnboarding()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#bbb;padding:4px 8px;">Dismiss</button>
+                </div>
+                <div id="onboarding-steps"></div>
+                <div style="margin-top:12px;">
+                    <div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-bottom:4px;">
+                        <span id="onboarding-progress-label">0 of 7 complete</span>
+                        <span id="onboarding-pct">0%</span>
+                    </div>
+                    <div style="background:#EFEFEB;border-radius:4px;height:6px;overflow:hidden;">
+                        <div id="onboarding-bar" style="height:100%;background:var(--color-sage);border-radius:4px;transition:width .4s ease;width:0%"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- COMPLIANCE INTELLIGENCE SUMMARY -->
             <div id="compliance-summary-row" style="margin-bottom:24px; display:none;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
@@ -1973,6 +1994,34 @@
         </div>
     </div>
 
+    <!-- ── SCENARIO PREVIEW MODAL ──────────────────────────────────────── -->
+    <div class="card-modal-backdrop" id="scenario-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="scenario-modal-title">
+        <div class="card-modal" id="scenario-modal" style="max-width:680px;">
+            <div class="card-modal-header">
+                <div style="flex:1">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+                        <span id="scenario-modal-diff" style="font-size:11px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:#EFEFEB;color:#666"></span>
+                        <span id="scenario-modal-legal" style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;background:#e0f2fe;color:#0369a1"></span>
+                    </div>
+                    <h2 id="scenario-modal-title" style="font-size:20px;line-height:1.3;margin:0"></h2>
+                </div>
+                <button onclick="closeScenarioModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:#999;padding:4px;line-height:1;margin-top:-4px">✕</button>
+            </div>
+            <div class="card-modal-body">
+                <p id="scenario-modal-desc" style="font-size:14px;color:#666;margin-bottom:16px;line-height:1.6"></p>
+                <div style="background:#FAFAF8;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:20px">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px;letter-spacing:.06em">The situation</div>
+                    <p id="scenario-modal-situation" style="font-size:14px;color:#333;line-height:1.7;margin:0"></p>
+                </div>
+                <div id="scenario-modal-outcomes" style="margin-bottom:20px"></div>
+                <div style="padding-top:4px;border-top:1px solid #EFEFEB;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                    <button id="scenario-modal-launch" class="btn-primary" style="font-size:14px;padding:10px 24px">🎯 Launch Simulation →</button>
+                    <a id="scenario-modal-reg" href="#" target="_blank" rel="noopener" class="card-modal-regulation">📄 Read the regulation ↗</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ── LEARNING CARD MODAL ─────────────────────────────────────────── -->
     <div class="card-modal-backdrop" id="card-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="card-modal-title">
         <div class="card-modal" id="card-modal">
@@ -2086,6 +2135,7 @@
             currentPage: 'home',
             currentLanguage: 'en',
             readCards: {},
+            toolsVisited: {},
             dashboard: {
                 score: 0,
                 progress: 0,
@@ -2107,9 +2157,11 @@
             try {
                 const saved = JSON.parse(localStorage.getItem('appState') || 'null');
                 if (saved) {
-                    if (saved.currentTier) appState.currentTier = saved.currentTier;
-                    if (saved.dashboard)   appState.dashboard   = saved.dashboard;
-                    if (saved.readCards)   appState.readCards   = saved.readCards;
+                    if (saved.currentTier)         appState.currentTier         = saved.currentTier;
+                    if (saved.dashboard)           appState.dashboard           = saved.dashboard;
+                    if (saved.readCards)           appState.readCards           = saved.readCards;
+                    if (saved.toolsVisited)        appState.toolsVisited        = saved.toolsVisited;
+                    if (saved.onboardingDismissed) appState.onboardingDismissed = saved.onboardingDismissed;
                 }
             } catch(e) {}
         })();
@@ -3453,14 +3505,15 @@
         function showPage(pageName) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            
+
             // Show requested page
             const pageEl = document.getElementById(pageName + '-page');
             if (pageEl) {
                 pageEl.classList.add('active');
             }
-            
+
             appState.currentPage = pageName;
+            trackToolVisit(pageName);
             
             // Update navigation
             updateNavigation();
@@ -3687,44 +3740,31 @@
         function loadScenarios() {
             const container = document.getElementById('scenarios-list');
             container.innerHTML = '';
+            const diffColor = { Easy:'#15803d', Medium:'#d97706', Hard:'#dc2626' };
+            const diffBg    = { Easy:'#dcfce7', Medium:'#fef3c7', Hard:'#fee2e2' };
 
             scenarios.forEach(scenario => {
                 const card = document.createElement('div');
                 card.className = 'card fade-in';
+                card.style.cssText = 'cursor:pointer;transition:all .2s;';
+                card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-2px)'; card.style.boxShadow = '0 8px 24px rgba(156,175,136,.18)'; card.style.borderColor = 'var(--color-sage)'; });
+                card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; card.style.borderColor = ''; });
 
-                const h3 = document.createElement('h3');
-                h3.textContent = scenario.title;
+                const legalRef = scenario.choices.find(c => c.legalRef)?.legalRef || '';
+                card.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px">
+                        <h3 style="margin:0;font-size:15px;line-height:1.3">${escapeHtml(scenario.title)}</h3>
+                        <span style="flex-shrink:0;font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;background:${diffBg[scenario.difficulty]||'#EFEFEB'};color:${diffColor[scenario.difficulty]||'#666'}">${scenario.difficulty}</span>
+                    </div>
+                    <p style="color:#666;font-size:13px;line-height:1.5;margin-bottom:14px">${escapeHtml(scenario.description)}</p>
+                    ${legalRef ? `<div style="font-size:11px;color:#0369a1;margin-bottom:12px;font-style:italic">${escapeHtml(legalRef)}</div>` : ''}
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <span style="font-size:12px;color:#999">${scenario.choices.length} possible outcomes</span>
+                        <span style="font-size:13px;font-weight:600;color:var(--color-sage)">Preview →</span>
+                    </div>`;
 
-                const p = document.createElement('p');
-                p.style.cssText = 'color: #666; margin-top: 8px;';
-                p.textContent = scenario.description;
-
-                const row = document.createElement('div');
-                row.style.cssText = 'margin-top: 16px; display: flex; justify-content: space-between; align-items: center;';
-
-                const diffSpan = document.createElement('span');
-                diffSpan.style.cssText = 'font-size: 12px; padding: 4px 8px; background: #EFEFEB; border-radius: 4px;';
-                diffSpan.textContent = scenario.difficulty;
-
-                const btn = document.createElement('button');
-                btn.className = 'btn-text scenario-start-btn';
-                btn.dataset.id = String(scenario.id);
-                btn.textContent = 'Start Simulation →';
-
-                row.appendChild(diffSpan);
-                row.appendChild(btn);
-                card.appendChild(h3);
-                card.appendChild(p);
-                card.appendChild(row);
+                card.addEventListener('click', () => openScenarioModal(scenario));
                 container.appendChild(card);
-            });
-
-            // Attach event listeners
-            document.querySelectorAll('.scenario-start-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const scenarioId = this.getAttribute('data-id');
-                    startScenario(parseInt(scenarioId));
-                });
             });
         }
 
@@ -4059,6 +4099,7 @@
                 renderMilestoneWidget();
                 renderCertificationStatus();
             }
+            renderOnboardingWidget();
             renderComplianceSummary();
         }
 
@@ -5221,6 +5262,124 @@
             note.style.cssText = 'font-size:13px;color:#888;margin-top:8px;';
             note.textContent = 'Fee multipliers are applied to the base EPR fee per tonne of packaging placed on market. Quarterly reporting required from 2028.';
             el.appendChild(note);
+        }
+
+        // ============================================================================
+        // SCENARIO PREVIEW MODAL
+        // ============================================================================
+        function openScenarioModal(scenario) {
+            const diffColor = { Easy:'#15803d', Medium:'#d97706', Hard:'#dc2626' };
+            const diffBg    = { Easy:'#dcfce7', Medium:'#fef3c7', Hard:'#fee2e2' };
+            const legalRef  = scenario.choices.find(c => c.legalRef)?.legalRef || 'PPWR Regulation (EU) 2025/40';
+
+            document.getElementById('scenario-modal-title').textContent     = scenario.title;
+            document.getElementById('scenario-modal-desc').textContent      = scenario.description;
+            document.getElementById('scenario-modal-situation').textContent = scenario.situation;
+
+            const diffEl = document.getElementById('scenario-modal-diff');
+            diffEl.textContent   = scenario.difficulty;
+            diffEl.style.background = diffBg[scenario.difficulty] || '#EFEFEB';
+            diffEl.style.color      = diffColor[scenario.difficulty] || '#666';
+
+            document.getElementById('scenario-modal-legal').textContent = legalRef;
+            document.getElementById('scenario-modal-reg').href          = PPWR_BASE;
+
+            // Show the 3 possible outcomes as a preview (no spoilers — just consequence severity)
+            const outcomesEl = document.getElementById('scenario-modal-outcomes');
+            const riskColor  = r => r >= 80 ? '#dc2626' : r >= 40 ? '#d97706' : '#15803d';
+            const riskBg     = r => r >= 80 ? '#fee2e2' : r >= 40 ? '#fef3c7' : '#dcfce7';
+            outcomesEl.innerHTML = `
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px;letter-spacing:.06em">Possible outcomes</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                ${scenario.choices.map(c => `
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#FAFAF8;border-radius:8px;border:1px solid #EFEFEB">
+                        <span style="font-weight:700;font-size:13px;flex-shrink:0;color:#333">Option ${c.answer}</span>
+                        <div style="flex:1;font-size:12px;color:#666">${c.text}</div>
+                        <span style="flex-shrink:0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:${riskBg(c.riskLevel || 0)};color:${riskColor(c.riskLevel || 0)}">${c.impact || 'Unknown'}</span>
+                    </div>`).join('')}
+                </div>`;
+
+            document.getElementById('scenario-modal-launch').onclick = () => {
+                closeScenarioModal();
+                startScenario(scenario.id);
+            };
+
+            document.getElementById('scenario-modal-backdrop').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeScenarioModal() {
+            document.getElementById('scenario-modal-backdrop').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('scenario-modal-backdrop').addEventListener('click', e => {
+            if (e.target === document.getElementById('scenario-modal-backdrop')) closeScenarioModal();
+        });
+
+        // ============================================================================
+        // TOOL VISIT TRACKING
+        // ============================================================================
+        const TRACKED_TOOLS = ['learning','scenarios','scope','packaging-audit','obligations','my-role','countries'];
+
+        function trackToolVisit(page) {
+            if (!TRACKED_TOOLS.includes(page)) return;
+            if (!appState.toolsVisited) appState.toolsVisited = {};
+            if (!appState.toolsVisited[page]) {
+                appState.toolsVisited[page] = Date.now();
+                localStorage.setItem('appState', JSON.stringify(appState));
+            }
+        }
+
+        // ============================================================================
+        // ONBOARDING CHECKLIST
+        // ============================================================================
+        const ONBOARDING_STEPS = [
+            { key:'learning',       icon:'📚', label:'Open Learning Modules',       page:'learning'       },
+            { key:'scenarios',      icon:'🎯', label:'Try a Simulation',             page:'scenarios'      },
+            { key:'scope',          icon:'🔍', label:'Check what packaging is in scope', page:'scope'     },
+            { key:'packaging-audit',icon:'📦', label:'Review your Packaging Audit',  page:'packaging-audit'},
+            { key:'obligations',    icon:'📋', label:'Explore the Obligations Tracker', page:'obligations' },
+            { key:'my-role',        icon:'🎭', label:'Run the Role Wizard',          page:'my-role'        },
+            { key:'countries',      icon:'🌍', label:'Visit the Country Hub',        page:'countries'      },
+        ];
+
+        function renderOnboardingWidget() {
+            const widget   = document.getElementById('onboarding-widget');
+            const stepsEl  = document.getElementById('onboarding-steps');
+            const barEl    = document.getElementById('onboarding-bar');
+            const labelEl  = document.getElementById('onboarding-progress-label');
+            const pctEl    = document.getElementById('onboarding-pct');
+            if (!widget || !stepsEl) return;
+
+            const visited  = appState.toolsVisited || {};
+            const dismissed = appState.onboardingDismissed;
+            const done     = ONBOARDING_STEPS.filter(s => visited[s.key]).length;
+            const total    = ONBOARDING_STEPS.length;
+
+            // Hide if dismissed or all complete
+            if (dismissed || done === total) { widget.style.display = 'none'; return; }
+            widget.style.display = 'block';
+
+            stepsEl.innerHTML = ONBOARDING_STEPS.map(s => {
+                const complete = !!visited[s.key];
+                return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #F5F5F3">
+                    <span style="font-size:16px;flex-shrink:0">${complete ? '✅' : '⬜'}</span>
+                    <span style="flex:1;font-size:13px;color:${complete?'#999':'#333'};${complete?'text-decoration:line-through;':''}">${s.icon} ${s.label}</span>
+                    ${!complete ? `<button class="btn-secondary page-link" data-page="${s.page}" style="font-size:11px;padding:4px 10px;">Go →</button>` : ''}
+                </div>`;
+            }).join('');
+
+            const pct = Math.round((done / total) * 100);
+            if (barEl)   barEl.style.width    = pct + '%';
+            if (labelEl) labelEl.textContent  = `${done} of ${total} complete`;
+            if (pctEl)   pctEl.textContent    = pct + '%';
+        }
+
+        function dismissOnboarding() {
+            appState.onboardingDismissed = true;
+            localStorage.setItem('appState', JSON.stringify(appState));
+            document.getElementById('onboarding-widget').style.display = 'none';
         }
 
         // Save state periodically
