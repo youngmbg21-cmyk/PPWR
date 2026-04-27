@@ -53,16 +53,16 @@
 const quotaStore = new Map();
 const STARTER_LIMIT = 3;
 
-// ─── CORS headers (tighten the origin in production!) ────────────────────────
-const CORS_HEADERS = {
-    'Access-Control-Allow-Origin':  '*',   // Production: replace * with your exact domain
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, X-Session-Token, X-User-Plan',
-    'Content-Type':                 'application/json'
-};
-
-function json(data, status = 200) {
-    return new Response(JSON.stringify(data), { status, headers: CORS_HEADERS });
+// ─── CORS headers ─────────────────────────────────────────────────────────────
+// Set ALLOWED_ORIGIN in Worker secrets for production (wrangler secret put ALLOWED_ORIGIN).
+// Falls back to '*' only when the env var is absent (local dev).
+function buildCorsHeaders(env) {
+    return {
+        'Access-Control-Allow-Origin':  env?.ALLOWED_ORIGIN || '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Session-Token, X-User-Plan',
+        'Content-Type':                 'application/json'
+    };
 }
 
 function isValidSessionToken(token) {
@@ -112,10 +112,13 @@ function extractSource(raw, cards, scenarios) {
 // ─── Main Worker handler ──────────────────────────────────────────────────────
 export default {
     async fetch(request, env) {
+        const CORS = buildCorsHeaders(env);
+        const json = (data, status = 200) =>
+            new Response(JSON.stringify(data), { status, headers: CORS });
 
         // Preflight
         if (request.method === 'OPTIONS') {
-            return new Response(null, { status: 204, headers: CORS_HEADERS });
+            return new Response(null, { status: 204, headers: CORS });
         }
 
         // Only POST to /api/chat
@@ -138,6 +141,13 @@ export default {
         // Input validation
         if (!query?.trim())         return json({ error: 'Bad request: query required' }, 400);
         if (query.length > 500)     return json({ error: 'Bad request: query too long'  }, 400);
+
+        // Strip prompt-injection patterns before forwarding to Claude
+        const sanitizedQuery = query.trim()
+            .replace(/\[SOURCE:[^\]]*\]/gi, '')
+            .replace(/<\/?knowledge>/gi, '')
+            .replace(/\[CARD[^\]]*\]/gi, '')
+            .replace(/\[SCENARIO[^\]]*\]/gi, '');
 
         const cards     = Array.isArray(context?.cards)     ? context.cards     : [];
         const scenarios = Array.isArray(context?.scenarios) ? context.scenarios : [];
@@ -183,13 +193,13 @@ ${knowledgeBlock}
                 headers: {
                     'Content-Type':      'application/json',
                     'x-api-key':         apiKey,
-                    'anthropic-version': '2023-06-01'
+                    'anthropic-version': '2024-06-01'
                 },
                 body: JSON.stringify({
-                    model:      'claude-opus-4-6',
+                    model:      env.ANTHROPIC_MODEL || 'claude-opus-4-6',
                     max_tokens: 512,
                     system:     SYSTEM_PROMPT,
-                    messages:   [{ role: 'user', content: query.trim() }]
+                    messages:   [{ role: 'user', content: sanitizedQuery }]
                 })
             });
 
