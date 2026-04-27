@@ -1148,6 +1148,200 @@
         .gs-item-sub   { font-size: 11px; color: #999; margin-top: 2px; line-height: 1.4; }
         .gs-item-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
         #gs-empty { padding: 32px; text-align: center; color: #bbb; font-size: 14px; }
+        /* ── NARRATIVE STORY ARC ──────────────────────────────────── */
+
+        /* Inline term tooltip — hover over jargon to see plain-English definition. */
+        .term {
+            border-bottom: 1.5px dotted var(--color-sage);
+            cursor: help;
+            position: relative;
+            color: inherit;
+            transition: color 0.2s;
+        }
+        .term:hover { color: var(--color-sage); }
+        .term-tip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1F1F1F;
+            color: #F5F5F3;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 12px;
+            line-height: 1.55;
+            max-width: 260px;
+            width: max-content;
+            white-space: normal;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+            z-index: 9000;
+            pointer-events: none;
+            font-family: 'Outfit', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .term-tip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #1F1F1F;
+        }
+        .term:hover .term-tip { display: block; }
+
+        /* Story arc journey steps */
+        .journey-step {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 24px;
+            border: 2px solid #EFEFEB;
+            text-align: center;
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+        .journey-step:hover { border-color: var(--color-sage); }
+        .journey-step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--color-sage);
+            color: white;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .journey-step h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+            color: #1F1F1F;
+        }
+        .journey-step p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .journey-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCC;
+            font-size: 22px;
+            padding-top: 20px;
+        }
+
+        /* Narrative hero — warm, story-first layout */
+        .narrative-hero {
+            text-align: center;
+            padding: 64px 32px 48px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .narrative-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-sage);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .narrative-hero h1 {
+            font-size: 40px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            color: #1F1F1F;
+        }
+        .narrative-hero .lead {
+            font-size: 17px;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        /* Impact banner */
+        .impact-banner {
+            background: linear-gradient(135deg, #F0F5EC 0%, #FFF8F0 100%);
+            border: 1px solid #E0DDD6;
+            border-left: 4px solid var(--color-sage);
+            border-radius: 10px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .impact-banner-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+        .impact-banner-body { flex: 1; }
+        .impact-banner-body strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: #1F1F1F;
+        }
+        .impact-banner-body p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Who-is-this-for strip */
+        .who-strip {
+            background: white;
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin-bottom: 40px;
+            border: 1px solid #EFEFEB;
+        }
+        .who-strip h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1F1F1F;
+        }
+        .who-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .who-role-chip {
+            background: #F0F5EC;
+            border: 1px solid #D0DEC8;
+            color: #3A5C30;
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Outcome card */
+        .outcome-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #EFEFEB;
+            border-top: 3px solid var(--color-sage);
+        }
+        .outcome-card .outcome-icon { font-size: 28px; margin-bottom: 12px; }
+        .outcome-card h3 { font-size: 16px; margin-bottom: 8px; color: #1F1F1F; }
+        .outcome-card p { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+
+        /* ── INLINE GLOSSARY DEFINITIONS ─── */
+        /* Used in page descriptions to expand acronyms on hover. */
+        abbr[title] {
+            text-decoration: underline dotted var(--color-sage);
+            cursor: help;
+        }
     </style>
 </head>
 <body>
@@ -1181,30 +1375,30 @@
         <div style="padding: 0 24px; margin-bottom: 24px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Menu</p>
         </div>
-        <div class="sidebar-item active page-link" data-page="dashboard">📊 Dashboard</div>
-        <div class="sidebar-item page-link" data-page="learning">📚 Learning Modules</div>
-        <div class="sidebar-item page-link" data-page="scenarios">🎯 Simulations</div>
-        <div class="sidebar-item page-link" data-page="assessment">✅ Assessment</div>
-        <div class="sidebar-item page-link" data-page="certificates">🎓 Certificates</div>
-        <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Calculator</div>
+        <div class="sidebar-item active page-link" data-page="dashboard">📊 My Overview</div>
+        <div class="sidebar-item page-link" data-page="learning">📚 Learning Cards</div>
+        <div class="sidebar-item page-link" data-page="scenarios">🎯 Practice Scenarios</div>
+        <div class="sidebar-item page-link" data-page="assessment">✅ Test Your Knowledge</div>
+        <div class="sidebar-item page-link" data-page="certificates">🎓 My Certificates</div>
+        <div class="sidebar-item page-link" data-page="risk-calculator">⚠️ Risk Exposure Check</div>
         <div class="sidebar-section-readiness" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">2030+ Readiness</p>
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Long-Term Planning</p>
         </div>
-        <div class="sidebar-item page-link" data-page="roadmap">📅 Roadmap 2024–2040</div>
-        <div class="sidebar-item page-link" data-page="grading">♻️ Grading Lab</div>
-        <div class="sidebar-item page-link" data-page="calculator">🧮 Content Calculator</div>
-        <div class="sidebar-item page-link" data-page="vault">📁 Record Vault</div>
+        <div class="sidebar-item page-link" data-page="roadmap">📅 Key Dates &amp; Deadlines</div>
+        <div class="sidebar-item page-link" data-page="grading">♻️ Packaging Grades (A–E)</div>
+        <div class="sidebar-item page-link" data-page="calculator">🧮 Recycled Material Check</div>
+        <div class="sidebar-item page-link" data-page="vault">📁 My Documents</div>
         <div class="sidebar-section-tools" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
-            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Compliance Tools</p>
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Tools &amp; Calculators</p>
         </div>
-        <div class="sidebar-item page-link" data-page="scope">🔍 Scope Checker</div>
-        <div class="sidebar-item page-link" data-page="glossary">📖 Glossary</div>
-        <div class="sidebar-item page-link" data-page="fine-estimator">⚖️ Fine Estimator</div>
-        <div class="sidebar-item page-link" data-page="packaging-audit">📦 Packaging Audit</div>
-        <div class="sidebar-item page-link" data-page="obligations">📋 Obligations Tracker</div>
-        <div class="sidebar-item page-link" data-page="my-role">🎭 My Role</div>
-        <div class="sidebar-item page-link" data-page="delegated-acts">📜 Delegated Acts</div>
-        <div class="sidebar-item page-link" data-page="countries">🌍 Country Hub</div>
+        <div class="sidebar-item page-link" data-page="scope">🔍 Does This Apply to Me?</div>
+        <div class="sidebar-item page-link" data-page="glossary">📖 Plain-English Glossary</div>
+        <div class="sidebar-item page-link" data-page="fine-estimator">⚖️ Penalty Calculator</div>
+        <div class="sidebar-item page-link" data-page="packaging-audit">📦 Packaging Review</div>
+        <div class="sidebar-item page-link" data-page="obligations">📋 My Action Checklist</div>
+        <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
+        <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
+        <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
         <div class="sidebar-section-admin" style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
         </div>
@@ -1216,16 +1410,131 @@
 
     <!-- Pages -->
     
-    <!-- HOME PAGE — Tier Selection -->
+    <!-- HOME PAGE — Story Arc + Tier Selection -->
     <div class="page active" id="home-page">
-        <div style="max-width:1100px; margin:0 auto; padding:60px 32px;">
-            <div style="text-align:center; margin-bottom:16px;">
-                <div style="width:48px;height:48px;background:linear-gradient(135deg,var(--color-sage) 0%,var(--color-clay) 100%);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <span style="color:white;font-size:22px;">📦</span>
-                </div>
-                <h1 style="font-size:38px;margin-bottom:12px;">PPWR Learning Hub</h1>
-                <p style="font-size:17px;color:#666;max-width:520px;margin:0 auto 48px;">Choose your access level and start learning PPWR compliance — the EU packaging regulation that takes full effect August 2026.</p>
+        <div style="max-width:1100px; margin:0 auto; padding:0 32px;">
+
+            <!-- ── NARRATIVE HERO ──────────────────────────────── -->
+            <div class="narrative-hero">
+                <span class="narrative-eyebrow">EU Packaging Regulation · Effective August 2026</span>
+                <h1>The rules on packaging just changed.<br>Here's what your company needs to do.</h1>
+                <p class="lead">
+                    A new EU law — called
+                    <span class="term">PPWR
+                        <span class="term-tip"><strong>PPWR</strong> stands for Packaging &amp; Packaging Waste Regulation (EU) 2025/40. It replaces an older 1994 directive and sets stricter rules on packaging across all EU and EEA markets.</span>
+                    </span>
+                    — applies to any business that places packaged products on the market in Europe.
+                    If your organisation uses boxes, bags, wrappers, bottles, or any kind of container, this regulation applies to you.
+                    This platform walks you through it — step by step, in plain language.
+                </p>
             </div>
+
+            <!-- ── IMPACT BANNER ─────────────────────────────── -->
+            <div style="max-width:760px; margin:0 auto 48px;">
+                <div class="impact-banner">
+                    <div class="impact-banner-icon">⏰</div>
+                    <div class="impact-banner-body">
+                        <strong>Enforcement starts August 12, 2026 — <span id="home-countdown-inline">calculating…</span> away.</strong>
+                        <p>After that date, packaging that doesn't comply can be pulled from shelves, rejected by retailers, or result in fines from national regulators. The best time to prepare is now.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── WHO IS THIS FOR ─────────────────────────────── -->
+            <div style="max-width:760px; margin:0 auto 56px;">
+                <div class="who-strip">
+                    <h2>Who needs to use this?</h2>
+                    <div class="who-roles">
+                        <span class="who-role-chip">📦 Product Managers</span>
+                        <span class="who-role-chip">🏭 Operations Teams</span>
+                        <span class="who-role-chip">⚖️ Legal &amp; Compliance</span>
+                        <span class="who-role-chip">🛒 Procurement</span>
+                        <span class="who-role-chip">♻️ Sustainability Leads</span>
+                        <span class="who-role-chip">🏢 Brand Owners</span>
+                        <span class="who-role-chip">🚚 Importers &amp; Distributors</span>
+                    </div>
+                    <p style="text-align:center; font-size:13px; color:#999; margin-top:16px; margin-bottom:0;">If your organisation puts anything in a package, at least one of these roles applies to you.</p>
+                </div>
+            </div>
+
+            <!-- ── HOW IT WORKS (3-STEP JOURNEY) ─────────────── -->
+            <div style="max-width:900px; margin:0 auto 64px;">
+                <h2 style="text-align:center; font-size:26px; margin-bottom:40px;">How this platform works</h2>
+                <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:start; gap:8px;">
+
+                    <div class="journey-step">
+                        <div class="journey-step-num">1</div>
+                        <h3>Understand what applies to you</h3>
+                        <p>Start with our 2-minute role quiz and scoping check. Find out exactly which rules affect your products, markets, and responsibilities — before diving into the detail.</p>
+                        <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">What's My Role?</span>
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Does This Apply to Me?</span>
+                        </div>
+                    </div>
+
+                    <div class="journey-connector">→</div>
+
+                    <div class="journey-step">
+                        <div class="journey-step-num">2</div>
+                        <h3>Learn one topic at a time</h3>
+                        <p>Work through bite-sized learning cards and scenario exercises. Each card covers one concept — no jargon, no walls of text. Practice with real decision scenarios before they happen in real life.</p>
+                        <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Learning Cards</span>
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Practice Scenarios</span>
+                        </div>
+                    </div>
+
+                    <div class="journey-connector">→</div>
+
+                    <div class="journey-step">
+                        <div class="journey-step-num">3</div>
+                        <h3>Prove it and stay ahead</h3>
+                        <p>Take the assessment to earn a verified compliance certificate. Use the tools to check your packaging grades, calculate recycled material targets, and track every deadline through 2040.</p>
+                        <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center;">
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Test Yourself</span>
+                            <span style="font-size:11px; background:#F0F5EC; color:#4A6840; padding:3px 10px; border-radius:12px; font-weight:600;">Certificates</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ── WHAT YOU'LL KNOW AFTER ─────────────────────── -->
+            <div style="max-width:900px; margin:0 auto 64px;">
+                <h2 style="text-align:center; font-size:26px; margin-bottom:32px;">What you'll be able to do after using this platform</h2>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px;">
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🔍</div>
+                        <h3>Know if the regulation applies to you</h3>
+                        <p>Identify your role — manufacturer, importer, retailer — and which specific rules you're responsible for.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">📋</div>
+                        <h3>Have a clear action checklist</h3>
+                        <p>Know what needs to be done, by when, in each country you operate in — with no legal jargon.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">♻️</div>
+                        <h3>Understand packaging grades</h3>
+                        <p>Know what makes packaging A-rated (most recyclable) vs D/E-rated — and what changes by 2030.</p>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🏅</div>
+                        <h3>Earn a compliance certificate</h3>
+                        <p>Show your manager, auditors, and colleagues that you've completed verified PPWR training.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── DIVIDER BEFORE PLANS ───────────────────────── -->
+            <div style="text-align:center; margin-bottom:40px;">
+                <h2 style="font-size:26px; margin-bottom:8px;">Choose your plan</h2>
+                <p style="color:#888; font-size:15px;">Start free — no account needed. Upgrade when you're ready.</p>
+            </div>
+        </div>
+
+        <!-- ── PRICING PLANS ──────────────────────────────────── -->
+        <div style="max-width:1100px; margin:0 auto; padding:0 32px 32px;">
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;align-items:start;">
 
@@ -1233,26 +1542,26 @@
                 <div class="card" style="border-top:4px solid #EFEFEB;padding:28px 24px;display:flex;flex-direction:column;">
                     <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#bbb;letter-spacing:.06em;margin-bottom:8px;">Free</p>
                     <h2 style="font-size:28px;margin-bottom:4px;">€0</h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Try the basics, no sign-up</p>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Try it out — no account needed</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Dashboard</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ First 5 Learning Cards</li>
-                        <li style="font-size:14px;color:#bbb;padding:6px 0;border-bottom:1px solid #F5F5F3;">✗ Scenarios</li>
-                        <li style="font-size:14px;color:#bbb;padding:6px 0;">✗ AI Navigator</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Overview dashboard</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ First 5 learning cards</li>
+                        <li style="font-size:14px;color:#bbb;padding:6px 0;border-bottom:1px solid #F5F5F3;">✗ Practice scenarios</li>
+                        <li style="font-size:14px;color:#bbb;padding:6px 0;">✗ AI compliance assistant</li>
                     </ul>
-                    <button class="btn-secondary page-link" data-page="tier-detail" data-tier="free" style="width:100%;">Explore Free →</button>
+                    <button class="btn-secondary page-link" data-page="tier-detail" data-tier="free" style="width:100%;">Start for free →</button>
                 </div>
 
                 <!-- STARTER -->
                 <div class="card" style="border-top:4px solid #9CAF88;padding:28px 24px;display:flex;flex-direction:column;">
                     <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:#9CAF88;letter-spacing:.06em;margin-bottom:8px;">Starter</p>
                     <h2 style="font-size:28px;margin-bottom:4px;">€99<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Up to 20 users</p>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">For teams of up to 20 people</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 24 Learning Cards</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 7 Simulations</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Assessment + Certificates</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ AI Brain (3 q/session)</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 24 learning cards</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ All 7 practice scenarios</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Knowledge test + certificates</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ AI assistant (3 questions/session)</li>
                     </ul>
                     <button class="btn-primary page-link" data-page="tier-detail" data-tier="starter" style="width:100%;">See Starter →</button>
                 </div>
@@ -1261,15 +1570,15 @@
                 <div class="card" style="border-top:4px solid var(--color-sage);padding:28px 24px;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(156,175,136,.18);">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                         <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--color-sage);letter-spacing:.06em;margin:0;">Growth</p>
-                        <span style="font-size:10px;font-weight:700;background:var(--color-sage);color:white;padding:2px 8px;border-radius:10px;">POPULAR</span>
+                        <span style="font-size:10px;font-weight:700;background:var(--color-sage);color:white;padding:2px 8px;border-radius:10px;">MOST POPULAR</span>
                     </div>
                     <h2 style="font-size:28px;margin-bottom:4px;">€199<span style="font-size:15px;font-weight:400;color:#999;">/mo</span></h2>
-                    <p style="font-size:13px;color:#999;margin-bottom:20px;">Up to 75 users</p>
+                    <p style="font-size:13px;color:#999;margin-bottom:20px;">For teams of up to 75 people</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
                         <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Everything in Starter</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ 2030+ Readiness Tools</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ AI Brain (unlimited)</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Company Dashboard</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Long-term planning tools (to 2040)</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Unlimited AI assistant questions</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Company-wide progress dashboard</li>
                     </ul>
                     <button class="btn-primary page-link" data-page="tier-detail" data-tier="growth" style="width:100%;">See Growth →</button>
                 </div>
@@ -1281,9 +1590,9 @@
                     <p style="font-size:13px;color:#999;margin-bottom:20px;">Unlimited users</p>
                     <ul style="list-style:none;padding:0;margin:0 0 28px;flex:1;">
                         <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Everything in Growth</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ User Management</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Analytics + Leads</li>
-                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Dedicated Support</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ User roles &amp; access control</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;border-bottom:1px solid #F5F5F3;">✓ Usage analytics &amp; reporting</li>
+                        <li style="font-size:14px;color:#555;padding:6px 0;">✓ Dedicated onboarding support</li>
                     </ul>
                     <button class="btn-primary page-link" data-page="tier-detail" data-tier="pro" style="width:100%;">See Pro →</button>
                 </div>
@@ -1293,42 +1602,43 @@
             <p style="text-align:center;color:#bbb;font-size:13px;margin-top:40px;">No credit card required for Free. Paid tiers: 14-day trial, cancel anytime.</p>
         </div>
 
-        <div style="max-width: 1400px; margin: 0 auto; padding: 0 32px; margin-top: 60px;">
-            <h2 style="text-align: center; font-size: 32px; margin-bottom: 48px;">Why PPWR Learning Hub?</h2>
-            
-            <div class="grid-3" style="margin-bottom: 60px;">
+        <div style="max-width:1100px; margin:0 auto; padding:0 32px; margin-top:60px;">
+            <h2 style="text-align:center; font-size:26px; margin-bottom:40px;">Designed for people who aren't compliance experts — yet</h2>
+
+            <div class="grid-3" style="margin-bottom:60px;">
                 <div class="card">
-                    <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
-                    <h3>Learn in 2 Minutes</h3>
-                    <p>Bite-sized learning cards and interactive simulations. Not lengthy webinars.</p>
+                    <div style="font-size:36px; margin-bottom:16px;">⚡</div>
+                    <h3>One topic at a time</h3>
+                    <p>Each learning card covers exactly one concept — in plain language, with a visual, and a real example. No jargon. No 50-page PDFs.</p>
                 </div>
                 <div class="card">
-                    <div style="font-size: 36px; margin-bottom: 16px;">📊</div>
-                    <h3>Real-Time Readiness</h3>
-                    <p>Instantly see your compliance score and identify risk gaps.</p>
+                    <div style="font-size:36px; margin-bottom:16px;">🎯</div>
+                    <h3>Practice before it matters</h3>
+                    <p>Scenario exercises put you in the decision-maker's seat. See the consequences of each choice before they happen in real life.</p>
                 </div>
                 <div class="card">
-                    <div style="font-size: 36px; margin-bottom: 16px;">🎯</div>
-                    <h3>Scenario-Based</h3>
-                    <p>Learn through branching decision trees. See real consequences.</p>
+                    <div style="font-size:36px; margin-bottom:16px;">📋</div>
+                    <h3>Know exactly what to do next</h3>
+                    <p>Your personal action checklist — filtered by your role, your markets, and what's due when — so nothing slips through the cracks.</p>
                 </div>
             </div>
 
-            <div style="background: white; border-radius: 12px; padding: 48px; text-align: center; margin-bottom: 60px;">
-                <h2 style="font-size: 28px; margin-bottom: 16px;">The PPWR Deadline is Real</h2>
-                <p style="font-size: 16px; color: #666; margin-bottom: 24px;">Enforcement begins August 12, 2026. Non-compliant packaging can be rejected by retailers and incur fines.</p>
-                <div class="status-amber" style="display: inline-block;" id="home-countdown">72 days until enforcement</div>
+            <div style="background:white; border-radius:12px; padding:40px 48px; text-align:center; margin-bottom:60px; border:1px solid #EFEFEB;">
+                <div style="font-size:48px; margin-bottom:16px;">⏳</div>
+                <h2 style="font-size:24px; margin-bottom:12px;">The enforcement clock is running</h2>
+                <p style="font-size:16px; color:#666; margin-bottom:20px; max-width:500px; margin-left:auto; margin-right:auto;">From August 12, 2026, packaging that doesn't meet the new requirements can be barred from sale. Regulators in each EU country will enforce the rules — including fines for non-compliance.</p>
+                <div class="status-amber" style="display:inline-block;" id="home-countdown">Calculating…</div>
             </div>
         </div>
 
-        <div style="background: var(--color-sage); color: white; padding: 60px 32px; text-align: center; margin-top: 60px;">
-            <h2 style="font-size: 32px; margin-bottom: 16px; color: white;">Ready to Get Compliant?</h2>
-            <p style="margin-bottom: 32px; font-size: 16px;">Join 200+ Nordic companies preparing for PPWR.</p>
-            <button class="btn-secondary page-link" data-page="signup" style="background: white; color: var(--color-sage); border-color: white;">Start Your Free Trial</button>
+        <div style="background:var(--color-sage); color:white; padding:64px 32px; text-align:center; margin-top:60px;">
+            <h2 style="font-size:28px; margin-bottom:12px; color:white;">Your team can be ready. Let's start.</h2>
+            <p style="margin-bottom:32px; font-size:16px; opacity:0.88; max-width:480px; margin-left:auto; margin-right:auto;">Join 200+ Nordic companies already building their compliance knowledge — one card at a time.</p>
+            <button class="btn-secondary page-link" data-page="tier-detail" data-tier="starter" style="background:white; color:var(--color-sage); border-color:white; font-size:15px; padding:14px 28px;">Get started free — no card needed</button>
         </div>
 
-        <div style="max-width: 1400px; margin: 0 auto; padding: 32px;">
-            <p style="text-align: center; color: #999; font-size: 14px;">PPWR Learning Hub © 2026 | Supporting Sweden, Denmark, Norway, Finland</p>
+        <div style="max-width:1100px; margin:0 auto; padding:32px;">
+            <p style="text-align:center; color:#bbb; font-size:13px;">PPWR Learning Hub © 2026 · Covering Sweden, Denmark, Norway, Finland, Estonia, Latvia, Lithuania</p>
         </div>
     </div>
 
@@ -1343,22 +1653,23 @@
     <!-- DASHBOARD PAGE -->
     <div class="page" id="dashboard-page">
         <div class="main-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; flex-wrap:wrap; gap:12px;">
-                <h1 style="margin:0;">Dashboard</h1>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin:0 0 6px;">My Overview</h1>
+                <p style="color:#888; font-size:15px; margin:0;">Here's where you stand — and what to focus on next.</p>
             </div>
 
-            <div class="grid-3" style="margin-bottom: 32px;">
+            <div class="grid-3" style="margin-bottom:32px;">
                 <div class="stat-box">
                     <div class="stat-number" id="dashboard-score">0</div>
-                    <div class="stat-label">Readiness Score</div>
+                    <div class="stat-label">Compliance readiness score</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-number" id="dashboard-progress">0%</div>
-                    <div class="stat-label">Progress</div>
+                    <div class="stat-label">Learning progress</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-number" id="dashboard-modules">0</div>
-                    <div class="stat-label">Modules Completed</div>
+                    <div class="stat-label">Topics covered</div>
                 </div>
             </div>
 
@@ -1387,10 +1698,10 @@
             <div class="card" id="onboarding-widget" style="margin-bottom:24px;display:none;border-left:4px solid var(--color-sage);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
                     <div>
-                        <h3 style="margin:0;font-size:15px;">🚀 Getting Started</h3>
-                        <p style="font-size:12px;color:#999;margin:2px 0 0">Complete these steps to explore the full platform</p>
+                        <h3 style="margin:0;font-size:15px;">👋 Your first steps</h3>
+                        <p style="font-size:12px;color:#999;margin:2px 0 0">A quick path to understanding what you need to do and why.</p>
                     </div>
-                    <button onclick="dismissOnboarding()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#bbb;padding:4px 8px;">Dismiss</button>
+                    <button onclick="dismissOnboarding()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#bbb;padding:4px 8px;">Hide</button>
                 </div>
                 <div id="onboarding-steps"></div>
                 <div style="margin-top:12px;">
@@ -1433,34 +1744,34 @@
                 </div>
             </div>
 
-            <div class="grid-2" style="margin-bottom: 32px;">
+            <div class="grid-2" style="margin-bottom:32px;">
                 <div class="card">
-                    <h3>Continue Learning</h3>
-                    <p style="color: #666; margin-top: 12px;">Pick up where you left off.</p>
-                    <button class="btn-secondary page-link" data-page="learning" style="width: 100%; margin-top: 16px;">Open Learning</button>
+                    <h3>📚 Continue learning</h3>
+                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Each card takes about 2 minutes and covers one topic in plain language. Pick up where you left off.</p>
+                    <button class="btn-secondary page-link" data-page="learning" style="width:100%; margin-top:16px;">Open Learning Cards →</button>
                 </div>
 
                 <div class="card">
-                    <h3>Try a Simulation</h3>
-                    <p style="color: #666; margin-top: 12px;">Test your PPWR knowledge with real scenarios.</p>
-                    <button class="btn-secondary page-link" data-page="scenarios" style="width: 100%; margin-top: 16px;">Start Simulation</button>
+                    <h3>🎯 Practice a scenario</h3>
+                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Put yourself in a real compliance situation. Make decisions and see what happens — before it happens in real life.</p>
+                    <button class="btn-secondary page-link" data-page="scenarios" style="width:100%; margin-top:16px;">Start a Practice Scenario →</button>
                 </div>
 
                 <div class="card">
-                    <h3>Company Status</h3>
-                    <div style="margin-top: 16px;">
-                        <p style="color: #666; font-size: 14px; margin-bottom: 12px;">Overall Readiness</p>
-                        <div class="progress-bar" style="margin-bottom: 16px;">
-                            <div class="progress-bar-fill" id="dashboard-progress-bar" style="width: 35%;"></div>
+                    <h3>📊 Your company's progress</h3>
+                    <div style="margin-top:14px;">
+                        <p style="color:#666; font-size:14px; margin-bottom:10px;">Overall readiness across your team</p>
+                        <div class="progress-bar" style="margin-bottom:14px;">
+                            <div class="progress-bar-fill" id="dashboard-progress-bar" style="width:35%;"></div>
                         </div>
                         <div class="status-amber">In Progress</div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <h3>Quick Actions</h3>
-                    <p style="color: #666; margin-top: 12px; font-size: 14px;">Complete your readiness assessment.</p>
-                    <button class="btn-secondary page-link" data-page="assessment" style="width: 100%; margin-top: 16px;">Take Assessment</button>
+                    <h3>✅ Test your knowledge</h3>
+                    <p style="color:#666; margin-top:10px; font-size:14px; line-height:1.6;">Answer 10 questions to see how ready your company is — and earn a shareable compliance certificate.</p>
+                    <button class="btn-secondary page-link" data-page="assessment" style="width:100%; margin-top:16px;">Take the Knowledge Test →</button>
                 </div>
             </div>
         </div>
@@ -1469,10 +1780,14 @@
     <!-- LEARNING MODULES PAGE -->
     <div class="page" id="learning-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">Learning Modules</h1>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">Learning Cards</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Each card covers one topic — one concept at a time, in plain language. No prior knowledge needed.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Click any card to open it. There's no required order — start with whatever feels most relevant to your work.</p>
+            </div>
 
-            <div style="margin-bottom: 32px;">
-                <input type="text" id="learning-filter" placeholder="Filter by topic..." style="width: 100%; padding: 12px; border: 1px solid #EFEFEB; border-radius: 8px; font-family: 'Outfit', sans-serif;">
+            <div style="margin-bottom:24px;">
+                <input type="text" id="learning-filter" placeholder="Search by topic (e.g. recycled content, labelling, EPR fees)…" style="width:100%; padding:12px; border:1px solid #EFEFEB; border-radius:8px; font-family:'Outfit',sans-serif;">
             </div>
 
             <div id="learning-cards" class="grid-3">
@@ -1484,8 +1799,11 @@
     <!-- SCENARIOS PAGE -->
     <div class="page" id="scenarios-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">PPWR Simulations</h1>
-            <p style="color: #666; margin-bottom: 32px;">Test your knowledge through realistic decision scenarios.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">Practice Scenarios</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">You're the decision-maker. Each scenario puts you in a real situation — a supplier call, a product launch, an audit question. Choose what you'd do, and see the outcome.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Making the wrong choice in a scenario isn't a problem — that's how you learn. Nothing here counts against you.</p>
+            </div>
 
             <div id="scenarios-list" class="grid-2">
                 <!-- Scenarios will be loaded here -->
@@ -1507,8 +1825,11 @@
     <!-- ASSESSMENT PAGE -->
     <div class="page" id="assessment-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">Company Readiness Assessment</h1>
-            <p style="color: #666; margin-bottom: 32px;">Answer 10 quick questions to understand your compliance readiness.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">How prepared is your company?</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Answer 10 short questions to get a personalised readiness score — and identify the most important gaps to close before August 2026.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Takes about 3 minutes. You'll receive a score and a certificate you can share with your team and management.</p>
+            </div>
 
             <div class="card" style="max-width: 600px;">
                 <div id="assessment-content">
@@ -1521,7 +1842,10 @@
     <!-- CERTIFICATES PAGE -->
     <div class="page" id="certificates-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">Your Certificates</h1>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">My Certificates</h1>
+                <p style="color:#888; font-size:15px; margin:0;">Complete the knowledge test to earn a verified certificate. Share it with your manager, include it in audits, or add it to your professional profile.</p>
+            </div>
             
             <div id="certificates-list" class="grid-2">
                 <!-- Certificates will be shown here -->
@@ -1532,22 +1856,25 @@
     <!-- RISK CALCULATOR PAGE -->
     <div class="page" id="risk-calculator-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 32px;">Risk Exposure Calculator</h1>
-            <p style="color: #666; margin-bottom: 32px;">Identify your specific PPWR compliance risks.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">Risk Exposure Check</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Tell us about your packaging and markets. We'll show you which compliance gaps pose the highest risk — and link you to the specific rules that apply.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Results are indicative — not legal advice. Use them as a starting point for your compliance planning.</p>
+            </div>
 
             <div class="card" style="max-width: 600px;">
                 <div class="input-group">
-                    <label>Industry</label>
+                    <label>What industry is your company in?</label>
                     <select id="risk-industry">
-                        <option>Food & Beverage</option>
-                        <option>E-commerce & Retail</option>
+                        <option>Food &amp; Beverage</option>
+                        <option>E-commerce &amp; Retail</option>
                         <option>Consumer Goods</option>
                         <option>Pharmaceuticals</option>
                     </select>
                 </div>
 
                 <div class="input-group">
-                    <label>Primary Packaging Material</label>
+                    <label>What is your main packaging material?</label>
                     <select id="risk-material">
                         <option>Plastic</option>
                         <option>Paper/Cardboard</option>
@@ -1558,22 +1885,29 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Markets (Select all that apply)</label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;">
-                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="EU"> EU</label>
-                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="UK"> UK</label>
-                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="Norway"> Norway</label>
-                        <label style="font-weight: 400; display: flex; align-items: center;"><input type="checkbox" value="Non-EU"> Non-EU</label>
+                    <label>Which markets do you sell into? <span style="font-weight:400;color:#999;">(Select all that apply)</span></label>
+                    <p style="font-size:12px;color:#aaa;margin:4px 0 10px;font-weight:400;">PPWR applies to all EU countries and Norway. The UK has separate rules.</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;">
+                        <label style="font-weight:400; display:flex; align-items:center; gap:8px;"><input type="checkbox" value="EU"> EU (any country)</label>
+                        <label style="font-weight:400; display:flex; align-items:center; gap:8px;"><input type="checkbox" value="UK"> UK (separate rules)</label>
+                        <label style="font-weight:400; display:flex; align-items:center; gap:8px;"><input type="checkbox" value="Norway"> Norway (EEA — PPWR applies)</label>
+                        <label style="font-weight:400; display:flex; align-items:center; gap:8px;"><input type="checkbox" value="Non-EU"> Non-EU (outside scope)</label>
                     </div>
                 </div>
 
-                <button class="btn-primary" style="width: 100%; margin-top: 24px;" id="calculate-risk-btn">Calculate Risk Profile</button>
+                <button class="btn-primary" style="width:100%; margin-top:24px;" id="calculate-risk-btn">Show My Risk Profile →</button>
             </div>
 
             <!-- MODULE 1: MINIMIZATION LAB (Article 10) -->
             <div class="card" style="max-width:600px; margin-top:24px;">
-                <h3 style="margin-bottom:6px;">📦 Minimization Lab</h3>
-                <p style="color:#888; font-size:13px; margin-bottom:18px;">PPWR Art. 10 — Empty space must not exceed 40% of outer packaging volume.</p>
+                <h3 style="margin-bottom:6px;">📦 Box Fullness Check</h3>
+                <p style="color:#888; font-size:13px; margin-bottom:18px;">
+                    Rule: the empty space in your outer packaging must not exceed 40% of the box's total volume
+                    (<span class="term" style="font-size:13px;">Article 10
+                        <span class="term-tip">Article 10 of Regulation (EU) 2025/40 sets the "minimisation" requirement: outer packaging must not contain more than 40% empty space relative to its internal volume. If your packaging exceeds 50%, it is presumed non-compliant unless you provide written justification.</span>
+                    </span>).
+                    Enter your dimensions below to check.
+                </p>
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
                     <div>
                         <label style="font-weight:600; font-size:13px; display:block; margin-bottom:8px;">Product Dimensions (mm)</label>
@@ -1604,8 +1938,13 @@
 
             <!-- MODULE 1: SUBSTANCE RED LIST (Article 5 / REACH) -->
             <div class="card" style="max-width:600px; margin-top:24px;">
-                <h3 style="margin-bottom:6px;">⚗️ Substance Red List</h3>
-                <p style="color:#888; font-size:13px; margin-bottom:18px;">PPWR Art. 5 / REACH — Cross-reference substances against prohibited and restricted chemicals.</p>
+                <h3 style="margin-bottom:6px;">⚗️ Prohibited Substance Check</h3>
+                <p style="color:#888; font-size:13px; margin-bottom:18px;">
+                    Certain chemicals are banned from packaging materials. Check whether a substance you use is on the prohibited or restricted list
+                    (<span class="term" style="font-size:13px;">Article 5
+                        <span class="term-tip">Article 5 of the regulation bans certain substances in packaging materials — including PFAS (per- and polyfluoroalkyl substances), oxo-degradable plastics, and packaging with combined heavy metals above 100 ppm. Using banned substances after the regulation's entry into force can result in the product being barred from sale.</span>
+                    </span>).
+                </p>
                 <div style="display:flex; gap:10px;">
                     <input type="text" id="substance-search" placeholder="Type substance name, e.g. PFAS, BPA, lead…" style="flex:1; padding:10px 14px; border:1px solid #ddd; border-radius:6px; font-size:14px;">
                     <button class="btn-primary" id="substance-search-btn" style="white-space:nowrap; padding:10px 18px;">Check</button>
@@ -1643,8 +1982,11 @@
     <!-- ROADMAP PAGE -->
     <div class="page" id="roadmap-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 8px;">📅 PPWR Roadmap 2024–2040</h1>
-            <p style="color: #666; margin-bottom: 32px;">Full regulatory lifecycle — from PFAS ban to long-term circularity targets.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">📅 Key Dates &amp; Deadlines</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Everything your company needs to do, and by when. From immediate requirements (August 2026) to long-term targets (2040).</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Scroll through the full timeline to see what's coming — and how much time you have.</p>
+            </div>
             <div id="roadmap-content"></div>
         </div>
     </div>
@@ -1652,8 +1994,11 @@
     <!-- GRADING LAB PAGE -->
     <div class="page" id="grading-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 8px;">♻️ Recyclability Grading Lab</h1>
-            <p style="color: #666; margin-bottom: 32px;">Match each packaging design to its PPWR recyclability grade (A–E). Instant feedback with EPR cost impact.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">♻️ Packaging Grades (A–E)</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Under the new regulation, every piece of packaging gets a recyclability grade — A (best) to E (worst). Grade D and E packaging will be banned from 2030.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Use this lab to match your packaging materials against the grading criteria — and see how the grade affects your recycling fee.</p>
+            </div>
             <div id="grading-content"></div>
         </div>
     </div>
@@ -1661,8 +2006,11 @@
     <!-- CALCULATOR PAGE -->
     <div class="page" id="calculator-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 8px;">🧮 2030+ Content Calculator</h1>
-            <p style="color: #666; margin-bottom: 32px;">Check your recycled-content compliance and empty-space ratios against current and future targets.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">🧮 Recycled Material Check</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">The regulation sets minimum targets for how much recycled material must be in plastic packaging — starting from 2030. Check whether your packaging meets the current and future requirements.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Also checks your packaging's "empty space ratio" — the regulation limits how much wasted space is allowed in a box or container.</p>
+            </div>
             <div id="calculator-content"></div>
         </div>
     </div>
@@ -1670,8 +2018,11 @@
     <!-- RECORD VAULT PAGE -->
     <div class="page" id="vault-page">
         <div class="main-content">
-            <h1 style="margin-bottom: 8px;">📁 Record Vault</h1>
-            <p style="color: #666; margin-bottom: 32px;">Retention rules by document type and EPR fee modulation reference table.</p>
+            <div style="margin-bottom:28px;">
+                <h1 style="margin-bottom:6px;">📁 My Documents</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Compliance requires documentation — and auditors will ask for it. This section shows you which documents to keep, for how long, and how your recycling fee can be reduced by demonstrating eco-friendly packaging.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Use this as your reference guide for document retention and fee modulation requirements.</p>
+            </div>
             <div id="vault-content"></div>
         </div>
     </div>
@@ -1810,8 +2161,9 @@
     <div class="page" id="scope-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">🔍 Scope &amp; Exemptions Checker</h1>
-                <p style="color:#666; font-size:15px;">Understand which packaging is covered by PPWR, what is excluded, and the special cases relevant to your operations.</p>
+                <h1 style="margin-bottom:8px;">🔍 Does This Apply to Me?</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Not every type of packaging is covered by the regulation — and some types have different rules. This page explains what's in scope, what's out, and what special cases might affect your products.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">If you're unsure whether a specific packaging type applies, start here.</p>
             </div>
             <div class="card" style="margin-bottom:24px;">
                 <h3 style="color:#15803d; margin-bottom:16px;">✅ In Scope</h3>
@@ -1835,8 +2187,9 @@
     <div class="page" id="delegated-acts-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">📜 Delegated Acts Tracker</h1>
-                <p style="color:#666; font-size:15px;">Key secondary legislation still pending — these acts will define the technical detail behind PPWR's core obligations.</p>
+                <h1 style="margin-bottom:8px;">📜 Upcoming Rule Changes</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">The core regulation is already in force, but many of the precise technical details are still being finalised by the European Commission. These "implementing rules" will arrive between 2025 and 2028.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Keep an eye on this page — when new rules are published, they may change specific requirements for your packaging.</p>
             </div>
             <div class="card">
                 <div id="delegated-acts-page-list"></div>
@@ -1848,8 +2201,9 @@
     <div class="page" id="fine-estimator-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">⚖️ Fine Estimator</h1>
-                <p style="color:#666; font-size:15px;">Estimate potential enforcement exposure by country, violation type and company scale. Ranges are indicative — not legal advice.</p>
+                <h1 style="margin-bottom:8px;">⚖️ Penalty Calculator</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">What could non-compliance actually cost your company? Select a country, the type of violation, and whether it was a one-off mistake or a pattern — and we'll show you the potential fine range.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">These figures are indicative ranges based on available enforcement guidance. They are not legal advice.</p>
             </div>
             <div class="grid-2" style="margin-bottom:24px; align-items:start;">
                 <div class="card">
@@ -1870,14 +2224,14 @@
                     <div style="margin-bottom:16px;">
                         <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Violation Type</label>
                         <select id="fe-violation" style="width:100%; padding:10px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
-                            <option value="">— Select violation —</option>
-                            <option value="epr-missing">EPR Non-Registration</option>
-                            <option value="epr-underreport">EPR Under-Reporting</option>
-                            <option value="recycled-content">Recycled Content Non-Compliance</option>
-                            <option value="labelling">Labelling / DPP Missing</option>
-                            <option value="reuse-target">Reuse Target Failure</option>
-                            <option value="prohibited-pkg">Placing Prohibited Packaging</option>
-                            <option value="grade-de">Marketing Grade D/E post-2030</option>
+                            <option value="">— Select violation type —</option>
+                            <option value="epr-missing">Not registered in country's recycling scheme (EPR)</option>
+                            <option value="epr-underreport">Under-reporting packaging volumes to recycling scheme</option>
+                            <option value="recycled-content">Not meeting recycled material targets (plastic packaging)</option>
+                            <option value="labelling">Missing or incorrect packaging labels / QR codes</option>
+                            <option value="reuse-target">Failing reuse and refill targets</option>
+                            <option value="prohibited-pkg">Selling packaging with banned substances</option>
+                            <option value="grade-de">Selling Grade D or E packaging after 2030</option>
                         </select>
                     </div>
                     <div style="margin-bottom:20px;">
@@ -1910,8 +2264,9 @@
     <div class="page" id="packaging-audit-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">📦 Packaging Audit Tool</h1>
-                <p style="color:#666; font-size:15px;">Review all 30 packaging formats used by Company A against PPWR requirements. Filter by tier, material or compliance status.</p>
+                <h1 style="margin-bottom:8px;">📦 Packaging Review</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">A line-by-line review of your company's packaging formats — checked against the new regulation's requirements. Filter by packaging category, recyclability grade, or compliance status.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Use this to identify which packaging formats need attention before the August 2026 enforcement date.</p>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
                 <select id="pa-filter-tier" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
@@ -1944,8 +2299,9 @@
     <div class="page" id="obligations-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">📋 Obligations Tracker</h1>
-                <p style="color:#666; font-size:15px;">All PPWR obligations in one place. Filter by severity, role or deadline to focus on what matters most right now.</p>
+                <h1 style="margin-bottom:8px;">📋 My Action Checklist</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Everything your company needs to do to comply — in one place. Filter by how urgent it is, who's responsible, and when the deadline falls.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Start with the "Critical" items due before 2026. Work through the rest in order of deadline.</p>
             </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
                 <select id="ob-filter-sev" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
@@ -1979,8 +2335,9 @@
     <div class="page" id="my-role-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">🎭 Role Determination Wizard</h1>
-                <p style="color:#666; font-size:15px;">Answer 4 questions to identify your PPWR roles and the key obligations that apply to your situation.</p>
+                <h1 style="margin-bottom:8px;">🎭 What's My Role?</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Different companies have different responsibilities under the new regulation. Answer 4 quick questions and we'll tell you exactly which category you fall into — and what that means for you.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Takes less than 2 minutes. Your answers won't be saved — it's just for your own understanding.</p>
             </div>
             <div class="card" style="max-width:640px;">
                 <!-- Step indicators -->
@@ -2004,8 +2361,9 @@
     <div class="page" id="countries-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">🌍 Country Hub</h1>
-                <p style="color:#666; font-size:15px;">PPWR implementation status, enforcement approach and required actions for all 7 cluster countries.</p>
+                <h1 style="margin-bottom:8px;">🌍 My Country's Rules</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">The EU regulation is the same everywhere, but each country sets its own enforcement approach, fines, and fee structure. Select your country to see what applies specifically where you operate.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Covering Sweden, Norway, Denmark, Finland, Estonia, Latvia and Lithuania.</p>
             </div>
             <div id="countries-hub-grid" class="grid-2"></div>
         </div>
@@ -2015,8 +2373,9 @@
     <div class="page" id="glossary-page">
         <div class="main-content">
             <div style="margin-bottom:32px;">
-                <h1 style="margin-bottom:8px;">📖 Glossary</h1>
-                <p style="color:#666; font-size:15px;">Key PPWR terms explained in plain English, with Company A context.</p>
+                <h1 style="margin-bottom:8px;">📖 Plain-English Glossary</h1>
+                <p style="color:#888; font-size:15px; margin:0 0 4px;">Compliance is full of terms that sound complicated but aren't. Here's every key term defined in plain English — with a note on what it means for your company specifically.</p>
+                <p style="color:#bbb; font-size:13px; margin:0;">Search for any term you've seen and weren't sure about.</p>
             </div>
             <div style="margin-bottom:20px;">
                 <input type="text" id="glossary-page-search" placeholder="Search terms…" oninput="filterGlossaryPage()" style="width:100%; padding:12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
@@ -2089,7 +2448,7 @@
                         📄 Read the regulation <span style="opacity:.6">↗</span>
                     </a>
                     <button id="card-modal-read-btn" class="btn-primary" style="font-size:13px;padding:7px 16px"></button>
-                    <button class="btn-secondary" id="card-modal-brain-btn" style="font-size:13px;padding:7px 16px">🧠 Ask the Brain</button>
+                    <button class="btn-secondary" id="card-modal-brain-btn" style="font-size:13px;padding:7px 16px">🧠 Ask the AI Assistant</button>
                 </div>
             </div>
         </div>
@@ -2114,7 +2473,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h3>PPWR Knowledge Navigator</h3>
+                    <h3>Compliance Assistant</h3>
                     <p>Closed knowledge · Platform content only</p>
                 </div>
             </div>
@@ -2228,10 +2587,16 @@
 
         function updateCountdowns() {
             const daysRemaining = calculateDaysRemaining();
-            const countdownElements = document.querySelectorAll('[id*="countdown"]');
-            countdownElements.forEach(el => {
+            // Banner-style countdowns show the full phrase.
+            const bannerEls = document.querySelectorAll('#home-countdown');
+            bannerEls.forEach(el => {
                 el.textContent = daysRemaining + ' days until enforcement';
             });
+            // Inline (sentence-embedded) countdowns show only the count + unit.
+            const inlineEl = document.getElementById('home-countdown-inline');
+            if (inlineEl) {
+                inlineEl.textContent = daysRemaining + (daysRemaining === 1 ? ' day' : ' days');
+            }
         }
 
         // ============================================================================
@@ -3453,27 +3818,27 @@
                     'First 5 learning cards (foundation topics)',
                 ],
                 excluded: [
-                    'Cards 6–24 (advanced PFAS, recyclability, 2030 targets)',
-                    'Scenario simulations',
-                    'Readiness assessment',
-                    'Certificates',
-                    'Risk calculator',
-                    'AI Knowledge Navigator',
-                    '2030+ Readiness tools (Roadmap, Grading Lab, Calculator, Vault)',
-                    'Admin / company dashboard',
+                    'Learning cards 6–24 (advanced topics: banned substances, recyclability, 2030 targets)',
+                    'Practice scenarios',
+                    'Knowledge test &amp; readiness assessment',
+                    'Compliance certificates',
+                    'Risk exposure check',
+                    'AI Compliance Assistant',
+                    'Long-term planning tools (Key Dates, Packaging Grades, Recycled Material Check, Documents)',
+                    'Company progress dashboard',
                 ]
             },
             starter: {
                 name: 'Starter', price: '€99/month', color: '#9CAF88', accentColor: '#F0F8F3',
                 tagline: 'Full compliance learning for teams up to 20 users',
                 included: [
-                    'Dashboard with Next Milestone + Certification Status widgets',
-                    'All 24 learning cards (foundation + strategic topics)',
-                    'All 7 scenario simulations with legal references',
-                    'Readiness assessment (10 questions, scored)',
-                    'Certificates of completion',
-                    'Risk calculator',
-                    'AI Knowledge Navigator (3 questions per session)',
+                    'Overview dashboard with key deadlines and certification status',
+                    'All 24 learning cards — every topic in plain language',
+                    'All 7 practice scenarios with real-world decision trees',
+                    'Knowledge test (10 questions, scored and personalised)',
+                    'Verified compliance certificates',
+                    'Risk exposure check',
+                    'AI Compliance Assistant (3 questions/session)',
                 ],
                 excluded: [
                     '2030+ Readiness tools (Roadmap, Grading Lab, Calculator, Vault)',
@@ -3486,12 +3851,12 @@
                 tagline: 'Strategic readiness platform for scaling companies up to 75 users',
                 included: [
                     'Everything in Starter',
-                    'Roadmap 2024–2040 (full regulatory lifecycle)',
-                    'Recyclability Grading Lab (A–E simulation)',
-                    'Content Calculator (recycled content + empty space checker)',
-                    'Record Vault (retention rules + EPR fee table)',
-                    'AI Knowledge Navigator (unlimited questions)',
-                    'Company admin dashboard',
+                    'Key Dates &amp; Deadlines — full timeline 2024–2040',
+                    'Packaging Grades (A–E) — interactive grading lab',
+                    'Recycled Material Check — recycled content &amp; box-fullness calculator',
+                    'My Documents — retention rules &amp; recycling fee reduction guide',
+                    'AI Compliance Assistant (unlimited questions)',
+                    'Company progress dashboard',
                 ],
                 excluded: [
                     'User management',
@@ -4701,7 +5066,7 @@
             // ── Welcome message ───────────────────────────────────────────────
             function showWelcome() {
                 appendBotBubble(
-                    'Hello! I\'m your <strong>PPWR Knowledge Navigator</strong>. Ask me anything about packaging compliance — I\'ll answer using the verified modules on this platform.',
+                    'Hello! I\'m your <strong>Compliance Assistant</strong>. Ask me anything about EU packaging compliance — what a term means, what applies to your company, what a deadline is. I\'ll answer using the verified content in this platform.',
                     null, false, true
                 );
             }
