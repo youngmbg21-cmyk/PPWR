@@ -170,6 +170,14 @@ export default async function handler(req, res) {
     if (query.trim().length > 500) {
         return res.status(400).json({ error: 'Bad request: query too long (max 500 chars)' });
     }
+
+    // Strip prompt-injection patterns before forwarding to Claude
+    const sanitizedQuery = query.trim()
+        .replace(/\[SOURCE:[^\]]*\]/gi, '')
+        .replace(/<\/?knowledge>/gi, '')
+        .replace(/\[CARD[^\]]*\]/gi, '')
+        .replace(/\[SCENARIO[^\]]*\]/gi, '');
+
     const cards     = Array.isArray(context?.cards)     ? context.cards     : [];
     const scenarios = Array.isArray(context?.scenarios) ? context.scenarios : [];
     if (cards.length === 0 && scenarios.length === 0) {
@@ -231,16 +239,16 @@ ${knowledgeBlock}
             headers: {
                 'Content-Type':         'application/json',
                 'x-api-key':            apiKey,          // never echoed back to client
-                'anthropic-version':    '2023-06-01',
+                'anthropic-version':    '2024-06-01',
             },
             body: JSON.stringify({
-                model:      'claude-opus-4-6',
+                model:      process.env.ANTHROPIC_MODEL || 'claude-opus-4-6',
                 max_tokens: 512,
                 system:     SYSTEM_PROMPT,
                 messages: [
                     {
                         role:    'user',
-                        content: query.trim()
+                        content: sanitizedQuery
                     }
                 ]
             })

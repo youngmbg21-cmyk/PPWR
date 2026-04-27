@@ -1532,6 +1532,15 @@
 
     <script>
         // ============================================================================
+        // SECURITY UTILITIES
+        // ============================================================================
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = String(str == null ? '' : str);
+            return div.innerHTML;
+        }
+
+        // ============================================================================
         // STATE MANAGEMENT
         // ============================================================================
         let appState = {
@@ -1860,22 +1869,34 @@
         // ============================================================================
         // AUTHENTICATION
         // ============================================================================
+        // TODO: Replace this entire mock auth block with a real backend (Supabase, Auth0, etc.)
+        // before production. Currently there is no server-side verification.
+        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         document.getElementById('login-btn')?.addEventListener('click', function() {
-            const email = document.getElementById('login-email').value;
+            const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
 
             if (!email || !password) {
                 alert('Please fill in all fields');
                 return;
             }
+            if (!EMAIL_RE.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
 
-            // Mock authentication
+            // Mock authentication — replace with real backend auth in production
             const user = {
                 id: 1,
                 name: 'John Doe',
                 email: email,
                 company: 'Test Company',
-                role: 'owner'
+                role: 'user'
             };
 
             localStorage.setItem('isLoggedIn', 'true');
@@ -1887,9 +1908,9 @@
         });
 
         document.getElementById('signup-btn')?.addEventListener('click', function() {
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const company = document.getElementById('signup-company').value;
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const company = document.getElementById('signup-company').value.trim();
             const country = document.getElementById('signup-country').value;
             const password = document.getElementById('signup-password').value;
 
@@ -1897,15 +1918,27 @@
                 alert('Please fill in all fields');
                 return;
             }
+            if (!EMAIL_RE.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
 
-            // Mock registration
+            // Mock registration — replace with real backend auth in production
+            const idBytes = new Uint8Array(8);
+            crypto.getRandomValues(idBytes);
+            const userId = Array.from(idBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+
             const user = {
-                id: Math.random(),
+                id: userId,
                 name: name,
                 email: email,
                 company: company,
                 country: country,
-                role: 'owner'
+                role: 'user'
             };
 
             localStorage.setItem('isLoggedIn', 'true');
@@ -1934,11 +1967,22 @@
             learningCards.forEach(card => {
                 const cardEl = document.createElement('div');
                 cardEl.className = 'learning-card fade-in';
-                cardEl.innerHTML = `
-                    <h3>${card.title}</h3>
-                    <p style="margin-top: 16px;">${card.content}</p>
-                    <span style="margin-top: 16px; font-size: 12px; color: #999; background: #EFEFEB; padding: 6px 12px; border-radius: 4px; display: inline-block;">${card.category}</span>
-                `;
+
+                const h3 = document.createElement('h3');
+                h3.textContent = card.title;
+
+                const p = document.createElement('p');
+                p.style.marginTop = '16px';
+                p.textContent = card.content;
+
+                const span = document.createElement('span');
+                span.style.cssText = 'margin-top: 16px; font-size: 12px; color: #999; background: #EFEFEB; padding: 6px 12px; border-radius: 4px; display: inline-block;';
+                span.textContent = card.category;
+
+                cardEl.appendChild(h3);
+                cardEl.appendChild(p);
+                cardEl.appendChild(span);
+
                 cardEl.addEventListener('click', function() {
                     alert('Card saved to favorites!');
                 });
@@ -1956,14 +2000,31 @@
             scenarios.forEach(scenario => {
                 const card = document.createElement('div');
                 card.className = 'card fade-in';
-                card.innerHTML = `
-                    <h3>${scenario.title}</h3>
-                    <p style="color: #666; margin-top: 8px;">${scenario.description}</p>
-                    <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 12px; padding: 4px 8px; background: #EFEFEB; border-radius: 4px;">${scenario.difficulty}</span>
-                        <button class="btn-text scenario-start-btn" data-id="${scenario.id}">Start Simulation →</button>
-                    </div>
-                `;
+
+                const h3 = document.createElement('h3');
+                h3.textContent = scenario.title;
+
+                const p = document.createElement('p');
+                p.style.cssText = 'color: #666; margin-top: 8px;';
+                p.textContent = scenario.description;
+
+                const row = document.createElement('div');
+                row.style.cssText = 'margin-top: 16px; display: flex; justify-content: space-between; align-items: center;';
+
+                const diffSpan = document.createElement('span');
+                diffSpan.style.cssText = 'font-size: 12px; padding: 4px 8px; background: #EFEFEB; border-radius: 4px;';
+                diffSpan.textContent = scenario.difficulty;
+
+                const btn = document.createElement('button');
+                btn.className = 'btn-text scenario-start-btn';
+                btn.dataset.id = String(scenario.id);
+                btn.textContent = 'Start Simulation →';
+
+                row.appendChild(diffSpan);
+                row.appendChild(btn);
+                card.appendChild(h3);
+                card.appendChild(p);
+                card.appendChild(row);
                 container.appendChild(card);
             });
 
@@ -1982,25 +2043,25 @@
 
             const content = document.getElementById('scenario-content');
             content.innerHTML = `
-                <h2>${scenario.title}</h2>
-                <p style="color: #666; margin-top: 16px; font-size: 16px;">${scenario.situation}</p>
-                
+                <h2>${escapeHtml(scenario.title)}</h2>
+                <p style="color: #666; margin-top: 16px; font-size: 16px;">${escapeHtml(scenario.situation)}</p>
+
                 <div style="margin-top: 32px;" id="scenario-choices">
                     ${scenario.choices.map((choice, idx) => `
-                        <div class="scenario-choice" onclick="selectChoice(${scenarioId}, ${idx})">
-                            <strong>${choice.answer}</strong> - ${choice.text}
+                        <div class="scenario-choice" onclick="selectChoice(${escapeHtml(scenarioId)}, ${escapeHtml(idx)})">
+                            <strong>${escapeHtml(choice.answer)}</strong> - ${escapeHtml(choice.text)}
                         </div>
                     `).join('')}
                 </div>
-                
+
                 <div id="scenario-feedback" style="margin-top: 32px; display: none;">
                     <p id="feedback-text" style="font-size: 16px; margin-bottom: 16px;"></p>
-                    
+
                     <div id="legal-ref-section" style="background: #F0F5EC; border-left: 4px solid var(--color-sage); padding: 16px; border-radius: 8px; margin-bottom: 20px; display: none;">
                         <p style="font-size: 12px; font-weight: 600; color: var(--color-sage); margin-bottom: 8px;">📜 Regulatory Reference</p>
                         <p id="legal-ref-text" style="font-size: 14px; color: #333; margin: 0;"></p>
                     </div>
-                    
+
                     <div style="background: #FFF9E6; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
                         <p style="font-size: 12px; font-weight: 600; color: #FFA500; margin-bottom: 12px;">⚠️ Risk Gauge</p>
                         <div class="risk-gauge" id="feedback-risk-gauge">
@@ -2017,7 +2078,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <p id="consequence-text" style="font-weight: 600; margin-bottom: 24px; padding: 12px; background: #F9F9F7; border-radius: 8px;"></p>
                     <button class="btn-secondary page-link" data-page="scenarios">Back to Simulations</button>
                 </div>
@@ -2070,11 +2131,11 @@
             assessmentQuestions.forEach((q, idx) => {
                 assessmentHTML += `
                     <div style="margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #EFEFEB;">
-                        <h4 style="margin-bottom: 16px;">${idx + 1}. ${q.question}</h4>
+                        <h4 style="margin-bottom: 16px;">${escapeHtml(idx + 1)}. ${escapeHtml(q.question)}</h4>
                         <div>
                             ${q.options.map((opt, optIdx) => `
                                 <label style="display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; font-weight: 400;">
-                                    <input type="radio" name="question-${q.id}" value="${optIdx}" style="margin-right: 12px;"> ${opt}
+                                    <input type="radio" name="question-${escapeHtml(q.id)}" value="${escapeHtml(optIdx)}" style="margin-right: 12px;"> ${escapeHtml(opt)}
                                 </label>
                             `).join('')}
                         </div>
@@ -2480,7 +2541,7 @@
             function showWelcome() {
                 appendBotBubble(
                     'Hello! I\'m your <strong>PPWR Knowledge Navigator</strong>. Ask me anything about packaging compliance — I\'ll answer using the verified modules on this platform.',
-                    null, false
+                    null, false, true
                 );
             }
 
@@ -2496,14 +2557,19 @@
             }
 
             // ── Bubble helpers ────────────────────────────────────────────────
-            function appendBotBubble(html, source, sourceVerified) {
+            // trusted=true ONLY for static developer-written strings; false (default) for
+            // any content from the server or user input.
+            function appendBotBubble(content, source, sourceVerified, trusted = false) {
                 const div = document.createElement('div');
                 div.className = 'ai-bubble bot';
-                div.innerHTML = html;
+                if (trusted) {
+                    div.innerHTML = content;
+                } else {
+                    div.textContent = content;
+                }
                 if (source) {
                     const src = document.createElement('span');
                     src.className = 'ai-source';
-                    // Show a lock/verified icon when the server confirmed the source module ID
                     const icon = sourceVerified ? '✅' : '📌';
                     src.textContent = icon + ' ' + source;
                     div.appendChild(src);
@@ -2706,14 +2772,16 @@
                         // Network failure or proxy error — fall back to local knowledge search
                         const local = localFallbackSearch(text);
                         if (local) {
-                            appendBotBubble(
-                                local.answer + '<br><small style="color:#aaa">(Offline fallback — live AI unavailable)</small>',
-                                local.source, false
-                            );
+                            const fallbackDiv = appendBotBubble(local.answer, local.source, false);
+                            const noteEl = document.createElement('small');
+                            noteEl.style.color = '#aaa';
+                            noteEl.textContent = '(Offline fallback — live AI unavailable)';
+                            fallbackDiv.insertBefore(document.createElement('br'), fallbackDiv.querySelector('.ai-source'));
+                            fallbackDiv.insertBefore(noteEl, fallbackDiv.querySelector('.ai-source'));
                         } else {
                             appendBotBubble(
                                 "I'm sorry, I couldn't reach the knowledge service right now. " +
-                                "Please consult the official <strong>Regulation (EU) 2025/40</strong> text.",
+                                "Please consult the official Regulation (EU) 2025/40 text.",
                                 null, false
                             );
                         }
