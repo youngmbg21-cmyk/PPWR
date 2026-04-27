@@ -304,8 +304,9 @@
 
         .learning-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border-color: #EFEFEB;
+            box-shadow: 0 8px 24px rgba(156,175,136,0.18);
+            border-color: var(--color-sage);
+            background: #F0F5EE;
         }
 
         .learning-card--expanded {
@@ -990,6 +991,79 @@
                 height: 50px;
             }
         }
+        /* ── CARD MODAL ── */
+        .card-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(13,17,23,0.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            backdrop-filter: blur(3px);
+        }
+        .card-modal-backdrop.open { display: flex; }
+        .card-modal {
+            background: white;
+            border-radius: 18px;
+            max-width: 640px;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 64px rgba(13,17,23,0.22);
+            animation: modalIn .22s ease;
+        }
+        @keyframes modalIn {
+            from { opacity:0; transform:translateY(18px) scale(.97); }
+            to   { opacity:1; transform:translateY(0)   scale(1);    }
+        }
+        .card-modal-header {
+            padding: 28px 28px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .card-modal-body { padding: 20px 28px 28px; }
+        .card-modal-visual {
+            background: #F7FAF6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 18px 0;
+            border: 1px solid #E8EDE5;
+        }
+        .card-modal-plain {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+        .card-modal-regulation {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0369a1;
+            background: #e0f2fe;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid #bae6fd;
+            transition: background .15s;
+        }
+        .card-modal-regulation:hover { background: #bae6fd; }
+        .ppwr-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #0369a1;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .ppwr-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -1770,6 +1844,30 @@
          when the aiNav IIFE runs during script parsing.
     ================================================================ -->
 
+    <!-- ── LEARNING CARD MODAL ─────────────────────────────────────────── -->
+    <div class="card-modal-backdrop" id="card-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="card-modal-title">
+        <div class="card-modal" id="card-modal">
+            <div class="card-modal-header">
+                <div style="flex:1">
+                    <span id="card-modal-badge" style="display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:4px;background:#EFEFEB;color:#666;margin-bottom:10px"></span>
+                    <h2 id="card-modal-title" style="font-size:20px;line-height:1.3;margin:0"></h2>
+                </div>
+                <button onclick="closeCardModal()" aria-label="Close" style="flex-shrink:0;background:none;border:none;cursor:pointer;font-size:20px;color:#999;padding:4px;line-height:1;margin-top:-4px">✕</button>
+            </div>
+            <div class="card-modal-body">
+                <div id="card-modal-visual" class="card-modal-visual" style="display:none"></div>
+                <p id="card-modal-plain" class="card-modal-plain"></p>
+                <div style="padding-top:4px;border-top:1px solid #EFEFEB;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                    <a id="card-modal-reg-link" href="#" target="_blank" rel="noopener" class="card-modal-regulation">
+                        📄 Read the regulation <span style="opacity:.6">↗</span>
+                    </a>
+                    <button id="card-modal-read-btn" class="btn-primary" style="font-size:13px;padding:7px 16px"></button>
+                    <button class="btn-secondary" id="card-modal-brain-btn" style="font-size:13px;padding:7px 16px">🧠 Ask the Brain</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating Brain Button (visible when logged in) -->
     <button id="ai-nav-btn" aria-label="Open PPWR Knowledge Navigator">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1936,37 +2034,75 @@
                 id: 1,
                 title: "What is Article 10 Minimization?",
                 content: "Packaging must be minimal in weight and volume while still providing adequate protection. Empty space should not exceed 40% for most products.",
-                category: "Articles"
+                category: "Articles",
+                article: "Art. 9",
+                plainEnglish: "Think of it this way: if you order a phone case online and it arrives in a box the size of a microwave, that's exactly what PPWR is trying to stop. The regulation says your packaging must be only as big as it needs to be to keep the product safe. For most products, the empty air space inside the box cannot be more than 40% of the total box volume. From 2030 that drops to 30%. If an inspector can visibly see that a package is mostly air, you could face a fine — so every cm³ needs to earn its place.",
+                visual: `<svg viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;display:block;margin:0 auto">
+                  <rect x="20" y="20" width="120" height="100" rx="6" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+                  <rect x="35" y="55" width="90" height="55" rx="4" fill="#0369a1" opacity=".85"/>
+                  <text x="80" y="88" text-anchor="middle" fill="white" font-size="11" font-weight="600">Product</text>
+                  <text x="80" y="38" text-anchor="middle" fill="#0369a1" font-size="10" font-weight="700">40% MAX empty</text>
+                  <rect x="180" y="20" width="120" height="100" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+                  <rect x="192" y="30" width="96" height="84" rx="4" fill="#15803d" opacity=".85"/>
+                  <text x="240" y="76" text-anchor="middle" fill="white" font-size="11" font-weight="600">Product</text>
+                  <text x="240" y="138" text-anchor="middle" fill="#15803d" font-size="10" font-weight="700">✓ Minimised</text>
+                  <text x="80" y="138" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="700">✗ Too much air</text>
+                </svg>`
             },
             {
                 id: 2,
                 title: "PFAS Ban Deadline",
                 content: "PFAS (per- and polyfluorinated alkyl substances) used in food contact packaging are banned from July 12, 2024. Suppliers must declare compliance.",
-                category: "PFAS"
+                category: "PFAS",
+                article: "Art. 5",
+                plainEnglish: "PFAS are a family of man-made chemicals nicknamed 'forever chemicals' because they never fully break down in nature or in the human body. They were commonly used to make food packaging grease-proof and water-resistant — pizza boxes, microwave popcorn bags, fast food wrappers. PPWR bans them entirely in food-contact packaging because they contaminate recycling streams and accumulate in ecosystems. The ban is already in effect. If a supplier tells you their packaging is 'industry standard' but can't show you a PFAS-free declaration, stop the order and ask for written proof of compliance before proceeding.",
+                visual: null
             },
             {
                 id: 3,
                 title: "Empty Space Ratio Explained",
                 content: "The ratio of empty space to product volume. For food packaging: maximum 40%. For non-food: maximum 50%. Measure from outside product to inside packaging edge.",
-                category: "Measurements"
+                category: "Measurements",
+                article: "Art. 9",
+                plainEnglish: "The empty-space rule is a simple maths test your packaging must pass. Take the internal volume of your box. Subtract the volume actually occupied by the product. Divide the leftover air by the total internal volume. If that percentage is above 40% (food) or 50% (non-food) today — or above 30%/35% from 2030 — you're non-compliant. The fix is almost always redesigning to a smaller box or adding a protective insert that fills the space while also protecting the product. Deliberate void fill like decorative tissue paper does not count as functional space.",
+                visual: `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;display:block;margin:0 auto">
+                  <rect x="10" y="10" width="280" height="36" rx="4" fill="#EFEFEB"/>
+                  <rect x="10" y="10" width="168" height="36" rx="4" fill="#15803d"/>
+                  <text x="94" y="33" text-anchor="middle" fill="white" font-size="11" font-weight="700">Product 60%</text>
+                  <text x="229" y="33" text-anchor="middle" fill="#666" font-size="11" font-weight="600">Air 40% ✓</text>
+                  <rect x="10" y="58" width="280" height="36" rx="4" fill="#EFEFEB"/>
+                  <rect x="10" y="58" width="84" height="36" rx="4" fill="#dc2626"/>
+                  <text x="47" y="81" text-anchor="middle" fill="white" font-size="11" font-weight="700">Product 30%</text>
+                  <text x="187" y="81" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="600">Air 70% ✗ Too much</text>
+                  <text x="10" y="112" fill="#666" font-size="10">Max: 40% food · 50% non-food (→30%/35% from 2030)</text>
+                </svg>`
             },
             {
                 id: 4,
                 title: "Recyclability Requirement",
                 content: "All packaging must be designed for recycling. Complex materials, mixed substrates, and non-removable labels reduce recyclability scores.",
-                category: "Recycling"
+                category: "Recycling",
+                article: "Art. 6",
+                plainEnglish: "PPWR says packaging must be designed so that, when someone throws it in the recycling bin, it can actually be recycled. This sounds obvious but a huge amount of packaging today looks recyclable but isn't — black plastic that confuses sorting lasers, pouches that combine incompatible plastics, labels glued on so tightly they contaminate the paper stream. PPWR grades packaging A–E. Grade A means a recycling facility can process it cleanly. Grade E means it can't be recycled at all at industrial scale. From 2030, Grade D and E packaging is banned. You need to know the grade of every packaging format you use or sell.",
+                visual: null
             },
             {
                 id: 5,
                 title: "Supplier Declaration of Conformity",
                 content: "Suppliers must provide written declaration that packaging meets PPWR. Document must be retained for 5 years. Request before accepting new materials.",
-                category: "Documentation"
+                category: "Documentation",
+                article: "Art. 35",
+                plainEnglish: "A Declaration of Conformity (DoC) is a written statement from your packaging supplier saying 'this material meets PPWR requirements'. It's their legal promise to you. Think of it like a food hygiene certificate for packaging materials. The declaration must cover: what the material is, which PPWR rules it meets, who tested it and how. You must ask for one before accepting any new packaging material, and keep it on file for at least 5 years. If regulators audit you and you can't produce the DoC, you — not the supplier — face the fine, even if the packaging actually does comply.",
+                visual: null
             },
             {
                 id: 6,
                 title: "Labeling Obligations",
                 content: "Packaging must include: material type, recyclability mark, and waste sorting instruction. Labels must be permanent, visible, and in national language.",
-                category: "Labels"
+                category: "Labels",
+                article: "Art. 12",
+                plainEnglish: "From 2028, every piece of sales and grouped packaging sold in the EU must have a standardised label that tells the person throwing it away: what material it is, whether it's recyclable, and which bin to put it in. The label must be in the local language of the country where the product is sold — so a product sold in both Sweden and Lithuania needs two different label variants. The label also can't just be a sticker that falls off; it must be permanent. From 2030 a QR code linking to the full Digital Product Passport must be added alongside.",
+                visual: null
             },
             {
                 id: 7,
