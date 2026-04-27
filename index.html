@@ -1772,8 +1772,9 @@
         <div class="main-content">
             <div style="margin-bottom:28px;">
                 <h1 style="margin:0 0 6px;">My Overview</h1>
-                <p style="color:#888; font-size:15px; margin:0;">Here's where you stand — and what to focus on next.</p>
+                <p style="color:var(--text2); font-size:15px; margin:0;">Here's where you stand — and what to focus on next.</p>
             </div>
+            <div id="dashboard-org-banner" style="margin-bottom:24px;"></div>
 
             <div class="grid-3" style="margin-bottom:32px;">
                 <div class="stat-box">
@@ -2283,7 +2284,7 @@
                 <div id="scope-out-list-page"></div>
             </div>
             <div class="card" style="margin-bottom:24px;">
-                <h3 style="color:#d97706; margin-bottom:16px;">⚠️ Special Cases — Company A Relevant</h3>
+                <h3 style="color:#d97706; margin-bottom:16px;">⚠️ Special Cases — May Apply to Your Organisation</h3>
                 <p style="color:var(--text2); font-size:13px; margin-bottom:16px;">These packaging categories have modified or conditional obligations that may apply to your specific product lines.</p>
                 <div id="scope-ca-list-page"></div>
             </div>
@@ -2407,9 +2408,10 @@
         <div class="main-content">
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">📋 My Action Checklist</h1>
-                <p style="color:#888; font-size:15px; margin:0 0 4px;">Everything your company needs to do to comply — in one place. Filter by how urgent it is, who's responsible, and when the deadline falls.</p>
+                <p style="color:var(--text2); font-size:15px; margin:0 0 4px;">Everything your company needs to do to comply — in one place. Filter by how urgent it is, who's responsible, and when the deadline falls.</p>
                 <p style="color:var(--text3); font-size:13px; margin:0;">Start with the "Critical" items due before 2026. Work through the rest in order of deadline.</p>
             </div>
+            <div id="obligations-org-banner" style="margin-bottom:16px;"></div>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
                 <select id="ob-filter-sev" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px;">
                     <option value="">All Severities</option>
@@ -2441,18 +2443,27 @@
     <!-- ROLE DETERMINATION WIZARD PAGE -->
     <div class="page" id="my-role-page">
         <div class="main-content">
-            <div style="margin-bottom:32px;">
+            <div style="margin-bottom:28px;">
                 <h1 style="margin-bottom:8px;">🎭 What's My Role?</h1>
-                <p style="color:#888; font-size:15px; margin:0 0 4px;">Different companies have different responsibilities under the new regulation. Answer 4 quick questions and we'll tell you exactly which category you fall into — and what that means for you.</p>
-                <p style="color:var(--text3); font-size:13px; margin:0;">Takes less than 2 minutes. Your answers won't be saved — it's just for your own understanding.</p>
+                <p style="color:var(--text2); font-size:15px; margin:0 0 4px;">Different organisations have different responsibilities under PPWR. Answer a few quick questions and we'll tell you exactly which legal category you fall into — and what that means practically.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Takes about 2 minutes. Your answers stay in your browser only.</p>
             </div>
-            <div class="card" style="max-width:640px;">
-                <!-- Step indicators -->
+
+            <!-- Org type selector — shown first, collapsed after selection -->
+            <div class="card" id="org-type-card" style="max-width:640px; margin-bottom:20px;">
+                <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 12px;">Step 1 of 5 — Organisation type</p>
+                <p style="font-weight:600;font-size:14px;margin-bottom:16px;">Which best describes your organisation?</p>
+                <div id="org-type-options" style="display:flex;flex-direction:column;gap:10px;"></div>
+                <p style="font-size:12px;color:var(--text3);margin:14px 0 0;line-height:1.6;">This helps us show examples and language that match how your business actually works. You can change it at any time.</p>
+            </div>
+
+            <!-- Wizard card — shown after org type is picked -->
+            <div class="card" id="wizard-card" style="max-width:640px; display:none;">
                 <div style="display:flex; gap:8px; margin-bottom:28px;" id="wizard-steps">
-                    <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#9CAF88; color:white; font-size:12px; font-weight:700;">1 Source</div>
-                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">2 Brand</div>
-                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">3 Modify</div>
-                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700;">4 Market</div>
+                    <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--accent); color:#fff; font-size:12px; font-weight:700; font-family:var(--ff-mono);">2 Source</div>
+                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">3 Brand</div>
+                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">4 Modify</div>
+                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">5 Market</div>
                 </div>
                 <div id="wizard-body"></div>
                 <div style="display:flex; gap:10px; margin-top:24px;">
@@ -2658,6 +2669,7 @@
             currentTier: 'free',
             currentPage: 'home',
             currentLanguage: 'en',
+            orgType: null,
             readCards: {},
             quizResults: {},
             toolsVisited: {},
@@ -2689,6 +2701,7 @@
                     if (saved.quizResults)         appState.quizResults         = saved.quizResults;
                     if (saved.toolsVisited)        appState.toolsVisited        = saved.toolsVisited;
                     if (saved.onboardingDismissed) appState.onboardingDismissed = saved.onboardingDismissed;
+                    if (saved.orgType)             appState.orgType             = saved.orgType;
                 }
             } catch(e) {}
         })();
@@ -3397,7 +3410,7 @@
             { item:'Graveyard decoration pots', article:'Art. 3(1)', notes:'Not sold for commercial packaging purpose' },
           ],
           caRelevant: [
-            { item:'Dangerous goods packaging (ADR/IMDG compliant)', status:'modified-obligations', article:'Art. 5(3)', urgency:'high', detail:'Packaging required to comply with ADR or IMDG may have modified recyclability and labelling obligations where PPWR requirements would conflict with safety requirements. Company A product lines with hazmat classification (sealants, adhesives, construction chemicals) should seek specific legal advice.' },
+            { item:'Dangerous goods packaging (ADR/IMDG compliant)', status:'modified-obligations', article:'Art. 5(3)', urgency:'high', detail:'Packaging required to comply with ADR or IMDG may have modified recyclability and labelling obligations where PPWR requirements would conflict with safety requirements. Product lines with hazmat classification (sealants, adhesives, construction chemicals) should seek specific legal advice.' },
             { item:'Contact-sensitive packaging (food/pharmaceutical direct contact)', status:'lower-rc-threshold', article:'Art. 7(3), Annex II', urgency:'medium', detail:'Packaging in direct contact with food or pharmaceutical products qualifies for the lower recycled content threshold: 10% by 2030 (not 30%). Apply the correct threshold to the correct packaging category.' },
             { item:'Packaging for medical devices (Class II/III)', status:'labelling-exemption', article:'Art. 12(6)', urgency:'low', detail:'Packaging for Class II/III medical devices has specific exemptions from some harmonised sorting label requirements where medical device labelling rules take precedence.' },
             { item:'Reusable transport packaging in closed-loop B2B systems', status:'modified-epr', article:'Art. 44(3)', urgency:'medium', detail:'Transport packaging used exclusively in a closed-loop system may qualify for modified EPR registration treatment. Relevant for intercompany flows between cluster entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.' },
@@ -3422,25 +3435,25 @@
 
         const ROLE_RULES = [
           { id:'own-packer', condition:s=>s.source==='sg-mfg', roles:['PACKER','MANUFACTURER','PRODUCER_EPR'],
-            trace:(s,c)=>`CA operates a manufacturing site in ${c} and applies the packaging itself — this makes CA the <strong>Packer/Filler</strong> and <strong>Manufacturer</strong> under PPWR Art. 3(11). As the entity first placing packaged goods on the market, CA is also the <strong>EPR Producer</strong> in every country of sale.` },
+            trace:(s,c)=>`Your organisation manufactures and packs the product itself — this makes you the <strong>Packer/Filler</strong> and <strong>Manufacturer</strong> under PPWR Art. 3(11). As the entity first placing packaged goods on the market, you are also the <strong>EPR Producer</strong> in every country where you sell.` },
           { id:'sister-sg-brand', condition:s=>s.source==='sg-sister'&&(s.brand==='sg-brand'||s.relabel==='relabel'||s.relabel==='repack'||s.relabel==='modify'), roles:['MANUFACTURER','IMPORTER','PRODUCER_EPR'],
-            trace:(s,c)=>`CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because it ${s.brand==='sg-brand'?'sells under the CA brand':s.relabel==='relabel'?'re-labels the packaging':s.relabel==='repack'?'re-packs into new packaging':'modifies the packaging'} — even though physical production is by a sister company. CA is also the <strong>Importer</strong> (goods cross into the cluster) and <strong>EPR Producer</strong> in ${c}.` },
+            trace:(s,c)=>`Your organisation is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because you ${s.brand==='sg-brand'?'sell under your own brand name':s.relabel==='relabel'?'re-label the packaging':s.relabel==='repack'?'re-pack into new packaging':'modify the packaging'} — even though physical production is handled by a related company or subsidiary. You are also the <strong>Importer</strong> when goods cross a border, and the <strong>EPR Producer</strong> in ${c}.` },
           { id:'sister-supplier-brand', condition:s=>s.source==='sg-sister'&&s.brand==='supplier-brand'&&s.relabel==='no', roles:['DISTRIBUTOR','PRODUCER_EPR'],
-            trace:(s,c)=>`CA does not place its own name on the product and does not modify the packaging — CA is a <strong>Distributor</strong> under PPWR Art. 3(13). CA is still the <strong>EPR Producer</strong> in ${c} because it is the entity placing the packaging on that market.` },
+            trace:(s,c)=>`Your organisation does not place its own name on the product and does not modify the packaging — you are a <strong>Distributor</strong> under PPWR Art. 3(13). You are still the <strong>EPR Producer</strong> in ${c} because you are the entity placing the packaging on that market.` },
           { id:'sister-customer-brand', condition:s=>s.source==='sg-sister'&&s.brand==='customer-brand', roles:['DISTRIBUTOR','PRODUCER_EPR'],
-            trace:(s,c)=>`The product carries the customer's brand — CA acts as a <strong>Distributor</strong>. CA is still the <strong>EPR Producer</strong> in ${c} as the entity placing the packaged goods on the market.` },
+            trace:(s,c)=>`The product carries the customer's brand — your organisation acts as a <strong>Distributor</strong>. You are still the <strong>EPR Producer</strong> in ${c} as the entity placing the packaged goods on the market.` },
           { id:'3p-non-eu-importer', condition:s=>s.source==='3p-non-eu', roles:['IMPORTER','PRODUCER_EPR'],
-            trace:(s,c)=>`The supplier is outside the EU — CA is the <strong>Importer</strong> of record and therefore the <strong>EPR Producer</strong> in ${c} under PPWR Art. 3(12). If the supplier's packaging is non-compliant, enforcement falls on CA.` },
+            trace:(s,c)=>`Your supplier is outside the EU — your organisation is the <strong>Importer</strong> of record and therefore the <strong>EPR Producer</strong> in ${c} under PPWR Art. 3(12). If the supplier's packaging is non-compliant, enforcement liability falls on you as the importer.` },
           { id:'3p-eu-sg-brand', condition:s=>s.source==='3p-eu'&&(s.brand==='sg-brand'||s.relabel!=='no'), roles:['MANUFACTURER','PRODUCER_EPR'],
-            trace:(s,c)=>`The supplier is EU-based. CA ${s.brand==='sg-brand'?'places the product under its own brand name':'re-labels or modifies the packaging'} — this triggers <strong>Manufacturer</strong> status for CA under Art. 3(11). CA is also the <strong>EPR Producer</strong> in ${c}.` },
+            trace:(s,c)=>`Your supplier is EU-based. Your organisation ${s.brand==='sg-brand'?'places the product under its own brand name':'re-labels or modifies the packaging'} — this triggers <strong>Manufacturer</strong> status under Art. 3(11). You are also the <strong>EPR Producer</strong> in ${c}.` },
           { id:'3p-eu-pass-through', condition:s=>s.source==='3p-eu'&&s.brand!=='sg-brand'&&s.relabel==='no', roles:['DISTRIBUTOR','PRODUCER_EPR'],
-            trace:(s,c)=>`The EU supplier retains Manufacturer status. CA neither brands nor modifies the packaging — CA is a <strong>Distributor</strong> under Art. 3(13). CA is still the <strong>EPR Producer</strong> in ${c}.` },
+            trace:(s,c)=>`The EU supplier retains Manufacturer status. Your organisation neither brands nor modifies the packaging — you are a <strong>Distributor</strong> under Art. 3(13). You are still the <strong>EPR Producer</strong> in ${c} as the entity placing packaged goods on that market.` },
         ];
 
         const OBLIGATION_DB = [
           { id:'epr-register', roles:['PRODUCER_EPR','MANUFACTURER','IMPORTER'], pkgTypes:['all'], deadline:2025, severity:'critical',
             title:'EPR Registration — required in each country where you place packaging on the market',
-            detail:'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale. Most EU Member States require registration by 12 August 2026. Non-registration is the highest-penalty violation across all 7 cluster markets.',
+            detail:'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale. Most EU Member States require registration by 12 August 2026. Non-registration is the highest-penalty violation across EU markets.',
             article:'Art. 44' },
           { id:'epr-report', roles:['PRODUCER_EPR','MANUFACTURER','IMPORTER'], pkgTypes:['all'], deadline:2025, severity:'critical',
             title:'EPR Annual Reporting — weights by packaging tier and material, per country of sale',
@@ -3468,7 +3481,7 @@
             article:'Art. 7, Annex II' },
           { id:'rc-verify-import', roles:['IMPORTER'], pkgTypes:['sales','grouped'], deadline:2030, severity:'high',
             title:'Verify recycled content certificates from all plastic packaging suppliers before import',
-            detail:'As importer, CA is responsible for ensuring plastic packaging placed on the EU market meets the applicable recycled content threshold (30% non-contact, 10% contact-sensitive, by 2030). Require certificates of conformity specifying recycled content % by material stream.',
+            detail:'As importer, your company is responsible for ensuring plastic packaging placed on the EU market meets the applicable recycled content threshold (30% non-contact, 10% contact-sensitive, by 2030). Require certificates of conformity specifying recycled content % by material stream.',
             article:'Art. 7, Art. 41' },
           { id:'reuse-transport-2030', roles:['PRODUCER_EPR','MANUFACTURER','PACKER'], pkgTypes:['transport'], deadline:2030, severity:'high',
             title:'Reuse target: ≥40% of transport packaging must be reusable by 2030 (→70% by 2040)',
@@ -3492,7 +3505,7 @@
             article:'Art. 13' },
           { id:'sorting-labels-import', roles:['IMPORTER','DISTRIBUTOR'], pkgTypes:['sales','grouped'], deadline:2028, severity:'high',
             title:'Verify sorting labels are correct for each destination country language before import',
-            detail:'As importer or distributor, CA cannot place packaging with missing or wrong-language sorting labels on the market. For goods from sister companies or 3rd-party suppliers, require pre-shipment label verification per destination market.',
+            detail:'As importer or distributor, your company cannot place packaging with missing or wrong-language sorting labels on the market. For goods from affiliated or 3rd-party suppliers, require pre-shipment label verification per destination market.',
             article:'Art. 12, Art. 41' },
           { id:'distributor-verify', roles:['DISTRIBUTOR'], pkgTypes:['all'], deadline:2025, severity:'high',
             title:'Distributor due diligence — verify upstream packaging compliance before placing on market',
@@ -3569,18 +3582,18 @@
 
         const PACKAGING_MATERIALS = [
           // ── SALES ──
-          { id:'cardboard-mono', label:'Cardboard carton (single-material)', tier:'sales', material:'Paper/cardboard', grade:'A', gradeRationale:'Single-material corrugated or folded cardboard with no barrier coatings — easily recyclable in paper stream at scale.', issues:[], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:false, eprFeeDirection:'lowest', sgRelevance:'Standard outer carton for many Company A product lines. Grade A status is a strong position — maintain single-material spec.' },
+          { id:'cardboard-mono', label:'Cardboard carton (single-material)', tier:'sales', material:'Paper/cardboard', grade:'A', gradeRationale:'Single-material corrugated or folded cardboard with no barrier coatings — easily recyclable in paper stream at scale.', issues:[], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:false, eprFeeDirection:'lowest', sgRelevance:'Standard outer carton for many product lines. Grade A status is a strong position — maintain single-material spec.' },
           { id:'plastic-bag-ldpe', label:'Plastic bag / film wrap (LDPE)', tier:'sales', material:'LDPE plastic', grade:'C', gradeRationale:'LDPE film is technically recyclable but collection infrastructure is limited in most markets.', issues:['Limited collection infrastructure in Baltic states','Often contaminated in mixed waste streams'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'medium-rising', sgRelevance:'Used for weather protection on some product lines. Grade C is permitted to 2030 but faces phase-out pressure. Plan transition to paper-based alternatives.' },
           { id:'multilayer-laminate', label:'Multi-layer laminate bag (plastic + foil/paper)', tier:'sales', material:'Mixed polymer laminate', grade:'E', gradeRationale:'Combination of incompatible materials creates a composite that cannot be separated for recycling.', issues:['No viable separation process at scale','Contaminates both paper and plastic recycling streams','Common in construction chemical packaging'], ppwrBan:true, banYear:2030, banReason:'Grade E packaging banned from 2030 (PPWR Art. 6). Multi-layer laminates that impede recyclability also potentially caught by Art. 5 restrictions.', rcCategory:'non-contact', reusable:false, eprFeeDirection:'highest-banned', sgRelevance:'HIGH PRIORITY. If used for mortars, adhesives or construction chemicals, this format must be replaced before 2030. Alternatives: mono-material PE bags or paper valve sacks.' },
           { id:'pet-blister', label:'PET blister / clamshell pack', tier:'sales', material:'PET plastic', grade:'B', gradeRationale:'Clear PET is well-established in recycling streams. Minor limitations due to heat-bonded card backing in some formats.', issues:['Card-backed blisters require separation — check format','PVC blister (different material) is Grade E — confirm polymer type'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'low', sgRelevance:'Acceptable format. Confirm all blisters are PET not PVC — PVC is Grade E and banned from 2030. Recycled content target: 30% by 2030.' },
-          { id:'plastic-bucket-hdpe', label:'Rigid HDPE bucket / tub', tier:'sales', material:'HDPE plastic', grade:'A', gradeRationale:'HDPE is one of the most recyclable plastics with well-established collection and reprocessing at scale across all 7 cluster markets.', issues:['Lids may be different polymer — check and specify mono-material lid'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'lowest', sgRelevance:'Strong position. Used for mortars, sealants, coatings. Ensure lid is same polymer or separately recyclable. Recycled content target: 30% by 2030.' },
-          { id:'glass-bottle', label:'Glass bottle / jar', tier:'sales', material:'Glass', grade:'A', gradeRationale:'Glass is infinitely recyclable with no quality degradation. Well-established collection in all 7 markets, particularly through deposit systems.', issues:['Heavy — higher transport emissions','Ceramic or crystal glass contaminates container glass stream'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:true, eprFeeDirection:'lowest', sgRelevance:'Not typical for construction products but relevant if any liquid product lines use glass. Grade A, no recycled content target (not plastic).' },
+          { id:'plastic-bucket-hdpe', label:'Rigid HDPE bucket / tub', tier:'sales', material:'HDPE plastic', grade:'A', gradeRationale:'HDPE is one of the most recyclable plastics with well-established collection and reprocessing at scale across EU markets.', issues:['Lids may be different polymer — check and specify mono-material lid'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'lowest', sgRelevance:'Strong position. Used for mortars, sealants, coatings. Ensure lid is same polymer or separately recyclable. Recycled content target: 30% by 2030.' },
+          { id:'glass-bottle', label:'Glass bottle / jar', tier:'sales', material:'Glass', grade:'A', gradeRationale:'Glass is infinitely recyclable with no quality degradation. Well-established collection across EU markets, particularly through deposit systems.', issues:['Heavy — higher transport emissions','Ceramic or crystal glass contaminates container glass stream'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:true, eprFeeDirection:'lowest', sgRelevance:'Not typical for construction products but relevant if any liquid product lines use glass. Grade A, no recycled content target (not plastic).' },
           { id:'oxo-degradable-film', label:'Oxo-degradable / oxo-fragmentable plastic film', tier:'sales', material:'Oxo-degradable plastic', grade:'E', gradeRationale:'Oxo-degradable plastics fragment into microplastics rather than biodegrading. Explicitly prohibited under PPWR Annex V regardless of format.', issues:['Contaminates recycling streams','Generates microplastic pollution','Marketed misleadingly as biodegradable'], ppwrBan:true, banYear:2025, banReason:'Explicitly prohibited under PPWR Annex V — ban applies now, not from 2030. Any oxo-degradable packaging must be removed from use immediately.', rcCategory:'non-contact', reusable:false, eprFeeDirection:'highest-banned', sgRelevance:'IMMEDIATE ACTION REQUIRED. If any supplier uses oxo-degradable film, this is a current violation. Audit all 3rd party suppliers for this material type.' },
           // ── GROUPED ──
           { id:'shrink-wrap-grouped', label:'Shrink wrap over grouped cartons (PE film)', tier:'grouped', material:'PE plastic film', grade:'C', gradeRationale:'PE film is recyclable in dedicated film streams but grouped packaging shrink wrap is often removed and discarded at retail or customer site.', issues:['Rarely collected separately at B2B customer sites','Often contaminated with labels and adhesive residue'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'medium-rising', sgRelevance:'Common for grouped product shipments. Grade C — permitted to 2030 but under review. Consider paperboard banding or cardboard overwrap as higher-grade alternatives.' },
           { id:'cardboard-outer', label:'Cardboard outer / display box (grouped)', tier:'grouped', material:'Paper/cardboard', grade:'A', gradeRationale:'Single-material cardboard outer — fully recyclable in paper stream.', issues:['Laminated or foil-printed outers reduce grade — check finish'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:false, eprFeeDirection:'lowest', sgRelevance:'Preferred format for grouped packaging. Maintain single-material spec — avoid lamination or foil embossing which can reduce recyclability grade.' },
           // ── TRANSPORT ──
-          { id:'stretch-wrap-pallet', label:'Stretch wrap (LLDPE film) — one-way pallet wrap', tier:'transport', material:'LLDPE plastic film', grade:'D', gradeRationale:'One-way pallet stretch wrap is almost never collected from B2B customer sites. Practical recycling rate near zero.', issues:['Near-zero actual collection rate at B2B delivery points','Contamination from tape, labels and product residue'], ppwrBan:true, banYear:2030, banReason:'Grade D banned from 2030 (PPWR Art. 6). As the most common one-way transport packaging format, this is one of the highest-impact PPWR compliance issues for Company A logistics.', rcCategory:'non-contact', reusable:false, eprFeeDirection:'highest-banned', sgRelevance:'CRITICAL. Stretch wrap on outbound pallets is almost certainly Company A\'s highest-volume Grade D packaging. Must be replaced before 2030. Options: reusable pallet hoods, cardboard angle boards + banding.' },
+          { id:'stretch-wrap-pallet', label:'Stretch wrap (LLDPE film) — one-way pallet wrap', tier:'transport', material:'LLDPE plastic film', grade:'D', gradeRationale:'One-way pallet stretch wrap is almost never collected from B2B customer sites. Practical recycling rate near zero.', issues:['Near-zero actual collection rate at B2B delivery points','Contamination from tape, labels and product residue'], ppwrBan:true, banYear:2030, banReason:'Grade D banned from 2030 (PPWR Art. 6). As the most common one-way transport packaging format, this is one of the highest-impact PPWR compliance issues for any logistics operation.', rcCategory:'non-contact', reusable:false, eprFeeDirection:'highest-banned', sgRelevance:'CRITICAL. Stretch wrap on outbound pallets is very likely your highest-volume Grade D packaging. Must be replaced before 2030. Options: reusable pallet hoods, cardboard angle boards + banding.' },
           { id:'wooden-pallet-oneuse', label:'Wooden pallet — one-way / non-pooled', tier:'transport', material:'Wood', grade:'B', gradeRationale:'Wood is recyclable but one-way pallets have limited actual recycling in practice.', issues:['One-way use means does not contribute to reuse target','Treatment chemicals (ISPM15) must be documented'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:false, eprFeeDirection:'low', sgRelevance:'Used for inbound shipments from some suppliers. Does not contribute to reuse target — only pooled/returnable pallets do. Switching to euro-pallet pool converts this to a reuse-contributing asset.' },
           { id:'euro-pallet-pooled', label:'Euro-pallet — pooled / returnable (CHEP / LPR)', tier:'transport', material:'Wood', grade:'A', gradeRationale:'Pooled pallets are designed for repeated use (50+ trips). High-quality wood, maintained and repaired.', issues:['Must document trip count and return rate to evidence reuse compliance'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'none', reusable:true, eprFeeDirection:'lowest', sgRelevance:'Best-in-class transport packaging for PPWR. Switching from one-way to pooled pallets is the single most impactful action for reuse target compliance.' },
           { id:'plastic-corner-boards', label:'Plastic corner boards / edge protectors — one-way', tier:'transport', material:'PP/PE plastic', grade:'C', gradeRationale:'PP and PE corner boards are technically recyclable but rarely collected from delivery sites.', issues:['Contaminated with tape and stretch film adhesive residue','Mixed with other transport waste at delivery'], ppwrBan:false, banYear:null, banReason:null, rcCategory:'non-contact', reusable:false, eprFeeDirection:'medium-rising', sgRelevance:'Grade C — under pressure. Alternatives: cardboard corner boards (Grade A, no plastic RC target), or reusable plastic corner boards with return programme.' },
@@ -3591,18 +3604,18 @@
         ];
 
         const GLOSSARY_TERMS = [
-          { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers.', sg:'CA is a producer in multiple roles — as manufacturer of own products, as importer of sister company goods, and as the EU importer of 3rd party non-EU goods.' },
-          { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade.', sg:'CA must register with EPR systems in all 7 markets for all packaging flows.' },
-          { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier.', sg:'CA\'s own manufacturing sites in the cluster make CA a packer/filler for those product lines.' },
-          { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in that country.', sg:'Every time CA buys from a sister company outside the cluster, CA becomes the importer-producer in the destination market.' },
-          { term:'Recyclability Grade (A–E)', tag:'Compliance', def:'PPWR requires all packaging to be assessed against a five-grade recyclability scale. Grade A = easily recyclable at scale. Grade E = non-recyclable, banned from 2030. Grades directly determine EPR fee levels.', sg:'CA must know the recyclability grade of all packaging it places on the market — including packaging received from suppliers.' },
-          { term:'Recycled Content', tag:'Targets', def:'The minimum percentage of recycled material that must be present in plastic packaging. Mandatory minimum of 30% for most plastic packaging by 2030, escalating to 55% by 2040.', sg:'CA\'s own manufactured products require compliant packaging material sourcing. For imported goods, CA must verify supplier compliance.' },
-          { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions.', sg:'CA must implement a digital passport programme for all own-manufactured products sold across the 7-market cluster.' },
-          { term:'Placement on the Market', tag:'Trigger Point', def:'The legal trigger for PPWR EPR obligations. Making packaging available in a country for distribution or use. Moving goods to your own warehouse is NOT placement on the market — selling from that warehouse to a local customer IS.', sg:'A Finnish warehouse serving FI, EE and LV customers requires three separate EPR registrations, each triggered at the first sale in that country.' },
-          { term:'Incoterms', tag:'Commercial', def:'International commercial terms defining the transfer of risk and responsibility between buyer and seller. Under PPWR, Incoterms determine who is the importer of record and therefore who bears the importer-producer EPR obligation.', sg:'CA\'s commercial team must review Incoterms for all cross-border flows to ensure EPR liability is correctly allocated.' },
-          { term:'Modulated EPR Fee', tag:'Finance', def:'PPWR requires EPR fees to be differentiated by recyclability grade — more recyclable packaging attracts lower fees. This creates a direct financial incentive to improve packaging recyclability.', sg:'Finance should model EPR fee savings from upgrading packaging grades as part of packaging redesign business cases.' },
+          { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers.', sg:'Your organisation may be a producer in multiple roles — as manufacturer of own products, as importer of affiliated company goods, and as the EU importer of 3rd party non-EU goods.' },
+          { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade.', sg:'Your organisation must register with EPR systems in every country where packaging is placed on the market.' },
+          { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier.', sg:'If your organisation manufactures and packs its own products, it is a packer/filler — the highest obligation tier under PPWR.' },
+          { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in that country.', sg:'Every time your organisation imports packaged goods from outside a given country — whether from an affiliated company or a 3rd-party supplier — it becomes the importer-producer in that destination market.' },
+          { term:'Recyclability Grade (A–E)', tag:'Compliance', def:'PPWR requires all packaging to be assessed against a five-grade recyclability scale. Grade A = easily recyclable at scale. Grade E = non-recyclable, banned from 2030. Grades directly determine EPR fee levels.', sg:'Your organisation must know the recyclability grade of all packaging it places on the market — including packaging received from suppliers.' },
+          { term:'Recycled Content', tag:'Targets', def:'The minimum percentage of recycled material that must be present in plastic packaging. Mandatory minimum of 30% for most plastic packaging by 2030, escalating to 55% by 2040.', sg:'Your own manufactured products require compliant packaging material sourcing. For imported goods, you must verify supplier compliance with recycled content thresholds.' },
+          { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions.', sg:'Your organisation must implement a digital passport programme for all own-manufactured products sold in the EU from 2030.' },
+          { term:'Placement on the Market', tag:'Trigger Point', def:'The legal trigger for PPWR EPR obligations. Making packaging available in a country for distribution or use. Moving goods to your own warehouse is NOT placement on the market — selling from that warehouse to a local customer IS.', sg:'For example, a warehouse serving customers in multiple EU countries requires a separate EPR registration per country, each triggered at the first sale in that country.' },
+          { term:'Incoterms', tag:'Commercial', def:'International commercial terms defining the transfer of risk and responsibility between buyer and seller. Under PPWR, Incoterms determine who is the importer of record and therefore who bears the importer-producer EPR obligation.', sg:'Your commercial team must review Incoterms for all cross-border flows to ensure EPR liability is correctly allocated.' },
+          { term:'Modulated EPR Fee', tag:'Finance', def:'PPWR requires EPR fees to be differentiated by recyclability grade — more recyclable packaging attracts lower fees. This creates a direct financial incentive to improve packaging recyclability.', sg:'Model EPR fee savings from upgrading packaging grades as part of packaging redesign business cases — the modulation can be significant.' },
           { term:'Reusable Packaging', tag:'Targets', def:'Packaging designed and marketed for multiple trips or rotations. Must meet specific design criteria under PPWR. By 2030, 40% of transport packaging placed on the market must be reusable.', sg:'Pallet pools, returnable crates, and refillable containers count. One-way stretch wrap and single-trip corner boards do not.' },
-          { term:'Unnecessary Packaging', tag:'Prohibited', def:'PPWR prohibits packaging that exceeds what is functionally necessary to protect, contain, or transport the product. Over-packaging, excessive void fill, and decorative secondary packaging without function may be challenged.', sg:'CA should conduct a packaging minimisation review, particularly for own-manufactured products where CA controls the specification.' },
+          { term:'Unnecessary Packaging', tag:'Prohibited', def:'PPWR prohibits packaging that exceeds what is functionally necessary to protect, contain, or transport the product. Over-packaging, excessive void fill, and decorative secondary packaging without function may be challenged.', sg:'Conduct a packaging minimisation review, particularly for own-manufactured products where you control the specification.' },
         ];
 
         // ── Substance Red List (Art. 5, REACH, PFAS Regulation) ─────────────────
@@ -3805,6 +3818,21 @@
 
         function renderObligationsTrackerPage() {
           window._obAll = OBLIGATION_DB;
+          // Org-type context banner
+          const obBanner = document.getElementById('obligations-org-banner');
+          if (obBanner) {
+            const smeNote  = 'For small businesses, EPR registration and correct labelling are the two most important priorities before August 2026.';
+            const midNote  = 'For mid-size companies, prioritise EPR registration in each market, recycled content supplier verification, and sorting label compliance.';
+            const entNote  = 'For large companies and multi-nationals, focus on multi-market EPR registration, reuse targets, Digital Product Passport preparation, and cross-border producer obligations.';
+            const notes = { sme: smeNote, mid: midNote, enterprise: entNote };
+            const ot = appState.orgType;
+            if (ot && notes[ot]) {
+              obBanner.innerHTML = `<div style="font-size:13px;padding:10px 14px;background:var(--bg3);border-left:3px solid var(--accent);border-radius:var(--r);color:var(--text2);line-height:1.5">
+                <strong style="color:var(--text)">Your focus:</strong> ${notes[ot]}
+                <button onclick="showPage('my-role')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;margin-left:10px">Change org type →</button>
+              </div>`;
+            } else { obBanner.innerHTML = ''; }
+          }
           filterObligationsPage();
         }
 
@@ -3843,47 +3871,170 @@
           }).join('') || '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No obligations match the selected filters.</div>';
         }
 
-        let _wizardAnswers = {};
-        let _wizardStep    = 1;
-        const _wizardSteps = [
-          { step:1, q:'Where does the product originate?', key:'source', opts:[ { v:'sg-mfg', l:'🏭 CA manufactures it in the cluster' }, { v:'sg-sister', l:'🤝 Sister company outside the cluster' }, { v:'3p-eu', l:'🇪🇺 3rd-party EU supplier' }, { v:'3p-non-eu', l:'🌐 3rd-party non-EU supplier' } ] },
-          { step:2, q:'Whose brand name is on the product?', key:'brand', opts:[ { v:'sg-brand', l:'🏷️ Company A brand' }, { v:'supplier-brand', l:'📦 Supplier\'s own brand' }, { v:'customer-brand', l:'🛍️ Customer\'s brand (private label)' } ] },
-          { step:3, q:'Does CA modify or re-label the packaging?', key:'relabel', opts:[ { v:'no', l:'✅ No — sold as received' }, { v:'relabel', l:'🔖 Re-labels only' }, { v:'repack', l:'📦 Re-packs into new packaging' }, { v:'modify', l:'🔧 Modifies the packaging' } ] },
-          { step:4, q:'Which country is the primary market?', key:'market', opts:[ { v:'SE', l:'🇸🇪 Sweden' }, { v:'NO', l:'🇳🇴 Norway (EEA)' }, { v:'DK', l:'🇩🇰 Denmark' }, { v:'FI', l:'🇫🇮 Finland' }, { v:'EE', l:'🇪🇪 Estonia' }, { v:'LV', l:'🇱🇻 Latvia' }, { v:'LT', l:'🇱🇹 Lithuania' } ] },
+        // ── Org-type definitions ──────────────────────────────────────────────
+        const ORG_TYPES = [
+          { v:'sme',        icon:'🏪', label:'Small or micro business',     sub:'Fewer than 50 employees, typically 1–2 markets, single supplier or own production' },
+          { v:'mid',        icon:'🏢', label:'Mid-size company',            sub:'50–500 employees, selling across several EU countries, mixed supply chain' },
+          { v:'enterprise', icon:'🏭', label:'Large company or multi-national', sub:'500+ employees, subsidiaries or related companies, complex multi-market supply chain' },
         ];
 
+        // Source options adapt to org type
+        function _wizardSourceOpts(orgType) {
+          if (orgType === 'sme') return [
+            { v:'sg-mfg',     l:'🏭 We make and pack our own products' },
+            { v:'3p-eu',      l:'🇪🇺 We buy from a supplier based in the EU' },
+            { v:'3p-non-eu',  l:'🌐 We import from a supplier outside the EU' },
+          ];
+          if (orgType === 'mid') return [
+            { v:'sg-mfg',     l:'🏭 We manufacture in-house' },
+            { v:'3p-eu',      l:'🇪🇺 EU-based supplier (3rd party)' },
+            { v:'3p-non-eu',  l:'🌐 Supplier outside the EU (imported)' },
+            { v:'sg-sister',  l:'🤝 A related company or partner business supplies us' },
+          ];
+          return [
+            { v:'sg-mfg',     l:'🏭 Manufactured in-house at our own facility' },
+            { v:'sg-sister',  l:'🤝 A subsidiary or related company supplies us' },
+            { v:'3p-eu',      l:'🇪🇺 3rd-party EU supplier' },
+            { v:'3p-non-eu',  l:'🌐 3rd-party non-EU supplier (imported)' },
+          ];
+        }
+
+        function _wizardBrandLabel(orgType) {
+          if (orgType === 'sme') return 'Whose brand name appears on the product or packaging?';
+          return 'Whose brand name is on the product?';
+        }
+
+        function _wizardBrandOpts(orgType) {
+          const ourLabel   = orgType === 'sme' ? '🏷️ Our own brand name' : '🏷️ Our company\'s own brand';
+          const suppLabel  = orgType === 'sme' ? '📦 The supplier\'s brand (we resell it)' : '📦 Supplier\'s own brand (we distribute it)';
+          const custLabel  = orgType === 'sme' ? '🛍️ A customer\'s brand (we make it for them)' : '🛍️ Customer\'s brand (white-label / private label)';
+          return [ { v:'sg-brand', l:ourLabel }, { v:'supplier-brand', l:suppLabel }, { v:'customer-brand', l:custLabel } ];
+        }
+
+        function _wizardModifyLabel(orgType) {
+          return orgType === 'sme'
+            ? 'Do you change or re-label the packaging before selling?'
+            : 'Does your organisation modify or re-label the packaging?';
+        }
+
+        function _wizardModifyOpts(orgType) {
+          return [
+            { v:'no',      l:'✅ No — we sell it as we receive it' },
+            { v:'relabel', l:'🔖 We add or replace labels only' },
+            { v:'repack',  l:'📦 We re-pack into our own packaging' },
+            { v:'modify',  l:'🔧 We physically modify the packaging' },
+          ];
+        }
+
+        function _getWizardSteps(orgType) {
+          return [
+            { step:1, q:'Where does the product come from?', key:'source', opts:_wizardSourceOpts(orgType) },
+            { step:2, q:_wizardBrandLabel(orgType),          key:'brand',  opts:_wizardBrandOpts(orgType) },
+            { step:3, q:_wizardModifyLabel(orgType),         key:'relabel',opts:_wizardModifyOpts(orgType) },
+            { step:4, q:'Which country is the primary market?', key:'market', opts:[
+              { v:'SE', l:'🇸🇪 Sweden' }, { v:'NO', l:'🇳🇴 Norway (EEA)' }, { v:'DK', l:'🇩🇰 Denmark' },
+              { v:'FI', l:'🇫🇮 Finland' }, { v:'EE', l:'🇪🇪 Estonia' }, { v:'LV', l:'🇱🇻 Latvia' },
+              { v:'LT', l:'🇱🇹 Lithuania' }, { v:'DE', l:'🇩🇪 Germany' }, { v:'FR', l:'🇫🇷 France' },
+              { v:'NL', l:'🇳🇱 Netherlands' }, { v:'PL', l:'🇵🇱 Poland' }, { v:'ES', l:'🇪🇸 Spain' },
+              { v:'IT', l:'🇮🇹 Italy' }, { v:'OTHER_EU', l:'🌍 Other EU country' },
+            ]},
+          ];
+        }
+
+        let _wizardAnswers = {};
+        let _wizardStep    = 1;
+        let _wizardOrgType = null;
+
         function renderRoleWizardPage() {
-          _wizardAnswers = {}; _wizardStep = 1;
+          _wizardAnswers = {}; _wizardStep = 1; _wizardOrgType = appState.orgType || null;
           document.getElementById('wizard-result').style.display = 'none';
+          if (_wizardOrgType) {
+            _showWizardCard();
+          } else {
+            _renderOrgTypeSelector();
+          }
+        }
+
+        function _renderOrgTypeSelector() {
+          const orgCard    = document.getElementById('org-type-card');
+          const wizardCard = document.getElementById('wizard-card');
+          orgCard.style.display    = 'block';
+          wizardCard.style.display = 'none';
+          const container = document.getElementById('org-type-options');
+          container.innerHTML = ORG_TYPES.map(o => `
+            <label style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border:1px solid ${_wizardOrgType===o.v?'var(--accent)':'var(--border2)'};border-radius:var(--rl);cursor:pointer;background:${_wizardOrgType===o.v?'var(--accent-dim)':'var(--bg3)'};transition:all .15s">
+              <input type="radio" name="org-type-opt" value="${o.v}" ${_wizardOrgType===o.v?'checked':''} style="accent-color:var(--accent);margin-top:2px;flex-shrink:0">
+              <div>
+                <div style="font-weight:600;font-size:14px;margin-bottom:3px">${o.icon} ${o.label}</div>
+                <div style="font-size:12px;color:var(--text2);line-height:1.5">${o.sub}</div>
+              </div>
+            </label>`).join('');
+
+          // Add continue button below options
+          if (!document.getElementById('org-type-continue-btn')) {
+            const btn = document.createElement('button');
+            btn.id        = 'org-type-continue-btn';
+            btn.className = 'btn-primary';
+            btn.textContent = 'Continue →';
+            btn.style.cssText = 'margin-top:16px;width:100%';
+            btn.onclick = () => {
+              const sel = document.querySelector('input[name="org-type-opt"]:checked');
+              if (!sel) { alert('Please select your organisation type to continue.'); return; }
+              _wizardOrgType = sel.value;
+              appState.orgType = sel.value;
+              localStorage.setItem('appState', JSON.stringify(appState));
+              _showWizardCard();
+            };
+            orgCard.appendChild(btn);
+          }
+        }
+
+        function _showWizardCard() {
+          const orgCard    = document.getElementById('org-type-card');
+          const wizardCard = document.getElementById('wizard-card');
+          // Collapse org-type card to a summary line
+          const orgMeta = ORG_TYPES.find(o => o.v === _wizardOrgType);
+          if (orgMeta) {
+            orgCard.innerHTML = `
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="font-size:13px;color:var(--text)"><strong>Organisation type:</strong> ${orgMeta.icon} ${orgMeta.label}</div>
+                <button class="btn-text" style="font-size:12px;white-space:nowrap" onclick="renderRoleWizardPage();appState.orgType=null;localStorage.setItem('appState',JSON.stringify(appState));">Change</button>
+              </div>`;
+          }
+          wizardCard.style.display = 'block';
           _wizardRenderStep();
         }
 
         function _wizardRenderStep() {
-          const cfg   = _wizardSteps[_wizardStep - 1];
+          const steps  = _getWizardSteps(_wizardOrgType || 'mid');
+          const cfg    = steps[_wizardStep - 1];
           const bodyEl = document.getElementById('wizard-body');
           const backEl = document.getElementById('wizard-back-btn');
           const nextEl = document.getElementById('wizard-next-btn');
           if (!bodyEl) return;
           document.querySelectorAll('.wizard-step-dot').forEach(d => {
             const s = parseInt(d.dataset.step);
-            d.style.background = s < _wizardStep ? '#9CAF88' : s === _wizardStep ? '#5B8A3C' : '#EFEFEB';
-            d.style.color      = s <= _wizardStep ? 'white' : '#999';
+            d.style.background = s < _wizardStep ? 'var(--accent)' : s === _wizardStep ? 'var(--sage-deep)' : 'var(--bg4)';
+            d.style.color      = s <= _wizardStep ? '#fff' : 'var(--text3)';
           });
-          bodyEl.innerHTML = `<p style="font-weight:600;font-size:14px;margin-bottom:14px">${cfg.q}</p>
+          bodyEl.innerHTML = `
+            <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 8px">Step ${_wizardStep + 1} of 5</p>
+            <p style="font-weight:600;font-size:15px;margin-bottom:16px;color:var(--text)">${cfg.q}</p>
             ${cfg.opts.map(o => `
-              <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid ${_wizardAnswers[cfg.key]===o.v?'#9CAF88':'#EFEFEB'};border-radius:8px;margin-bottom:8px;cursor:pointer;background:${_wizardAnswers[cfg.key]===o.v?'#F3F7F0':'white'};font-size:13px;transition:all .15s">
-                <input type="radio" name="wiz-opt" value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'checked':''} style="accent-color:#9CAF88"> ${o.l}
+              <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid ${_wizardAnswers[cfg.key]===o.v?'var(--accent)':'var(--border2)'};border-radius:var(--r);margin-bottom:8px;cursor:pointer;background:${_wizardAnswers[cfg.key]===o.v?'var(--accent-dim)':'var(--bg3)'};font-size:13px;transition:all .15s;color:var(--text)">
+                <input type="radio" name="wiz-opt" value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'checked':''} style="accent-color:var(--accent)"> ${o.l}
               </label>`).join('')}`;
           backEl.style.display = _wizardStep > 1 ? 'inline-flex' : 'none';
-          nextEl.textContent   = _wizardStep < _wizardSteps.length ? 'Next →' : 'Show my roles →';
+          nextEl.textContent   = _wizardStep < steps.length ? 'Next →' : 'Show my roles →';
         }
 
         function wizardNext() {
-          const cfg = _wizardSteps[_wizardStep - 1];
-          const sel = document.querySelector('input[name="wiz-opt"]:checked');
+          const steps = _getWizardSteps(_wizardOrgType || 'mid');
+          const cfg   = steps[_wizardStep - 1];
+          const sel   = document.querySelector('input[name="wiz-opt"]:checked');
           if (!sel) { alert('Please select an option to continue.'); return; }
           _wizardAnswers[cfg.key] = sel.value;
-          if (_wizardStep < _wizardSteps.length) { _wizardStep++; _wizardRenderStep(); return; }
+          if (_wizardStep < steps.length) { _wizardStep++; _wizardRenderStep(); return; }
           _wizardShowResult();
         }
 
@@ -3892,24 +4043,29 @@
         }
 
         function _wizardShowResult() {
-          const countryNames = { SE:'Sweden', NO:'Norway', DK:'Denmark', FI:'Finland', EE:'Estonia', LV:'Latvia', LT:'Lithuania' };
+          const countryNames = { SE:'Sweden', NO:'Norway', DK:'Denmark', FI:'Finland', EE:'Estonia', LV:'Latvia', LT:'Lithuania', DE:'Germany', FR:'France', NL:'Netherlands', PL:'Poland', ES:'Spain', IT:'Italy', OTHER_EU:'your EU market' };
           const country = countryNames[_wizardAnswers.market] || _wizardAnswers.market;
           const matched = ROLE_RULES.find(r => r.condition(_wizardAnswers));
           const roles   = matched ? matched.roles : ['PRODUCER_EPR'];
-          const trace   = matched ? matched.trace(_wizardAnswers, country) : `CA is the EPR Producer in ${country}.`;
+          const trace   = matched ? matched.trace(_wizardAnswers, country) : `Your organisation is the EPR Producer in ${country}.`;
           const obs     = OBLIGATION_DB.filter(o => o.roles.some(r => roles.includes(r)));
           const critObs = obs.filter(o => o.severity === 'critical');
+          const orgMeta = ORG_TYPES.find(o => o.v === _wizardOrgType);
           const resultEl = document.getElementById('wizard-result');
           resultEl.style.display = 'block';
           resultEl.innerHTML = `
-            <h3 style="margin-bottom:12px">Your PPWR roles in ${country}</h3>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-              ${roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:5px 12px;border-radius:8px;background:${m.bg};color:${m.color};font-size:12px;font-weight:600;border:1.5px solid ${m.color}30">${m.label}</span>` : ''; }).join('')}
+            <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 10px">Your PPWR roles in ${country}</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+              ${roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:5px 12px;border-radius:8px;background:${m.bg};color:${m.color};font-size:12px;font-weight:600;border:1px solid ${m.color}40">${m.label}</span>` : ''; }).join('')}
             </div>
-            <div style="font-size:13px;color:#444;line-height:1.7;padding:12px;background:#FAFAF8;border-radius:8px;margin-bottom:16px">${termify(trace,true)}</div>
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Top obligations (${obs.length} total — ${critObs.length} critical)</div>
-            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${termify(o.title,false)}</strong><div style="color:var(--text2);margin-top:3px">${o.article}</div></div>`).join('')}
-            <button class="btn-secondary" onclick="showPage('obligations')" style="margin-top:12px;font-size:12px">View all ${obs.length} obligations →</button>`;
+            <div style="font-size:13px;color:var(--text);line-height:1.75;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r);margin-bottom:18px">${termify(trace,true)}</div>
+            ${orgMeta ? `<div style="font-size:12px;color:var(--text2);padding:10px 12px;background:var(--bg3);border-radius:var(--r);margin-bottom:14px;border:1px solid var(--border)">ℹ️ Results are tailored for a <strong>${orgMeta.label.toLowerCase()}</strong>. <button class="btn-text" style="font-size:12px" onclick="renderRoleWizardPage()">Retake with a different org type</button></div>` : ''}
+            <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 10px">Top obligations — ${obs.length} total, ${critObs.length} critical</p>
+            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid var(--critical);background:var(--critical-dim);border-radius:0 var(--r) var(--r) 0;margin-bottom:8px;font-size:12px"><strong>${termify(o.title,false)}</strong><div style="color:var(--text2);margin-top:3px">${o.article}</div></div>`).join('')}
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+              <button class="btn-secondary" onclick="showPage('obligations')" style="font-size:12px">View all ${obs.length} obligations →</button>
+              <button class="btn-secondary" onclick="renderRoleWizardPage()" style="font-size:12px">↺ Start again</button>
+            </div>`;
           resultEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
         }
 
@@ -3926,8 +4082,8 @@
                 <span style="font-weight:700;font-size:14px">${t.term}</span>
                 <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${c}18;color:${c};flex-shrink:0">${t.tag}</span>
               </div>
-              <p style="font-size:13px;color:#444;line-height:1.6;margin:0 0 ${t.sg?'10px':'0'}">${t.def}</p>
-              ${t.sg ? `<div style="font-size:12px;color:#9CAF88;padding:8px 10px;background:#F3F7F0;border-radius:6px;border-left:3px solid #9CAF88;line-height:1.5;margin-bottom:8px">→ CA Context: ${t.sg}</div>` : ''}
+              <p style="font-size:13px;color:var(--text2);line-height:1.6;margin:0 0 ${t.sg?'10px':'0'}">${t.def}</p>
+              ${t.sg ? `<div style="font-size:12px;color:var(--accent);padding:8px 10px;background:var(--accent-dim);border-radius:6px;border-left:3px solid var(--accent);line-height:1.5;margin-bottom:8px">→ Your context: ${t.sg}</div>` : ''}
               ${ppwrLink('PPWR Regulation','📄 Read the full regulation ↗')}
             </div>`;
           }).join('') || '<div style="padding:24px;text-align:center;color:var(--text3);font-size:13px">No terms match your search.</div>';
@@ -5262,6 +5418,34 @@
             document.getElementById('dashboard-progress').textContent = appState.dashboard.progress + '%';
             document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
+
+            // Org-type context banner
+            const orgBanner = document.getElementById('dashboard-org-banner');
+            if (orgBanner) {
+                const orgMeta = {
+                    sme:        { icon:'🏪', label:'Small or micro business', tip:'Your compliance journey is focused on essentials — EPR registration, labelling, and recycled content for your specific product formats.' },
+                    mid:        { icon:'🏢', label:'Mid-size company',         tip:'Your priorities include EPR registration across multiple markets, supplier verification, and preparing your packaging for recyclability grade requirements.' },
+                    enterprise: { icon:'🏭', label:'Large company or multi-national', tip:'Your focus spans multi-market EPR, cross-border producer obligations, reuse targets, and Digital Product Passport implementation.' },
+                };
+                const ot = appState.orgType;
+                if (ot && orgMeta[ot]) {
+                    const m = orgMeta[ot];
+                    orgBanner.innerHTML = `<div style="display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:var(--r);font-size:13px;line-height:1.5">
+                        <span style="font-size:20px;flex-shrink:0">${m.icon}</span>
+                        <div style="flex:1">
+                            <span style="font-weight:600;color:var(--text)">${m.label}</span>
+                            <span style="color:var(--text2);margin-left:8px">${m.tip}</span>
+                        </div>
+                        <button onclick="showPage('my-role')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 0">Change →</button>
+                    </div>`;
+                } else {
+                    orgBanner.innerHTML = `<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);font-size:13px">
+                        <span style="font-size:18px">💡</span>
+                        <span style="color:var(--text2);flex:1">Tell us about your organisation to get personalised guidance across the platform.</span>
+                        <button onclick="showPage('my-role')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 0">Get started →</button>
+                    </div>`;
+                }
+            }
 
             renderMilestoneWidget();
             renderCertificationStatus();
