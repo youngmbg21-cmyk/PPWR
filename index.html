@@ -1032,6 +1032,17 @@
         <div class="sidebar-item page-link" data-page="grading">♻️ Grading Lab</div>
         <div class="sidebar-item page-link" data-page="calculator">🧮 Content Calculator</div>
         <div class="sidebar-item page-link" data-page="vault">📁 Record Vault</div>
+        <div class="sidebar-section-tools" style="padding: 0 24px; margin-top: 20px; margin-bottom: 10px; border-top: 1px solid #EFEFEB; padding-top: 18px;">
+            <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Compliance Tools</p>
+        </div>
+        <div class="sidebar-item page-link" data-page="scope">🔍 Scope Checker</div>
+        <div class="sidebar-item page-link" data-page="glossary">📖 Glossary</div>
+        <div class="sidebar-item page-link" data-page="fine-estimator">⚖️ Fine Estimator</div>
+        <div class="sidebar-item page-link" data-page="packaging-audit">📦 Packaging Audit</div>
+        <div class="sidebar-item page-link" data-page="obligations">📋 Obligations Tracker</div>
+        <div class="sidebar-item page-link" data-page="my-role">🎭 My Role</div>
+        <div class="sidebar-item page-link" data-page="delegated-acts">📜 Delegated Acts</div>
+        <div class="sidebar-item page-link" data-page="countries">🌍 Country Hub</div>
         <div class="sidebar-section-admin" style="padding: 0 24px; margin-top: 32px; margin-bottom: 24px; border-top: 1px solid #EFEFEB; padding-top: 24px;">
             <p style="font-size: 12px; color: #999; font-weight: 600; text-transform: uppercase;">Admin</p>
         </div>
@@ -1197,6 +1208,16 @@
                 <div class="card" id="cert-status-widget">
                     <h3>🏅 Certification Status</h3>
                     <div id="cert-status-content" style="margin-top: 12px; color: #666;">Loading…</div>
+                </div>
+            </div>
+
+            <div class="card" id="delegated-acts-widget" style="margin-bottom: 32px; display: none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h3 style="margin:0;">📜 Delegated Acts Watch</h3>
+                    <button class="btn-secondary page-link" data-page="delegated-acts" style="font-size:12px; padding:6px 14px;">View All</button>
+                </div>
+                <div id="delegated-acts-widget-content">
+                    <p style="color:#666; font-size:14px;">Loading…</p>
                 </div>
             </div>
 
@@ -1517,6 +1538,229 @@
                 <button class="btn-primary" id="send-bulk-invites" style="flex: 1;">Send Invites</button>
                 <button class="btn-secondary" id="close-bulk-modal" style="flex: 1;">Cancel</button>
             </div>
+        </div>
+    </div>
+
+    <!-- ================================================================
+         NEW FEATURE PAGES
+    ================================================================ -->
+
+    <!-- SCOPE & EXEMPTIONS PAGE -->
+    <div class="page" id="scope-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">🔍 Scope &amp; Exemptions Checker</h1>
+                <p style="color:#666; font-size:15px;">Understand which packaging is covered by PPWR, what is excluded, and the special cases relevant to your operations.</p>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+                <h3 style="color:#15803d; margin-bottom:16px;">✅ In Scope</h3>
+                <p style="color:#666; font-size:13px; margin-bottom:16px;">All of the following are covered by PPWR and carry full compliance obligations.</p>
+                <div id="scope-in-list-page"></div>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+                <h3 style="color:#dc2626; margin-bottom:16px;">🚫 Out of Scope</h3>
+                <p style="color:#666; font-size:13px; margin-bottom:16px;">These items are explicitly excluded from PPWR's definition of packaging.</p>
+                <div id="scope-out-list-page"></div>
+            </div>
+            <div class="card" style="margin-bottom:24px;">
+                <h3 style="color:#d97706; margin-bottom:16px;">⚠️ Special Cases — Company A Relevant</h3>
+                <p style="color:#666; font-size:13px; margin-bottom:16px;">These packaging categories have modified or conditional obligations that may apply to your specific product lines.</p>
+                <div id="scope-ca-list-page"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELEGATED ACTS PAGE -->
+    <div class="page" id="delegated-acts-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">📜 Delegated Acts Tracker</h1>
+                <p style="color:#666; font-size:15px;">Key secondary legislation still pending — these acts will define the technical detail behind PPWR's core obligations.</p>
+            </div>
+            <div class="card">
+                <div id="delegated-acts-page-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINE ESTIMATOR PAGE -->
+    <div class="page" id="fine-estimator-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">⚖️ Fine Estimator</h1>
+                <p style="color:#666; font-size:15px;">Estimate potential enforcement exposure by country, violation type and company scale. Ranges are indicative — not legal advice.</p>
+            </div>
+            <div class="grid-2" style="margin-bottom:24px; align-items:start;">
+                <div class="card">
+                    <h3 style="margin-bottom:20px;">Configure scenario</h3>
+                    <div style="margin-bottom:16px;">
+                        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Country</label>
+                        <select id="fe-country" style="width:100%; padding:10px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+                            <option value="">— Select country —</option>
+                            <option value="SE">🇸🇪 Sweden</option>
+                            <option value="NO">🇳🇴 Norway (EEA)</option>
+                            <option value="DK">🇩🇰 Denmark</option>
+                            <option value="FI">🇫🇮 Finland</option>
+                            <option value="EE">🇪🇪 Estonia</option>
+                            <option value="LV">🇱🇻 Latvia</option>
+                            <option value="LT">🇱🇹 Lithuania</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Violation Type</label>
+                        <select id="fe-violation" style="width:100%; padding:10px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+                            <option value="">— Select violation —</option>
+                            <option value="epr-missing">EPR Non-Registration</option>
+                            <option value="epr-underreport">EPR Under-Reporting</option>
+                            <option value="recycled-content">Recycled Content Non-Compliance</option>
+                            <option value="labelling">Labelling / DPP Missing</option>
+                            <option value="reuse-target">Reuse Target Failure</option>
+                            <option value="prohibited-pkg">Placing Prohibited Packaging</option>
+                            <option value="grade-de">Marketing Grade D/E post-2030</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <label style="font-size:13px; font-weight:600; display:block; margin-bottom:10px;">Scale</label>
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
+                                <input type="radio" name="fe-scale" value="isolated" style="margin-top:2px;" checked>
+                                <span><strong>Isolated incident</strong><br><span style="color:#666; font-size:12px;">First offence, self-reported, remediated promptly</span></span>
+                            </label>
+                            <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
+                                <input type="radio" name="fe-scale" value="persistent" style="margin-top:2px;">
+                                <span><strong>Persistent breach</strong><br><span style="color:#666; font-size:12px;">Repeated, not self-reported, slow to remediate</span></span>
+                            </label>
+                            <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:13px;">
+                                <input type="radio" name="fe-scale" value="systemic" style="margin-top:2px;">
+                                <span><strong>Systemic failure</strong><br><span style="color:#666; font-size:12px;">Deliberate, large-scale, cross-border pattern</span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn-primary" id="fe-run-btn" style="width:100%;" onclick="runFineEstimator()">Estimate Exposure →</button>
+                </div>
+                <div class="card" id="fe-result" style="display:none;">
+                    <div id="fe-result-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PACKAGING AUDIT PAGE -->
+    <div class="page" id="packaging-audit-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">📦 Packaging Audit Tool</h1>
+                <p style="color:#666; font-size:15px;">Review all 30 packaging formats used by Company A against PPWR requirements. Filter by tier, material or compliance status.</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
+                <select id="pa-filter-tier" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Tiers</option>
+                    <option value="sales">Sales</option>
+                    <option value="grouped">Grouped</option>
+                    <option value="transport">Transport</option>
+                </select>
+                <select id="pa-filter-grade" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Grades</option>
+                    <option value="A">Grade A</option>
+                    <option value="B">Grade B</option>
+                    <option value="C">Grade C</option>
+                    <option value="D">Grade D</option>
+                    <option value="E">Grade E</option>
+                </select>
+                <select id="pa-filter-risk" onchange="filterPackagingAudit()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Status</option>
+                    <option value="banned">Banned / At Risk</option>
+                    <option value="ok">Compliant</option>
+                </select>
+                <span id="pa-count" style="font-size:13px; color:#666; margin-left:auto;"></span>
+            </div>
+            <div id="pa-summary-bar" style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;"></div>
+            <div id="packaging-audit-grid" class="grid-3"></div>
+        </div>
+    </div>
+
+    <!-- OBLIGATIONS TRACKER PAGE -->
+    <div class="page" id="obligations-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">📋 Obligations Tracker</h1>
+                <p style="color:#666; font-size:15px;">All PPWR obligations in one place. Filter by severity, role or deadline to focus on what matters most right now.</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;">
+                <select id="ob-filter-sev" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Severities</option>
+                    <option value="critical">Critical</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <select id="ob-filter-deadline" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Deadlines</option>
+                    <option value="2025">Active now (2025)</option>
+                    <option value="2028">By 2028</option>
+                    <option value="2030">By 2030</option>
+                </select>
+                <select id="ob-filter-role" onchange="filterObligationsPage()" style="padding:8px 12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:13px;">
+                    <option value="">All Roles</option>
+                    <option value="MANUFACTURER">Manufacturer</option>
+                    <option value="PACKER">Packer</option>
+                    <option value="IMPORTER">Importer</option>
+                    <option value="DISTRIBUTOR">Distributor</option>
+                    <option value="PRODUCER_EPR">EPR Producer</option>
+                </select>
+                <span id="ob-count" style="font-size:13px; color:#666; margin-left:auto;"></span>
+            </div>
+            <div id="obligations-tracker-list"></div>
+        </div>
+    </div>
+
+    <!-- ROLE DETERMINATION WIZARD PAGE -->
+    <div class="page" id="my-role-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">🎭 Role Determination Wizard</h1>
+                <p style="color:#666; font-size:15px;">Answer 4 questions to identify your PPWR roles and the key obligations that apply to your situation.</p>
+            </div>
+            <div class="card" style="max-width:640px;">
+                <!-- Step indicators -->
+                <div style="display:flex; gap:8px; margin-bottom:28px;" id="wizard-steps">
+                    <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#9CAF88; color:white; font-size:12px; font-weight:700;">1 Source</div>
+                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">2 Brand</div>
+                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">3 Modify</div>
+                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:#EFEFEB; color:#999; font-size:12px; font-weight:700;">4 Market</div>
+                </div>
+                <div id="wizard-body"></div>
+                <div style="display:flex; gap:10px; margin-top:24px;">
+                    <button class="btn-secondary" id="wizard-back-btn" style="display:none;" onclick="wizardBack()">← Back</button>
+                    <button class="btn-primary" id="wizard-next-btn" onclick="wizardNext()" style="flex:1;">Next →</button>
+                </div>
+            </div>
+            <div class="card" id="wizard-result" style="margin-top:24px; max-width:640px; display:none;"></div>
+        </div>
+    </div>
+
+    <!-- COUNTRY HUB PAGE -->
+    <div class="page" id="countries-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">🌍 Country Hub</h1>
+                <p style="color:#666; font-size:15px;">PPWR implementation status, enforcement approach and required actions for all 7 cluster countries.</p>
+            </div>
+            <div id="countries-hub-grid" class="grid-2"></div>
+        </div>
+    </div>
+
+    <!-- GLOSSARY PAGE -->
+    <div class="page" id="glossary-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <h1 style="margin-bottom:8px;">📖 Glossary</h1>
+                <p style="color:#666; font-size:15px;">Key PPWR terms explained in plain English, with Company A context.</p>
+            </div>
+            <div style="margin-bottom:20px;">
+                <input type="text" id="glossary-page-search" placeholder="Search terms…" oninput="filterGlossaryPage()" style="width:100%; padding:12px; border:1px solid #EFEFEB; border-radius:8px; font-family:inherit; font-size:14px;">
+            </div>
+            <div id="glossary-page-list" class="grid-2"></div>
         </div>
     </div>
 
@@ -1987,6 +2231,84 @@
         ];
 
         // ============================================================================
+        // COMPLIANCE TOOLS DATA
+        // ============================================================================
+
+        const DELEGATED_ACTS = [
+          { id:'recyclability-criteria', title:'Delegated Regulation — Recyclability Assessment Criteria (Art. 6(4))', status:'pending', expectedBy:'2026', notes:'Will define the final methodology for assigning grades A–E to packaging. Current grades are based on the Regulation\'s framework criteria — they will be confirmed or revised when this act is adopted.', affects:['Recyclability grades','PACKAGING_MATERIALS'] },
+          { id:'recycled-content-calc', title:'Implementing Regulation — Recycled Content Calculation Method (Art. 7(8))', status:'pending', expectedBy:'2026', notes:'Will define exactly how recycled content percentage is calculated and verified. Targets are correct per Annex II — only the calculation methodology is pending.', affects:['RC_TARGETS','Recycled content obligations'] },
+          { id:'dpp-specs', title:'Delegated Regulation — Digital Product Passport Specifications (Art. 13(7))', status:'pending', expectedBy:'2027', notes:'Will define the exact data fields required in the digital product passport, the technical format for the QR code, and the hosting/accessibility requirements. The 2030 deadline is confirmed — the technical specification is pending.', affects:['DPP obligation (2030)'] },
+          { id:'reuse-formats', title:'Delegated Regulation — Reusable Packaging Design Requirements (Art. 11(4))', status:'pending', expectedBy:'2026', notes:'Will define the minimum design requirements that transport and sales packaging must meet to qualify as "reusable" for the purposes of the reuse targets.', affects:['Reuse target (40% by 2030)','PACKAGING_MATERIALS reusable flag'] },
+          { id:'grade-c-phaseout', title:'Delegated Act — Grade C Phase-out Timeline (Art. 6(5))', status:'pending', expectedBy:'2028', notes:'Will confirm whether and when Grade C packaging faces mandatory phase-out after 2030. Until adopted, Grade C remains permitted post-2030.', affects:['Grade C packaging','Recyclability obligation'] },
+          { id:'epr-modulation', title:'Implementing Act — EPR Fee Modulation Criteria (Art. 45(6))', status:'pending', expectedBy:'2026', notes:'Will define the exact criteria by which EPR fees must be modulated by recyclability grade. Current fee direction indicators are qualitative — precise modulation factors will be set by this act.', affects:['EPR fee levels','Country enforcement ranges'] },
+        ];
+
+        const SCOPE_DATA = {
+          inScope: [
+            { item:'Cardboard boxes and cartons', article:'Annex I', notes:'All sizes, all tiers' },
+            { item:'Plastic bags, film and wrapping', article:'Annex I', notes:'Including stretch wrap and shrink film' },
+            { item:'Glass bottles and jars', article:'Annex I', notes:'Including closures and caps' },
+            { item:'Metal tins and cans', article:'Annex I', notes:'Steel and aluminium' },
+            { item:'Wooden pallets and crates', article:'Annex I', notes:'Transport tier — reuse targets apply' },
+            { item:'Plastic buckets, tubs and containers', article:'Annex I', notes:'Including lids if sold with container' },
+            { item:'Composite packaging (Tetra Pak type)', article:'Annex I', notes:'Multi-material — recyclability assessment required' },
+            { item:'Protective wrapping around products', article:'Annex I', notes:'e.g. bubble wrap, foam inserts around glass' },
+            { item:'Labels, tapes and seals on packaging', article:'Annex I', notes:'Must not impede recyclability of host packaging' },
+            { item:'Bags used for construction chemicals', article:'Annex I', notes:'Paper valve sacks, PE bags, laminate bags — all in scope' },
+            { item:'Corner boards, edge protectors', article:'Annex I', notes:'Transport tier' },
+            { item:'Strapping and banding', article:'Annex I', notes:'Steel, plastic, paper — all in scope' },
+          ],
+          outOfScope: [
+            { item:'Fixed/permanent parts of a product (e.g. printer cartridge body)', article:'Annex I Note 1', notes:'Integral to the product, not separable' },
+            { item:'Flower pots sold containing a plant', article:'Annex I Note 2', notes:'Pot is part of the product, not packaging' },
+            { item:'Paint tins sold as the product itself', article:'Annex I Note 2', notes:'Container is the product' },
+            { item:'Tea bags and coffee pods (product-integral)', article:'Annex I Note 3', notes:'Functional part of the product consumed in use' },
+            { item:'Wax around cheese (consumed with product)', article:'Annex I Note 3', notes:'Forms part of the food — not packaging' },
+            { item:'Tape reel cores and CD jewel cases', article:'Annex I Note 1', notes:'Integral to the product' },
+            { item:'Graveyard decoration pots', article:'Art. 3(1)', notes:'Not sold for commercial packaging purpose' },
+          ],
+          caRelevant: [
+            { item:'Dangerous goods packaging (ADR/IMDG compliant)', status:'modified-obligations', article:'Art. 5(3)', urgency:'high', detail:'Packaging required to comply with ADR or IMDG may have modified recyclability and labelling obligations where PPWR requirements would conflict with safety requirements. Company A product lines with hazmat classification (sealants, adhesives, construction chemicals) should seek specific legal advice.' },
+            { item:'Contact-sensitive packaging (food/pharmaceutical direct contact)', status:'lower-rc-threshold', article:'Art. 7(3), Annex II', urgency:'medium', detail:'Packaging in direct contact with food or pharmaceutical products qualifies for the lower recycled content threshold: 10% by 2030 (not 30%). Apply the correct threshold to the correct packaging category.' },
+            { item:'Packaging for medical devices (Class II/III)', status:'labelling-exemption', article:'Art. 12(6)', urgency:'low', detail:'Packaging for Class II/III medical devices has specific exemptions from some harmonised sorting label requirements where medical device labelling rules take precedence.' },
+            { item:'Reusable transport packaging in closed-loop B2B systems', status:'modified-epr', article:'Art. 44(3)', urgency:'medium', detail:'Transport packaging used exclusively in a closed-loop system may qualify for modified EPR registration treatment. Relevant for intercompany flows between cluster entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.' },
+            { item:'Packaging for products exported outside the EU', status:'epr-exclusion', article:'Art. 44(2)', urgency:'medium', detail:'Packaging on products exported from the EU can be excluded from EPR reporting in the exporting Member State. Documentary evidence of export is required (customs declarations, shipping documents).' },
+          ],
+        };
+
+        const ROLE_META = {
+          PACKER:       { label:'Packer / Filler',  color:'#9b1c1c', bg:'#fee2e2', desc:'First contact between product and packaging — primary design obligations' },
+          MANUFACTURER: { label:'Manufacturer',      color:'#92400e', bg:'#fef3c7', desc:'Places own name/trademark on product — Art. 3(11) PPWR' },
+          IMPORTER:     { label:'Importer',          color:'#1e3a8a', bg:'#dbeafe', desc:'First EU entity placing goods from outside EU on the market' },
+          DISTRIBUTOR:  { label:'Distributor',       color:'#065f46', bg:'#d1fae5', desc:'Downstream supply chain — no own name, no modification' },
+          PRODUCER_EPR: { label:'EPR Producer',      color:'#4c1d95', bg:'#ede9fe', desc:'Registers and pays EPR fees in country of placement on market' },
+        };
+
+        const SEV_META = {
+          critical: { label:'Critical',    bg:'#fee2e2', color:'#dc2626', icon:'🔴' },
+          high:     { label:'Act now',     bg:'#fef3c7', color:'#d97706', icon:'🟡' },
+          medium:   { label:'Plan for it', bg:'#e0f2fe', color:'#0369a1', icon:'🔵' },
+          low:      { label:'Awareness',   bg:'#f0fdf4', color:'#16a34a', icon:'🟢' },
+        };
+
+        const ROLE_RULES = [
+          { id:'own-packer', condition:s=>s.source==='sg-mfg', roles:['PACKER','MANUFACTURER','PRODUCER_EPR'],
+            trace:(s,c)=>`CA operates a manufacturing site in ${c} and applies the packaging itself — this makes CA the <strong>Packer/Filler</strong> and <strong>Manufacturer</strong> under PPWR Art. 3(11). As the entity first placing packaged goods on the market, CA is also the <strong>EPR Producer</strong> in every country of sale.` },
+          { id:'sister-sg-brand', condition:s=>s.source==='sg-sister'&&(s.brand==='sg-brand'||s.relabel==='relabel'||s.relabel==='repack'||s.relabel==='modify'), roles:['MANUFACTURER','IMPORTER','PRODUCER_EPR'],
+            trace:(s,c)=>`CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because it ${s.brand==='sg-brand'?'sells under the CA brand':s.relabel==='relabel'?'re-labels the packaging':s.relabel==='repack'?'re-packs into new packaging':'modifies the packaging'} — even though physical production is by a sister company. CA is also the <strong>Importer</strong> (goods cross into the cluster) and <strong>EPR Producer</strong> in ${c}.` },
+          { id:'sister-supplier-brand', condition:s=>s.source==='sg-sister'&&s.brand==='supplier-brand'&&s.relabel==='no', roles:['DISTRIBUTOR','PRODUCER_EPR'],
+            trace:(s,c)=>`CA does not place its own name on the product and does not modify the packaging — CA is a <strong>Distributor</strong> under PPWR Art. 3(13). CA is still the <strong>EPR Producer</strong> in ${c} because it is the entity placing the packaging on that market.` },
+          { id:'sister-customer-brand', condition:s=>s.source==='sg-sister'&&s.brand==='customer-brand', roles:['DISTRIBUTOR','PRODUCER_EPR'],
+            trace:(s,c)=>`The product carries the customer's brand — CA acts as a <strong>Distributor</strong>. CA is still the <strong>EPR Producer</strong> in ${c} as the entity placing the packaged goods on the market.` },
+          { id:'3p-non-eu-importer', condition:s=>s.source==='3p-non-eu', roles:['IMPORTER','PRODUCER_EPR'],
+            trace:(s,c)=>`The supplier is outside the EU — CA is the <strong>Importer</strong> of record and therefore the <strong>EPR Producer</strong> in ${c} under PPWR Art. 3(12). If the supplier's packaging is non-compliant, enforcement falls on CA.` },
+          { id:'3p-eu-sg-brand', condition:s=>s.source==='3p-eu'&&(s.brand==='sg-brand'||s.relabel!=='no'), roles:['MANUFACTURER','PRODUCER_EPR'],
+            trace:(s,c)=>`The supplier is EU-based. CA ${s.brand==='sg-brand'?'places the product under its own brand name':'re-labels or modifies the packaging'} — this triggers <strong>Manufacturer</strong> status for CA under Art. 3(11). CA is also the <strong>EPR Producer</strong> in ${c}.` },
+          { id:'3p-eu-pass-through', condition:s=>s.source==='3p-eu'&&s.brand!=='sg-brand'&&s.relabel==='no', roles:['DISTRIBUTOR','PRODUCER_EPR'],
+            trace:(s,c)=>`The EU supplier retains Manufacturer status. CA neither brands nor modifies the packaging — CA is a <strong>Distributor</strong> under Art. 3(13). CA is still the <strong>EPR Producer</strong> in ${c}.` },
+        ];
+
+        // ============================================================================
         // STRATEGIC DATA OBJECTS
         // ============================================================================
         const PPWR_ROADMAP = {
@@ -2292,22 +2614,35 @@
             if (pageName === 'admin-users') loadAdminUsers();
             if (pageName === 'admin-analytics') loadAnalytics();
             if (pageName === 'admin-leads') loadLeads();
-            if (pageName === 'certificates') loadCertificates();
-            if (pageName === 'roadmap')     renderRoadmap();
-            if (pageName === 'grading')     renderGradingModule();
-            if (pageName === 'calculator')  renderCalculator();
-            if (pageName === 'vault')       renderVault();
+            if (pageName === 'certificates')    loadCertificates();
+            if (pageName === 'roadmap')         renderRoadmap();
+            if (pageName === 'grading')         renderGradingModule();
+            if (pageName === 'calculator')      renderCalculator();
+            if (pageName === 'vault')           renderVault();
+            if (pageName === 'scope')           renderScopePageNew();
+            if (pageName === 'delegated-acts')  renderDelegatedActsPage();
+            if (pageName === 'fine-estimator')  renderFineEstimatorPage();
+            if (pageName === 'packaging-audit') renderPackagingAuditPage();
+            if (pageName === 'obligations')     renderObligationsTrackerPage();
+            if (pageName === 'my-role')         renderRoleWizardPage();
+            if (pageName === 'countries')       renderCountriesHubPage();
+            if (pageName === 'glossary')        renderGlossaryPage();
         }
 
         // Which sidebar pages each tier can access
         const TIER_ACCESS = {
-            free:    ['dashboard', 'learning'],
-            starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator'],
+            free:    ['dashboard', 'learning', 'scope', 'glossary'],
+            starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
+                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role'],
             growth:  ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
-                      'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard'],
+                      'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
+                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
+                      'delegated-acts', 'countries'],
             pro:     ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
                       'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
-                      'admin-users', 'admin-analytics', 'admin-leads']
+                      'admin-users', 'admin-analytics', 'admin-leads',
+                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
+                      'delegated-acts', 'countries']
         };
 
         function tierHasAccess(page) {
@@ -2344,6 +2679,12 @@
             const readinessHeader = document.querySelector('.sidebar-section-readiness');
             if (readinessHeader) {
                 readinessHeader.style.display = tierHasAccess('roadmap') ? '' : 'none';
+            }
+
+            // Show/hide compliance tools section header
+            const toolsHeader = document.querySelector('.sidebar-section-tools');
+            if (toolsHeader) {
+                toolsHeader.style.display = tierHasAccess('scope') ? '' : 'none';
             }
 
             // Show/hide admin section header
