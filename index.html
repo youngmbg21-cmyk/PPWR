@@ -2477,6 +2477,328 @@
         ];
 
         // ============================================================================
+        // COMPLIANCE TOOL RENDER FUNCTIONS
+        // ============================================================================
+
+        function renderScopePageNew() {
+          const inEl  = document.getElementById('scope-in-list-page');
+          const outEl = document.getElementById('scope-out-list-page');
+          const caEl  = document.getElementById('scope-ca-list-page');
+          if (!inEl || !outEl || !caEl) return;
+          const row = (r, badge, badgeCls) => `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid #F5F5F3;gap:12px">
+              <div style="flex:1"><span style="font-weight:600;font-size:13px">${r.item}</span><span style="display:block;font-size:12px;color:#666;margin-top:2px">${r.notes}</span></div>
+              <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+                <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;${badgeCls}">${badge}</span>
+                <span style="font-size:10px;color:#999">${r.article}</span>
+              </div>
+            </div>`;
+          inEl.innerHTML  = SCOPE_DATA.inScope.map(r => row(r,'IN SCOPE','background:#dcfce7;color:#15803d')).join('');
+          outEl.innerHTML = SCOPE_DATA.outOfScope.map(r => row(r,'OUT','background:#fee2e2;color:#dc2626')).join('');
+          const urgencyStyle = { high:{bg:'#fee2e2',color:'#dc2626',label:'High priority'}, medium:{bg:'#fef3c7',color:'#d97706',label:'Medium'}, low:{bg:'#e0f2fe',color:'#0369a1',label:'Awareness'} };
+          const statusLabel  = { 'modified-obligations':'Modified obligations','lower-rc-threshold':'Lower RC threshold','labelling-exemption':'Labelling exemption','modified-epr':'Modified EPR','epr-exclusion':'EPR exclusion' };
+          caEl.innerHTML = SCOPE_DATA.caRelevant.map(r => {
+            const u = urgencyStyle[r.urgency]; const s = statusLabel[r.status] || r.status;
+            return `<div style="background:#FAFAF8;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:12px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+                <span style="font-weight:600;font-size:13px;flex:1">${r.item}</span>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0">
+                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${u.bg};color:${u.color}">${u.label}</span>
+                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${s}</span>
+                  <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#e0f2fe;color:#0369a1">${r.article}</span>
+                </div>
+              </div>
+              <p style="font-size:12px;color:#666;line-height:1.6;margin:0">${r.detail}</p>
+            </div>`;
+          }).join('');
+        }
+
+        function renderDelegatedActsPage() {
+          const listEl   = document.getElementById('delegated-acts-page-list');
+          const widgetEl = document.getElementById('delegated-acts-widget-content');
+          const html = DELEGATED_ACTS.map(a => {
+            const isPending = a.status === 'pending';
+            const badge = isPending
+              ? `<span style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:#fef3c7;color:#d97706">PENDING</span>`
+              : `<span style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;background:#dcfce7;color:#15803d">ADOPTED</span>`;
+            return `<div style="padding:16px 0;border-bottom:1px solid #F5F5F3">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap">
+                <span style="font-weight:600;font-size:13px;flex:1">${a.title}</span>
+                <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">${badge}<span style="font-size:11px;color:#999">Expected ${a.expectedBy}</span></div>
+              </div>
+              <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 6px">${a.notes}</p>
+              <div style="font-size:11px;color:#999">Affects: ${a.affects.join(' · ')}</div>
+            </div>`;
+          }).join('');
+          if (listEl)   listEl.innerHTML   = html;
+          if (widgetEl) widgetEl.innerHTML = DELEGATED_ACTS.slice(0,3).map(a =>
+            `<div style="padding:8px 0;border-bottom:1px solid #F5F5F3;font-size:12px">
+              <span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#fef3c7;color:#d97706;margin-right:6px">PENDING</span>
+              <span style="font-weight:500">${a.title.replace(/Delegated |Implementing /g,'').split('—')[0].trim()}</span>
+              <span style="color:#999;margin-left:6px">(exp. ${a.expectedBy})</span>
+            </div>`).join('');
+        }
+
+        function runFineEstimator() {
+          const country   = document.getElementById('fe-country').value;
+          const violation = document.getElementById('fe-violation').value;
+          const scale     = document.querySelector('input[name="fe-scale"]:checked')?.value || 'isolated';
+          const resultEl  = document.getElementById('fe-result');
+          const contentEl = document.getElementById('fe-result-content');
+          if (!country || !violation) { alert('Please select a country and violation type.'); return; }
+          const ce = COUNTRY_ENFORCEMENT[country];
+          const vp = VIOLATION_PROFILES[violation];
+          if (!ce || !vp) return;
+          const bandKey  = BAND_MATRIX[ce.strictness]?.[vp.baseSeverity]?.[scale] || 'MEDIUM';
+          const bs       = BAND_STYLE[bandKey];
+          const range    = ce.ranges[violation]?.[scale === 'isolated' ? 'iso' : scale === 'persistent' ? 'per' : 'sys'] || 'Contact legal for estimate';
+          const nonMon   = vp.nonMonetary[scale] || [];
+          const flags    = [ce.dailyPenalty && '📅 Daily accumulating penalty possible', ce.publicNaming && '📢 Public naming on non-compliance register', ce.criminalReferral && '⚖️ Criminal referral possible for serious cases'].filter(Boolean);
+          resultEl.style.display = 'block';
+          contentEl.innerHTML = `
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+              <div style="width:48px;height:48px;border-radius:10px;background:${bs.bg};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">${bs.icon}</div>
+              <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:2px">Risk Band</div>
+                <div style="font-size:22px;font-weight:700;color:${bs.bg}">${bs.label}</div></div>
+            </div>
+            <div style="font-size:12px;color:#666;margin-bottom:16px">${bs.desc}</div>
+            <div style="background:#F5F5F3;border-radius:8px;padding:14px;margin-bottom:16px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:4px">Indicative Fine Range — ${ce.flag} ${ce.name}</div>
+              <div style="font-size:18px;font-weight:700">${range}</div>
+              <div style="font-size:11px;color:#999;margin-top:4px">Scale: ${scale} · Enforcement: ${ce.strictnessLabel}</div>
+            </div>
+            ${flags.length ? `<div style="margin-bottom:16px">${flags.map(f=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">${f}</div>`).join('')}</div>` : ''}
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:8px">Non-monetary consequences</div>
+            ${nonMon.map(c=>`<div style="font-size:12px;color:#555;padding:4px 0;border-bottom:1px solid #F5F5F3">• ${c}</div>`).join('')}
+            <div style="margin-top:16px;padding:10px;background:#fff8e1;border-radius:6px;font-size:11px;color:#92400e">Ranges are indicative only and not legal advice. Actual fines depend on individual circumstances, national transposition and judicial discretion.</div>`;
+        }
+
+        function renderFineEstimatorPage() { /* static HTML — runFineEstimator() handles interaction */ }
+
+        function renderPackagingAuditPage() {
+          window._paAll = PACKAGING_MATERIALS;
+          filterPackagingAudit();
+        }
+
+        function filterPackagingAudit() {
+          const all     = window._paAll || PACKAGING_MATERIALS;
+          const tier    = document.getElementById('pa-filter-tier')?.value  || '';
+          const grade   = document.getElementById('pa-filter-grade')?.value || '';
+          const risk    = document.getElementById('pa-filter-risk')?.value  || '';
+          const grid    = document.getElementById('packaging-audit-grid');
+          const countEl = document.getElementById('pa-count');
+          const barEl   = document.getElementById('pa-summary-bar');
+          if (!grid) return;
+          let items = all;
+          if (tier)  items = items.filter(i => i.tier  === tier);
+          if (grade) items = items.filter(i => i.grade === grade);
+          if (risk === 'banned') items = items.filter(i => i.ppwrBan);
+          if (risk === 'ok')     items = items.filter(i => !i.ppwrBan);
+          if (countEl) countEl.textContent = `${items.length} format${items.length !== 1 ? 's' : ''} shown`;
+          const gradeColor = { A:'#15803d', B:'#0369a1', C:'#d97706', D:'#dc2626', E:'#7f1d1d' };
+          const gradeBg    = { A:'#dcfce7', B:'#dbeafe', C:'#fef3c7', D:'#fee2e2', E:'#fee2e2' };
+          const eprLabel   = { 'lowest':'Lowest fees', 'low':'Low fees', 'medium-rising':'Rising fees', 'highest-banned':'Highest / banned' };
+          grid.innerHTML = items.map(m => `
+            <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+                <span style="font-weight:600;font-size:13px;flex:1;line-height:1.4">${m.label}</span>
+                <span style="padding:3px 8px;border-radius:6px;font-size:13px;font-weight:800;background:${gradeBg[m.grade]};color:${gradeColor[m.grade]};flex-shrink:0">Grade ${m.grade}</span>
+              </div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555;text-transform:capitalize">${m.tier}</span>
+                <span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${m.material}</span>
+                ${m.ppwrBan ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;background:#fee2e2;color:#dc2626">⛔ ${m.banYear === 2025 ? 'BANNED NOW' : 'BANNED 2030'}</span>` : ''}
+                ${m.reusable ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:#dcfce7;color:#15803d">♻️ Reusable</span>` : ''}
+              </div>
+              <div style="font-size:11px;color:#666;line-height:1.5">${m.gradeRationale}</div>
+              ${m.issues.length ? `<div style="font-size:11px;color:#dc2626">${m.issues.map(i=>`• ${i}`).join('<br>')}</div>` : ''}
+              <div style="font-size:11px;padding:8px;background:#FAFAF8;border-radius:6px;border-left:3px solid ${gradeColor[m.grade]};color:#333;line-height:1.5">${m.sgRelevance}</div>
+              <div style="font-size:11px;color:#999">EPR fee direction: ${eprLabel[m.eprFeeDirection] || m.eprFeeDirection}</div>
+            </div>`).join('');
+          if (barEl) {
+            const counts = {};
+            all.forEach(m => { counts[m.grade] = (counts[m.grade]||0)+1; });
+            barEl.innerHTML = ['A','B','C','D','E'].map(g => counts[g] ? `<span style="padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;background:${gradeBg[g]};color:${gradeColor[g]}">Grade ${g}: ${counts[g]}</span>` : '').join('');
+          }
+        }
+
+        function renderObligationsTrackerPage() {
+          window._obAll = OBLIGATION_DB;
+          filterObligationsPage();
+        }
+
+        function filterObligationsPage() {
+          const all     = window._obAll || OBLIGATION_DB;
+          const sev     = document.getElementById('ob-filter-sev')?.value      || '';
+          const dead    = document.getElementById('ob-filter-deadline')?.value  || '';
+          const role    = document.getElementById('ob-filter-role')?.value      || '';
+          const listEl  = document.getElementById('obligations-tracker-list');
+          const countEl = document.getElementById('ob-count');
+          if (!listEl) return;
+          let items = all;
+          if (sev)  items = items.filter(o => o.severity === sev);
+          if (dead) items = items.filter(o => o.deadline <= parseInt(dead));
+          if (role) items = items.filter(o => o.roles.includes(role));
+          if (countEl) countEl.textContent = `${items.length} obligation${items.length !== 1 ? 's' : ''} shown`;
+          listEl.innerHTML = items.map(o => {
+            const s = SEV_META[o.severity] || SEV_META.low;
+            const deadTag = o.deadline > 2025
+              ? `<span style="font-size:10px;background:#e0f2fe;color:#0369a1;padding:2px 7px;border-radius:4px;font-weight:600">By ${o.deadline}</span>`
+              : `<span style="font-size:10px;background:#fee2e2;color:#dc2626;padding:2px 7px;border-radius:4px;font-weight:600">Active now</span>`;
+            const roleChips = o.roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;background:${m.bg};color:${m.color}">${m.label}</span>` : ''; }).join('');
+            return `<div style="background:white;border:1px solid #EFEFEB;border-radius:10px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start">
+              <span style="flex-shrink:0;padding:4px 9px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;background:${s.bg};color:${s.color};margin-top:2px">${s.label}</span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
+                  <span style="font-weight:600;font-size:13px">${o.title}</span>${deadTag}
+                </div>
+                <p style="font-size:12px;color:#666;line-height:1.6;margin:0 0 8px">${o.detail}</p>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                  ${roleChips}
+                  <span style="font-size:11px;color:#0369a1;font-style:italic;margin-left:4px">${o.article}</span>
+                </div>
+              </div>
+            </div>`;
+          }).join('') || '<div style="padding:24px;text-align:center;color:#999;font-size:13px">No obligations match the selected filters.</div>';
+        }
+
+        let _wizardAnswers = {};
+        let _wizardStep    = 1;
+        const _wizardSteps = [
+          { step:1, q:'Where does the product originate?', key:'source', opts:[ { v:'sg-mfg', l:'🏭 CA manufactures it in the cluster' }, { v:'sg-sister', l:'🤝 Sister company outside the cluster' }, { v:'3p-eu', l:'🇪🇺 3rd-party EU supplier' }, { v:'3p-non-eu', l:'🌐 3rd-party non-EU supplier' } ] },
+          { step:2, q:'Whose brand name is on the product?', key:'brand', opts:[ { v:'sg-brand', l:'🏷️ Company A brand' }, { v:'supplier-brand', l:'📦 Supplier\'s own brand' }, { v:'customer-brand', l:'🛍️ Customer\'s brand (private label)' } ] },
+          { step:3, q:'Does CA modify or re-label the packaging?', key:'relabel', opts:[ { v:'no', l:'✅ No — sold as received' }, { v:'relabel', l:'🔖 Re-labels only' }, { v:'repack', l:'📦 Re-packs into new packaging' }, { v:'modify', l:'🔧 Modifies the packaging' } ] },
+          { step:4, q:'Which country is the primary market?', key:'market', opts:[ { v:'SE', l:'🇸🇪 Sweden' }, { v:'NO', l:'🇳🇴 Norway (EEA)' }, { v:'DK', l:'🇩🇰 Denmark' }, { v:'FI', l:'🇫🇮 Finland' }, { v:'EE', l:'🇪🇪 Estonia' }, { v:'LV', l:'🇱🇻 Latvia' }, { v:'LT', l:'🇱🇹 Lithuania' } ] },
+        ];
+
+        function renderRoleWizardPage() {
+          _wizardAnswers = {}; _wizardStep = 1;
+          document.getElementById('wizard-result').style.display = 'none';
+          _wizardRenderStep();
+        }
+
+        function _wizardRenderStep() {
+          const cfg   = _wizardSteps[_wizardStep - 1];
+          const bodyEl = document.getElementById('wizard-body');
+          const backEl = document.getElementById('wizard-back-btn');
+          const nextEl = document.getElementById('wizard-next-btn');
+          if (!bodyEl) return;
+          document.querySelectorAll('.wizard-step-dot').forEach(d => {
+            const s = parseInt(d.dataset.step);
+            d.style.background = s < _wizardStep ? '#9CAF88' : s === _wizardStep ? '#5B8A3C' : '#EFEFEB';
+            d.style.color      = s <= _wizardStep ? 'white' : '#999';
+          });
+          bodyEl.innerHTML = `<p style="font-weight:600;font-size:14px;margin-bottom:14px">${cfg.q}</p>
+            ${cfg.opts.map(o => `
+              <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid ${_wizardAnswers[cfg.key]===o.v?'#9CAF88':'#EFEFEB'};border-radius:8px;margin-bottom:8px;cursor:pointer;background:${_wizardAnswers[cfg.key]===o.v?'#F3F7F0':'white'};font-size:13px;transition:all .15s">
+                <input type="radio" name="wiz-opt" value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'checked':''} style="accent-color:#9CAF88"> ${o.l}
+              </label>`).join('')}`;
+          backEl.style.display = _wizardStep > 1 ? 'inline-flex' : 'none';
+          nextEl.textContent   = _wizardStep < _wizardSteps.length ? 'Next →' : 'Show my roles →';
+        }
+
+        function wizardNext() {
+          const cfg = _wizardSteps[_wizardStep - 1];
+          const sel = document.querySelector('input[name="wiz-opt"]:checked');
+          if (!sel) { alert('Please select an option to continue.'); return; }
+          _wizardAnswers[cfg.key] = sel.value;
+          if (_wizardStep < _wizardSteps.length) { _wizardStep++; _wizardRenderStep(); return; }
+          _wizardShowResult();
+        }
+
+        function wizardBack() {
+          if (_wizardStep > 1) { _wizardStep--; _wizardRenderStep(); }
+        }
+
+        function _wizardShowResult() {
+          const countryNames = { SE:'Sweden', NO:'Norway', DK:'Denmark', FI:'Finland', EE:'Estonia', LV:'Latvia', LT:'Lithuania' };
+          const country = countryNames[_wizardAnswers.market] || _wizardAnswers.market;
+          const matched = ROLE_RULES.find(r => r.condition(_wizardAnswers));
+          const roles   = matched ? matched.roles : ['PRODUCER_EPR'];
+          const trace   = matched ? matched.trace(_wizardAnswers, country) : `CA is the EPR Producer in ${country}.`;
+          const obs     = OBLIGATION_DB.filter(o => o.roles.some(r => roles.includes(r)));
+          const critObs = obs.filter(o => o.severity === 'critical');
+          const resultEl = document.getElementById('wizard-result');
+          resultEl.style.display = 'block';
+          resultEl.innerHTML = `
+            <h3 style="margin-bottom:12px">Your PPWR roles in ${country}</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+              ${roles.map(r => { const m = ROLE_META[r]; return m ? `<span style="padding:5px 12px;border-radius:8px;background:${m.bg};color:${m.color};font-size:12px;font-weight:600;border:1.5px solid ${m.color}30">${m.label}</span>` : ''; }).join('')}
+            </div>
+            <div style="font-size:13px;color:#444;line-height:1.7;padding:12px;background:#FAFAF8;border-radius:8px;margin-bottom:16px">${trace}</div>
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:10px">Top obligations (${obs.length} total — ${critObs.length} critical)</div>
+            ${critObs.slice(0,3).map(o => `<div style="padding:10px 12px;border-left:3px solid #dc2626;background:#fff5f5;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>${o.title}</strong><div style="color:#666;margin-top:3px">${o.article}</div></div>`).join('')}
+            <button class="btn-secondary" onclick="showPage('obligations')" style="margin-top:12px;font-size:12px">View all ${obs.length} obligations →</button>`;
+          resultEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+
+        function renderGlossaryPageNew(filter) {
+          const q    = (filter !== undefined ? filter : (document.getElementById('glossary-page-search')?.value || '')).toLowerCase();
+          const listEl = document.getElementById('glossary-page-list');
+          if (!listEl) return;
+          const tagColor = { 'Core Concept':'#4c1d95', 'Regulation':'#1e3a8a', 'Legal Role':'#9b1c1c', 'Compliance':'#065f46', 'Targets':'#92400e', 'Labelling':'#0369a1', 'Trigger Point':'#374151', 'Commercial':'#6b21a8', 'Finance':'#15803d', 'Prohibited':'#dc2626' };
+          const filtered = q ? GLOSSARY_TERMS.filter(t => t.term.toLowerCase().includes(q) || t.def.toLowerCase().includes(q) || t.tag.toLowerCase().includes(q)) : GLOSSARY_TERMS;
+          listEl.innerHTML = filtered.map(t => {
+            const c = tagColor[t.tag] || '#555';
+            return `<div class="card" style="padding:18px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px">
+                <span style="font-weight:700;font-size:14px">${t.term}</span>
+                <span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:${c}18;color:${c};flex-shrink:0">${t.tag}</span>
+              </div>
+              <p style="font-size:13px;color:#444;line-height:1.6;margin:0 0 ${t.sg?'10px':'0'}">${t.def}</p>
+              ${t.sg ? `<div style="font-size:12px;color:#9CAF88;padding:8px 10px;background:#F3F7F0;border-radius:6px;border-left:3px solid #9CAF88;line-height:1.5">→ CA Context: ${t.sg}</div>` : ''}
+            </div>`;
+          }).join('') || '<div style="padding:24px;text-align:center;color:#999;font-size:13px">No terms match your search.</div>';
+        }
+        function filterGlossaryPage() { renderGlossaryPageNew(); }
+
+        function renderCountriesHubPage() {
+          const grid = document.getElementById('countries-hub-grid');
+          if (!grid) return;
+          const order = ['SE','NO','DK','FI','EE','LV','LT'];
+          const eprInfo = {
+            SE:{ scheme:'FTI Förpackningsinsamlingen', threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            NO:{ scheme:'Grønt Punkt Norge',           threshold:'No minimum',   deadline:'~late 2026' },
+            DK:{ scheme:'DPA-System',                  threshold:'All producers',deadline:'12 Aug 2026' },
+            FI:{ scheme:'RINKI',                       threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            EE:{ scheme:'ETT',                         threshold:'Register proactively',deadline:'12 Aug 2026' },
+            LV:{ scheme:'Latvijas Zaļais punkts',      threshold:'All producers',deadline:'12 Aug 2026' },
+            LT:{ scheme:'Žaliasis taškas',             threshold:'All producers',deadline:'12 Aug 2026' },
+          };
+          const strictColor = { high:'#dc2626', medium:'#d97706' };
+          const strictBg    = { high:'#fee2e2', medium:'#fef3c7' };
+          grid.innerHTML = order.map(code => {
+            const c  = COUNTRY_ENFORCEMENT[code];
+            const ep = eprInfo[code] || {};
+            const badges = [c.dailyPenalty&&'📅 Daily penalty', c.publicNaming&&'📢 Public naming', c.criminalReferral&&'⚖️ Criminal referral', c.eea&&'🇪🇺 EEA (not EU)'].filter(Boolean);
+            return `<div class="card" style="padding:20px">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                <span style="font-size:32px">${c.flag}</span>
+                <div>
+                  <div style="font-weight:700;font-size:16px">${c.name}</div>
+                  <div style="font-size:11px;color:#999">${c.body}</div>
+                </div>
+                <span style="margin-left:auto;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:${strictBg[c.strictness]};color:${strictColor[c.strictness]}">${c.strictnessLabel}</span>
+              </div>
+              <p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:12px">${c.approach}</p>
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:6px">Audit priorities</div>
+                ${c.priorities.map(p=>`<div style="font-size:12px;color:#333;padding:3px 0;border-bottom:1px solid #F5F5F3">• ${p}</div>`).join('')}
+              </div>
+              <div style="background:#FAFAF8;border-radius:8px;padding:12px;margin-bottom:12px">
+                <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:6px">EPR Registration</div>
+                <div style="font-size:12px;font-weight:600;margin-bottom:2px">${ep.scheme||''}</div>
+                <div style="font-size:11px;color:#666">Threshold: ${ep.threshold||'—'}</div>
+                <div style="font-size:11px;color:#dc2626;font-weight:600;margin-top:4px">Deadline: ${ep.deadline||'—'}</div>
+              </div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                ${badges.map(b=>`<span style="padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:#F5F5F3;color:#555">${b}</span>`).join('')}
+              </div>
+            </div>`;
+          }).join('');
+        }
+
+        // ============================================================================
         // STRATEGIC DATA OBJECTS
         // ============================================================================
         const PPWR_ROADMAP = {
@@ -2794,7 +3116,7 @@
             if (pageName === 'obligations')     renderObligationsTrackerPage();
             if (pageName === 'my-role')         renderRoleWizardPage();
             if (pageName === 'countries')       renderCountriesHubPage();
-            if (pageName === 'glossary')        renderGlossaryPage();
+            if (pageName === 'glossary')        renderGlossaryPageNew();
         }
 
         // Which sidebar pages each tier can access
