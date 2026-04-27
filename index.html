@@ -2462,6 +2462,13 @@
                     <button id="card-modal-read-btn" class="btn-primary" style="font-size:13px;padding:7px 16px"></button>
                     <button class="btn-secondary" id="card-modal-brain-btn" style="font-size:13px;padding:7px 16px">🧠 Ask the AI Assistant</button>
                 </div>
+                <div id="card-modal-next-wrap" style="display:none;margin-top:14px;padding:12px 16px;background:#F0F5EC;border-radius:10px;align-items:center;justify-content:space-between;gap:12px;">
+                    <div>
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9CAF88;margin:0 0 2px;">Up next</p>
+                        <p id="card-modal-next-title" style="font-size:13px;font-weight:600;color:#2A4A22;margin:0;line-height:1.35;"></p>
+                    </div>
+                    <button id="card-modal-next-btn" class="btn-primary" style="font-size:13px;padding:7px 16px;white-space:nowrap;flex-shrink:0;">Read it →</button>
+                </div>
             </div>
         </div>
     </div>
@@ -4257,6 +4264,7 @@
             const readBtn = document.getElementById('card-modal-read-btn');
             const isRead  = !!(appState.readCards && appState.readCards[card.id]);
             readBtn.textContent = isRead ? '✅ Marked as read' : 'Mark as read';
+            _updateNextCardWidget(card);
             readBtn.onclick = () => {
                 if (!appState.readCards) appState.readCards = {};
                 const wasRead = !!appState.readCards[card.id];
@@ -4275,6 +4283,7 @@
                 appState.dashboard.score    = Math.min(100, 10 + Math.round((count / total) * 90));
                 localStorage.setItem('appState', JSON.stringify(appState));
                 loadLearningCards();
+                _updateNextCardWidget(card);
             };
             document.getElementById('card-modal-brain-btn').onclick = () => {
                 closeCardModal();
@@ -4284,6 +4293,34 @@
             };
             backdrop.classList.add('open');
             document.body.style.overflow = 'hidden';
+        }
+
+        function _nextCardFor(card) {
+            if (!card) return null;
+            const reads = appState.readCards || {};
+            const idx   = learningCards.findIndex(c => c.id === card.id);
+            // Search forward from current position (wrapping), prefer same category
+            const candidates = [
+                ...learningCards.slice(idx + 1),
+                ...learningCards.slice(0, idx),
+            ].filter(c => !reads[c.id]);
+            if (!candidates.length) return null;
+            return candidates.find(c => c.category === card.category) || candidates[0];
+        }
+
+        function _updateNextCardWidget(card) {
+            const wrap      = document.getElementById('card-modal-next-wrap');
+            const titleEl   = document.getElementById('card-modal-next-title');
+            const nextBtn   = document.getElementById('card-modal-next-btn');
+            if (!wrap || !titleEl || !nextBtn) return;
+            const next = _nextCardFor(card);
+            if (next) {
+                titleEl.textContent = next.title;
+                nextBtn.onclick = () => openCardModal(next);
+                wrap.style.display = 'flex';
+            } else {
+                wrap.style.display = 'none';
+            }
         }
 
         function closeCardModal() {
