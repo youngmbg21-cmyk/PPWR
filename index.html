@@ -775,7 +775,7 @@
             right: 28px;
             z-index: 901;
             width: 440px;
-            max-height: 640px;
+            max-height: min(640px, calc(100vh - 110px));
             display: flex;
             flex-direction: column;
             background: var(--bg2);
@@ -1524,7 +1524,7 @@
         <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
         <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
         <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
-        <div class="sidebar-item page-link" data-page="legal-chatbot">🤖 PPWR Legal Assistant</div>
+        <div class="sidebar-item page-link" data-page="legal-chatbot">🤖 PPWR Assistant</div>
         <div class="sidebar-section-admin" style="padding: 0 16px; margin-top: 20px; margin-bottom: 8px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Admin</p>
         </div>
@@ -2179,7 +2179,7 @@
         <div class="main-content" style="max-width:860px;">
             <div style="margin-bottom:24px;">
                 <p class="rc-eyebrow">AI-Powered Compliance Tool</p>
-                <h1 style="margin-bottom:8px;">🤖 PPWR Legal Assistant</h1>
+                <h1 style="margin-bottom:8px;">🤖 PPWR Assistant</h1>
                 <p style="color:#888; font-size:15px; max-width:640px; line-height:1.65; margin:0 0 4px;">
                     Ask any question about the Packaging and Packaging Waste Regulation (EU) 2025/40.
                     Each answer cites the relevant PPWR Articles and Annexes.
