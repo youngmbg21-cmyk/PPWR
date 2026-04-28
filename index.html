@@ -2192,15 +2192,11 @@
 
     <!-- LEGAL CHATBOT PAGE -->
     <div class="page" id="legal-chatbot-page">
-        <div class="main-content" style="max-width:860px;">
-            <div style="margin-bottom:24px;">
+        <div class="main-content" style="max-width:780px;">
+            <div style="margin-bottom:20px;">
                 <p class="rc-eyebrow">AI-Powered Compliance Tool</p>
-                <h1 style="margin-bottom:8px;">🤖 PPWR Assistant</h1>
-                <p style="color:#888; font-size:15px; max-width:640px; line-height:1.65; margin:0 0 4px;">
-                    Ask any question about the Packaging and Packaging Waste Regulation (EU) 2025/40.
-                    Each answer cites the relevant PPWR Articles and Annexes.
-                </p>
-                <p style="color:var(--text3); font-size:12px; margin:0;">Not legal advice — always verify with counsel before acting on compliance decisions.</p>
+                <h1 style="margin-bottom:6px;">🤖 PPWR Assistant</h1>
+                <p style="color:var(--text2); font-size:14px; margin:0;">Ask any question about Regulation (EU) 2025/40 — answers cite the exact Article.</p>
             </div>
             <div id="legal-chatbot-content"></div>
         </div>
@@ -7800,71 +7796,160 @@
 
         function renderLegalChatbot() {
             const el = document.getElementById('legal-chatbot-content');
-            if (!el) return;
-            // Build two-column FAQ Explorer
-            const firstCat = PPWR_FAQ[0].id;
+            if (!el || el.dataset.init) return;
+            el.dataset.init = '1';
+
+            const PROXY = '/.netlify/functions/chat';
+            const token = 'ppwr-session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            const LIMIT = 3;
+            let qCount = 0;
+            let busy = false;
+
+            // Quick-start questions drawn from FAQ categories
+            const QUICK = [
+                'What packaging formats are banned by 2030?',
+                'What are the recycled content targets for plastic packaging?',
+                'Which EU countries are covered by PPWR?',
+                'How does EPR registration work?',
+                'What labelling is required on packaging under Art. 12?',
+                'What penalties apply for PPWR non-compliance?',
+                'Are micro-enterprises exempt from PPWR?',
+                'What single-use packaging is banned from August 2026?',
+                'What is a Digital Product Passport for packaging?',
+            ];
+
             el.innerHTML = `
-            <div style="display:grid;grid-template-columns:200px 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;min-height:520px;">
-                <div id="faq-cat-list" style="background:var(--bg3);border-right:1px solid var(--border);padding:8px 0;">
-                    ${PPWR_FAQ.map(cat => `
-                    <button id="faq-cat-${cat.id}" onclick="showFAQCategory('${cat.id}')"
-                        style="width:100%;text-align:left;padding:11px 16px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:8px;border-left:3px solid transparent;transition:all .15s;">
-                        <span>${cat.icon}</span><span>${cat.label}</span>
-                    </button>`).join('')}
-                </div>
-                <div id="faq-qa-panel" style="padding:24px;overflow-y:auto;"></div>
-            </div>
-            <p style="font-size:11px;color:var(--text3);margin:10px 0 0;text-align:right;">
-                Not legal advice — verify with counsel. Source: Regulation (EU) 2025/40 (PPWR).
-            </p>`;
-            showFAQCategory(firstCat);
-        }
-
-        function showFAQCategory(catId) {
-            const cat = PPWR_FAQ.find(c => c.id === catId);
-            if (!cat) return;
-            // Highlight active category button
-            PPWR_FAQ.forEach(c => {
-                const btn = document.getElementById('faq-cat-' + c.id);
-                if (!btn) return;
-                const active = c.id === catId;
-                btn.style.background   = active ? 'var(--accent-dim)' : 'none';
-                btn.style.color        = active ? 'var(--accent)'     : 'var(--text2)';
-                btn.style.borderLeft   = active ? '3px solid var(--accent)' : '3px solid transparent';
-            });
-            const panel = document.getElementById('faq-qa-panel');
-            if (!panel) return;
-            panel.innerHTML = `
-                <h3 style="font-size:15px;font-weight:700;margin:0 0 16px;display:flex;align-items:center;gap:8px;">
-                    <span>${cat.icon}</span><span>${cat.label}</span>
-                </h3>
-                ${cat.questions.map(q => `
-                <div style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;">
-                    <button onclick="toggleFAQQuestion('${q.id}')"
-                        style="width:100%;text-align:left;padding:13px 16px;border:none;background:var(--bg2);cursor:pointer;font-size:14px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:12px;">
-                        <span>${q.q}</span>
-                        <span id="faq-arrow-${q.id}" style="font-size:11px;color:var(--text3);flex-shrink:0;">▼</span>
+                <div id="lc-msgs" style="
+                    background:var(--bg2);border:1px solid var(--border);border-radius:12px 12px 0 0;
+                    min-height:320px;max-height:440px;overflow-y:auto;padding:18px 18px 8px;
+                    display:flex;flex-direction:column;gap:12px;"></div>
+                <div id="lc-pills" style="
+                    border-left:1px solid var(--border);border-right:1px solid var(--border);
+                    background:var(--bg3);padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+                <div style="
+                    display:flex;gap:8px;border:1px solid var(--border);border-top:none;
+                    border-radius:0 0 12px 12px;background:var(--bg);padding:10px 12px;">
+                    <input id="lc-input" type="text" maxlength="300" autocomplete="off"
+                        placeholder="Ask about PPWR regulation…"
+                        style="flex:1;padding:9px 12px;border:1px solid var(--border2);border-radius:8px;
+                               font-size:14px;background:var(--bg2);color:var(--text);outline:none;"/>
+                    <button id="lc-send" style="
+                        padding:9px 18px;background:var(--accent);color:#fff;border:none;
+                        border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;">
+                        Send →
                     </button>
-                    <div id="faq-ans-${q.id}" style="display:none;padding:14px 16px;background:#fff;border-top:1px solid var(--border);">
-                        <p style="font-size:14px;line-height:1.7;color:var(--text);margin:0 0 10px;">${q.a}</p>
-                        <p style="font-size:11px;font-weight:700;color:var(--text3);margin:0;">
-                            📖 ${q.refs.join(' · ')}
-                        </p>
-                    </div>
-                </div>`).join('')}`;
-        }
+                </div>
+                <p style="font-size:11px;color:var(--text3);margin:7px 0 0;text-align:center;">
+                    For information purposes only. Always verify with the official
+                    <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener"
+                       style="color:inherit;text-decoration:underline;">EUR-Lex</a> text. Not legal advice.
+                </p>`;
 
-        function toggleFAQQuestion(qid) {
-            const ans   = document.getElementById('faq-ans-'   + qid);
-            const arrow = document.getElementById('faq-arrow-' + qid);
-            if (!ans) return;
-            const open = ans.style.display !== 'none';
-            ans.style.display   = open ? 'none' : 'block';
-            if (arrow) arrow.textContent = open ? '▼' : '▲';
-        }
+            const msgs  = el.querySelector('#lc-msgs');
+            const pills = el.querySelector('#lc-pills');
+            const inp   = el.querySelector('#lc-input');
+            const snd   = el.querySelector('#lc-send');
 
-        function legalChatQuick(text) {
-            void text; // stub — kept for any lingering onclick refs
+            function escHtml(s) {
+                const d = document.createElement('div');
+                d.textContent = s;
+                return d.innerHTML;
+            }
+
+            function addMsg(html, role) {
+                const div = document.createElement('div');
+                div.style.cssText = role === 'user'
+                    ? 'align-self:flex-end;background:var(--accent);color:#fff;padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:80%;font-size:14px;line-height:1.55;'
+                    : 'align-self:flex-start;background:var(--bg3);color:var(--text);padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:88%;font-size:14px;line-height:1.6;border:1px solid var(--border);';
+                div.innerHTML = html;
+                msgs.appendChild(div);
+                msgs.scrollTop = msgs.scrollHeight;
+                return div;
+            }
+
+            function addSource(label) {
+                if (!label) return;
+                const s = document.createElement('p');
+                s.style.cssText = 'font-size:11px;color:var(--accent);margin:2px 0 0;font-weight:600;display:flex;align-items:center;gap:4px;';
+                s.innerHTML = `<span style="color:#22c55e;">✔</span> ${escHtml(label)}`;
+                msgs.appendChild(s);
+                msgs.scrollTop = msgs.scrollHeight;
+            }
+
+            // Welcome bubble
+            addMsg('Hello! I can answer questions about <strong>Regulation (EU) 2025/40</strong>. I\'ll cite the exact Article in every answer. Select a question below or type your own.', 'bot');
+
+            // Render quick-start pills
+            function renderPills() {
+                pills.innerHTML = '';
+                QUICK.forEach(q => {
+                    const b = document.createElement('button');
+                    b.textContent = q;
+                    b.style.cssText = 'padding:5px 11px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text2);font-size:12px;cursor:pointer;white-space:nowrap;';
+                    b.addEventListener('click', () => { inp.value = q; sendQuery(); });
+                    pills.appendChild(b);
+                });
+            }
+            renderPills();
+
+            async function sendQuery() {
+                const text = inp.value.trim();
+                if (!text || busy) return;
+                if (qCount >= LIMIT && (appState.currentTier || 'free') === 'starter') {
+                    addMsg('You\'ve used all 3 questions for this session. <a href="#" onclick="showPage(\'home\');return false;" style="color:var(--accent);font-weight:600;">Upgrade to Pro</a> for unlimited access.', 'bot');
+                    inp.disabled = snd.disabled = true;
+                    return;
+                }
+
+                pills.style.display = 'none';
+                addMsg(escHtml(text), 'user');
+                inp.value = '';
+                busy = true;
+                snd.disabled = inp.disabled = true;
+                qCount++;
+
+                const typing = addMsg('<span style="opacity:.5;">Searching regulation…</span>', 'bot');
+
+                try {
+                    const res = await fetch(PROXY, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            query: text, sessionToken: token,
+                            plan: (appState.currentTier || 'starter').toLowerCase(),
+                            mode: 'pdf', context: { cards: [], scenarios: [] }
+                        })
+                    });
+                    typing.remove();
+                    const ct = res.headers.get('content-type') || '';
+                    if (!ct.includes('application/json')) {
+                        addMsg(`Service error (HTTP ${res.status}). Please try again in a moment.`, 'bot');
+                    } else {
+                        const data = await res.json();
+                        if (data.upgradeRequired) {
+                            addMsg('Question limit reached. <a href="#" onclick="showPage(\'home\');return false;" style="color:var(--accent);font-weight:600;">Upgrade to Pro</a> for unlimited access.', 'bot');
+                            inp.disabled = snd.disabled = true;
+                        } else if (data.error) {
+                            addMsg(`Error: ${escHtml(data.error)}`, 'bot');
+                        } else {
+                            addMsg(escHtml(data.answer).replace(/\n/g, '<br>'), 'bot');
+                            addSource(data.sourceLabel);
+                        }
+                    }
+                } catch (e) {
+                    typing.remove();
+                    addMsg(`Network error: ${escHtml(e.message)}`, 'bot');
+                }
+
+                busy = false;
+                if (qCount < LIMIT || (appState.currentTier || 'free') !== 'starter') {
+                    snd.disabled = inp.disabled = false;
+                    inp.focus();
+                }
+            }
+
+            snd.addEventListener('click', sendQuery);
+            inp.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendQuery(); } });
         }
 
 
