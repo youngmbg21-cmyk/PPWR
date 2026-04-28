@@ -1983,12 +1983,52 @@
 
                     <div class="rc-field">
                         <label class="rc-field-label" for="risk-industry">Industry</label>
-                        <select class="rc-select" id="risk-industry">
-                            <option>Food &amp; Beverage</option>
-                            <option>E-commerce &amp; Retail</option>
-                            <option>Consumer Goods</option>
-                            <option>Pharmaceuticals</option>
-                        </select>
+                        <input type="text" class="rc-select" id="risk-industry" list="industry-datalist"
+                               placeholder="Type to search your industry…"
+                               style="cursor:text;"
+                               autocomplete="off">
+                        <datalist id="industry-datalist">
+                            <option value="Agriculture &amp; Horticulture">
+                            <option value="Automotive &amp; Vehicle Parts">
+                            <option value="Bakery &amp; Confectionery">
+                            <option value="Beauty &amp; Personal Care">
+                            <option value="Beverages (Alcoholic)">
+                            <option value="Beverages (Non-Alcoholic)">
+                            <option value="Chemicals &amp; Cleaning Products">
+                            <option value="Construction Materials &amp; DIY">
+                            <option value="Consumer Electronics">
+                            <option value="Consumer Goods (General)">
+                            <option value="Dairy &amp; Refrigerated Foods">
+                            <option value="E-commerce &amp; Online Retail">
+                            <option value="Education &amp; Office Supplies">
+                            <option value="Fashion &amp; Apparel">
+                            <option value="Fisheries &amp; Seafood">
+                            <option value="Food Manufacturing (General)">
+                            <option value="Food Service &amp; Catering">
+                            <option value="Fresh Produce &amp; Vegetables">
+                            <option value="Furniture &amp; Home Goods">
+                            <option value="Garden &amp; Outdoor Products">
+                            <option value="Glass &amp; Ceramics">
+                            <option value="Healthcare &amp; Medical Devices">
+                            <option value="Industrial Equipment &amp; Machinery">
+                            <option value="Logistics &amp; Warehousing">
+                            <option value="Luxury Goods">
+                            <option value="Meat &amp; Poultry">
+                            <option value="Nutraceuticals &amp; Supplements">
+                            <option value="Packaging Manufacturing">
+                            <option value="Pet Food &amp; Pet Care">
+                            <option value="Pharmaceuticals">
+                            <option value="Printing &amp; Publishing">
+                            <option value="Retail (General)">
+                            <option value="Snacks &amp; Confectionery">
+                            <option value="Specialty &amp; Organic Foods">
+                            <option value="Sports &amp; Recreation">
+                            <option value="Textiles &amp; Household Linens">
+                            <option value="Tobacco &amp; Nicotine Products">
+                            <option value="Toys &amp; Childrenware">
+                            <option value="Wholesale Distribution">
+                            <option value="Wine &amp; Spirits">
+                        </datalist>
                     </div>
 
                     <div class="rc-field">
@@ -5905,7 +5945,48 @@
             let score = materialScore[material] ?? 40;
 
             // ── Industry modifier ──────────────────────────────────────────────────
-            const industryMod = { 'Food & Beverage': 18, 'Pharmaceuticals': 12, 'Consumer Goods': 8, 'E-commerce & Retail': 10 };
+            const industryMod = {
+                'Agriculture & Horticulture': 10,
+                'Automotive & Vehicle Parts': 8,
+                'Bakery & Confectionery': 16,
+                'Beauty & Personal Care': 13,
+                'Beverages (Alcoholic)': 15,
+                'Beverages (Non-Alcoholic)': 16,
+                'Chemicals & Cleaning Products': 12,
+                'Construction Materials & DIY': 7,
+                'Consumer Electronics': 9,
+                'Consumer Goods (General)': 8,
+                'Dairy & Refrigerated Foods': 18,
+                'E-commerce & Online Retail': 10,
+                'Education & Office Supplies': 6,
+                'Fashion & Apparel': 8,
+                'Fisheries & Seafood': 16,
+                'Food Manufacturing (General)': 18,
+                'Food Service & Catering': 15,
+                'Fresh Produce & Vegetables': 13,
+                'Furniture & Home Goods': 8,
+                'Garden & Outdoor Products': 9,
+                'Glass & Ceramics': 6,
+                'Healthcare & Medical Devices': 12,
+                'Industrial Equipment & Machinery': 6,
+                'Logistics & Warehousing': 8,
+                'Luxury Goods': 11,
+                'Meat & Poultry': 18,
+                'Nutraceuticals & Supplements': 13,
+                'Packaging Manufacturing': 10,
+                'Pet Food & Pet Care': 15,
+                'Pharmaceuticals': 12,
+                'Printing & Publishing': 6,
+                'Retail (General)': 10,
+                'Snacks & Confectionery': 16,
+                'Specialty & Organic Foods': 15,
+                'Sports & Recreation': 8,
+                'Textiles & Household Linens': 7,
+                'Tobacco & Nicotine Products': 12,
+                'Toys & Childrenware': 10,
+                'Wholesale Distribution': 9,
+                'Wine & Spirits': 15,
+            };
             score += industryMod[industry] ?? 8;
 
             // ── Market scope modifier ─────────────────────────────────────────────
@@ -5972,10 +6053,48 @@
                 'Metal':          { icon:'🟡', why:'Metal is generally recyclable, but steel and aluminium still require EPR registration and must display sorting instructions under Art. 12.' },
             };
             const INDUSTRY_WHY = {
-                'Food & Beverage':    { icon:'🔴', why:'Food contact rules overlap with PPWR — EU Reg. 10/2011 applies alongside Art. 5 restrictions. Reuse targets for beverage packaging are stricter.' },
-                'Pharmaceuticals':    { icon:'🟠', why:'Pharma packaging has Art. 5 substance restrictions and must balance PPWR minimisation rules against patient safety requirements.' },
-                'Consumer Goods':     { icon:'🟡', why:'Consumer goods packaging must meet minimisation rules (Art. 10) and labelling (Art. 12), but has fewer sector-specific obligations than food or pharma.' },
-                'E-commerce & Retail':{ icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope.' },
+                'Agriculture & Horticulture':    { icon:'🟡', why:'Agricultural packaging (trays, films, pots) must meet minimisation and recyclability rules. Pesticide containers face additional chemical restrictions under Art. 5.' },
+                'Automotive & Vehicle Parts':    { icon:'🟡', why:'Automotive packaging is primarily transit and tertiary — EPR registration and void-fill limits apply, but food-contact and reuse obligations are less common.' },
+                'Bakery & Confectionery':        { icon:'🔴', why:'Bakery items use food-contact plastic films and trays subject to EU Reg. 10/2011 and PPWR Art. 5. Reuse targets for takeaway packaging apply from 2030.' },
+                'Beauty & Personal Care':        { icon:'🟠', why:'Cosmetics packaging often uses mixed materials and coatings that complicate recyclability grading. PPWR minimisation rules apply alongside EU cosmetics regulation.' },
+                'Beverages (Alcoholic)':         { icon:'🔴', why:'Alcoholic beverage packaging (glass, PET, cans) faces reuse targets from 2030 and mandatory recycled content in plastic bottles. Deposit Return Scheme compliance is critical.' },
+                'Beverages (Non-Alcoholic)':     { icon:'🔴', why:'Non-alcoholic drinks face the strictest PPWR recycled-content mandates (30% by 2030, 65% by 2040 for PET) and mandatory DRS participation for PET/metal containers.' },
+                'Chemicals & Cleaning Products': { icon:'🟠', why:'Chemical packaging must comply with CLP labelling alongside PPWR Art. 12 sorting labels. PFAS restrictions under Art. 5 affect many spray and flexible film formats.' },
+                'Construction Materials & DIY':  { icon:'🟢', why:'Construction packaging is mostly secondary and tertiary — EPR registration applies, but reuse and recycled-content obligations are lighter for non-consumer formats.' },
+                'Consumer Electronics':          { icon:'🟡', why:'Electronics retail packaging must meet minimisation rules (Art. 10) and recyclability standards. Void-fill limits affect large e-commerce shipments significantly.' },
+                'Consumer Goods (General)':      { icon:'🟡', why:'General consumer goods packaging must meet minimisation rules (Art. 10) and labelling (Art. 12), but has fewer sector-specific obligations than food or pharma.' },
+                'Dairy & Refrigerated Foods':    { icon:'🔴', why:'Dairy packaging (multi-layer films, coated cartons) is among the hardest to grade recyclable. Food-contact substance rules and short shelf-life formats create high compliance complexity.' },
+                'E-commerce & Online Retail':    { icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope for all EU market entries.' },
+                'Education & Office Supplies':   { icon:'🟢', why:'Office and stationery packaging has standard EPR and labelling obligations. Recyclability targets apply but food-contact and reuse obligations are largely absent.' },
+                'Fashion & Apparel':             { icon:'🟡', why:'Clothing packaging (polybags, hangers, boxes) must meet minimisation and recyclability rules. Single-use plastic bags are restricted; reusable alternatives are encouraged.' },
+                'Fisheries & Seafood':           { icon:'🔴', why:'Seafood packaging uses EPS foam and multi-layer barrier films that are very difficult to recycle. High EPR fees and recyclability grading risk apply alongside food-contact rules.' },
+                'Food Manufacturing (General)':  { icon:'🔴', why:'Food manufacturing uses the widest variety of packaging formats — films, trays, pouches, jars. PPWR Art. 5 substance rules and reuse targets create the broadest compliance footprint.' },
+                'Food Service & Catering':       { icon:'🔴', why:'Food service packaging (cups, trays, clamshells) faces single-use restrictions and mandatory reuse systems for takeaway from 2030. Many formats are currently unrecyclable.' },
+                'Fresh Produce & Vegetables':    { icon:'🟠', why:'Fresh produce uses lightweight plastic films and netting that are poorly recyclable. PPWR minimisation rules may conflict with food waste reduction requirements for fresh items.' },
+                'Furniture & Home Goods':        { icon:'🟡', why:'Furniture packaging (corrugated, foam, strapping) is primarily secondary/tertiary. EPR and minimisation rules apply; reuse and recycled-content mandates are lighter.' },
+                'Garden & Outdoor Products':     { icon:'🟡', why:'Garden product packaging must meet standard recyclability and EPR requirements. Some formats use UV-stabilised plastics that may score poorly on recyclability grading.' },
+                'Glass & Ceramics':              { icon:'🟢', why:'Glass as a packaging material has no recycled-content mandate under PPWR. EPR registration and sorting-instruction labelling are the primary obligations.' },
+                'Healthcare & Medical Devices':  { icon:'🟠', why:'Medical device packaging must balance PPWR minimisation rules against sterility requirements. Art. 5 substance restrictions apply; regulatory exemptions may be available.' },
+                'Industrial Equipment & Machinery':{ icon:'🟢', why:'Industrial packaging is almost entirely secondary and tertiary. EPR registration thresholds may be met, but consumer-facing and reuse obligations rarely apply.' },
+                'Logistics & Warehousing':       { icon:'🟡', why:'Logistics operators are often "first placers" of transit packaging and must register under EPR. Void-fill minimisation rules directly affect pallet and case packing design.' },
+                'Luxury Goods':                  { icon:'🟠', why:'Luxury packaging prioritises aesthetics — multi-material boxes and rigid plastics face poor recyclability grades and higher EPR fees. Minimisation rules conflict with premium presentation.' },
+                'Meat & Poultry':                { icon:'🔴', why:'Meat packaging uses MAP gas-flush trays and multi-layer barrier films that are unrecyclable in most EU systems. Very high EPR fees and recyclability risk apply.' },
+                'Nutraceuticals & Supplements':  { icon:'🟠', why:'Supplement packaging (bottles, sachets, blister packs) often uses mixed materials. Food-contact and PPWR Art. 5 substance rules both apply alongside EPR registration.' },
+                'Packaging Manufacturing':       { icon:'🟡', why:'Packaging manufacturers are not typically first placers, but may be responsible producers for self-use packaging. Design-for-recyclability obligations apply to all output.' },
+                'Pet Food & Pet Care':           { icon:'🔴', why:'Pet food uses the same food-contact packaging formats as human food — multi-layer pouches, trays, cans. PPWR recycled-content and reuse obligations apply equally.' },
+                'Pharmaceuticals':               { icon:'🟠', why:'Pharma packaging has Art. 5 substance restrictions and must balance PPWR minimisation rules against patient safety requirements. Regulatory exemptions may apply.' },
+                'Printing & Publishing':         { icon:'🟢', why:'Print and publishing packaging (shrink wrap, mailers) has standard EPR obligations. Recyclability rules apply but food-contact and reuse obligations are absent.' },
+                'Retail (General)':              { icon:'🟡', why:'General retailers are often responsible producers for own-brand packaging. PPWR EPR, labelling, and minimisation rules apply across all product categories sold.' },
+                'Snacks & Confectionery':        { icon:'🔴', why:'Snack packaging (metallised films, multi-layer laminates) is among the worst-performing for recyclability. High EPR fees and Art. 5 PFAS restrictions apply.' },
+                'Specialty & Organic Foods':     { icon:'🔴', why:'Specialty food packaging often uses premium or compostable materials with complex recyclability grading. Organic certifications do not exempt packaging from PPWR obligations.' },
+                'Sports & Recreation':           { icon:'🟡', why:'Sports product packaging must meet minimisation and recyclability standards. Large, irregular formats may incur higher EPR fees; void-fill limits apply for e-commerce orders.' },
+                'Textiles & Household Linens':   { icon:'🟡', why:'Textile packaging (polybags, header cards, boxes) must meet recyclability and minimisation rules. Single-use plastic bags are restricted under PPWR Annex V.' },
+                'Tobacco & Nicotine Products':   { icon:'🟠', why:'Tobacco packaging must comply with PPWR alongside Tobacco Products Directive requirements. Outer packaging EPR registration is mandatory; slim and flexible formats face grading risk.' },
+                'Toys & Childrenware':           { icon:'🟡', why:'Toy packaging must meet PPWR minimisation and recyclability rules alongside EN 71 safety standards. Blister packs and mixed-material retail packaging face EPR scrutiny.' },
+                'Wholesale Distribution':        { icon:'🟡', why:'Wholesale distributors place secondary and transit packaging and must register under EPR. Reuse of tertiary packaging (pallets, crates) is incentivised under PPWR Art. 11.' },
+                'Wine & Spirits':                { icon:'🔴', why:'Wine and spirits packaging uses glass bottles with plastic closures and multi-material labels. DRS compliance for sparkling wine PET is required; EPR registration is mandatory per market.' },
+                'Food & Beverage':               { icon:'🔴', why:'Food contact rules overlap with PPWR — EU Reg. 10/2011 applies alongside Art. 5 restrictions. Reuse targets for beverage packaging are stricter.' },
+                'E-commerce & Retail':           { icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope.' },
             };
             const matWhy = MATERIAL_WHY[material] || { icon:'⚪', why:'Your material has standard PPWR obligations.' };
             const indWhy = INDUSTRY_WHY[industry] || { icon:'⚪', why:'Your industry has standard obligations.' };
