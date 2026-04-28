@@ -916,6 +916,31 @@
         .ai-bubble.bot td   { border: 1px solid var(--border2); padding: 4px 8px; }
         .ai-bubble.bot code { background: var(--bg); padding: 1px 4px; border-radius: 3px; font-size: 0.88em; }
 
+        #ppwr-ask-bar {
+            margin-bottom: 20px;
+        }
+
+        #ppwr-ask-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            background: var(--accent-dim);
+            border: 1px solid var(--accent);
+            border-radius: var(--r);
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--ff-body);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #ppwr-ask-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
         .ai-bubble.bot .ai-source {
             display: inline-block;
             margin-top: 7px;
@@ -1566,7 +1591,6 @@
         <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
         <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
         <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
-        <div class="sidebar-item page-link" data-page="legal-chatbot">🤖 PPWR Assistant</div>
         <div class="sidebar-section-admin" style="padding: 0 16px; margin-top: 20px; margin-bottom: 8px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Admin</p>
         </div>
@@ -2217,16 +2241,6 @@
     </div>
 
     <!-- LEGAL CHATBOT PAGE -->
-    <div class="page" id="legal-chatbot-page">
-        <div class="main-content" style="max-width:780px;">
-            <div style="margin-bottom:20px;">
-                <p class="rc-eyebrow">AI-Powered Compliance Tool</p>
-                <h1 style="margin-bottom:6px;">🤖 PPWR Assistant</h1>
-                <p style="color:var(--text2); font-size:14px; margin:0;">Ask any question about Regulation (EU) 2025/40 — answers cite the exact Article.</p>
-            </div>
-            <div id="legal-chatbot-content"></div>
-        </div>
-    </div>
 
     <!-- RECORD VAULT PAGE -->
     <div class="page" id="vault-page">
@@ -5049,6 +5063,22 @@
             if (mc) mc.scrollTop = 0;
             window.scrollTo(0, 0);
 
+            // Inject "Ask your PPWR Assistant" button at top of every app page
+            const existingBar = document.getElementById('ppwr-ask-bar');
+            if (existingBar) existingBar.remove();
+            const noBarPages = ['home', 'tier-detail'];
+            const tier = appState.currentTier || 'free';
+            const hasBrain = ['starter', 'pro'].includes(tier);
+            if (hasBrain && !noBarPages.includes(pageName) && pageEl) {
+                const pageMc = pageEl.querySelector('.main-content');
+                if (pageMc) {
+                    const bar = document.createElement('div');
+                    bar.id = 'ppwr-ask-bar';
+                    bar.innerHTML = '<button id="ppwr-ask-btn" onclick="aiNav.openChat()">🤖 Ask your PPWR Assistant</button>';
+                    pageMc.insertBefore(bar, pageMc.firstChild);
+                }
+            }
+
             // Update navigation
             updateNavigation();
             
@@ -5066,7 +5096,6 @@
             if (pageName === 'grading')         renderGradingModule();
             if (pageName === 'calculator')         renderCalculator();
             if (pageName === 'impact-calculator') renderImpactCalculator();
-            if (pageName === 'legal-chatbot')     renderLegalChatbot();
             if (pageName === 'vault')             renderVault();
             if (pageName === 'scope')           renderScopePageNew();
             if (pageName === 'delegated-acts')  renderDelegatedActsPage();
@@ -5087,12 +5116,12 @@
             free:    ['dashboard', 'learning', 'scope', 'glossary'],
             starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
                       'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
-                      'impact-calculator', 'legal-chatbot'],
+                      'impact-calculator'],
             pro:     ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
                       'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
                       'admin-users', 'admin-analytics', 'admin-leads',
                       'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
-                      'delegated-acts', 'countries', 'impact-calculator', 'legal-chatbot']
+                      'delegated-acts', 'countries', 'impact-calculator']
         };
 
         function tierHasAccess(page) {
@@ -6974,7 +7003,7 @@
             syncVisibility();
 
             // Public API
-            return { goUpgrade, syncVisibility };
+            return { goUpgrade, syncVisibility, openChat };
         })();
         // ============================================================================
         // END AI KNOWLEDGE NAVIGATOR
@@ -7763,305 +7792,6 @@
             }
             document.getElementById('ic-fine-risk').innerHTML = fineHtml;
         }
-
-        // ============================================================================
-        // PPWR LEGAL CHATBOT
-        // ============================================================================
-
-        // Set to your Cloudflare Worker / Netlify Function URL to enable Claude API mode.
-        // Leave empty to use the built-in closed-knowledge fallback.
-        const PPWR_FAQ = [
-          { id:'scope', icon:'🔍', label:'Scope & Coverage', questions:[
-            { id:'s1', q:'Which countries must comply with PPWR?',
-              a:'PPWR (EU 2025/40) applies to all 27 EU member states plus Norway, Iceland, and Liechtenstein via the EEA Agreement. The UK has its own separate UK EPR regime and is not covered. Switzerland follows its own national packaging ordinance.',
-              refs:['Art. 2','Art. 1'] },
-            { id:'s2', q:'Is Norway impacted by PPWR?',
-              a:'Yes. Norway has adopted PPWR through the EEA Agreement. EPR is managed through Grønt Punkt Norge. Norway already operates one of the world\'s most successful deposit-return systems (Infinitum), which satisfies the PPWR Art. 50 DRS requirement.',
-              refs:['Art. 2','Art. 50','EEA Agreement'] },
-            { id:'s3', q:'What packaging types are in scope?',
-              a:'All packaging placed on the EU market — primary (consumer-facing), secondary (grouped), and tertiary/transport packaging. This includes food, beverages, cosmetics, pharmaceuticals, industrial goods, and e-commerce packaging. All materials are covered: plastic, paper/board, glass, metal, wood, and composites.',
-              refs:['Art. 2','Annex I'] },
-            { id:'s4', q:'What is excluded from PPWR scope?',
-              a:'Excluded items include: military and civil protection packaging; certain pharmaceutical packaging where sterility cannot otherwise be met; packaging for goods exported entirely outside the EU. Micro-enterprise exemptions may also apply (Art. 58).',
-              refs:['Art. 2','Art. 58'] },
-            { id:'s5', q:'When do PPWR obligations come into force?',
-              a:'PPWR entered into force 12 July 2024. Most obligations apply from 12 August 2026. Key earlier/later dates: PFAS ban — July 2024; oxo-degradable ban — January 2025; Grade D/E ban — January 2030; DRS deadline — January 2029; recycled content targets — January 2030.',
-              refs:['Art. 2','Art. 5','Art. 7','Art. 50'] },
-          ]},
-          { id:'substances', icon:'⚗️', label:'Banned Substances', questions:[
-            { id:'b1', q:'What substances are banned under Art. 5?',
-              a:'Art. 5 and Annex I prohibit: (1) PFAS (entire class) in food-contact packaging — banned from 12 July 2024; (2) Oxo-degradable plastics (pro-oxidant additives that fragment into microplastics) — banned from 1 January 2025; (3) More than 100 ppm combined of lead, cadmium, mercury, and hexavalent chromium in any packaging.',
-              refs:['Art. 5','Annex I'] },
-            { id:'b2', q:'Are PFAS banned in all packaging or only food-contact?',
-              a:'Under PPWR Art. 5, PFAS are banned specifically in food-contact packaging from 12 July 2024. For non-food-contact packaging, PFAS restrictions come from REACH Regulation (Annex XVII). ECHA has proposed a universal PFAS restriction under REACH that would eventually cover all uses.',
-              refs:['Art. 5(1)','REACH Annex XVII'] },
-            { id:'b3', q:'What is the heavy metal limit and how is it tested?',
-              a:'Lead, cadmium, mercury, and hexavalent chromium combined must not exceed 100 ppm (0.01% by weight). Producers must hold supplier certificates of conformity. Testing follows EN 13428 methodology. This limit has applied since Directive 94/62/EC (1994) and is reaffirmed by PPWR.',
-              refs:['Art. 5','Dir. 94/62/EC'] },
-            { id:'b4', q:'What happens if banned substances are found in my packaging?',
-              a:'Non-compliant packaging may not be placed on the EU market. If discovered post-sale: mandatory withdrawal/recall, notification to the competent authority, and financial penalties under Art. 65. For PFAS (banned July 2024) and oxo-degradables (banned January 2025), immediate remediation is required.',
-              refs:['Art. 5','Art. 65'] },
-          ]},
-          { id:'grading', icon:'♻️', label:'Recyclability Grading', questions:[
-            { id:'g1', q:'What are the recyclability grades A–E?',
-              a:'Grade A — fully recyclable at scale (EPR discount up to 20%); Grade B — largely recyclable; Grade C — recyclable with minor barriers (standard EPR fee); Grade D — difficult to recycle (1.5× EPR surcharge, banned from 2030); Grade E — not recyclable at scale (2.0× EPR surcharge, banned from 2030). Delegated acts will set detailed criteria by end 2026.',
-              refs:['Art. 6','Annex II'] },
-            { id:'g2', q:'Which packaging formats will likely receive Grade D or E?',
-              a:'Likely Grade D/E formats include: metallised PET/PE laminates, multi-layer composites (4+ materials), carbon-black-pigmented plastics (NIR non-detectable), PVC packaging, EPS food containers, and opaque dark-coloured flexible films without NIR-transparent pigments.',
-              refs:['Art. 6(5)','Annex II'] },
-            { id:'g3', q:'How does the recyclability grade affect EPR fees?',
-              a:'EPR contributions must be modulated by recyclability grade (Art. 44). Grade A: up to 20% fee discount. Grades B/C: standard fee. Grade D: 1.5× surcharge. Grade E: 2.0× surcharge. The exact base fee rates are set by each member state\'s EPR scheme and vary across EU markets.',
-              refs:['Art. 6','Art. 44'] },
-            { id:'g4', q:'How do I assess my packaging\'s grade before delegated acts are published?',
-              a:'Use existing CEN standards (EN 13430 recyclability test) and industry Design for Recycling guidelines (e.g., Plastics Recyclers Europe, CEFLEX) as proxies. Some PROs and accredited labs offer preliminary grading assessments. Plan for delegated acts to be finalised by end 2026.',
-              refs:['Art. 6','Art. 64'] },
-          ]},
-          { id:'recycled', icon:'🔄', label:'Recycled Content', questions:[
-            { id:'r1', q:'What are the mandatory recycled content targets?',
-              a:'Art. 7 targets for plastic packaging: PET beverage bottles — 25% by 2025, 30% by 2030; food-contact sensitive plastics — 10% by 2030, 15% by 2035; non-PET plastic packaging (PP, HDPE, LDPE) — 10% by 2030, 25% by 2035. Targets are per packaging unit by weight.',
-              refs:['Art. 7'] },
-            { id:'r2', q:'Do recycled content targets apply to glass, metal, or paper?',
-              a:'No. Art. 7 sets mandatory recycled content minimums only for plastic packaging. Glass, metal, paper, and cardboard packaging have no mandatory recycled content targets under PPWR. EPR fee modulation may indirectly incentivise recycled content in these materials.',
-              refs:['Art. 7'] },
-            { id:'r3', q:'Does chemically recycled content count towards targets?',
-              a:'Yes. Chemically recycled content counts toward Art. 7 targets if certified to ISO 15270 or an equivalent standard, using mass-balance accounting. Certification must be verified by an accredited third party. The Commission will publish guidance on methodology via delegated act.',
-              refs:['Art. 7(5)'] },
-            { id:'r4', q:'Are there exemptions to the recycled content requirement?',
-              a:'EFSA may grant derogations for food-contact sensitive plastics where meeting the required level cannot be achieved safely under food safety law. Micro-enterprises (< 10 employees, ≤ €2M turnover) may qualify for member-state exemptions under Art. 58.',
-              refs:['Art. 7','Art. 58'] },
-          ]},
-          { id:'epr', icon:'📋', label:'EPR & Registration', questions:[
-            { id:'e1', q:'How does EPR registration work — is there one EU-wide registration?',
-              a:'No. There is no single EU-wide EPR registration. Producers must register separately with the competent authority or an approved PRO in each member state where they place packaging on the market. Arts. 44–45 set the framework; each country implements its own national EPR scheme.',
-              refs:['Art. 44','Art. 45'] },
-            { id:'e2', q:'Who counts as the "producer" responsible for EPR?',
-              a:'The "producer" is the entity that first places packaging on the EU market — typically the brand owner or importer. Retailers selling own-brand products are producers for those products. Distributors are generally not producers unless they import under their own name.',
-              refs:['Art. 3','Art. 44'] },
-            { id:'e3', q:'Can I use a Producer Responsibility Organisation (PRO)?',
-              a:'Yes. Art. 46 allows producers to fulfil EPR obligations by joining an approved collective PRO. The PRO collects fees and manages collection/recycling on behalf of members. Major EU PROs include Reclay, Landbell (Germany), Citeo (France), Ecoembes (Spain), and Grønt Punkt (Nordics).',
-              refs:['Art. 46'] },
-            { id:'e4', q:'What data must be reported under EPR?',
-              a:'Producers must report: weight of each packaging type placed on market per year, material type, recyclability grade, and recycled content percentage. Reporting is typically annual. Data must be kept for at least 5 years and must be independently verified for larger producers.',
-              refs:['Art. 44','Art. 56'] },
-          ]},
-          { id:'reuse', icon:'🔁', label:'Reuse & Single-Use', questions:[
-            { id:'u1', q:'What single-use packaging is banned from August 2026?',
-              a:'From 12 August 2026, Annex V restricts: single-use plastic packaging for food/beverages consumed on-site in HORECA (restaurants, cafés, canteens); single-use plastic hotel amenity packaging (small shampoo, soap, conditioner bottles). EPS food containers were already banned under SUPD from January 2021.',
-              refs:['Art. 11','Annex V'] },
-            { id:'u2', q:'What are the reuse targets for transport packaging?',
-              a:'Art. 11 sets mandatory reuse targets for tertiary/transport plastic packaging: 50% of units placed on market must be reusable by 2030; 70% by 2035; 90% by 2040. Reusable packaging must meet minimum trip and durability criteria set by delegated act.',
-              refs:['Art. 11','Annex VI'] },
-            { id:'u3', q:'Must retailers offer reusable options for takeaway?',
-              a:'From 2030, sellers of takeaway food and beverages must offer at least one reusable packaging option. Consumers may bring their own containers. E-commerce sellers must also offer at least one reusable delivery packaging option. This primarily affects HORECA and grocery retail sectors.',
-              refs:['Art. 11'] },
-            { id:'u4', q:'What is a Deposit Return System (DRS) and when is it mandatory?',
-              a:'Art. 50 requires all member states to establish DRS for single-use plastic beverage bottles ≤ 3 litres and metal beverage containers ≤ 3 litres by 1 January 2029. Countries with existing DRS achieving ≥ 90% separate collection may apply for derogation. DRS participation is mandatory for in-scope producers.',
-              refs:['Art. 50'] },
-          ]},
-          { id:'labelling', icon:'🏷️', label:'Labelling & Digital Passport', questions:[
-            { id:'l1', q:'What labelling is required on packaging under Art. 12?',
-              a:'Art. 12 requires: (1) EU-harmonised sorting instruction labels (material type + how to sort, using standardised pictograms); (2) a recycled content label where applicable; (3) a "reusable" symbol for reusable formats. Labels must be in the official language(s) of the member state of sale.',
-              refs:['Art. 12','Annex VII'] },
-            { id:'l2', q:'What is a Digital Product Passport for packaging?',
-              a:'Secondary and tertiary packaging weighing > 5 kg must carry a QR code linking to a Digital Product Passport (DPP). The DPP must contain: packaging materials list, recyclability grade, recycled content percentage, and disassembly/recycling instructions. The system must be compatible with the EU DPP framework.',
-              refs:['Art. 12(7)','Art. 26'] },
-            { id:'l3', q:'When must Art. 12 labelling be in place?',
-              a:'Most Art. 12 labelling obligations apply from 12 August 2026. However, delegated acts specifying exact harmonised label formats and QR code standards are still pending (expected 2025–2026). Producers should build labelling management systems now, before final formats are confirmed.',
-              refs:['Art. 12','Art. 64'] },
-          ]},
-          { id:'fines', icon:'⚖️', label:'Fines & Penalties', questions:[
-            { id:'f1', q:'What penalties apply for PPWR non-compliance?',
-              a:'Art. 65 requires member states to set penalties that are effective, proportionate, and dissuasive. Factors considered: severity and duration of infringement, economic benefit gained, company size, and prior violations. Most national penalty schedules are still being finalised ahead of August 2026.',
-              refs:['Art. 65'] },
-            { id:'f2', q:'What fine amounts should I expect?',
-              a:'Based on analogous EU environmental regulations and early member state proposals: minor violations (labelling gaps) — €5,000–€50,000; significant failures (recycled content shortfall) — €50,000–€500,000; serious/repeated infringement — up to 4–10% of annual EU turnover. Fines may compound per market.',
-              refs:['Art. 65'] },
-            { id:'f3', q:'Can regulators ban my products from the EU market?',
-              a:'Yes. Art. 65 and the EU Market Surveillance Regulation allow competent authorities to order withdrawal or recall of non-compliant packaging. For banned substances and Grade D/E post-2030, market access can be blocked at border controls (customs) or via in-market enforcement raids.',
-              refs:['Art. 65','Art. 5','Art. 6'] },
-          ]},
-          { id:'countries', icon:'🌍', label:'Country Coverage', questions:[
-            { id:'c1', q:'Which EU countries are covered by PPWR?',
-              a:'All 27 EU member states: Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden. Plus EEA: Norway, Iceland, Liechtenstein.',
-              refs:['Art. 2'] },
-            { id:'c2', q:'Does PPWR apply to the UK?',
-              a:'No. The UK left the EU and has its own UK EPR regime (effective April 2025), administered by the Environment Agency (England/Wales), SEPA (Scotland), and NIEA (Northern Ireland). UK EPR has different thresholds, material categories, reporting requirements, and fee structures from EU PPWR.',
-              refs:['Art. 2'] },
-            { id:'c3', q:'Which EU countries already have Deposit Return Systems?',
-              a:'Countries with existing DRS: Germany, Sweden, Finland, Denmark, Norway, Estonia, Lithuania, Latvia, Croatia, Netherlands, Slovakia, Romania. Countries implementing DRS to meet the 2029 deadline include Belgium, France, Ireland, Spain, Portugal, and Poland. All member states must comply by 1 January 2029.',
-              refs:['Art. 50'] },
-          ]},
-          { id:'sme', icon:'🏢', label:'SME & Exemptions', questions:[
-            { id:'m1', q:'Are micro-enterprises exempt from PPWR?',
-              a:'Art. 58 allows member states to exempt micro-enterprises (< 10 employees AND ≤ €2 million annual turnover) from certain requirements. However, substance bans (Art. 5) and the Grade D/E ban from 2030 apply to ALL businesses regardless of size.',
-              refs:['Art. 58','Art. 5','Art. 6'] },
-            { id:'m2', q:'What specifically can micro-enterprises be exempted from?',
-              a:'Member states may exempt micro-enterprises from: EPR registration and fee obligations, recycled content verification, and digital product passport obligations. They may NOT be exempted from: PFAS/oxo-degradable bans, heavy metal limits, Grade D/E restrictions, and basic sorting-instruction labelling.',
-              refs:['Art. 58'] },
-            { id:'m3', q:'What about SMEs that are not micro-enterprises?',
-              a:'SMEs (10–249 employees, ≤ €50M turnover) do not qualify for the full micro-enterprise exemption but may benefit from: extended transition timelines in some member states, simplified reporting formats, lower-cost collective PRO arrangements, and proportionate penalty treatment under Art. 65.',
-              refs:['Art. 58','Art. 65'] },
-          ]},
-        ];
-
-        function renderLegalChatbot() {
-            const el = document.getElementById('legal-chatbot-content');
-            if (!el || el.dataset.init) return;
-            el.dataset.init = '1';
-
-            const PROXY = '/.netlify/functions/chat';
-            const token = 'ppwr-session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-            const LIMIT = 3;
-            let qCount = 0;
-            let busy = false;
-
-            // Quick-start questions drawn from FAQ categories
-            const QUICK = [
-                'What packaging formats are banned by 2030?',
-                'What are the recycled content targets for plastic packaging?',
-                'Which EU countries are covered by PPWR?',
-                'How does EPR registration work?',
-                'What labelling is required on packaging under Art. 12?',
-                'What penalties apply for PPWR non-compliance?',
-                'Are micro-enterprises exempt from PPWR?',
-                'What single-use packaging is banned from August 2026?',
-                'What is a Digital Product Passport for packaging?',
-            ];
-
-            el.innerHTML = `
-                <div id="lc-msgs" style="
-                    background:var(--bg2);border:1px solid var(--border);border-radius:12px 12px 0 0;
-                    min-height:320px;max-height:440px;overflow-y:auto;padding:18px 18px 8px;
-                    display:flex;flex-direction:column;gap:12px;"></div>
-                <div id="lc-pills" style="
-                    border-left:1px solid var(--border);border-right:1px solid var(--border);
-                    background:var(--bg3);padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px;"></div>
-                <div style="
-                    display:flex;gap:8px;border:1px solid var(--border);border-top:none;
-                    border-radius:0 0 12px 12px;background:var(--bg);padding:10px 12px;">
-                    <input id="lc-input" type="text" maxlength="300" autocomplete="off"
-                        placeholder="Ask about PPWR regulation…"
-                        style="flex:1;padding:9px 12px;border:1px solid var(--border2);border-radius:8px;
-                               font-size:14px;background:var(--bg2);color:var(--text);outline:none;"/>
-                    <button id="lc-send" style="
-                        padding:9px 18px;background:var(--accent);color:#fff;border:none;
-                        border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;">
-                        Send →
-                    </button>
-                </div>
-                <p style="font-size:11px;color:var(--text3);margin:7px 0 0;text-align:center;">
-                    For information purposes only. Always verify with the official
-                    <a href="https://eur-lex.europa.eu" target="_blank" rel="noopener"
-                       style="color:inherit;text-decoration:underline;">EUR-Lex</a> text. Not legal advice.
-                </p>`;
-
-            const msgs  = el.querySelector('#lc-msgs');
-            const pills = el.querySelector('#lc-pills');
-            const inp   = el.querySelector('#lc-input');
-            const snd   = el.querySelector('#lc-send');
-
-            function escHtml(s) {
-                const d = document.createElement('div');
-                d.textContent = s;
-                return d.innerHTML;
-            }
-
-            function addMsg(html, role) {
-                const div = document.createElement('div');
-                div.style.cssText = role === 'user'
-                    ? 'align-self:flex-end;background:var(--accent);color:#fff;padding:10px 14px;border-radius:14px 14px 4px 14px;max-width:80%;font-size:14px;line-height:1.55;'
-                    : 'align-self:flex-start;background:var(--bg3);color:var(--text);padding:10px 14px;border-radius:14px 14px 14px 4px;max-width:88%;font-size:14px;line-height:1.6;border:1px solid var(--border);';
-                div.innerHTML = html;
-                msgs.appendChild(div);
-                msgs.scrollTop = msgs.scrollHeight;
-                return div;
-            }
-
-            function addSource(label) {
-                if (!label) return;
-                const s = document.createElement('p');
-                s.style.cssText = 'font-size:11px;color:var(--accent);margin:2px 0 0;font-weight:600;display:flex;align-items:center;gap:4px;';
-                s.innerHTML = `<span style="color:#22c55e;">✔</span> ${escHtml(label)}`;
-                msgs.appendChild(s);
-                msgs.scrollTop = msgs.scrollHeight;
-            }
-
-            // Welcome bubble
-            addMsg('Hello! I can answer questions about <strong>Regulation (EU) 2025/40</strong>. I\'ll cite the exact Article in every answer. Select a question below or type your own.', 'bot');
-
-            // Render quick-start pills
-            function renderPills() {
-                pills.innerHTML = '';
-                QUICK.forEach(q => {
-                    const b = document.createElement('button');
-                    b.textContent = q;
-                    b.style.cssText = 'padding:5px 11px;border:1px solid var(--border2);border-radius:20px;background:var(--bg2);color:var(--text2);font-size:12px;cursor:pointer;white-space:nowrap;';
-                    b.addEventListener('click', () => { inp.value = q; sendQuery(); });
-                    pills.appendChild(b);
-                });
-            }
-            renderPills();
-
-            async function sendQuery() {
-                const text = inp.value.trim();
-                if (!text || busy) return;
-                if (qCount >= LIMIT && (appState.currentTier || 'free') === 'starter') {
-                    addMsg('You\'ve used all 3 questions for this session. <a href="#" onclick="showPage(\'home\');return false;" style="color:var(--accent);font-weight:600;">Upgrade to Pro</a> for unlimited access.', 'bot');
-                    inp.disabled = snd.disabled = true;
-                    return;
-                }
-
-                pills.style.display = 'none';
-                addMsg(escHtml(text), 'user');
-                inp.value = '';
-                busy = true;
-                snd.disabled = inp.disabled = true;
-                qCount++;
-
-                const typing = addMsg('<span style="opacity:.5;">Searching regulation…</span>', 'bot');
-
-                try {
-                    const res = await fetch(PROXY, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            query: text, sessionToken: token,
-                            plan: (appState.currentTier || 'starter').toLowerCase(),
-                            mode: 'pdf', context: { cards: [], scenarios: [] }
-                        })
-                    });
-                    typing.remove();
-                    const ct = res.headers.get('content-type') || '';
-                    if (!ct.includes('application/json')) {
-                        addMsg(`Service error (HTTP ${res.status}). Please try again in a moment.`, 'bot');
-                    } else {
-                        const data = await res.json();
-                        if (data.upgradeRequired) {
-                            addMsg('Question limit reached. <a href="#" onclick="showPage(\'home\');return false;" style="color:var(--accent);font-weight:600;">Upgrade to Pro</a> for unlimited access.', 'bot');
-                            inp.disabled = snd.disabled = true;
-                        } else if (data.error) {
-                            addMsg(`Error: ${escHtml(data.error)}`, 'bot');
-                        } else {
-                            addMsg(escHtml(data.answer).replace(/\n/g, '<br>'), 'bot');
-                            addSource(data.sourceLabel);
-                        }
-                    }
-                } catch (e) {
-                    typing.remove();
-                    addMsg(`Network error: ${escHtml(e.message)}`, 'bot');
-                }
-
-                busy = false;
-                if (qCount < LIMIT || (appState.currentTier || 'free') !== 'starter') {
-                    snd.disabled = inp.disabled = false;
-                    inp.focus();
-                }
-            }
-
-            snd.addEventListener('click', sendQuery);
-            inp.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendQuery(); } });
-        }
-
 
         function renderESCalc(container) {
             container.innerHTML = '';
