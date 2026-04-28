@@ -3832,53 +3832,85 @@
         // ── Substance Red List (Art. 5, REACH, PFAS Regulation) ─────────────────
         const SUBSTANCE_RED_LIST = [
           { name:'PFAS (group)',       aliases:['perfluoroalkyl','polyfluoroalkyl','teflon','ptfe','pfoa','pfos','pfna','pfbs'],
-            status:'BANNED',        article:'Art. 5(1)',   since:'2024-07-12',
+            status:'BANNED',        article:'Art. 5(1)',   since:'2024-07-12', timeline:'Banned from 12 July 2024 (PPWR entry into force).',
             note:'Entire class of per- and polyfluoroalkyl substances banned in food-contact packaging. Includes PTFE-coated liners and fluorinated barrier coatings.',
-            action:'Obtain PFAS-free declaration from supplier. Replace fluorinated grease-barrier with silicone or bio-based alternatives.' },
+            action:'Obtain PFAS-free declaration from supplier. Replace fluorinated grease-barrier with silicone or bio-based alternatives.',
+            alternatives:'Silicone-coated release liners; bio-based fluorine-free grease-barrier coatings (e.g. starch, chitosan); clay-coated paperboard.' },
           { name:'Lead',              aliases:['lead','pb','lead compound','lead oxide'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994; PPWR reaffirmed.',
             note:'Lead and lead compounds in packaging inks, pigments, and PVC stabilisers restricted to < 100 ppm (combined with Cd, Cr VI, Hg).',
-            action:'Request heavy-metal test certificate from packaging supplier confirming < 100 ppm combined.' },
+            action:'Request heavy-metal test certificate from packaging supplier confirming < 100 ppm combined.',
+            alternatives:'Calcium-zinc stabilisers for PVC; organic azo pigments for inks; tin-based heat stabilisers.' },
           { name:'Cadmium',           aliases:['cadmium','cd','cadmium pigment','cadmium sulfide'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Cadmium restricted to < 100 ppm combined. Common in yellow/red pigments and PVC stabilisers.',
-            action:'Audit pigment suppliers and request annual CoC for heavy-metal compliance.' },
+            action:'Audit pigment suppliers and request annual CoC for heavy-metal compliance.',
+            alternatives:'Iron oxide pigments; perinone orange; quinophthalone yellow — all cadmium-free.' },
           { name:'Mercury',           aliases:['mercury','hg','mercuric','methylmercury'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Mercury restricted to < 100 ppm combined. Rarely used in modern packaging but still found in some specialty coatings.',
-            action:'Confirm with supplier that no mercury-based bacteriostats or pigments are present.' },
+            action:'Confirm with supplier that no mercury-based bacteriostats or pigments are present.',
+            alternatives:'Silver-based or copper-based antimicrobials; modern biocide packages compliant with EU Biocidal Products Regulation.' },
           { name:'Hexavalent Chromium', aliases:['chromium vi','cr vi','chromate','dichromate','hexavalent'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Cr(VI) restricted to < 100 ppm combined. Found in some metallic coatings and anti-corrosion treatments.',
-            action:'Verify with metal packaging supplier that chromate conversion coatings are not used.' },
+            action:'Verify with metal packaging supplier that chromate conversion coatings are not used.',
+            alternatives:'Trivalent chromium (Cr III) passivation; zirconium-based conversion coatings; organic primer systems.' },
           { name:'BPA (Bisphenol A)', aliases:['bpa','bisphenol a','bisphenol-a'],
-            status:'RESTRICTED',    article:'REACH Annex XVII / Art. 5', since:'2023-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII / Art. 5', since:'2023-01-01', timeline:'Restricted for food-contact from Jan 2023; thermal paper ban from Jan 2020.',
             note:'BPA restricted in food-contact materials. Many countries additionally restrict BPA in thermal paper and canned food linings.',
-            action:'Require BPA-free declaration for all can linings, jar lids, and food-contact plastic packaging.' },
+            action:'Require BPA-free declaration for all can linings, jar lids, and food-contact plastic packaging.',
+            alternatives:'BPA-free epoxy (bisphenol-F based); acrylic-based can coatings; polyester-based interior lacquers.' },
           { name:'Phthalates (group)',  aliases:['phthalate','dehp','dbp','bbp','dinp','didp','diop'],
-            status:'RESTRICTED',    article:'REACH Annex XVII', since:'2015-07-21',
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'2015-07-21', timeline:'DEHP/DBP/BBP/DIBP restricted from Jul 2015; DPHP under review 2025.',
             note:'DEHP, DBP, BBP, and DIBP restricted to < 0.1% w/w in articles. DINP, DIDP, and DIHP restricted in childcare articles.',
-            action:'Confirm plasticiser identity in flexible PVC packaging. Demand REACH declaration from PVC compound supplier.' },
+            action:'Confirm plasticiser identity in flexible PVC packaging. Demand REACH declaration from PVC compound supplier.',
+            alternatives:'DOTP (di(2-ethylhexyl) terephthalate); DINCH; citrate-based plasticisers (ATBC) for food-contact applications.' },
           { name:'Formaldehyde',       aliases:['formaldehyde','methylene oxide','formalin'],
-            status:'RESTRICTED',    article:'REACH / EU 10/2011 (plastics)', since:'2011-01-14',
+            status:'RESTRICTED',    article:'REACH / EU 10/2011 (plastics)', since:'2011-01-14', timeline:'Migration limit applies under EU 10/2011 since Jan 2011.',
             note:'Migration limits apply for food-contact plastics. Commonly released from melamine and phenol-formaldehyde resins.',
-            action:'Ensure food-contact plastic components are tested to EU 10/2011 migration limits.' },
+            action:'Ensure food-contact plastic components are tested to EU 10/2011 migration limits.',
+            alternatives:'Polyolefin-based food-contact packaging (PE/PP) as replacement for melamine ware; urea-free adhesives.' },
           { name:'Benzene',            aliases:['benzene','benzol'],
-            status:'RESTRICTED',    article:'REACH Annex XVII', since:'1994-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'1994-01-01', timeline:'< 0.1% restriction in force since 1994.',
             note:'Benzene restricted to < 0.1% in articles and mixtures. Residual solvent concern in printing inks and adhesives.',
-            action:'Request solvent residue test on printed packaging. Ensure water-based or benzene-free inks are used.' },
+            action:'Request solvent residue test on printed packaging. Ensure water-based or benzene-free inks are used.',
+            alternatives:'Water-based inks; UV-cured inks; alcohol-based inks with < 5% benzene-free aromatic solvents.' },
           { name:'Oxo-degradable Additives', aliases:['oxo-degradable','oxo degradable','d2w','epi','prodegradant'],
-            status:'BANNED',        article:'PPWR Art. 5(2) / SUPD', since:'2025-01-01',
+            status:'BANNED',        article:'PPWR Art. 5(2) / SUPD', since:'2025-01-01', timeline:'Banned from 1 January 2025 under PPWR Art. 5(2).',
             note:'Packaging containing oxo-degradable plastic (pro-oxidant additives that fragment plastic into microplastics) is banned.',
-            action:'Audit all plastic packaging for oxo-degradable additives. Remove from supply chain immediately.' },
+            action:'Audit all plastic packaging for oxo-degradable additives. Remove from supply chain immediately.',
+            alternatives:'Certified home-compostable bioplastics (EN 13432); mechanically recyclable mono-material polyolefin films.' },
           { name:'Black Carbon Pigment (non-detectable)', aliases:['carbon black','non-detectable black','nir-absorbing black','cb'],
-            status:'RESTRICTED',    article:'PPWR Art. 6 (recyclability grade)',since:'2026-01-01',
+            status:'RESTRICTED',    article:'PPWR Art. 6 (recyclability grade)',since:'2026-01-01', timeline:'Downgraded to Grade D/E under PPWR grading from 2026. Ban on Grade D/E from 2030.',
             note:'Carbon black pigments that absorb NIR light prevent sorting by near-infrared scanners, downgrading recyclability to Grade D/E.',
-            action:'Replace non-detectable carbon black with NIR-transparent black alternatives to maintain recyclability grade.' },
+            action:'Replace non-detectable carbon black with NIR-transparent black alternatives to maintain recyclability grade.',
+            alternatives:'NIR-transparent black pigments (e.g. laser-carbon blacks, organic blacks); dark grey blends; no-pigment natural polymer options.' },
           { name:'Chlorinated Paraffins (SCCP)', aliases:['sccp','chlorinated paraffin','short chain chlorinated'],
-            status:'RESTRICTED',    article:'REACH Annex XVII / POP Regulation', since:'2012-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII / POP Regulation', since:'2012-01-01', timeline:'POPs restriction in force since 2012.',
             note:'Short-chain chlorinated paraffins (SCCP) are Persistent Organic Pollutants restricted under REACH.',
-            action:'Verify plasticisers and flame retardants in PVC packaging are SCCP-free.' },
+            action:'Verify plasticisers and flame retardants in PVC packaging are SCCP-free.',
+            alternatives:'Medium-chain chlorinated paraffins (MCCP, with caveats); non-chlorinated flame retardants; DOTP plasticiser.' },
+          { name:'Styrene / Polystyrene (EPS)', aliases:['styrene','eps','polystyrene','expanded polystyrene'],
+            status:'RESTRICTED',    article:'PPWR Annex V / SUPD Art. 5', since:'2025-01-01', timeline:'Single-use EPS food containers banned Jan 2025 under SUPD; PPWR Annex V scope from Aug 2026.',
+            note:'Expanded polystyrene single-use food containers (cups, trays, clamshells) are banned. Other EPS packaging must meet recyclability grading.',
+            action:'Replace single-use EPS food contact items immediately. Evaluate EPS transport packaging recyclability grade.',
+            alternatives:'Moulded fibre (sugarcane, wheat straw); PP foam trays; PET trays; compostable PLA containers (certified EN 13432).' },
+          { name:'PVC (Polyvinyl Chloride)', aliases:['pvc','polyvinyl chloride','vinyl chloride','pvc film','pvc shrink'],
+            status:'RESTRICTED',    article:'PPWR Art. 6 / Annex II', since:'2026-01-01', timeline:'PVC packaging likely Grade D/E from 2026 due to HCl off-gassing in sorting. Grade D/E banned 2030.',
+            note:'PVC packaging is very difficult to recycle — it contaminates other streams and releases HCl gas when incinerated. Expected to receive Grade D or E under PPWR grading.',
+            action:'Audit all PVC use: shrink sleeves, clamshells, blister packs. Plan migration to PET or PP alternatives before 2030.',
+            alternatives:'PET shrink sleeves; OPS (oriented polystyrene, transitional); PP clamshells; fibre-based blister packs.' },
+          { name:'Perfluorooctanoic Acid (PFOA)', aliases:['pfoa','perfluorooctanoic','c8','pfoa-based'],
+            status:'BANNED',        article:'Art. 5(1) / REACH Annex XVII', since:'2020-07-04', timeline:'REACH Annex XVII restriction since Jul 2020; PPWR Art. 5(1) from Jul 2024.',
+            note:'PFOA and its salts/esters are banned in food-contact coatings such as non-stick pan liners, pizza box coatings, and microwave popcorn bags.',
+            action:'Confirm food-contact paper and board coatings are PFOA-free. Request fluorine content screening (< 20 µg/cm² organofluorine).',
+            alternatives:'PEF (polyethylene furanoate) barrier coatings; clay/silica-based barriers; shellac; wax-based greaseproofing.' },
+          { name:'Heavy Metal Inks', aliases:['heavy metal ink','ink pigment','printing ink metal','ink lead','ink cadmium'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC / EuPIA guidelines', since:'1994-12-31', timeline:'100 ppm limit since 1994; EuPIA Good Manufacturing Practice from 2006.',
+            note:'Printing inks on packaging must comply with the 100 ppm combined heavy-metal limit. EuPIA guidelines restrict additional metals beyond the four regulated by Directive 94/62.',
+            action:'Use only EuPIA-compliant inks. Request ink SDS and CoC confirming heavy-metal levels.',
+            alternatives:'Water-based inkjet inks; UV LED-cured inks; EuPIA GMPe-compliant solvent-based inks with certified pigments.' },
         ];
 
         // ============================================================================
@@ -5915,16 +5947,26 @@
                 const bg  = isBanned ? '#FFEBEE' : '#FFF8E1';
                 const bdr = isBanned ? '#F44336' : '#FFA000';
                 const col = isBanned ? '#C62828' : '#E65100';
+                const altHtml = s.alternatives
+                    ? `<div style="background:#E8F5E9;border-radius:4px;padding:8px 12px;margin-top:8px;">
+                           <p style="font-size:12px;color:#1B5E20;margin:0;"><strong>✅ Alternatives:</strong> ${s.alternatives}</p>
+                       </div>`
+                    : '';
+                const timelineHtml = s.timeline
+                    ? `<p style="font-size:11px;color:var(--text3);margin:4px 0 8px;font-style:italic;">📅 ${s.timeline}</p>`
+                    : '';
                 return `<div style="background:${bg}; border-left:3px solid ${bdr}; padding:14px 16px; border-radius:6px; margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
                         <strong style="font-size:14px;">${s.name}</strong>
                         <span style="background:${bdr};color:#fff;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;margin-left:10px;">${s.status}</span>
                     </div>
-                    <p style="font-size:12px; color:${col}; margin-bottom:6px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
+                    <p style="font-size:12px; color:${col}; margin-bottom:2px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
+                    ${timelineHtml}
                     <p style="font-size:13px; color:var(--text); margin-bottom:8px;">${s.note}</p>
                     <div style="background:rgba(255,255,255,0.7); border-radius:4px; padding:8px 12px;">
                         <p style="font-size:12px; color:var(--text2); margin:0;"><strong>Required action:</strong> ${s.action}</p>
                     </div>
+                    ${altHtml}
                 </div>`;
             }).join('');
         }
@@ -7074,10 +7116,15 @@
                     barsDiv.appendChild(row);
                 });
 
+                const fineDiv = document.createElement('div');
+                fineDiv.id = 'rc-fine-' + key;
+                fineDiv.style.cssText = 'margin-top:12px;display:none;';
+
                 card.appendChild(clbl);
                 card.appendChild(cnote);
                 card.appendChild(inputRow);
                 card.appendChild(barsDiv);
+                card.appendChild(fineDiv);
                 container.appendChild(card);
             });
         }
@@ -7085,6 +7132,9 @@
         function calcRC(key, targets, inputId) {
             const val = parseFloat(document.getElementById(inputId)?.value) || 0;
             const years = [2025, 2030, 2035, 2040];
+            let worstGap = 0;
+            let worstYear = null;
+            let worstTarget = 0;
             years.forEach(yr => {
                 const target = targets[yr];
                 if (target === 0 && yr === 2025) return;
@@ -7097,7 +7147,35 @@
                 fillEl.style.background = met ? '#2A9D8F' : (pct > 60 ? '#F4A261' : '#E63946');
                 statusEl.textContent = met ? '✅' : '❌ gap: ' + (target - val).toFixed(1) + '%';
                 statusEl.style.color = met ? '#2A9D8F' : '#E63946';
+                const gap = target - val;
+                if (gap > worstGap) { worstGap = gap; worstYear = yr; worstTarget = target; }
             });
+
+            const fineDiv = document.getElementById('rc-fine-' + key);
+            if (!fineDiv) return;
+            if (worstGap <= 0) {
+                fineDiv.style.display = 'none';
+                return;
+            }
+            // Fine risk bands — Art. 65 PPWR requires "effective, proportionate, dissuasive" penalties
+            let band, fineRange, riskColor, riskBg;
+            const gapPct = worstGap;
+            if (gapPct < 5) {
+                band='Low'; fineRange='< €50,000 per infringement'; riskColor='#E65100'; riskBg='#FFF8E1';
+            } else if (gapPct < 15) {
+                band='Medium'; fineRange='€50,000 – €200,000 per infringement'; riskColor='#BF360C'; riskBg='#FBE9E7';
+            } else if (gapPct < 30) {
+                band='High'; fineRange='€200,000 – €500,000 per infringement'; riskColor='#C62828'; riskBg='#FFEBEE';
+            } else {
+                band='Critical'; fineRange='€500,000+ / up to 10% annual EU turnover'; riskColor='#B71C1C'; riskBg='#FFCDD2';
+            }
+            fineDiv.style.display = 'block';
+            fineDiv.innerHTML = `<div style="background:${riskBg};border:1px solid ${riskColor}33;border-radius:8px;padding:12px 14px;">
+                <p style="font-size:11px;font-weight:700;color:${riskColor};letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;">⚠️ Fine Risk — ${band} (Art. 65 PPWR)</p>
+                <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Gap of <strong>${gapPct.toFixed(1)}%</strong> against ${worstYear} target of <strong>${worstTarget}%</strong></p>
+                <p style="font-size:12px;color:${riskColor};margin:0;"><strong>Estimated fine range:</strong> ${fineRange}</p>
+                <p style="font-size:11px;color:var(--text3);margin:4px 0 0;">Member states set exact penalties under Art. 65. Fines are per infringement and may compound annually.</p>
+            </div>`;
         }
 
         function renderESCalc(container) {
