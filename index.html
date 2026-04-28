@@ -1511,6 +1511,7 @@
         <div class="sidebar-item page-link" data-page="roadmap">📅 Key Dates &amp; Deadlines</div>
         <div class="sidebar-item page-link" data-page="grading">♻️ Packaging Grades (A–E)</div>
         <div class="sidebar-item page-link" data-page="calculator">🧮 Recycled Material Check</div>
+        <div class="sidebar-item page-link" data-page="impact-calculator">💰 Impact Calculator</div>
         <div class="sidebar-item page-link" data-page="vault">📁 My Documents</div>
         <div class="sidebar-section-tools" style="padding: 0 16px; margin-top: 16px; margin-bottom: 6px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Tools &amp; Calculators</p>
@@ -1523,6 +1524,7 @@
         <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
         <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
         <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
+        <div class="sidebar-item page-link" data-page="legal-chatbot">🤖 PPWR Legal Assistant</div>
         <div class="sidebar-section-admin" style="padding: 0 16px; margin-top: 20px; margin-bottom: 8px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Admin</p>
         </div>
@@ -1983,12 +1985,52 @@
 
                     <div class="rc-field">
                         <label class="rc-field-label" for="risk-industry">Industry</label>
-                        <select class="rc-select" id="risk-industry">
-                            <option>Food &amp; Beverage</option>
-                            <option>E-commerce &amp; Retail</option>
-                            <option>Consumer Goods</option>
-                            <option>Pharmaceuticals</option>
-                        </select>
+                        <input type="text" class="rc-select" id="risk-industry" list="industry-datalist"
+                               placeholder="Type to search your industry…"
+                               style="cursor:text;"
+                               autocomplete="off">
+                        <datalist id="industry-datalist">
+                            <option value="Agriculture &amp; Horticulture">
+                            <option value="Automotive &amp; Vehicle Parts">
+                            <option value="Bakery &amp; Confectionery">
+                            <option value="Beauty &amp; Personal Care">
+                            <option value="Beverages (Alcoholic)">
+                            <option value="Beverages (Non-Alcoholic)">
+                            <option value="Chemicals &amp; Cleaning Products">
+                            <option value="Construction Materials &amp; DIY">
+                            <option value="Consumer Electronics">
+                            <option value="Consumer Goods (General)">
+                            <option value="Dairy &amp; Refrigerated Foods">
+                            <option value="E-commerce &amp; Online Retail">
+                            <option value="Education &amp; Office Supplies">
+                            <option value="Fashion &amp; Apparel">
+                            <option value="Fisheries &amp; Seafood">
+                            <option value="Food Manufacturing (General)">
+                            <option value="Food Service &amp; Catering">
+                            <option value="Fresh Produce &amp; Vegetables">
+                            <option value="Furniture &amp; Home Goods">
+                            <option value="Garden &amp; Outdoor Products">
+                            <option value="Glass &amp; Ceramics">
+                            <option value="Healthcare &amp; Medical Devices">
+                            <option value="Industrial Equipment &amp; Machinery">
+                            <option value="Logistics &amp; Warehousing">
+                            <option value="Luxury Goods">
+                            <option value="Meat &amp; Poultry">
+                            <option value="Nutraceuticals &amp; Supplements">
+                            <option value="Packaging Manufacturing">
+                            <option value="Pet Food &amp; Pet Care">
+                            <option value="Pharmaceuticals">
+                            <option value="Printing &amp; Publishing">
+                            <option value="Retail (General)">
+                            <option value="Snacks &amp; Confectionery">
+                            <option value="Specialty &amp; Organic Foods">
+                            <option value="Sports &amp; Recreation">
+                            <option value="Textiles &amp; Household Linens">
+                            <option value="Tobacco &amp; Nicotine Products">
+                            <option value="Toys &amp; Childrenware">
+                            <option value="Wholesale Distribution">
+                            <option value="Wine &amp; Spirits">
+                        </datalist>
                     </div>
 
                     <div class="rc-field">
@@ -2117,6 +2159,37 @@
                 <p style="color:var(--text3); font-size:13px; margin:0;">Also checks your packaging's "empty space ratio" — the regulation limits how much wasted space is allowed in a box or container.</p>
             </div>
             <div id="calculator-content"></div>
+        </div>
+    </div>
+
+    <!-- IMPACT CALCULATOR PAGE -->
+    <div class="page" id="impact-calculator-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <p class="rc-eyebrow">PPWR Financial Modelling</p>
+                <h1 style="margin-bottom:8px;">💰 Impact Calculator</h1>
+                <p style="color:#888; font-size:15px; max-width:600px; line-height:1.65; margin:0;">
+                    Estimate your PPWR financial exposure — EPR fee liability, compliance gaps, remediation cost, and fine risk — based on your packaging profile.
+                </p>
+                <p style="color:var(--text3); font-size:12px; margin:8px 0 0;">All figures are indicative estimates. Consult a compliance advisor for formal assessments.</p>
+            </div>
+            <div id="impact-calculator-content"></div>
+        </div>
+    </div>
+
+    <!-- LEGAL CHATBOT PAGE -->
+    <div class="page" id="legal-chatbot-page">
+        <div class="main-content" style="max-width:860px;">
+            <div style="margin-bottom:24px;">
+                <p class="rc-eyebrow">AI-Powered Compliance Tool</p>
+                <h1 style="margin-bottom:8px;">🤖 PPWR Legal Assistant</h1>
+                <p style="color:#888; font-size:15px; max-width:640px; line-height:1.65; margin:0 0 4px;">
+                    Ask any question about the Packaging and Packaging Waste Regulation (EU) 2025/40.
+                    Each answer cites the relevant PPWR Articles and Annexes.
+                </p>
+                <p style="color:var(--text3); font-size:12px; margin:0;">Not legal advice — always verify with counsel before acting on compliance decisions.</p>
+            </div>
+            <div id="legal-chatbot-content"></div>
         </div>
     </div>
 
@@ -3792,53 +3865,85 @@
         // ── Substance Red List (Art. 5, REACH, PFAS Regulation) ─────────────────
         const SUBSTANCE_RED_LIST = [
           { name:'PFAS (group)',       aliases:['perfluoroalkyl','polyfluoroalkyl','teflon','ptfe','pfoa','pfos','pfna','pfbs'],
-            status:'BANNED',        article:'Art. 5(1)',   since:'2024-07-12',
+            status:'BANNED',        article:'Art. 5(1)',   since:'2024-07-12', timeline:'Banned from 12 July 2024 (PPWR entry into force).',
             note:'Entire class of per- and polyfluoroalkyl substances banned in food-contact packaging. Includes PTFE-coated liners and fluorinated barrier coatings.',
-            action:'Obtain PFAS-free declaration from supplier. Replace fluorinated grease-barrier with silicone or bio-based alternatives.' },
+            action:'Obtain PFAS-free declaration from supplier. Replace fluorinated grease-barrier with silicone or bio-based alternatives.',
+            alternatives:'Silicone-coated release liners; bio-based fluorine-free grease-barrier coatings (e.g. starch, chitosan); clay-coated paperboard.' },
           { name:'Lead',              aliases:['lead','pb','lead compound','lead oxide'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994; PPWR reaffirmed.',
             note:'Lead and lead compounds in packaging inks, pigments, and PVC stabilisers restricted to < 100 ppm (combined with Cd, Cr VI, Hg).',
-            action:'Request heavy-metal test certificate from packaging supplier confirming < 100 ppm combined.' },
+            action:'Request heavy-metal test certificate from packaging supplier confirming < 100 ppm combined.',
+            alternatives:'Calcium-zinc stabilisers for PVC; organic azo pigments for inks; tin-based heat stabilisers.' },
           { name:'Cadmium',           aliases:['cadmium','cd','cadmium pigment','cadmium sulfide'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Cadmium restricted to < 100 ppm combined. Common in yellow/red pigments and PVC stabilisers.',
-            action:'Audit pigment suppliers and request annual CoC for heavy-metal compliance.' },
+            action:'Audit pigment suppliers and request annual CoC for heavy-metal compliance.',
+            alternatives:'Iron oxide pigments; perinone orange; quinophthalone yellow — all cadmium-free.' },
           { name:'Mercury',           aliases:['mercury','hg','mercuric','methylmercury'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Mercury restricted to < 100 ppm combined. Rarely used in modern packaging but still found in some specialty coatings.',
-            action:'Confirm with supplier that no mercury-based bacteriostats or pigments are present.' },
+            action:'Confirm with supplier that no mercury-based bacteriostats or pigments are present.',
+            alternatives:'Silver-based or copper-based antimicrobials; modern biocide packages compliant with EU Biocidal Products Regulation.' },
           { name:'Hexavalent Chromium', aliases:['chromium vi','cr vi','chromate','dichromate','hexavalent'],
-            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31',
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC', since:'1994-12-31', timeline:'< 100 ppm since 31 Dec 1994.',
             note:'Cr(VI) restricted to < 100 ppm combined. Found in some metallic coatings and anti-corrosion treatments.',
-            action:'Verify with metal packaging supplier that chromate conversion coatings are not used.' },
+            action:'Verify with metal packaging supplier that chromate conversion coatings are not used.',
+            alternatives:'Trivalent chromium (Cr III) passivation; zirconium-based conversion coatings; organic primer systems.' },
           { name:'BPA (Bisphenol A)', aliases:['bpa','bisphenol a','bisphenol-a'],
-            status:'RESTRICTED',    article:'REACH Annex XVII / Art. 5', since:'2023-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII / Art. 5', since:'2023-01-01', timeline:'Restricted for food-contact from Jan 2023; thermal paper ban from Jan 2020.',
             note:'BPA restricted in food-contact materials. Many countries additionally restrict BPA in thermal paper and canned food linings.',
-            action:'Require BPA-free declaration for all can linings, jar lids, and food-contact plastic packaging.' },
+            action:'Require BPA-free declaration for all can linings, jar lids, and food-contact plastic packaging.',
+            alternatives:'BPA-free epoxy (bisphenol-F based); acrylic-based can coatings; polyester-based interior lacquers.' },
           { name:'Phthalates (group)',  aliases:['phthalate','dehp','dbp','bbp','dinp','didp','diop'],
-            status:'RESTRICTED',    article:'REACH Annex XVII', since:'2015-07-21',
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'2015-07-21', timeline:'DEHP/DBP/BBP/DIBP restricted from Jul 2015; DPHP under review 2025.',
             note:'DEHP, DBP, BBP, and DIBP restricted to < 0.1% w/w in articles. DINP, DIDP, and DIHP restricted in childcare articles.',
-            action:'Confirm plasticiser identity in flexible PVC packaging. Demand REACH declaration from PVC compound supplier.' },
+            action:'Confirm plasticiser identity in flexible PVC packaging. Demand REACH declaration from PVC compound supplier.',
+            alternatives:'DOTP (di(2-ethylhexyl) terephthalate); DINCH; citrate-based plasticisers (ATBC) for food-contact applications.' },
           { name:'Formaldehyde',       aliases:['formaldehyde','methylene oxide','formalin'],
-            status:'RESTRICTED',    article:'REACH / EU 10/2011 (plastics)', since:'2011-01-14',
+            status:'RESTRICTED',    article:'REACH / EU 10/2011 (plastics)', since:'2011-01-14', timeline:'Migration limit applies under EU 10/2011 since Jan 2011.',
             note:'Migration limits apply for food-contact plastics. Commonly released from melamine and phenol-formaldehyde resins.',
-            action:'Ensure food-contact plastic components are tested to EU 10/2011 migration limits.' },
+            action:'Ensure food-contact plastic components are tested to EU 10/2011 migration limits.',
+            alternatives:'Polyolefin-based food-contact packaging (PE/PP) as replacement for melamine ware; urea-free adhesives.' },
           { name:'Benzene',            aliases:['benzene','benzol'],
-            status:'RESTRICTED',    article:'REACH Annex XVII', since:'1994-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII', since:'1994-01-01', timeline:'< 0.1% restriction in force since 1994.',
             note:'Benzene restricted to < 0.1% in articles and mixtures. Residual solvent concern in printing inks and adhesives.',
-            action:'Request solvent residue test on printed packaging. Ensure water-based or benzene-free inks are used.' },
+            action:'Request solvent residue test on printed packaging. Ensure water-based or benzene-free inks are used.',
+            alternatives:'Water-based inks; UV-cured inks; alcohol-based inks with < 5% benzene-free aromatic solvents.' },
           { name:'Oxo-degradable Additives', aliases:['oxo-degradable','oxo degradable','d2w','epi','prodegradant'],
-            status:'BANNED',        article:'PPWR Art. 5(2) / SUPD', since:'2025-01-01',
+            status:'BANNED',        article:'PPWR Art. 5(2) / SUPD', since:'2025-01-01', timeline:'Banned from 1 January 2025 under PPWR Art. 5(2).',
             note:'Packaging containing oxo-degradable plastic (pro-oxidant additives that fragment plastic into microplastics) is banned.',
-            action:'Audit all plastic packaging for oxo-degradable additives. Remove from supply chain immediately.' },
+            action:'Audit all plastic packaging for oxo-degradable additives. Remove from supply chain immediately.',
+            alternatives:'Certified home-compostable bioplastics (EN 13432); mechanically recyclable mono-material polyolefin films.' },
           { name:'Black Carbon Pigment (non-detectable)', aliases:['carbon black','non-detectable black','nir-absorbing black','cb'],
-            status:'RESTRICTED',    article:'PPWR Art. 6 (recyclability grade)',since:'2026-01-01',
+            status:'RESTRICTED',    article:'PPWR Art. 6 (recyclability grade)',since:'2026-01-01', timeline:'Downgraded to Grade D/E under PPWR grading from 2026. Ban on Grade D/E from 2030.',
             note:'Carbon black pigments that absorb NIR light prevent sorting by near-infrared scanners, downgrading recyclability to Grade D/E.',
-            action:'Replace non-detectable carbon black with NIR-transparent black alternatives to maintain recyclability grade.' },
+            action:'Replace non-detectable carbon black with NIR-transparent black alternatives to maintain recyclability grade.',
+            alternatives:'NIR-transparent black pigments (e.g. laser-carbon blacks, organic blacks); dark grey blends; no-pigment natural polymer options.' },
           { name:'Chlorinated Paraffins (SCCP)', aliases:['sccp','chlorinated paraffin','short chain chlorinated'],
-            status:'RESTRICTED',    article:'REACH Annex XVII / POP Regulation', since:'2012-01-01',
+            status:'RESTRICTED',    article:'REACH Annex XVII / POP Regulation', since:'2012-01-01', timeline:'POPs restriction in force since 2012.',
             note:'Short-chain chlorinated paraffins (SCCP) are Persistent Organic Pollutants restricted under REACH.',
-            action:'Verify plasticisers and flame retardants in PVC packaging are SCCP-free.' },
+            action:'Verify plasticisers and flame retardants in PVC packaging are SCCP-free.',
+            alternatives:'Medium-chain chlorinated paraffins (MCCP, with caveats); non-chlorinated flame retardants; DOTP plasticiser.' },
+          { name:'Styrene / Polystyrene (EPS)', aliases:['styrene','eps','polystyrene','expanded polystyrene'],
+            status:'RESTRICTED',    article:'PPWR Annex V / SUPD Art. 5', since:'2025-01-01', timeline:'Single-use EPS food containers banned Jan 2025 under SUPD; PPWR Annex V scope from Aug 2026.',
+            note:'Expanded polystyrene single-use food containers (cups, trays, clamshells) are banned. Other EPS packaging must meet recyclability grading.',
+            action:'Replace single-use EPS food contact items immediately. Evaluate EPS transport packaging recyclability grade.',
+            alternatives:'Moulded fibre (sugarcane, wheat straw); PP foam trays; PET trays; compostable PLA containers (certified EN 13432).' },
+          { name:'PVC (Polyvinyl Chloride)', aliases:['pvc','polyvinyl chloride','vinyl chloride','pvc film','pvc shrink'],
+            status:'RESTRICTED',    article:'PPWR Art. 6 / Annex II', since:'2026-01-01', timeline:'PVC packaging likely Grade D/E from 2026 due to HCl off-gassing in sorting. Grade D/E banned 2030.',
+            note:'PVC packaging is very difficult to recycle — it contaminates other streams and releases HCl gas when incinerated. Expected to receive Grade D or E under PPWR grading.',
+            action:'Audit all PVC use: shrink sleeves, clamshells, blister packs. Plan migration to PET or PP alternatives before 2030.',
+            alternatives:'PET shrink sleeves; OPS (oriented polystyrene, transitional); PP clamshells; fibre-based blister packs.' },
+          { name:'Perfluorooctanoic Acid (PFOA)', aliases:['pfoa','perfluorooctanoic','c8','pfoa-based'],
+            status:'BANNED',        article:'Art. 5(1) / REACH Annex XVII', since:'2020-07-04', timeline:'REACH Annex XVII restriction since Jul 2020; PPWR Art. 5(1) from Jul 2024.',
+            note:'PFOA and its salts/esters are banned in food-contact coatings such as non-stick pan liners, pizza box coatings, and microwave popcorn bags.',
+            action:'Confirm food-contact paper and board coatings are PFOA-free. Request fluorine content screening (< 20 µg/cm² organofluorine).',
+            alternatives:'PEF (polyethylene furanoate) barrier coatings; clay/silica-based barriers; shellac; wax-based greaseproofing.' },
+          { name:'Heavy Metal Inks', aliases:['heavy metal ink','ink pigment','printing ink metal','ink lead','ink cadmium'],
+            status:'RESTRICTED',    article:'Art. 5 / Dir. 94/62/EC / EuPIA guidelines', since:'1994-12-31', timeline:'100 ppm limit since 1994; EuPIA Good Manufacturing Practice from 2006.',
+            note:'Printing inks on packaging must comply with the 100 ppm combined heavy-metal limit. EuPIA guidelines restrict additional metals beyond the four regulated by Directive 94/62.',
+            action:'Use only EuPIA-compliant inks. Request ink SDS and CoC confirming heavy-metal levels.',
+            alternatives:'Water-based inkjet inks; UV LED-cured inks; EuPIA GMPe-compliant solvent-based inks with certified pigments.' },
         ];
 
         // ============================================================================
@@ -4722,8 +4827,10 @@
             if (pageName === 'certificates')    loadCertificates();
             if (pageName === 'roadmap')         renderRoadmap();
             if (pageName === 'grading')         renderGradingModule();
-            if (pageName === 'calculator')      renderCalculator();
-            if (pageName === 'vault')           renderVault();
+            if (pageName === 'calculator')         renderCalculator();
+            if (pageName === 'impact-calculator') renderImpactCalculator();
+            if (pageName === 'legal-chatbot')     renderLegalChatbot();
+            if (pageName === 'vault')             renderVault();
             if (pageName === 'scope')           renderScopePageNew();
             if (pageName === 'delegated-acts')  renderDelegatedActsPage();
             if (pageName === 'fine-estimator')  renderFineEstimatorPage();
@@ -4739,12 +4846,13 @@
         const TIER_ACCESS = {
             free:    ['dashboard', 'learning', 'scope', 'glossary'],
             starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
-                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role'],
+                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
+                      'impact-calculator', 'legal-chatbot'],
             pro:     ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
                       'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
                       'admin-users', 'admin-analytics', 'admin-leads',
                       'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
-                      'delegated-acts', 'countries']
+                      'delegated-acts', 'countries', 'impact-calculator', 'legal-chatbot']
         };
 
         function tierHasAccess(page) {
@@ -5875,16 +5983,26 @@
                 const bg  = isBanned ? '#FFEBEE' : '#FFF8E1';
                 const bdr = isBanned ? '#F44336' : '#FFA000';
                 const col = isBanned ? '#C62828' : '#E65100';
+                const altHtml = s.alternatives
+                    ? `<div style="background:#E8F5E9;border-radius:4px;padding:8px 12px;margin-top:8px;">
+                           <p style="font-size:12px;color:#1B5E20;margin:0;"><strong>✅ Alternatives:</strong> ${s.alternatives}</p>
+                       </div>`
+                    : '';
+                const timelineHtml = s.timeline
+                    ? `<p style="font-size:11px;color:var(--text3);margin:4px 0 8px;font-style:italic;">📅 ${s.timeline}</p>`
+                    : '';
                 return `<div style="background:${bg}; border-left:3px solid ${bdr}; padding:14px 16px; border-radius:6px; margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
                         <strong style="font-size:14px;">${s.name}</strong>
                         <span style="background:${bdr};color:#fff;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;margin-left:10px;">${s.status}</span>
                     </div>
-                    <p style="font-size:12px; color:${col}; margin-bottom:6px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
+                    <p style="font-size:12px; color:${col}; margin-bottom:2px;"><strong>${s.article}</strong> · In effect: ${s.since}</p>
+                    ${timelineHtml}
                     <p style="font-size:13px; color:var(--text); margin-bottom:8px;">${s.note}</p>
                     <div style="background:rgba(255,255,255,0.7); border-radius:4px; padding:8px 12px;">
                         <p style="font-size:12px; color:var(--text2); margin:0;"><strong>Required action:</strong> ${s.action}</p>
                     </div>
+                    ${altHtml}
                 </div>`;
             }).join('');
         }
@@ -5905,7 +6023,48 @@
             let score = materialScore[material] ?? 40;
 
             // ── Industry modifier ──────────────────────────────────────────────────
-            const industryMod = { 'Food & Beverage': 18, 'Pharmaceuticals': 12, 'Consumer Goods': 8, 'E-commerce & Retail': 10 };
+            const industryMod = {
+                'Agriculture & Horticulture': 10,
+                'Automotive & Vehicle Parts': 8,
+                'Bakery & Confectionery': 16,
+                'Beauty & Personal Care': 13,
+                'Beverages (Alcoholic)': 15,
+                'Beverages (Non-Alcoholic)': 16,
+                'Chemicals & Cleaning Products': 12,
+                'Construction Materials & DIY': 7,
+                'Consumer Electronics': 9,
+                'Consumer Goods (General)': 8,
+                'Dairy & Refrigerated Foods': 18,
+                'E-commerce & Online Retail': 10,
+                'Education & Office Supplies': 6,
+                'Fashion & Apparel': 8,
+                'Fisheries & Seafood': 16,
+                'Food Manufacturing (General)': 18,
+                'Food Service & Catering': 15,
+                'Fresh Produce & Vegetables': 13,
+                'Furniture & Home Goods': 8,
+                'Garden & Outdoor Products': 9,
+                'Glass & Ceramics': 6,
+                'Healthcare & Medical Devices': 12,
+                'Industrial Equipment & Machinery': 6,
+                'Logistics & Warehousing': 8,
+                'Luxury Goods': 11,
+                'Meat & Poultry': 18,
+                'Nutraceuticals & Supplements': 13,
+                'Packaging Manufacturing': 10,
+                'Pet Food & Pet Care': 15,
+                'Pharmaceuticals': 12,
+                'Printing & Publishing': 6,
+                'Retail (General)': 10,
+                'Snacks & Confectionery': 16,
+                'Specialty & Organic Foods': 15,
+                'Sports & Recreation': 8,
+                'Textiles & Household Linens': 7,
+                'Tobacco & Nicotine Products': 12,
+                'Toys & Childrenware': 10,
+                'Wholesale Distribution': 9,
+                'Wine & Spirits': 15,
+            };
             score += industryMod[industry] ?? 8;
 
             // ── Market scope modifier ─────────────────────────────────────────────
@@ -5972,10 +6131,48 @@
                 'Metal':          { icon:'🟡', why:'Metal is generally recyclable, but steel and aluminium still require EPR registration and must display sorting instructions under Art. 12.' },
             };
             const INDUSTRY_WHY = {
-                'Food & Beverage':    { icon:'🔴', why:'Food contact rules overlap with PPWR — EU Reg. 10/2011 applies alongside Art. 5 restrictions. Reuse targets for beverage packaging are stricter.' },
-                'Pharmaceuticals':    { icon:'🟠', why:'Pharma packaging has Art. 5 substance restrictions and must balance PPWR minimisation rules against patient safety requirements.' },
-                'Consumer Goods':     { icon:'🟡', why:'Consumer goods packaging must meet minimisation rules (Art. 10) and labelling (Art. 12), but has fewer sector-specific obligations than food or pharma.' },
-                'E-commerce & Retail':{ icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope.' },
+                'Agriculture & Horticulture':    { icon:'🟡', why:'Agricultural packaging (trays, films, pots) must meet minimisation and recyclability rules. Pesticide containers face additional chemical restrictions under Art. 5.' },
+                'Automotive & Vehicle Parts':    { icon:'🟡', why:'Automotive packaging is primarily transit and tertiary — EPR registration and void-fill limits apply, but food-contact and reuse obligations are less common.' },
+                'Bakery & Confectionery':        { icon:'🔴', why:'Bakery items use food-contact plastic films and trays subject to EU Reg. 10/2011 and PPWR Art. 5. Reuse targets for takeaway packaging apply from 2030.' },
+                'Beauty & Personal Care':        { icon:'🟠', why:'Cosmetics packaging often uses mixed materials and coatings that complicate recyclability grading. PPWR minimisation rules apply alongside EU cosmetics regulation.' },
+                'Beverages (Alcoholic)':         { icon:'🔴', why:'Alcoholic beverage packaging (glass, PET, cans) faces reuse targets from 2030 and mandatory recycled content in plastic bottles. Deposit Return Scheme compliance is critical.' },
+                'Beverages (Non-Alcoholic)':     { icon:'🔴', why:'Non-alcoholic drinks face the strictest PPWR recycled-content mandates (30% by 2030, 65% by 2040 for PET) and mandatory DRS participation for PET/metal containers.' },
+                'Chemicals & Cleaning Products': { icon:'🟠', why:'Chemical packaging must comply with CLP labelling alongside PPWR Art. 12 sorting labels. PFAS restrictions under Art. 5 affect many spray and flexible film formats.' },
+                'Construction Materials & DIY':  { icon:'🟢', why:'Construction packaging is mostly secondary and tertiary — EPR registration applies, but reuse and recycled-content obligations are lighter for non-consumer formats.' },
+                'Consumer Electronics':          { icon:'🟡', why:'Electronics retail packaging must meet minimisation rules (Art. 10) and recyclability standards. Void-fill limits affect large e-commerce shipments significantly.' },
+                'Consumer Goods (General)':      { icon:'🟡', why:'General consumer goods packaging must meet minimisation rules (Art. 10) and labelling (Art. 12), but has fewer sector-specific obligations than food or pharma.' },
+                'Dairy & Refrigerated Foods':    { icon:'🔴', why:'Dairy packaging (multi-layer films, coated cartons) is among the hardest to grade recyclable. Food-contact substance rules and short shelf-life formats create high compliance complexity.' },
+                'E-commerce & Online Retail':    { icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope for all EU market entries.' },
+                'Education & Office Supplies':   { icon:'🟢', why:'Office and stationery packaging has standard EPR and labelling obligations. Recyclability targets apply but food-contact and reuse obligations are largely absent.' },
+                'Fashion & Apparel':             { icon:'🟡', why:'Clothing packaging (polybags, hangers, boxes) must meet minimisation and recyclability rules. Single-use plastic bags are restricted; reusable alternatives are encouraged.' },
+                'Fisheries & Seafood':           { icon:'🔴', why:'Seafood packaging uses EPS foam and multi-layer barrier films that are very difficult to recycle. High EPR fees and recyclability grading risk apply alongside food-contact rules.' },
+                'Food Manufacturing (General)':  { icon:'🔴', why:'Food manufacturing uses the widest variety of packaging formats — films, trays, pouches, jars. PPWR Art. 5 substance rules and reuse targets create the broadest compliance footprint.' },
+                'Food Service & Catering':       { icon:'🔴', why:'Food service packaging (cups, trays, clamshells) faces single-use restrictions and mandatory reuse systems for takeaway from 2030. Many formats are currently unrecyclable.' },
+                'Fresh Produce & Vegetables':    { icon:'🟠', why:'Fresh produce uses lightweight plastic films and netting that are poorly recyclable. PPWR minimisation rules may conflict with food waste reduction requirements for fresh items.' },
+                'Furniture & Home Goods':        { icon:'🟡', why:'Furniture packaging (corrugated, foam, strapping) is primarily secondary/tertiary. EPR and minimisation rules apply; reuse and recycled-content mandates are lighter.' },
+                'Garden & Outdoor Products':     { icon:'🟡', why:'Garden product packaging must meet standard recyclability and EPR requirements. Some formats use UV-stabilised plastics that may score poorly on recyclability grading.' },
+                'Glass & Ceramics':              { icon:'🟢', why:'Glass as a packaging material has no recycled-content mandate under PPWR. EPR registration and sorting-instruction labelling are the primary obligations.' },
+                'Healthcare & Medical Devices':  { icon:'🟠', why:'Medical device packaging must balance PPWR minimisation rules against sterility requirements. Art. 5 substance restrictions apply; regulatory exemptions may be available.' },
+                'Industrial Equipment & Machinery':{ icon:'🟢', why:'Industrial packaging is almost entirely secondary and tertiary. EPR registration thresholds may be met, but consumer-facing and reuse obligations rarely apply.' },
+                'Logistics & Warehousing':       { icon:'🟡', why:'Logistics operators are often "first placers" of transit packaging and must register under EPR. Void-fill minimisation rules directly affect pallet and case packing design.' },
+                'Luxury Goods':                  { icon:'🟠', why:'Luxury packaging prioritises aesthetics — multi-material boxes and rigid plastics face poor recyclability grades and higher EPR fees. Minimisation rules conflict with premium presentation.' },
+                'Meat & Poultry':                { icon:'🔴', why:'Meat packaging uses MAP gas-flush trays and multi-layer barrier films that are unrecyclable in most EU systems. Very high EPR fees and recyclability risk apply.' },
+                'Nutraceuticals & Supplements':  { icon:'🟠', why:'Supplement packaging (bottles, sachets, blister packs) often uses mixed materials. Food-contact and PPWR Art. 5 substance rules both apply alongside EPR registration.' },
+                'Packaging Manufacturing':       { icon:'🟡', why:'Packaging manufacturers are not typically first placers, but may be responsible producers for self-use packaging. Design-for-recyclability obligations apply to all output.' },
+                'Pet Food & Pet Care':           { icon:'🔴', why:'Pet food uses the same food-contact packaging formats as human food — multi-layer pouches, trays, cans. PPWR recycled-content and reuse obligations apply equally.' },
+                'Pharmaceuticals':               { icon:'🟠', why:'Pharma packaging has Art. 5 substance restrictions and must balance PPWR minimisation rules against patient safety requirements. Regulatory exemptions may apply.' },
+                'Printing & Publishing':         { icon:'🟢', why:'Print and publishing packaging (shrink wrap, mailers) has standard EPR obligations. Recyclability rules apply but food-contact and reuse obligations are absent.' },
+                'Retail (General)':              { icon:'🟡', why:'General retailers are often responsible producers for own-brand packaging. PPWR EPR, labelling, and minimisation rules apply across all product categories sold.' },
+                'Snacks & Confectionery':        { icon:'🔴', why:'Snack packaging (metallised films, multi-layer laminates) is among the worst-performing for recyclability. High EPR fees and Art. 5 PFAS restrictions apply.' },
+                'Specialty & Organic Foods':     { icon:'🔴', why:'Specialty food packaging often uses premium or compostable materials with complex recyclability grading. Organic certifications do not exempt packaging from PPWR obligations.' },
+                'Sports & Recreation':           { icon:'🟡', why:'Sports product packaging must meet minimisation and recyclability standards. Large, irregular formats may incur higher EPR fees; void-fill limits apply for e-commerce orders.' },
+                'Textiles & Household Linens':   { icon:'🟡', why:'Textile packaging (polybags, header cards, boxes) must meet recyclability and minimisation rules. Single-use plastic bags are restricted under PPWR Annex V.' },
+                'Tobacco & Nicotine Products':   { icon:'🟠', why:'Tobacco packaging must comply with PPWR alongside Tobacco Products Directive requirements. Outer packaging EPR registration is mandatory; slim and flexible formats face grading risk.' },
+                'Toys & Childrenware':           { icon:'🟡', why:'Toy packaging must meet PPWR minimisation and recyclability rules alongside EN 71 safety standards. Blister packs and mixed-material retail packaging face EPR scrutiny.' },
+                'Wholesale Distribution':        { icon:'🟡', why:'Wholesale distributors place secondary and transit packaging and must register under EPR. Reuse of tertiary packaging (pallets, crates) is incentivised under PPWR Art. 11.' },
+                'Wine & Spirits':                { icon:'🔴', why:'Wine and spirits packaging uses glass bottles with plastic closures and multi-material labels. DRS compliance for sparkling wine PET is required; EPR registration is mandatory per market.' },
+                'Food & Beverage':               { icon:'🔴', why:'Food contact rules overlap with PPWR — EU Reg. 10/2011 applies alongside Art. 5 restrictions. Reuse targets for beverage packaging are stricter.' },
+                'E-commerce & Retail':           { icon:'🟠', why:'E-commerce packaging faces specific minimisation targets: at least 50% of space must be product, not void fill. Transit packaging is in scope.' },
             };
             const matWhy = MATERIAL_WHY[material] || { icon:'⚪', why:'Your material has standard PPWR obligations.' };
             const indWhy = INDUSTRY_WHY[industry] || { icon:'⚪', why:'Your industry has standard obligations.' };
@@ -6955,10 +7152,15 @@
                     barsDiv.appendChild(row);
                 });
 
+                const fineDiv = document.createElement('div');
+                fineDiv.id = 'rc-fine-' + key;
+                fineDiv.style.cssText = 'margin-top:12px;display:none;';
+
                 card.appendChild(clbl);
                 card.appendChild(cnote);
                 card.appendChild(inputRow);
                 card.appendChild(barsDiv);
+                card.appendChild(fineDiv);
                 container.appendChild(card);
             });
         }
@@ -6966,6 +7168,9 @@
         function calcRC(key, targets, inputId) {
             const val = parseFloat(document.getElementById(inputId)?.value) || 0;
             const years = [2025, 2030, 2035, 2040];
+            let worstGap = 0;
+            let worstYear = null;
+            let worstTarget = 0;
             years.forEach(yr => {
                 const target = targets[yr];
                 if (target === 0 && yr === 2025) return;
@@ -6978,13 +7183,362 @@
                 fillEl.style.background = met ? '#2A9D8F' : (pct > 60 ? '#F4A261' : '#E63946');
                 statusEl.textContent = met ? '✅' : '❌ gap: ' + (target - val).toFixed(1) + '%';
                 statusEl.style.color = met ? '#2A9D8F' : '#E63946';
+                const gap = target - val;
+                if (gap > worstGap) { worstGap = gap; worstYear = yr; worstTarget = target; }
             });
+
+            const fineDiv = document.getElementById('rc-fine-' + key);
+            if (!fineDiv) return;
+            if (worstGap <= 0) {
+                fineDiv.style.display = 'none';
+                return;
+            }
+            // Fine risk bands — Art. 65 PPWR requires "effective, proportionate, dissuasive" penalties
+            let band, fineRange, riskColor, riskBg;
+            const gapPct = worstGap;
+            if (gapPct < 5) {
+                band='Low'; fineRange='< €50,000 per infringement'; riskColor='#E65100'; riskBg='#FFF8E1';
+            } else if (gapPct < 15) {
+                band='Medium'; fineRange='€50,000 – €200,000 per infringement'; riskColor='#BF360C'; riskBg='#FBE9E7';
+            } else if (gapPct < 30) {
+                band='High'; fineRange='€200,000 – €500,000 per infringement'; riskColor='#C62828'; riskBg='#FFEBEE';
+            } else {
+                band='Critical'; fineRange='€500,000+ / up to 10% annual EU turnover'; riskColor='#B71C1C'; riskBg='#FFCDD2';
+            }
+            fineDiv.style.display = 'block';
+            fineDiv.innerHTML = `<div style="background:${riskBg};border:1px solid ${riskColor}33;border-radius:8px;padding:12px 14px;">
+                <p style="font-size:11px;font-weight:700;color:${riskColor};letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;">⚠️ Fine Risk — ${band} (Art. 65 PPWR)</p>
+                <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Gap of <strong>${gapPct.toFixed(1)}%</strong> against ${worstYear} target of <strong>${worstTarget}%</strong></p>
+                <p style="font-size:12px;color:${riskColor};margin:0;"><strong>Estimated fine range:</strong> ${fineRange}</p>
+                <p style="font-size:11px;color:var(--text3);margin:4px 0 0;">Member states set exact penalties under Art. 65. Fines are per infringement and may compound annually.</p>
+            </div>`;
+        }
+
+        // ============================================================================
+        // IMPACT CALCULATOR
+        // ============================================================================
+        function renderImpactCalculator() {
+            const el = document.getElementById('impact-calculator-content');
+            if (!el) return;
+            el.innerHTML = `
+            <div class="rc-grid">
+              <!-- LEFT: Inputs -->
+              <div class="card" style="padding:28px;">
+                <span class="rc-section-label">Your packaging profile</span>
+
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-skus">Number of distinct packaging SKUs</label>
+                  <input type="number" class="rc-select" id="ic-skus" min="1" placeholder="e.g. 12" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-volume">Annual packaging volume placed on EU market (tonnes)</label>
+                  <input type="number" class="rc-select" id="ic-volume" min="0" step="0.1" placeholder="e.g. 50" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-material">Primary material</label>
+                  <select class="rc-select" id="ic-material" onchange="calcImpact()">
+                    <option value="">— select —</option>
+                    <option value="plastic-pet">Plastic — PET</option>
+                    <option value="plastic-pp">Plastic — PP/HDPE/LDPE</option>
+                    <option value="plastic-mixed">Plastic — Mixed/Laminate</option>
+                    <option value="paper">Paper / Cardboard</option>
+                    <option value="glass">Glass</option>
+                    <option value="metal">Metal (steel/aluminium)</option>
+                    <option value="mixed">Mixed materials</option>
+                  </select>
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-recycled">Current recycled content in plastic packaging (%)</label>
+                  <input type="number" class="rc-select" id="ic-recycled" min="0" max="100" placeholder="e.g. 15" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-grade">Packaging recyclability grade (A–E)</label>
+                  <select class="rc-select" id="ic-grade" onchange="calcImpact()">
+                    <option value="">— select —</option>
+                    <option value="A">A — Fully Recyclable (EPR discount)</option>
+                    <option value="B">B — Largely Recyclable</option>
+                    <option value="C">C — Recyclable with Barriers</option>
+                    <option value="D">D — Difficult (banned 2030, 1.5× fee)</option>
+                    <option value="E">E — Not Recyclable (banned 2030, 2.0× fee)</option>
+                  </select>
+                </div>
+                <div class="rc-field" style="margin-bottom:0;">
+                  <label class="rc-field-label" for="ic-markets">Number of EU member states you sell into</label>
+                  <input type="number" class="rc-select" id="ic-markets" min="1" max="27" placeholder="e.g. 5" oninput="calcImpact()">
+                </div>
+              </div>
+
+              <!-- RIGHT: Results -->
+              <div id="ic-results" style="display:none;">
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">EPR fee liability estimate</span>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 4px;">
+                    <span id="ic-epr-fee" style="font-size:32px;font-weight:800;color:var(--text);">—</span>
+                    <span style="font-size:14px;color:var(--text2);">/ year (all markets)</span>
+                  </div>
+                  <p id="ic-epr-note" style="font-size:12px;color:var(--text3);margin:0;"></p>
+                </div>
+
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">Recycled content gap</span>
+                  <div id="ic-rc-gap" style="margin-top:10px;"></div>
+                </div>
+
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">Cost to comply (2030 estimate)</span>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 4px;">
+                    <span id="ic-cost" style="font-size:28px;font-weight:800;color:var(--text);">—</span>
+                    <span style="font-size:14px;color:var(--text2);">total capital outlay</span>
+                  </div>
+                  <p id="ic-cost-note" style="font-size:12px;color:var(--text3);margin:0;"></p>
+                </div>
+
+                <div class="card" style="padding:28px;">
+                  <span class="rc-section-label">Fine risk exposure (Art. 65 PPWR)</span>
+                  <div id="ic-fine-risk" style="margin-top:10px;"></div>
+                </div>
+              </div>
+            </div>`;
+        }
+
+        function calcImpact() {
+            const skus     = parseInt(document.getElementById('ic-skus')?.value)   || 0;
+            const volume   = parseFloat(document.getElementById('ic-volume')?.value)|| 0;
+            const material = document.getElementById('ic-material')?.value          || '';
+            const recycled = parseFloat(document.getElementById('ic-recycled')?.value) || 0;
+            const grade    = document.getElementById('ic-grade')?.value             || '';
+            const markets  = parseInt(document.getElementById('ic-markets')?.value) || 1;
+
+            if (!volume || !material || !grade) { document.getElementById('ic-results').style.display='none'; return; }
+            document.getElementById('ic-results').style.display = '';
+
+            // EPR base rate €/tonne (industry average by material, 2026 est.)
+            const baseRate = { 'plastic-pet':320, 'plastic-pp':290, 'plastic-mixed':480, 'paper':95, 'glass':45, 'metal':185, 'mixed':380 };
+            const gradeMulti = { A:0.8, B:0.9, C:1.0, D:1.5, E:2.0 };
+            const rate = (baseRate[material] || 300) * (gradeMulti[grade] || 1.0);
+            const totalEPR = rate * volume * markets;
+            document.getElementById('ic-epr-fee').textContent = '€' + Math.round(totalEPR).toLocaleString();
+            document.getElementById('ic-epr-note').textContent =
+                'Base rate €' + (baseRate[material]||300) + '/t × ' + gradeMulti[grade||'C'] + '× grade multiplier × ' + volume + ' t × ' + markets + ' market(s). Rates vary by member state EPR scheme.';
+
+            // Recycled content gap
+            const rcTarget2030 = (material === 'plastic-pet') ? 30 : (material.startsWith('plastic')) ? 10 : 0;
+            const rcGapDiv = document.getElementById('ic-rc-gap');
+            if (rcTarget2030 > 0) {
+                const gap = Math.max(0, rcTarget2030 - recycled);
+                const gapColor = gap === 0 ? '#2A9D8F' : (gap < 10 ? '#F4A261' : '#E63946');
+                rcGapDiv.innerHTML = gap === 0
+                    ? `<p style="color:#2A9D8F;font-size:14px;font-weight:600;">✅ Meeting 2030 target (${rcTarget2030}%) with ${recycled}% recycled content.</p>`
+                    : `<p style="font-size:14px;">Your recycled content: <strong>${recycled}%</strong> — 2030 target: <strong>${rcTarget2030}%</strong></p>
+                       <p style="font-size:14px;color:${gapColor};font-weight:600;">Gap: ${gap.toFixed(1)}% — additional ${(gap/100 * volume).toFixed(1)} t/yr of recycled input required.</p>`;
+            } else {
+                rcGapDiv.innerHTML = '<p style="font-size:13px;color:var(--text3);">No mandatory recycled-content target applies to this material type under PPWR Art. 7.</p>';
+            }
+
+            // Cost to comply (rough: €1,200/t for sourcing recycled feedstock premium + redesign)
+            const rcGap = Math.max(0, rcTarget2030 - recycled);
+            const redesignCost = skus * 8500;
+            const feedstockPremium = (rcGap / 100) * volume * 1200;
+            const totalCost = redesignCost + feedstockPremium;
+            document.getElementById('ic-cost').textContent = '€' + Math.round(totalCost).toLocaleString();
+            document.getElementById('ic-cost-note').textContent =
+                'Packaging redesign: €8,500/SKU × ' + skus + ' SKUs = €' + Math.round(redesignCost).toLocaleString() +
+                (feedstockPremium > 0 ? ' + recycled feedstock premium: €' + Math.round(feedstockPremium).toLocaleString() : '') + '. Capital estimates only; excludes testing & certification.';
+
+            // Fine risk
+            let fineHtml;
+            if (grade === 'D' || grade === 'E') {
+                fineHtml = `<div style="background:#FFCDD2;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#B71C1C;margin-bottom:4px;">🚫 Critical — Grade ${grade} banned from 2030</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Continuing to place Grade D/E packaging after 2030 exposes you to fines of <strong>€500,000+ per infringement</strong> or up to 10% of annual EU turnover (Art. 65).</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Immediate redesign strongly recommended. Budget redesign now — 2030 is under 4 years away.</p></div>`;
+            } else if (rcGap >= 15) {
+                fineHtml = `<div style="background:#FFEBEE;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#C62828;margin-bottom:4px;">⚠️ High — Significant recycled content gap</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">A ${rcGap.toFixed(1)}% gap against the 2030 target creates estimated fine risk of <strong>€200,000 – €500,000</strong> per infringement per market.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Across ${markets} market(s), total exposure could reach €${Math.round(350000*markets).toLocaleString()}.</p></div>`;
+            } else if (rcGap > 0) {
+                fineHtml = `<div style="background:#FFF8E1;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#E65100;margin-bottom:4px;">⚠️ Medium — Recycled content gap</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Estimated fine exposure: <strong>€50,000 – €200,000</strong> per infringement if the gap persists past 2030.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Plan now — sourcing certified recycled feedstock at scale requires 12–24 months of supplier qualification.</p></div>`;
+            } else {
+                fineHtml = `<div style="background:#E8F5E9;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#2A9D8F;margin-bottom:4px;">✅ Low risk — Recycled content on track</p>
+                    <p style="font-size:13px;color:var(--text);margin:0;">No fine exposure from recycled content gaps. Monitor grade D/E packaging and EPR registration per market.</p></div>`;
+            }
+            document.getElementById('ic-fine-risk').innerHTML = fineHtml;
+        }
+
+        // ============================================================================
+        // PPWR LEGAL CHATBOT
+        // ============================================================================
+
+        // Set to your Cloudflare Worker / Netlify Function URL to enable Claude API mode.
+        // Leave empty to use the built-in closed-knowledge fallback.
+        const LEGAL_CHATBOT_ENDPOINT = '';
+
+        // Built-in PPWR article knowledge base for offline / no-API-key mode
+        const PPWR_LEGAL_KB = [
+            { articles:['Art. 2','Scope'], keywords:['scope','apply','covered','applies','included','excluded','exemption'],
+              answer:'PPWR (EU 2025/40) applies to all packaging placed on the EU market and to packaging waste, regardless of the material used. Exempted items include military packaging, certain medical packaging where sterility cannot be achieved otherwise, and packaging for goods exported outside the EU (Art. 2).' },
+            { articles:['Art. 5','Annex I'], keywords:['pfas','banned','prohibited','substance','restrict','lead','cadmium','mercury','oxo','chemical'],
+              answer:'Art. 5 and Annex I prohibit: (a) PFAS in food-contact packaging (from 12 July 2024); (b) oxo-degradable plastic packaging (from 1 January 2025); (c) packaging with > 100 ppm combined of lead, cadmium, mercury, and hexavalent chromium. Additional substances may be restricted by delegated act.' },
+            { articles:['Art. 6','Art. 7','Annex II'], keywords:['recyclability','grade','a','b','c','d','e','recyclable','recycle','banned 2030'],
+              answer:'Art. 6 requires all packaging to receive a recyclability grade A–E based on EU-wide design-for-recycling criteria (Annex II). Grades D and E are banned from January 2030. Grade A packaging may receive a reduced EPR contribution. Delegated acts will set detailed grading criteria by end 2026.' },
+            { articles:['Art. 7'], keywords:['recycled content','recycled material','target','pet','plastic','percentage'],
+              answer:'Art. 7 sets mandatory minimum recycled content in plastic packaging: PET beverage bottles — 25% by 2025, 30% by 2030; contact-sensitive plastics — 10% by 2030, 15% by 2035; non-PET plastic packaging — 10% by 2030, 25% by 2035. Chemical recycling credits count if ISO 15270 certified.' },
+            { articles:['Art. 9','Art. 10','Annex IV'], keywords:['minimisation','weight','volume','space','void','size','necessary','overpackaging'],
+              answer:'Art. 9 and 10 require packaging to be minimised to the necessary amount — no unnecessary weight, volume, or layers beyond what protects the product. Annex IV bans packaging with > 40% empty space (50% for e-commerce). Art. 10 prohibits misleading packaging shapes that overstate product quantity.' },
+            { articles:['Art. 11','Annex V'], keywords:['reuse','refill','reusable','single-use','restrict','ban','sup'],
+              answer:'Art. 11 and Annex V restrict single-use formats and set reuse targets. Key restrictions from August 2026: single-use plastic packaging for food/beverage consumed on-site in HORECA, single-use plastic hotel amenity packaging. Reuse targets for transport packaging: 50% by 2030, 90% by 2040.' },
+            { articles:['Art. 12'], keywords:['label','labelling','sorting','qr','code','symbol','colour','material'],
+              answer:'Art. 12 requires packaging to carry standardised sorting instruction labels (material type, how to sort) using EU-harmonised pictograms. Digital product passports via QR code are required for secondary and tertiary packaging > 5 kg. Labels must be in the official language(s) of the member state.' },
+            { articles:['Art. 44','Art. 45'], keywords:['epr','producer responsibility','extended producer','fee','register','registration'],
+              answer:'Arts. 44–45 require producers to register with the competent authority in each EU member state where they place packaging on the market. EPR fees must be modulated by packaging recyclability grade and recycled content. Registration is per-country — there is no single EU-wide EPR registration.' },
+            { articles:['Art. 50'], keywords:['deposit return','drs','deposit','bottle','can','beverage'],
+              answer:'Art. 50 requires member states to establish deposit-return systems (DRS) for single-use plastic beverage bottles ≤ 3 litres and metal beverage containers ≤ 3 litres by 1 January 2029. Countries with existing DRS achieving ≥ 90% collection may apply for derogation.' },
+            { articles:['Art. 65'], keywords:['fine','penalty','sanction','enforcement','infringement'],
+              answer:'Art. 65 requires member states to set penalties that are effective, proportionate, and dissuasive. Penalties must take into account: severity and duration of infringement, the economic benefit gained, the scale of the company, prior violations. Member states report penalty frameworks to the Commission.' },
+            { articles:['Art. 58','Art. 59'], keywords:['sme','small','micro','threshold','exempt','exemption','size'],
+              answer:'Micro-enterprises (< 10 employees and ≤ €2 million turnover) may be exempted from certain PPWR requirements by member states (Art. 58). SME-specific provisions and extended timelines are available for some targets. Always verify with the competent authority in each member state where you operate.' },
+            { articles:['Recital 1','Art. 1'], keywords:['purpose','objective','goal','why','circular economy','sustainability','environment'],
+              answer:'PPWR (EU 2025/40) replaces Directive 94/62/EC and is designed to reduce packaging waste, increase reuse and recycling, remove harmful substances, and complete the EU single market for sustainable packaging. It is part of the European Green Deal and Circular Economy Action Plan (Art. 1).' },
+        ];
+
+        let legalChatHistory = [];
+        let legalChatBusy = false;
+
+        function renderLegalChatbot() {
+            const el = document.getElementById('legal-chatbot-content');
+            if (!el) return;
+            legalChatHistory = [];
+            legalChatBusy = false;
+            const apiMode = !!LEGAL_CHATBOT_ENDPOINT;
+            el.innerHTML = `
+            ${!apiMode ? `<div style="background:#FFF8E1;border:1px solid #FFD54F;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#E65100;">
+                <strong>ℹ️ Knowledge-base mode:</strong> Answers are drawn from PPWR Articles and Annexes built into this platform.
+                To enable full AI mode, configure <code>LEGAL_CHATBOT_ENDPOINT</code> with your Cloudflare Worker URL.
+            </div>` : `<div style="background:#E8F5E9;border:1px solid #A5D6A7;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#1B5E20;">
+                <strong>✅ AI mode active</strong> — responses are generated by Claude and cite PPWR Articles/Annexes directly.
+            </div>`}
+            <div id="lc-messages" style="min-height:320px;max-height:480px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
+                <div class="lc-bot-msg" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;max-width:88%;font-size:14px;line-height:1.65;">
+                    <strong>PPWR Legal Assistant</strong><br>
+                    Hello! Ask me anything about EU Packaging and Packaging Waste Regulation (EU) 2025/40 — scope, substance bans, recycled content targets, EPR obligations, labelling, fines, and more. I'll cite the relevant Articles and Annexes in every answer.
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:12px;">
+                <input type="text" id="lc-input" placeholder="e.g. What are the recycled content targets for PET bottles?"
+                    style="flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;"
+                    onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+                <button class="btn-primary" id="lc-send" onclick="legalChatSend()" style="padding:12px 24px;white-space:nowrap;">Ask →</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${['What is banned under Art. 5?','Recycled content targets for plastics','Recyclability grading A–E explained','EPR registration — how does it work?','Fine and penalty rules (Art. 65)','Scope — what packaging is covered?']
+                    .map(q => `<button class="btn-secondary" style="font-size:12px;padding:5px 12px;" onclick="legalChatQuick('${q.replace(/'/,"\\'")}');">${q}</button>`).join('')}
+            </div>`;
+            document.getElementById('lc-input')?.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); legalChatSend(); }
+            });
+        }
+
+        function legalChatQuick(text) {
+            const inp = document.getElementById('lc-input');
+            if (inp) { inp.value = text; legalChatSend(); }
+        }
+
+        function legalChatAppend(role, text, articles) {
+            const msgs = document.getElementById('lc-messages');
+            if (!msgs) return;
+            const isBot = role === 'bot';
+            const div = document.createElement('div');
+            div.style.cssText = isBot
+                ? 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;max-width:88%;font-size:14px;line-height:1.65;'
+                : 'background:var(--accent);color:#fff;border-radius:10px;padding:12px 16px;max-width:80%;font-size:14px;line-height:1.55;align-self:flex-end;margin-left:auto;';
+            div.textContent = text;
+            if (isBot && articles && articles.length) {
+                const ref = document.createElement('p');
+                ref.style.cssText = 'font-size:11px;color:var(--text3);margin:8px 0 0;font-weight:600;';
+                ref.textContent = '📖 ' + articles.join(' · ');
+                div.appendChild(ref);
+            }
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function legalChatKBSearch(query) {
+            const q = query.toLowerCase();
+            let best = null, bestScore = 0;
+            for (const entry of PPWR_LEGAL_KB) {
+                let score = 0;
+                for (const kw of entry.keywords) { if (q.includes(kw)) score += (kw.length > 4 ? 3 : 1); }
+                for (const art of entry.articles) { if (q.includes(art.toLowerCase())) score += 4; }
+                if (score > bestScore) { bestScore = score; best = entry; }
+            }
+            return bestScore >= 2 ? best : null;
+        }
+
+        async function legalChatSend() {
+            if (legalChatBusy) return;
+            const inp = document.getElementById('lc-input');
+            const sendBtn = document.getElementById('lc-send');
+            const text = inp?.value.trim();
+            if (!text) return;
+
+            inp.value = '';
+            legalChatHistory.push({ role:'user', content: text });
+            legalChatAppend('user', text, null);
+            legalChatBusy = true;
+            if (sendBtn) sendBtn.disabled = true;
+
+            if (LEGAL_CHATBOT_ENDPOINT) {
+                // API mode — call worker proxy
+                const typingEl = document.createElement('div');
+                typingEl.style.cssText = 'font-size:13px;color:var(--text3);padding:10px 0;';
+                typingEl.textContent = '⏳ Thinking…';
+                document.getElementById('lc-messages')?.appendChild(typingEl);
+                try {
+                    const res = await fetch(LEGAL_CHATBOT_ENDPOINT, {
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({ query: text, sessionToken:'ppwr-session-legal-' + Date.now(), plan:'pro',
+                            context:{ cards: [], scenarios: [] } })
+                    });
+                    typingEl.remove();
+                    if (res.ok) {
+                        const data = await res.json();
+                        legalChatAppend('bot', data.answer || '(no answer)', data.sourceLabel ? [data.sourceLabel] : []);
+                    } else {
+                        legalChatAppend('bot', 'The AI service is currently unavailable. Please try again later.', ['Art. Error']);
+                    }
+                } catch (e) {
+                    typingEl.remove();
+                    legalChatAppend('bot', 'Network error reaching the AI service. Falling back to knowledge base.', []);
+                    const kb = legalChatKBSearch(text);
+                    if (kb) legalChatAppend('bot', kb.answer, kb.articles);
+                }
+            } else {
+                // Knowledge-base fallback
+                setTimeout(() => {
+                    const kb = legalChatKBSearch(text);
+                    if (kb) {
+                        legalChatAppend('bot', kb.answer, kb.articles);
+                    } else {
+                        legalChatAppend('bot',
+                            "I'm sorry, that specific detail isn't covered in my built-in knowledge base. Please consult the official Regulation (EU) 2025/40 text on EUR-Lex, or configure the AI endpoint for full coverage.",
+                            ['PPWR (EU) 2025/40']);
+                    }
+                }, 400);
+            }
+
+            legalChatBusy = false;
+            if (sendBtn) sendBtn.disabled = false;
+            inp?.focus();
         }
 
         function renderESCalc(container) {
             container.innerHTML = '';
-            const title = document.createElement('h3');
-            title.style.marginBottom = '8px';
             title.textContent = 'Empty Space Checker';
             const subtitle = document.createElement('p');
             subtitle.style.cssText = 'font-size:14px;color:var(--text2);margin-bottom:20px;';
