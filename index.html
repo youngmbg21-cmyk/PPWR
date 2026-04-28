@@ -786,7 +786,7 @@
             opacity: 0;
             pointer-events: none;
             transform: translateY(16px) scale(0.97);
-            transition: opacity 0.28s ease, transform 0.28s ease;
+            transition: opacity 0.28s ease, transform 0.28s ease, width 0.25s ease;
         }
 
         #ai-chat-window.open {
@@ -794,6 +794,8 @@
             pointer-events: auto;
             transform: translateY(0) scale(1);
         }
+
+        #ai-chat-window.expanded { width: 572px; }
 
         #ai-chat-header {
             background: linear-gradient(135deg, var(--accent) 0%, var(--sage-deep) 100%);
@@ -835,6 +837,17 @@
         }
 
         #ai-chat-close:hover { background: rgba(255,255,255,0.28); }
+
+        #ai-chat-expand {
+            background: rgba(255,255,255,0.15);
+            border: none; color: white;
+            width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; font-size: 15px;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s; line-height: 1; padding: 0;
+        }
+
+        #ai-chat-expand:hover { background: rgba(255,255,255,0.28); }
 
         #ai-chat-messages {
             flex: 1;
@@ -2601,7 +2614,10 @@
                     <p>Closed knowledge · Platform content only</p>
                 </div>
             </div>
-            <button id="ai-chat-close" aria-label="Close chat">✕</button>
+            <div style="display:flex;align-items:center;gap:4px;">
+                <button id="ai-chat-expand" aria-label="Expand chat" title="Expand">⤢</button>
+                <button id="ai-chat-close" aria-label="Close chat">✕</button>
+            </div>
         </div>
 
         <!-- Messages -->
@@ -2657,6 +2673,73 @@
             const div = document.createElement('div');
             div.textContent = String(str == null ? '' : str);
             return div.innerHTML;
+        }
+
+        function renderMarkdown(raw) {
+            const esc = raw
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            function inline(t) {
+                return t
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>')
+                    .replace(/`([^`\n]+?)`/g, '<code style="background:var(--bg3);padding:1px 4px;border-radius:3px;font-size:0.88em;">$1</code>');
+            }
+
+            const lines = esc.split('\n');
+            let html = '';
+            let inUl = false;
+            let inTable = false;
+
+            function closeUl()    { if (inUl)    { html += '</ul>';              inUl    = false; } }
+            function closeTable() { if (inTable) { html += '</tbody></table>';   inTable = false; } }
+
+            for (const line of lines) {
+                const t = line.trim();
+
+                if (t.startsWith('|') && t.endsWith('|')) {
+                    closeUl();
+                    const cells = t.slice(1, -1).split('|').map(c => c.trim());
+                    if (cells.every(c => /^[-: ]+$/.test(c))) continue;
+                    if (!inTable) {
+                        html += '<table style="border-collapse:collapse;width:100%;margin:8px 0;font-size:13px;"><thead><tr>';
+                        html += cells.map(c => `<th style="border:1px solid var(--border2);padding:5px 8px;background:var(--bg3);text-align:left;">${inline(c)}</th>`).join('');
+                        html += '</tr></thead><tbody>';
+                        inTable = true;
+                    } else {
+                        html += '<tr>' + cells.map(c => `<td style="border:1px solid var(--border2);padding:5px 8px;">${inline(c)}</td>`).join('') + '</tr>';
+                    }
+                    continue;
+                }
+
+                closeTable();
+
+                if (/^[-*•] /.test(t)) {
+                    if (!inUl) { html += '<ul style="margin:6px 0 6px 18px;padding:0;line-height:1.65;">'; inUl = true; }
+                    html += `<li>${inline(t.replace(/^[-*•] /, ''))}</li>`;
+                    continue;
+                }
+
+                closeUl();
+
+                const hm = t.match(/^(#{1,3}) (.+)/);
+                if (hm) {
+                    const tag = 'h' + (hm[1].length + 3);
+                    const sz  = [14, 13, 12][hm[1].length - 1];
+                    html += `<${tag} style="margin:10px 0 3px;font-size:${sz}px;">${inline(hm[2])}</${tag}>`;
+                    continue;
+                }
+
+                if (!t) { html += '<br>'; continue; }
+
+                html += `<p style="margin:3px 0;line-height:1.65;">${inline(t)}</p>`;
+            }
+
+            closeUl();
+            closeTable();
+            return html;
         }
 
         // ============================================================================
@@ -5908,6 +5991,7 @@
             const btn        = document.getElementById('ai-nav-btn');
             const win        = document.getElementById('ai-chat-window');
             const closeBtn   = document.getElementById('ai-chat-close');
+            const expandBtn  = document.getElementById('ai-chat-expand');
             const messages   = document.getElementById('ai-chat-messages');
             const input      = document.getElementById('ai-chat-input');
             const sendBtn    = document.getElementById('ai-chat-send');
@@ -5940,6 +6024,12 @@
             });
 
             closeBtn.addEventListener('click', closeChat);
+
+            expandBtn.addEventListener('click', () => {
+                const expanded = win.classList.toggle('expanded');
+                expandBtn.textContent = expanded ? '⤡' : '⤢';
+                expandBtn.title       = expanded ? 'Collapse' : 'Expand';
+            });
 
             // Close on Escape key
             document.addEventListener('keydown', e => {
@@ -5974,7 +6064,7 @@
                 if (trusted) {
                     div.innerHTML = content;
                 } else {
-                    div.textContent = content;
+                    div.innerHTML = renderMarkdown(content);
                 }
                 if (source) {
                     const src = document.createElement('span');
