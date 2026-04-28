@@ -2857,12 +2857,30 @@
 
         // ── Inline term tooltips ─────────────────────────────────────────────
         const TERM_DEFS = {
-            EPR:   'Extended Producer Responsibility — your company pays annual fees into a national recycling programme based on how much packaging you place on the market each year.',
-            DPP:   'Digital Product Passport — a mandatory digital record (QR code) containing material composition, recyclability grade, and EPR registration details. Required for B2B packaging over 5 kg from 2030.',
-            PCR:   'Post-Consumer Recycled content — material that has been collected from consumers, recycled, and used again in new packaging. PPWR sets minimum PCR percentages by material type from 2030.',
-            PFAS:  'Per- and polyfluoroalkyl substances — chemical coatings used in some food-contact packaging (e.g. grease-resistant wrappers). Banned in food-contact packaging under PPWR from July 2024.',
-            REACH: 'EU chemicals regulation (EC 1907/2006). PPWR adds packaging-specific substance bans on top of REACH — both frameworks apply when reviewing your materials.',
-            NIR:   'Near-Infrared sorting — the technology recycling facilities use to identify and separate plastic types. Dark pigments like carbon black block NIR light, making packaging impossible to sort and forcing a lower recyclability grade.',
+            EPR:     'Extended Producer Responsibility — your company pays annual fees into a national recycling programme based on how much packaging you place on the market each year.',
+            DPP:     'Digital Product Passport — a mandatory digital record (QR code) containing material composition, recyclability grade, and EPR registration details. Required for B2B packaging over 5 kg from 2030.',
+            PCR:     'Post-Consumer Recycled content — material collected from consumers, recycled, and used again in new packaging. PPWR sets minimum PCR percentages by material type from 2030.',
+            PFAS:    'Per- and polyfluoroalkyl substances — chemical coatings used in some food-contact packaging (e.g. grease-resistant wrappers). Banned in food-contact packaging under PPWR from July 2024.',
+            REACH:   'EU chemicals regulation (EC 1907/2006). PPWR adds packaging-specific substance bans on top of REACH — both frameworks apply when reviewing your materials.',
+            NIR:     'Near-Infrared sorting — the technology recycling facilities use to identify and separate plastic types. Dark pigments like carbon black block NIR light, making packaging impossible to sort.',
+            PPWR:    'Packaging and Packaging Waste Regulation — EU Regulation 2025/40, which replaces the old Packaging Directive and sets new rules on recycled content, recyclability, reuse, EPR fees, and substance bans.',
+            DRS:     'Deposit Return System — a scheme where consumers pay a small deposit on a beverage container (e.g. bottle or can) and get it back when they return the empty container for recycling. Mandatory across the EU by 2029.',
+            SUP:     'Single-Use Plastics — disposable plastic items (cups, cutlery, straws, etc.) covered by the EU Single-Use Plastics Directive and PPWR Annex V restrictions.',
+            HORECA:  'Hotels, Restaurants and Cafés — the food service sector, which faces specific PPWR reuse and single-use packaging restrictions from August 2026.',
+            PRO:     'Producer Responsibility Organisation — a collective body (e.g. Citeo, CONAI, Reclay) that manages EPR registration and fee collection on behalf of its member producers.',
+            BPA:     'Bisphenol A — a chemical used in some plastic packaging and can linings, restricted in food-contact materials under REACH and EU Regulation 10/2011.',
+            PET:     'Polyethylene terephthalate — a clear plastic widely used for beverage bottles. PPWR sets the strictest recycled content targets for PET bottles: 25% by 2025, 30% by 2030.',
+            HDPE:    'High-Density Polyethylene — a rigid plastic used for milk bottles, detergent containers, and pipes. Covered by PPWR non-PET recycled content targets (10% by 2030).',
+            LDPE:    'Low-Density Polyethylene — a flexible plastic used for bags, films, and squeeze bottles. Covered by PPWR non-PET recycled content targets (10% by 2030).',
+            PP:      'Polypropylene — a versatile plastic used for food containers, caps, and packaging films. Covered by PPWR non-PET recycled content targets (10% by 2030).',
+            PVC:     'Polyvinyl Chloride — a plastic used in cling film, blister packs, and some bottles. Expected to receive Grade D or E under PPWR recyclability grading, and banned from 2030.',
+            EPS:     'Expanded Polystyrene — foam plastic used in food trays and protective packaging. Single-use EPS food containers were banned under the Single-Use Plastics Directive from 2021.',
+            EFSA:    'European Food Safety Authority — the EU body that assesses food safety risks. EFSA approval is required for derogations to PPWR recycled content targets in food-contact packaging.',
+            UBA:     'Umweltbundesamt — the German Federal Environment Agency, which oversees LUCID (the German packaging register) and enforces packaging compliance in Germany.',
+            SCCP:    'Short-Chain Chlorinated Paraffins — restricted Persistent Organic Pollutants (POPs) used as plasticisers in some PVC packaging. Restricted under REACH Annex XVII.',
+            MRF:     'Materials Recovery Facility — a sorting plant where mixed recyclables are separated by material type before being sent to reprocessors.',
+            OPS:     'Oriented Polystyrene — a transitional alternative to PVC for shrink sleeves with better recyclability, though still under review for long-term PPWR grading.',
+            ZSVR:    'Zentrale Stelle Verpackungsregister — the German Central Office for the Packaging Register, which operates the LUCID register all producers selling into Germany must join.',
         };
 
         function termify(input, isHtml) {
@@ -2871,7 +2889,7 @@
             return str.replace(/(<[^>]+>)|([^<]+)/g, (match, tag, text) => {
                 if (tag) return tag;
                 if (!text) return match;
-                return text.replace(/\b(EPR|DPP|PCR|PFAS|REACH|NIR)\b/g, term => {
+                return text.replace(/\b(PPWR|EPR|DPP|PCR|PFAS|REACH|NIR|DRS|SUP|HORECA|PRO|BPA|PET|HDPE|LDPE|PP|PVC|EPS|EFSA|UBA|SCCP|MRF|OPS|ZSVR)\b/g, term => {
                     const def = TERM_DEFS[term];
                     return def
                         ? `<span class="term">${term}<span class="term-tip">${def}</span></span>`
@@ -5236,7 +5254,7 @@
             `;
 
             const optsEl = el.querySelector('#quiz-opts');
-            qdata.opts.forEach((opt, i) => {
+            _kqShuffle(qdata.opts).forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'quiz-opt';
                 btn.textContent = opt.t;
@@ -5525,6 +5543,7 @@
         function _kqRenderQuestion() {
             const s = _kqState;
             const q = s.round[s.roundIdx];
+            s.shuffledOpts = _kqShuffle(q.opts);
             const totalDone = s.sessionAnswered + s.roundIdx;
             const totalTarget = s.usedCount;
             const progressPct = totalTarget > 0 ? Math.round((totalDone / totalTarget) * 100) : 0;
@@ -5540,7 +5559,7 @@
                     </div>
                     <p class="kq-question">${escapeHtml(q.q)}</p>
                     <div id="kq-tiles">
-                        ${q.opts.map((o, i) => `
+                        ${s.shuffledOpts.map((o, i) => `
                             <button class="kq-tile" data-idx="${i}">${escapeHtml(o.t)}</button>
                         `).join('')}
                     </div>
@@ -5564,11 +5583,12 @@
         function _kqAnswer(chosenIdx) {
             const s = _kqState;
             const q = s.round[s.roundIdx];
-            const chosen = q.opts[chosenIdx];
+            const opts = s.shuffledOpts || q.opts;
+            const chosen = opts[chosenIdx];
             const isCorrect = chosen.c;
-            const correctIdx = q.opts.findIndex(o => o.c);
+            const correctIdx = opts.findIndex(o => o.c);
 
-            s.answers.push({ q: q.q, chosen: chosen.t, correct: isCorrect, correctText: q.opts[correctIdx].t, feedback: chosen.f });
+            s.answers.push({ q: q.q, chosen: chosen.t, correct: isCorrect, correctText: opts[correctIdx].t, feedback: chosen.f });
 
             // Lock all tiles and highlight result
             document.querySelectorAll('.kq-tile').forEach((btn, i) => {
