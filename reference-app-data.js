@@ -913,12 +913,12 @@
     <div class="pillar-card">
       <div class="pillar-num">04</div>
       <div class="pillar-title">🏷️ Labelling &amp; QR Codes</div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6">Mandatory harmonised sorting labels across the EU from 2028. Digital product passport (QR code) required from 2030 for packaging. Critical for your own branded/private label products sold across all 7 markets.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Mandatory harmonised sorting labels across the EU from 2028. Digital product passport (QR code) required from 2030 for packaging. Critical for your own branded/private label products sold across all EU markets.</p>
     </div>
     <div class="pillar-card">
       <div class="pillar-num">05</div>
       <div class="pillar-title">💶 EPR &amp; Fees</div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6">Extended Producer Responsibility fees modulated by recyclability grade. The "polluter pays" principle — less recyclable packaging = higher EPR fee. Applies to all packaging you place on the market in each country, including intra-cluster flows.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Extended Producer Responsibility fees modulated by recyclability grade. The "polluter pays" principle — less recyclable packaging = higher EPR fee. Applies to all packaging you place on the market in each country, including cross-border flows within the EU.</p>
     </div>
     <div class="pillar-card" style="border-top-color: var(--amber)">
       <div class="pillar-num" style="color:#fcd34d">⚡</div>
@@ -1003,6 +1003,27 @@
   <h2 class="section-heading">Country-by-Country Guide</h2>
   <p class="section-sub">Click any country card to expand its full profile. Cards highlight automatically when you run a scenario in the Flow Simulator.</p>
 
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:180px;max-width:320px">
+      <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)">🔍</span>
+      <input id="country-search" type="text" placeholder="Search country…" oninput="filterCountryCards()"
+        style="width:100%;padding:8px 10px 8px 30px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);outline:none;box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button onclick="filterCountryCards('all')" id="cf-all" class="cf-btn cf-active"
+        style="padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--ink);color:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">All (28)</button>
+      <button onclick="filterCountryCards('high')" id="cf-high"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #dc2626;background:white;color:#dc2626;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🔴 High</button>
+      <button onclick="filterCountryCards('medium')" id="cf-med"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #d97706;background:white;color:#d97706;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟡 Medium</button>
+      <button onclick="filterCountryCards('low')" id="cf-low"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #0369a1;background:white;color:#0369a1;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟢 Low</button>
+      <button onclick="filterCountryCards('deposit')" id="cf-dep"
+        style="padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:white;color:var(--ink);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">💰 Has DRS</button>
+    </div>
+    <span id="country-count" style="font-size:12px;color:var(--muted);white-space:nowrap">28 countries</span>
+  </div>
+
   <div class="alert alert-info" id="countries-alert">
     <div class="alert-icon">ℹ️</div>
     <div><strong>PPWR is a Regulation — directly applicable in all 27 EU Member States</strong> from <strong>12 August 2026</strong>, with no national transposition required. Each Member State must have a designated competent authority, operational EPR scheme, and penalty framework in place by that date. <strong>Norway (EEA)</strong> incorporates PPWR through the EEA Agreement — expected 2026–2027, with substance equivalent to the EU Regulation.
@@ -1017,9 +1038,22 @@
 
   <div class="country-grid" id="country-grid-dynamic"></div>
 
+  <!-- Compare panel — shown when 2+ countries are selected -->
+  <div id="compare-panel" style="display:none;background:white;border:2px solid #7c3aed;border-radius:12px;padding:16px 20px;margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#7c3aed">⚖️ Country Comparison</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="renderCompare()" style="padding:6px 14px;border-radius:8px;border:1px solid #7c3aed;background:#7c3aed;color:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">Compare selected</button>
+        <button onclick="clearCompare()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:white;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Clear</button>
+      </div>
+    </div>
+    <div id="compare-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div id="compare-table" style="overflow-x:auto"></div>
+  </div>
+
     <div class="card">
     <div class="card-title">🔗 Cross-Border Complexity Matrix</div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:16px">When packaging crosses borders within the cluster, EPR obligations follow the <em>country of placement on the market</em> — not the country of origin.</p>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:16px">When packaging crosses borders within the EU, EPR obligations follow the <em>country of placement on the market</em> — not the country of origin.</p>
     <div style="overflow-x:auto">
       <table style="width:100%;border-collapse:collapse;font-size:13px">
         <thead>
@@ -1032,13 +1066,13 @@
         </thead>
         <tbody>
           <tr>
-            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><strong>🏗️ CA manufactures in cluster country → sells domestically</strong></td>
+            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><strong>🏗️ CA manufactures in EU country → sells domestically</strong></td>
             <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5">CA manufacturing entity (primary producer)</td>
             <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5">🇩🇪🇫🇷🇵🇱 etc. — market of sale</td>
             <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><span style="color:var(--sg-red);font-weight:600">HIGHEST — Full obligations</span></td>
           </tr>
           <tr style="background:#fef9f5">
-            <td style="padding:10px 14px;border:1px solid var(--border)"><strong>🏗️ CA manufactures in cluster country → exports to other cluster countries</strong></td>
+            <td style="padding:10px 14px;border:1px solid var(--border)"><strong>🏗️ CA manufactures in EU country → exports to other EU countries</strong></td>
             <td style="padding:10px 14px;border:1px solid var(--border)">CA mfg entity (export packaging) + receiving entity (EPR in destination)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">Both origin + destination countries</td>
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--warn);font-weight:600">HIGH — Dual obligations</span></td>
@@ -1050,7 +1084,7 @@
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--warn);font-weight:600">HIGH</span></td>
           </tr>
           <tr style="background:var(--cream)">
-            <td style="padding:10px 14px;border:1px solid var(--border)">CA Sweden → CA Norway (intra-cluster)</td>
+            <td style="padding:10px 14px;border:1px solid var(--border)">CA Sweden → CA Norway (cross-border)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">CA Norway (Norwegian importer)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">🇳🇴 Norway</td>
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--amber);font-weight:600">MEDIUM</span></td>
@@ -1108,7 +1142,7 @@
       <div class="scenario-card" id="sc-own" onclick="selectScenario('own')" style="border-color:var(--sg-red);border-width:2px">
         <div class="sc-icon">🏗️</div>
         <div class="sc-title" style="color:var(--sg-red)">Own Manufactured Products ★</div>
-        <div class="sc-desc">Company A manufactures and packs products within the cluster, then sells domestically or cross-border. You are the primary producer — the highest PPWR obligation tier.</div>
+        <div class="sc-desc">Company A manufactures and packs products in an EU/EEA country, then sells domestically or cross-border. You are the primary producer — the highest PPWR obligation tier.</div>
         <span class="sc-badge sc-high">Primary Producer — Maximum Obligations</span>
       </div>
       <div class="scenario-card selected" id="sc-0" onclick="selectScenario(0)">
@@ -1392,7 +1426,24 @@
 
   <!-- ── COUNTRY ENFORCEMENT PROFILES ── -->
   <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin-bottom:6px">Country Enforcement Profiles</h3>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Enforcement strictness varies significantly across the cluster. Click a country to expand its profile.</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:10px">Enforcement strictness varies significantly across EU Member States. Click a country to expand its profile.</p>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:160px;max-width:260px">
+      <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted)">🔍</span>
+      <input id="enf-search" type="text" placeholder="Filter country…" oninput="filterEnfProfiles()"
+        style="width:100%;padding:7px 9px 7px 28px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);outline:none;box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button onclick="filterEnfProfiles('all')" id="ef-all"
+        style="padding:5px 10px;border-radius:20px;border:1px solid var(--border);background:var(--ink);color:white;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">All</button>
+      <button onclick="filterEnfProfiles('high')" id="ef-high"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #dc2626;background:white;color:#dc2626;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🔴 High</button>
+      <button onclick="filterEnfProfiles('medium')" id="ef-med"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #d97706;background:white;color:#d97706;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟡 Medium</button>
+      <button onclick="filterEnfProfiles('low')" id="ef-low"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #0369a1;background:white;color:#0369a1;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟢 Low</button>
+    </div>
+  </div>
   <div id="enforcement-profiles" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px"></div>
 
   <!-- ── VIOLATION REFERENCE TABLE ── -->
@@ -1661,8 +1712,8 @@
       <div class="role-icon">⚖️</div>
       <div class="role-title">Legal / Compliance</div>
       <ul class="role-tasks">
-        <li class="role-task">Register with EPR systems in all 7 markets</li>
-        <li class="role-task">Monitor EPR scheme updates and penalty rule changes in each of the 7 markets</li>
+        <li class="role-task">Register with EPR systems in all EU/EEA markets where packaging is placed</li>
+        <li class="role-task">Monitor EPR scheme updates and penalty rule changes in each market where CA operates</li>
         <li class="role-task">Review Incoterms in contracts to confirm EPR liability allocation</li>
         <li class="role-task">Ensure own-manufactured product packaging is legally compliant by 2028/2030</li>
         <li class="role-task">Manage penalty risk and enforcement correspondence</li>
@@ -1899,7 +1950,7 @@ const SCOPE_DATA = {
       item: 'Reusable transport packaging in closed-loop B2B systems',
       status: 'modified-epr',
       article: 'Art. 44(3)',
-      detail: 'Transport packaging used exclusively in a closed-loop system (i.e. CA-to-CA entity only, never placed on the market for a third party) may qualify for modified EPR registration treatment. This is relevant for intercompany flows between cluster entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.',
+      detail: 'Transport packaging used exclusively in a closed-loop system (i.e. CA-to-CA entity only, never placed on the market for a third party) may qualify for modified EPR registration treatment. This is relevant for intercompany flows between EU entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.',
       urgency: 'medium',
     },
     {
@@ -2085,7 +2136,7 @@ function toggleCountry(code) {
 
 // ── LAYER 0: COUNTRY DATA ──────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════
-// COUNTRY CONFIG — single source of truth for all 7 cluster countries
+// COUNTRY CONFIG — single source of truth for all 28 EU/EEA countries
 // Update fields here; country cards, rule engine and simulator all read from this.
 // ═══════════════════════════════════════════════════════════════════════════
 const COUNTRY_CONFIG = {
@@ -2131,7 +2182,7 @@ const COUNTRY_CONFIG = {
     languageLabel: 'Swedish',
     depositSystem: true,
     depositNote: 'Pantbanken / Returpack deposit systems for cans and bottles — separate from packaging EPR',
-    notableFeatures: ['Strictest enforcement in cluster', 'Daily accruing penalties possible', 'Public naming of non-compliant operators', 'Criminal referral for serious cases'],
+    notableFeatures: ['Among strictest enforcement in EU', 'Daily accruing penalties possible', 'Public naming of non-compliant operators', 'Criminal referral for serious cases'],
     caAction: 'Maintain FTI registration. Prepare for modulated EPR fee structure under PPWR — recyclability grades will directly affect costs. Priority: audit all packaging grades for Swedish market-placed products.',
     enforcement: 'high',
   },
@@ -2224,7 +2275,7 @@ const COUNTRY_CONFIG = {
     depositSystem: false,
     depositNote: null,
     notableFeatures: ['Green Dot system (LZP)', 'Fee increases expected under PPWR', 'B2B under-registration a known gap'],
-    caAction: 'Model EPR fee increases for Latvian operations. Intra-cluster flows from SE/FI → LV mean the Latvian entity bears EPR liability. Clarify legal entity responsibility in intra-cluster contracts.',
+    caAction: 'Model EPR fee increases for Latvian operations. Cross-border flows from other EU countries into LV mean the Latvian entity bears EPR liability. Clarify legal entity responsibility in cross-border supply contracts.',
     enforcement: 'medium',
   },
   AT: {
@@ -2520,7 +2571,7 @@ const COUNTRY_CONFIG = {
     depositSystem: false,
     depositNote: null,
     notableFeatures: ['Most enforcement-active Baltic state', 'AAA has flagged B2B under-reporting as audit priority', 'Enforcement increasing since 2023'],
-    caAction: 'Review B2B packaging reporting immediately — AAA has flagged this as an audit priority. Ensure all packaging weights and types are captured in EPR reporting for all intra-cluster and 3rd party flows.',
+    caAction: 'Review B2B packaging reporting immediately — AAA has flagged this as an audit priority. Ensure all packaging weights and types are captured in EPR reporting for all cross-border and 3rd party flows.',
     enforcement: 'medium',
   },
 };
@@ -2581,11 +2632,14 @@ function renderCountryCards() {
         <strong style="color:var(--sg-red)">Company A Action:</strong> ${c.caAction}
       </div>`;
 
+    const inCompare = compareSet.has(code);
     return `
       <div class="country-card" id="cc-${code.toLowerCase()}" onclick="toggleCountry('${code.toLowerCase()}')"
-           style="position:relative${highlight === 'required' ? ';border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.15)' : highlight === 'check' ? ';border-color:#d97706' : ''}">
+           style="position:relative${highlight === 'required' ? ';border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.15)' : highlight === 'check' ? ';border-color:#d97706' : inCompare ? ';border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15)' : ''}">
         ${hlBadge}
-        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <button onclick="event.stopPropagation();toggleCompare('${code}')" title="${inCompare ? 'Remove from compare' : 'Add to compare'}"
+          style="position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;border:1.5px solid ${inCompare ? '#7c3aed' : 'var(--border)'};background:${inCompare ? '#7c3aed' : 'white'};color:${inCompare ? 'white' : 'var(--muted)'};font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:'DM Sans',sans-serif;font-weight:700;line-height:1">+</button>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;padding-right:28px">
           <div>
             <div class="country-flag">${c.flag}</div>
             <div class="country-name">${c.name}</div>
@@ -2640,6 +2694,100 @@ function clearSimHighlights() {
   renderCountryCards();
   const banner = document.getElementById('sim-context-banner');
   if (banner) banner.style.display = 'none';
+}
+
+// ── COUNTRY COMPARISON ────────────────────────────────────────────────────
+let compareSet = new Set();
+
+function toggleCompare(code) {
+  if (compareSet.has(code)) { compareSet.delete(code); } else { compareSet.add(code); }
+  renderCountryCards();
+  updateComparePanel();
+}
+
+function clearCompare() {
+  compareSet.clear();
+  renderCountryCards();
+  updateComparePanel();
+}
+
+function updateComparePanel() {
+  const panel = document.getElementById('compare-panel');
+  const chips = document.getElementById('compare-chips');
+  const table = document.getElementById('compare-table');
+  if (!panel) return;
+  const codes = [...compareSet];
+  panel.style.display = codes.length >= 1 ? 'block' : 'none';
+  if (chips) chips.innerHTML = codes.map(code => {
+    const c = COUNTRY_CONFIG[code];
+    return `<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:#ede9fe;border-radius:20px;font-size:12px;font-weight:600;color:#7c3aed">
+      ${c.flag} ${c.name}
+      <button onclick="toggleCompare('${code}')" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:14px;padding:0;line-height:1">×</button>
+    </span>`;
+  }).join('');
+  if (table) table.innerHTML = '';
+}
+
+function renderCompare() {
+  const codes = [...compareSet];
+  if (codes.length < 2) { alert('Select at least 2 countries to compare.'); return; }
+  const table = document.getElementById('compare-table');
+  if (!table) return;
+  const rows = [
+    ['', ...codes.map(c => `<strong>${COUNTRY_CONFIG[c].flag} ${COUNTRY_CONFIG[c].name}</strong>`)],
+    ['Membership', ...codes.map(c => COUNTRY_CONFIG[c].membership === 'EEA' ? '<span style="color:#d97706">EEA (Norway)</span>' : '🇪🇺 EU Member')],
+    ['PPWR Status', ...codes.map(c => `<span style="font-size:11px">${COUNTRY_CONFIG[c].ppwrStatusLabel}</span>`)],
+    ['EPR Scheme', ...codes.map(c => COUNTRY_CONFIG[c].eprSchemes.join('<br>'))],
+    ['Regulator', ...codes.map(c => COUNTRY_CONFIG[c].regulator)],
+    ['Enforcement', ...codes.map(c => {
+      const lvl = COUNTRY_CONFIG[c].enforcement;
+      const col = lvl === 'high' ? '#dc2626' : lvl === 'medium' ? '#d97706' : '#0369a1';
+      return `<span style="font-weight:700;color:${col}">${lvl.toUpperCase()}</span>`;
+    })],
+    ['Deposit System', ...codes.map(c => COUNTRY_CONFIG[c].depositSystem ? '✅ Yes' : '—')],
+    ['Language(s)', ...codes.map(c => COUNTRY_CONFIG[c].languageLabel)],
+    ['Registration', ...codes.map(c => `<span style="font-size:11px">${COUNTRY_CONFIG[c].registrationThreshold}</span>`)],
+  ];
+  const colW = `${Math.floor(80 / codes.length)}%`;
+  table.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">` +
+    rows.map((row, i) => `<tr style="background:${i % 2 === 0 ? 'var(--cream)' : 'white'}">` +
+      row.map((cell, j) => `<td style="padding:8px 10px;border:1px solid var(--border);${j === 0 ? 'font-weight:600;width:18%;white-space:nowrap' : `width:${colW}`}">${cell}</td>`).join('') +
+    '</tr>').join('') + '</table>';
+}
+
+let _cfActive = 'all';
+function filterCountryCards(enforcement) {
+  if (enforcement !== undefined) _cfActive = enforcement;
+  const query = (document.getElementById('country-search')?.value || '').toLowerCase();
+  const grid = document.getElementById('country-grid-dynamic');
+  if (!grid) return;
+  let visible = 0;
+  COUNTRY_ORDER.forEach(code => {
+    const card = document.getElementById('cc-' + code.toLowerCase());
+    if (!card) return;
+    const c = COUNTRY_CONFIG[code];
+    const matchesSearch = !query ||
+      c.name.toLowerCase().includes(query) ||
+      (c.eprSchemes || []).join(' ').toLowerCase().includes(query) ||
+      c.regulator.toLowerCase().includes(query);
+    const matchesFilter =
+      _cfActive === 'all' ||
+      (_cfActive === 'deposit' ? c.depositSystem : c.enforcement === _cfActive);
+    const show = matchesSearch && matchesFilter;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById('country-count');
+  if (countEl) countEl.textContent = visible + ' countr' + (visible === 1 ? 'y' : 'ies');
+  ['all','high','medium','low','deposit'].forEach(k => {
+    const btn = document.getElementById('cf-' + (k === 'medium' ? 'med' : k === 'deposit' ? 'dep' : k));
+    if (!btn) return;
+    const active = _cfActive === k;
+    btn.style.background = active ? 'var(--ink)' : 'white';
+    btn.style.color = active ? 'white' :
+      k === 'high' ? '#dc2626' : k === 'medium' ? '#d97706' :
+      k === 'low' ? '#0369a1' : 'var(--ink)';
+  });
 }
 
 
@@ -2709,7 +2857,7 @@ const ROLE_RULES = [
       if (s.relabel === 'relabel') reasons.push('CA re-labels the packaging');
       if (s.relabel === 'repack') reasons.push('CA re-packs into new packaging');
       if (s.relabel === 'modify') reasons.push('CA modifies the packaging');
-      return `CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because ${reasons.join(' and ')} — even though physical production is by a sister company outside the cluster. As the entity placing goods under its own name on the ${c} market, CA is also the <strong>EPR Producer</strong> in ${c}. CA is the <strong>Importer</strong> because goods cross into the cluster from outside.`;
+      return `CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because ${reasons.join(' and ')} — even though physical production is by a sister company. As the entity placing goods under its own name on the ${c} market, CA is also the <strong>EPR Producer</strong> in ${c}. CA is the <strong>Importer</strong> because goods originate from outside ${c}.`;
     }
   },
 
@@ -2851,7 +2999,7 @@ const OBLIGATION_DB = [
     deadline: 2025,
     severity: 'critical',
     title: 'EPR Registration — required in each country where you place packaging on the market',
-    detail: 'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale — not at year-end. Most EU Member States require registration by 12 August 2026 at the latest. Non-registration is the highest-penalty violation across all 7 cluster markets. Use EPR_SCHEME_INFO for per-country scheme names and contacts.',
+    detail: 'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale — not at year-end. Most EU Member States require registration by 12 August 2026 at the latest. Non-registration is the highest-penalty violation across EU markets. Use EPR_SCHEME_INFO for per-country scheme names and contacts.',
     article: 'Art. 44',
     injectCountry: true,  // flag: runSimulation will append country-specific rows
   },
@@ -3264,7 +3412,7 @@ const SCENARIO_FIELDS = {
     heading: 'Step 2 — Configure the 3rd party direct ship:',
     fields: [
       { id:'ds-supplier', label:'Supplier Location', type:'select', options:[
-        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU (outside cluster)'}
+        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU supplier'}
       ]},
       { id:'ds-dest', label:"Customer's Country", type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'ds-brand', label:'Brand on packaging', type:'select', options:[
@@ -3298,7 +3446,7 @@ const SCENARIO_FIELDS = {
     heading: 'Step 2 — Configure the 3rd party via CA warehouse:',
     fields: [
       { id:'wh-supplier', label:'Supplier Location', type:'select', options:[
-        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU (outside cluster)'}
+        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU supplier'}
       ]},
       { id:'wh-country', label:'CA Warehouse Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'wh-brand', label:'Brand on packaging', type:'select', options:[
@@ -3332,13 +3480,13 @@ const SCENARIO_FIELDS = {
         pkgType: document.getElementById('wh-pkgtype')?.value || 'all',
         yearFilter: parseInt(document.getElementById('wh-yearfilter')?.value || '2030'),
         additionalMarkets: sellTo === 'multi' ? CLUSTER.filter(c => c !== whCountry) :
-                           sellTo === 'outside' ? [...CLUSTER.filter(c => c !== whCountry), 'OTHER-EU'] : []
+                           sellTo === 'outside' ? CLUSTER.filter(c => c !== whCountry) : []
       };
     }
   },
 
   4: {
-    heading: 'Step 2 — Configure the export outside cluster:',
+    heading: 'Step 2 — Configure the export outside the EU/EEA:',
     fields: [
       { id:'ex-origin', label:'Exporting Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'ex-dest', label:'Destination', type:'select', options:[
@@ -3364,7 +3512,7 @@ const SCENARIO_FIELDS = {
       pkgType: document.getElementById('ex-pkgtype')?.value || 'all',
       yearFilter: parseInt(document.getElementById('ex-yearfilter')?.value || '2030'),
       additionalMarkets: [],
-      exportDest: document.getElementById('ex-dest')?.value || 'OTHER-EU',
+      exportDest: document.getElementById('ex-dest')?.value || 'NON-EU',
       incoterms: document.getElementById('ex-incoterms')?.value || 'exw-fca'
     })
   },
@@ -3530,7 +3678,7 @@ function runSimulation() {
       deadline: 2025,
       title: `Incoterms: ${inputs.incoterms.toUpperCase()} — ${inputs.incoterms === 'ddp' ? 'CA retains importer-of-record status in destination country' : inputs.incoterms === 'dap' ? 'Verify whether CA is importer of record in destination' : 'EPR obligation passes to buyer at point of collection'}`,
       detail: inputs.incoterms === 'ddp'
-        ? `Under DDP, CA remains the importer of record in the destination country and carries EPR Producer obligations there. This requires EPR registration in the destination country — not just the exporting cluster country.`
+        ? `Under DDP, CA remains the importer of record in the destination country and carries EPR Producer obligations there. This requires EPR registration in the destination country — not just the exporting country.`
         : inputs.incoterms === 'dap'
         ? `Under DAP, CA delivers to the named place but customs clearance is done by the buyer. Whether CA is the importer of record depends on specific contractual and customs arrangements. Legal must confirm this for each destination country.`
         : `Under EXW/FCA, the buyer takes responsibility from the point of collection. EPR obligations in the destination country fall to the buyer/importer there. CA must document the export to exclude these volumes from its domestic EPR report.`,
@@ -3987,7 +4135,7 @@ const COUNTRY_ENFORCEMENT = {
     strictness: 'high',
     strictnessLabel: 'High',
     body: 'Miljøstyrelsen',
-    approach: 'Active. Denmark introduced new EPR rules in 2025 and Miljøstyrelsen has increased audit activity. Denmark has a track record of criminal referrals for serious environmental violations. New PPWR penalty framework expected to be among the stricter in the cluster.',
+    approach: 'Active. Denmark introduced new EPR rules in 2025 and Miljøstyrelsen has increased audit activity. Denmark has a track record of criminal referrals for serious environmental violations. New PPWR penalty framework expected to be among the stricter in the EU.',
     priorities: ['EPR registration with DPA-System', 'B2B packaging reporting accuracy', 'Labelling for Danish market'],
     dailyPenalty: false,
     publicNaming: true,
@@ -4072,7 +4220,7 @@ const COUNTRY_ENFORCEMENT = {
     strictnessLabel: 'Medium (active)',
     body: 'Aplinkos apsaugos agentūra (AAA)',
     approach: 'Active and increasing. Lithuania\'s AAA has meaningfully increased enforcement activity since 2023 and has specifically flagged B2B packaging under-reporting as an audit priority. Lithuania is considered more enforcement-active than its Baltic peers. Expect continued escalation as PPWR implementation proceeds.',
-    priorities: ['B2B packaging EPR reporting (explicit audit priority)', 'Žaliasis taškas registration', 'Intra-cluster import documentation'],
+    priorities: ['B2B packaging EPR reporting (explicit audit priority)', 'Žaliasis taškas registration', 'Cross-border import documentation'],
     dailyPenalty: false,
     publicNaming: false,
     criminalReferral: false,
@@ -4225,6 +4373,31 @@ function toggleEnfProfile(code) {
   detail.style.display = isOpen ? 'none' : 'block';
   card.style.borderColor = isOpen ? 'var(--border)' : 'var(--sg-red)';
   if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+let _efActive = 'all';
+function filterEnfProfiles(strictness) {
+  if (strictness !== undefined) _efActive = strictness;
+  const query = (document.getElementById('enf-search')?.value || '').toLowerCase();
+  Object.keys(COUNTRY_ENFORCEMENT).forEach(code => {
+    const card = document.getElementById('enf-' + code);
+    if (!card) return;
+    const c = COUNTRY_ENFORCEMENT[code];
+    const matchesSearch = !query ||
+      c.name.toLowerCase().includes(query) ||
+      c.body.toLowerCase().includes(query);
+    const matchesFilter = _efActive === 'all' || c.strictness === _efActive;
+    card.style.display = matchesSearch && matchesFilter ? '' : 'none';
+  });
+  ['all','high','medium','low'].forEach(k => {
+    const btn = document.getElementById('ef-' + (k === 'medium' ? 'med' : k));
+    if (!btn) return;
+    const active = _efActive === k;
+    btn.style.background = active ? 'var(--ink)' : 'white';
+    btn.style.color = active ? 'white' :
+      k === 'high' ? '#dc2626' : k === 'medium' ? '#d97706' :
+      k === 'low' ? '#0369a1' : 'var(--ink)';
+  });
 }
 
 // ── RENDER PENALTY TABLE ────────────────────────────────────────────────────
@@ -4505,7 +4678,7 @@ const PACKAGING_MATERIALS = [
     material: 'LLDPE plastic film',
     grade: 'D',
     gradeRationale: 'LLDPE stretch film is technically recyclable but one-way pallet stretch wrap is almost never collected from B2B customer sites. Practical recycling rate near zero. Grades D under current criteria.',
-    issues: ['Near-zero actual collection rate at B2B delivery points', 'Contamination from tape, labels and product residue', 'No viable collection system across cluster markets for B2B use'],
+    issues: ['Near-zero actual collection rate at B2B delivery points', 'Contamination from tape, labels and product residue', 'No viable collection system across most EU markets for B2B use'],
     ppwrBan: true,
     banReason: 'Grade D banned from 2030 (PPWR Art. 6). As the most common one-way transport packaging format, this is one of the highest-impact PPWR compliance issues for Company A logistics.',
     banYear: 2030,
@@ -4932,13 +5105,13 @@ function populateMaterialSelects() {
 
 // ── GLOSSARY ──
 const terms = [
-  { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers. Company A is a producer in multiple roles — as manufacturer of own products, as importer of sister company goods, and as the EU importer of 3rd party non-EU goods.', sg:'For CA Nordic/Baltic, being a primary producer (own manufacture) carries the fullest set of obligations.' },
-  { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade — the less recyclable your packaging, the higher your fee.', sg:'CA must register with EPR systems in all 7 markets for all packaging flows.' },
-  { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier. If Company A manufactures and packs its own products, it is the packer/filler and bears the fullest PPWR responsibilities.', sg:'CA\'s own manufacturing sites in the cluster make CA a packer/filler for those product lines.' },
-  { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in the importing country, even if obligations were already met elsewhere.', sg:'Every time CA buys from a sister company outside the cluster, CA becomes the importer-producer in the destination market.' },
+  { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers. Company A is a producer in multiple roles — as manufacturer of own products, as importer of sister company goods, and as the EU importer of 3rd party non-EU goods.', sg:'Being a primary producer (own manufacture) carries the fullest set of PPWR obligations.' },
+  { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade — the less recyclable your packaging, the higher your fee.', sg:'CA must register with EPR systems in all EU/EEA markets for all packaging flows.' },
+  { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier. If Company A manufactures and packs its own products, it is the packer/filler and bears the fullest PPWR responsibilities.', sg:'CA\'s own manufacturing sites make CA a packer/filler for those product lines — the highest PPWR obligation tier.' },
+  { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in the importing country, even if obligations were already met elsewhere.', sg:'Every time CA buys from a sister company in another country, CA becomes the importer-producer in the destination market.' },
   { term:'Recyclability Grade (A–E)', tag:'Compliance', def:'PPWR requires all packaging to be assessed against a five-grade recyclability scale. Grade A = easily recyclable at scale. Grade E = non-recyclable, banned from 2030. Grades directly determine EPR fee levels. Packaging manufacturers must publish recyclability grades.', sg:'CA must know the recyclability grade of all packaging it places on the market — including packaging received from suppliers.' },
   { term:'Recycled Content', tag:'Targets', def:'The minimum percentage of recycled material that must be present in plastic packaging. Mandatory minimum of 30% for most plastic packaging by 2030, escalating to 55% by 2040. Applies per packaging category. Compliance requires certificates of conformity from packaging material suppliers.', sg:'CA\'s own manufactured products require compliant packaging material sourcing. For imported goods, CA must verify supplier compliance.' },
-  { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions. Must be accessible to consumers, waste collectors, and regulators.', sg:'CA must implement a digital passport programme for all own-manufactured products sold across the 7-market cluster.' },
+  { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions. Must be accessible to consumers, waste collectors, and regulators.', sg:'CA must implement a digital passport programme for all own-manufactured products sold across EU markets.' },
   { term:'Placement on the Market', tag:'Trigger Point',
     def:"The legal trigger for PPWR EPR obligations. Placing on the market means making packaging available in a country for distribution or use — when supplied to another person. Key distinction: (1) Moving goods to your own warehouse in another country is NOT placing on the market. (2) Selling from that warehouse to a local customer IS placing on the market in that country. (3) Shipping from your warehouse to a customer abroad IS placing on the market in the customer's country. For own-manufactured products, placement occurs when goods first leave the factory for distribution.",
     sg:"A Finnish warehouse serving FI, EE and LV customers requires three separate EPR registrations, each triggered at the first sale in that country — not when goods arrive in the warehouse." },
