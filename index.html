@@ -1027,6 +1027,16 @@
         #ai-chat-send:hover { background: var(--sage-deep); transform: scale(1.05); }
         #ai-chat-send svg { width: 17px; height: 17px; fill: white; }
 
+        #ai-mode-toggle { display:flex; border-bottom:1px solid var(--border); padding:0 14px; flex-shrink:0; background:var(--bg2); }
+        .ai-mode-btn {
+            flex:1; padding:9px 6px; background:none; border:none;
+            border-bottom:2px solid transparent; font-size:11px; font-weight:600;
+            color:var(--text3); cursor:pointer; transition:color .15s,border-color .15s;
+            margin-bottom:-1px; white-space:nowrap;
+        }
+        .ai-mode-btn:hover { color:var(--text); }
+        .ai-mode-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+
         #ai-chat-footer {
             padding: 6px 14px 8px;
             background: var(--bg2);
@@ -2723,6 +2733,12 @@
                 </div>
             </div>
             <button id="ai-chat-close" aria-label="Close chat">✕</button>
+        </div>
+
+        <!-- Mode toggle -->
+        <div id="ai-mode-toggle">
+            <button class="ai-mode-btn active" id="ai-mode-btn-knowledge">📚 Platform</button>
+            <button class="ai-mode-btn" id="ai-mode-btn-pdf">📄 Full Regulation</button>
         </div>
 
         <!-- Messages -->
@@ -6504,6 +6520,17 @@
 
         const aiNav = (() => {
 
+            // ── Proxy config ──────────────────────────────────────────────────
+            // Paste your Cloudflare Worker URL here once deployed, e.g.:
+            // 'https://ppwr-chat.yourname.workers.dev/api/chat'
+            const PROXY_ENDPOINT = '';
+
+            // ── Session token (sent to proxy to identify this browser session) ─
+            const sessionToken = 'ppwr-session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+
+            // ── Chat mode: 'knowledge' = local cards | 'pdf' = full regulation ─
+            let chatMode = 'knowledge';
+
             // ── Plan quota config ─────────────────────────────────────────────
             const STARTER_LIMIT = 3;
 
@@ -6560,12 +6587,110 @@
                 if (e.key === 'Escape' && win.classList.contains('open')) closeChat();
             });
 
+            // ── Mode switching ────────────────────────────────────────────────
+            function setMode(mode) {
+                chatMode = mode;
+                document.getElementById('ai-mode-btn-knowledge').classList.toggle('active', mode === 'knowledge');
+                document.getElementById('ai-mode-btn-pdf').classList.toggle('active', mode === 'pdf');
+                const subtitle = document.querySelector('#ai-chat-header p');
+                if (subtitle) subtitle.textContent = mode === 'pdf'
+                    ? 'Regulation (EU) 2025/40 · Full text'
+                    : 'Closed knowledge · Platform content only';
+                messages.innerHTML = '';
+                showWelcome();
+                updateSuggestions();
+            }
+
+            function updateSuggestions() {
+                if (!suggWrap) return;
+                if (chatMode === 'pdf') {
+                    suggWrap.innerHTML = `
+                        <button class="ai-pill" data-query="What packaging formats are banned by 2030?">What's banned by 2030?</button>
+                        <button class="ai-pill" data-query="What are the recycled content targets for plastic packaging?">Recycled content targets</button>
+                        <button class="ai-pill" data-query="How does EPR registration work under Article 44?">EPR registration</button>
+                        <button class="ai-pill" data-query="What does Article 6 say about recyclability grades?">Article 6 — grades</button>`;
+                } else {
+                    suggWrap.innerHTML = `
+                        <button class="ai-pill" data-query="What is PFAS?">What is PFAS?</button>
+                        <button class="ai-pill" data-query="Empty space limit">Empty space limit</button>
+                        <button class="ai-pill" data-query="Recyclability rules">Recyclability rules</button>
+                        <button class="ai-pill" data-query="Record retention">Record retention</button>`;
+                }
+                suggWrap.querySelectorAll('.ai-pill').forEach(pill => {
+                    pill.addEventListener('click', () => { input.value = pill.dataset.query; handleSend(); });
+                });
+                suggWrap.style.display = 'flex';
+            }
+
+            // ── PDF query (calls Cloudflare Worker proxy) ─────────────────────
+            async function _handlePDFQuery(text) {
+                if (!PROXY_ENDPOINT) {
+                    removeTyping();
+                    appendBotBubble(
+                        '⚠️ Full Regulation mode needs a Cloudflare Worker URL configured in <code>PROXY_ENDPOINT</code> inside <code>index.html</code>. Deploy <code>worker.js</code> to Cloudflare and paste the URL there.',
+                        null, false, true
+                    );
+                    return;
+                }
+                try {
+                    const res  = await fetch(PROXY_ENDPOINT, {
+                        method:  'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body:    JSON.stringify({
+                            query: text, sessionToken, plan: getUserPlan(),
+                            mode:  'pdf', context: { cards: [], scenarios: [] }
+                        })
+                    });
+                    const data = await res.json();
+                    removeTyping();
+                    if (data.upgradeRequired) { appendUpgradeWall(); }
+                    else if (data.error)      { appendBotBubble('Service temporarily unavailable. Please try again shortly.', null, false); }
+                    else                      { appendBotBubble(data.answer, data.sourceLabel, data.sourceVerified); }
+                } catch {
+                    removeTyping();
+                    appendBotBubble('Could not connect to the AI service. Check your internet connection and try again.', null, false);
+                }
+            }
+
+            // ── Knowledge query (local search, wrapped as promise for async handleSend) ─
+            function _handleKnowledgeQuery(text) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        removeTyping();
+                        const result = processChatQuery(text);
+                        if (result) {
+                            appendBotBubble(result.answer, result.source, result.verified);
+                        } else {
+                            appendBotBubble(
+                                "I'm sorry, that specific detail is not covered in our current modules. Please consult the official Regulation (EU) 2025/40 text.",
+                                null, false
+                            );
+                        }
+                        resolve();
+                    }, 650);
+                });
+            }
+
             // ── Welcome message ───────────────────────────────────────────────
             function showWelcome() {
-                appendBotBubble(
-                    'Hello! I\'m your <strong>Compliance Assistant</strong>. Ask me anything about EU packaging compliance — what a term means, what applies to your company, what a deadline is. I\'ll answer using the verified content in this platform.',
-                    null, false, true
-                );
+                if (chatMode === 'pdf') {
+                    if (!PROXY_ENDPOINT) {
+                        appendBotBubble(
+                            '📄 <strong>Full Regulation mode</strong> — asks questions directly against the 130-page PPWR regulation text. <em>Not yet active</em>: paste your Cloudflare Worker URL into <code>PROXY_ENDPOINT</code> in <code>index.html</code> to enable it.',
+                            null, false, true
+                        );
+                    } else {
+                        appendBotBubble(
+                            'Hello! I have access to the full text of <strong>Regulation (EU) 2025/40</strong>. Ask me any question — I\'ll read the regulation and cite the exact Article in my answer.',
+                            'PPWR Regulation (EU) 2025/40', true, true
+                        );
+                    }
+                } else {
+                    appendBotBubble(
+                        'Hello! I\'m your <strong>Compliance Assistant</strong>. Ask me anything about EU packaging compliance — what a term means, what applies to your company, what a deadline is. I\'ll answer using the verified content in this platform.',
+                        null, false, true
+                    );
+                }
             }
 
             // ── Quota bar renderer ────────────────────────────────────────────
@@ -6725,7 +6850,7 @@
             }
 
             // ── Handle user send ──────────────────────────────────────────────
-            function handleSend() {
+            async function handleSend() {
                 const text = input.value.trim();
                 if (!text) return;
 
@@ -6749,28 +6874,17 @@
                 syncQuotaBar();
                 showTyping();
 
-                // Brief delay for natural feel, then run the closed-knowledge search
-                setTimeout(() => {
-                    removeTyping();
+                if (chatMode === 'pdf') {
+                    await _handlePDFQuery(text);
+                } else {
+                    await _handleKnowledgeQuery(text);
+                }
 
-                    const result = processChatQuery(text);
-
-                    if (result) {
-                        appendBotBubble(result.answer, result.source, result.verified);
-                    } else {
-                        appendBotBubble(
-                            "I'm sorry, that specific detail is not covered in our current modules. Please consult the official Regulation (EU) 2025/40 text.",
-                            null, false
-                        );
-                    }
-
-                    // Re-enable unless quota is now exhausted
-                    const exhausted = isStarterPlan() && sessionQuestions >= STARTER_LIMIT;
-                    input.disabled   = exhausted;
-                    sendBtn.disabled = exhausted;
-                    if (exhausted) setTimeout(() => appendUpgradeWall(), 400);
-                    input.focus();
-                }, 650);
+                const exhausted = isStarterPlan() && sessionQuestions >= STARTER_LIMIT;
+                input.disabled   = exhausted;
+                sendBtn.disabled = exhausted;
+                if (exhausted) setTimeout(() => appendUpgradeWall(), 400);
+                input.focus();
             }
 
 
@@ -6781,13 +6895,14 @@
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
             });
 
-            // Suggestion pills
+            // Suggestion pills (initial wiring — updateSuggestions() re-wires on mode switch)
             suggWrap.querySelectorAll('.ai-pill').forEach(pill => {
-                pill.addEventListener('click', () => {
-                    input.value = pill.dataset.query;
-                    handleSend();
-                });
+                pill.addEventListener('click', () => { input.value = pill.dataset.query; handleSend(); });
             });
+
+            // Mode toggle buttons
+            document.getElementById('ai-mode-btn-knowledge')?.addEventListener('click', () => setMode('knowledge'));
+            document.getElementById('ai-mode-btn-pdf')?.addEventListener('click', () => setMode('pdf'));
 
             // ── Re-sync button visibility whenever login state changes ─────────
             // Patch showPage to call syncVisibility after each navigation
@@ -6801,7 +6916,7 @@
             syncVisibility();
 
             // Public API
-            return { goUpgrade, syncVisibility };
+            return { goUpgrade, syncVisibility, setMode };
         })();
         // ============================================================================
         // END AI KNOWLEDGE NAVIGATOR
