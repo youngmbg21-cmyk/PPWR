@@ -2898,6 +2898,44 @@
             });
         }
 
+        const _termRE = /\b(PPWR|EPR|DPP|PCR|PFAS|REACH|NIR|DRS|SUP|HORECA|PRO|BPA|PET|HDPE|LDPE|PP|PVC|EPS|EFSA|UBA|SCCP|MRF|OPS|ZSVR)\b/g;
+        const _termSkipTags = new Set(['SCRIPT','STYLE','TEXTAREA','INPUT','SELECT','CODE','PRE','BUTTON']);
+
+        function termifyDOM(root) {
+            if (!root) return;
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    let p = node.parentNode;
+                    while (p && p !== root) {
+                        if (_termSkipTags.has(p.tagName)) return NodeFilter.FILTER_SKIP;
+                        if (p.classList && (p.classList.contains('term') || p.classList.contains('term-tip'))) return NodeFilter.FILTER_SKIP;
+                        p = p.parentNode;
+                    }
+                    _termRE.lastIndex = 0;
+                    return _termRE.test(node.textContent) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+                }
+            });
+            const nodes = [];
+            let n;
+            while ((n = walker.nextNode())) nodes.push(n);
+            nodes.forEach(textNode => {
+                if (!textNode.parentNode) return;
+                const raw = textNode.textContent;
+                _termRE.lastIndex = 0;
+                if (!_termRE.test(raw)) return;
+                const html = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                    .replace(_termRE, term => {
+                        const def = TERM_DEFS[term];
+                        return def ? `<span class="term">${term}<span class="term-tip">${def}</span></span>` : term;
+                    });
+                const tmp = document.createElement('span');
+                tmp.innerHTML = html;
+                const frag = document.createDocumentFragment();
+                while (tmp.firstChild) frag.appendChild(tmp.firstChild);
+                textNode.parentNode.replaceChild(frag, textNode);
+            });
+        }
+
         function calculateDaysRemaining() {
             const today = new Date(2026, 3, 27); // April 27, 2026
             const deadline = new Date(2026, 7, 12); // August 12, 2026
@@ -4896,6 +4934,9 @@
             if (pageName === 'countries')       renderCountriesHubPage();
             if (pageName === 'glossary')        renderGlossaryPageNew();
             if (pageName === 'risk-calculator') renderSubstanceTags();
+
+            // Apply acronym tooltips to all rendered text on this page
+            setTimeout(() => termifyDOM(pageEl), 0);
         }
 
         // Which sidebar pages each tier can access
@@ -5112,6 +5153,7 @@
             };
             backdrop.classList.add('open');
             document.body.style.overflow = 'hidden';
+            setTimeout(() => termifyDOM(backdrop), 0);
         }
 
         function _nextCardFor(card) {
@@ -7921,6 +7963,7 @@
 
             document.getElementById('scenario-modal-backdrop').classList.add('open');
             document.body.style.overflow = 'hidden';
+            setTimeout(() => termifyDOM(document.getElementById('scenario-modal-backdrop')), 0);
         }
 
         function _renderScenarioChoices(scenario) {
