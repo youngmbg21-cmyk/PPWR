@@ -2688,6 +2688,7 @@
             currentPage: 'home',
             currentLanguage: 'en',
             orgType: null,
+            userMode: null,
             readCards: {},
             quizResults: {},
             toolsVisited: {},
@@ -2720,9 +2721,43 @@
                     if (saved.toolsVisited)        appState.toolsVisited        = saved.toolsVisited;
                     if (saved.onboardingDismissed) appState.onboardingDismissed = saved.onboardingDismissed;
                     if (saved.orgType)             appState.orgType             = saved.orgType;
+                    if (saved.userMode)            appState.userMode            = saved.userMode;
                 }
             } catch(e) {}
         })();
+
+        function showOnboardingIfNeeded() {
+            if (appState.userMode) return;
+            const existing = document.getElementById('ppwr-onboarding');
+            if (existing) return;
+            const el = document.createElement('div');
+            el.id = 'ppwr-onboarding';
+            el.style.cssText = 'position:fixed;inset:0;z-index:9999;background:var(--bg1);display:flex;align-items:center;justify-content:center;padding:24px;';
+            el.innerHTML = buildOnboardingHTML();
+            document.body.appendChild(el);
+        }
+
+        function buildOnboardingHTML() {
+            return `
+            <div style="max-width:640px;width:100%;text-align:center;">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-family:var(--ff-mono);margin-bottom:16px;">PPWR Navigator</div>
+              <h1 style="font-size:clamp(22px,4vw,34px);font-family:var(--ff-display);font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.2;">What brings you here today?</h1>
+              <p style="font-size:15px;color:var(--text2);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto;">We'll set up the app for you — the content and tools you see will match how you actually need to use it.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+                <button onclick="setUserMode('learner')" style="background:var(--bg3);border:2px solid var(--border);border-radius:12px;padding:28px 20px;cursor:pointer;text-align:left;transition:border-color .2s,background .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-dim)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg3)'">
+                  <div style="font-size:32px;margin-bottom:12px;">🎓</div>
+                  <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;">Learning about PPWR</div>
+                  <div style="font-size:13px;color:var(--text2);line-height:1.5;">I want to understand what it is and what it means for my day-to-day work</div>
+                </button>
+                <button onclick="setUserMode('compliance')" style="background:var(--bg3);border:2px solid var(--border);border-radius:12px;padding:28px 20px;cursor:pointer;text-align:left;transition:border-color .2s,background .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--accent-dim)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--bg3)'">
+                  <div style="font-size:32px;margin-bottom:12px;">🔍</div>
+                  <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;">Assessing our compliance</div>
+                  <div style="font-size:13px;color:var(--text2);line-height:1.5;">I need to understand our obligations, exposure, and what we need to register for</div>
+                </button>
+              </div>
+              <button onclick="setUserMode('learner')" style="background:none;border:none;font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline;">Skip for now — explore as guest</button>
+            </div>`;
+        }
 
         // ============================================================================
         // DYNAMIC COUNTDOWN CALCULATION
@@ -4734,6 +4769,77 @@
                     item.classList.add('active');
                 }
             });
+
+            // Apply user-mode muting/highlighting
+            applyUserMode();
+        }
+
+        // ── LEARNER / COMPLIANCE MODE ─────────────────────────────────────────────
+        const COMPLIANCE_ONLY_PAGES = ['fine-estimator','scenarios','countries','penalties'];
+
+        function setUserMode(mode) {
+            appState.userMode = mode;
+            localStorage.setItem('appState', JSON.stringify(appState));
+            const overlay = document.getElementById('ppwr-onboarding');
+            if (overlay) overlay.remove();
+            const defaultPage = mode === 'compliance' ? 'dashboard' : 'learning';
+            if (['home','tier-detail'].includes(appState.currentPage)) {
+                showPage(defaultPage);
+            } else {
+                applyUserMode();
+            }
+        }
+
+        function applyUserMode() {
+            const mode = appState.userMode;
+            // Mute analytical tools for learners
+            document.querySelectorAll('.sidebar-item[data-page]').forEach(item => {
+                const page = item.getAttribute('data-page');
+                const isAnalytical = COMPLIANCE_ONLY_PAGES.includes(page);
+                if (mode === 'learner' && isAnalytical) {
+                    item.style.opacity = '0.4';
+                    item.title = 'Compliance tool — available when you need it';
+                } else {
+                    item.style.opacity = '';
+                    item.title = '';
+                }
+            });
+            // Add/update switch-mode footer in sidebar
+            let footer = document.getElementById('sidebar-mode-footer');
+            if (!footer && mode) {
+                footer = document.createElement('div');
+                footer.id = 'sidebar-mode-footer';
+                footer.style.cssText = 'padding:12px 16px;border-top:1px solid var(--border);margin-top:12px;';
+                document.getElementById('sidebar').appendChild(footer);
+            }
+            if (footer && mode) {
+                const label = mode === 'learner' ? '🎓 Learning mode' : '🔍 Compliance mode';
+                footer.innerHTML = `<div style="font-size:11px;color:var(--text3);margin-bottom:4px;">${label}</div>
+                  <button onclick="resetUserMode()" style="background:none;border:none;font-size:11px;color:var(--accent);cursor:pointer;padding:0;text-decoration:underline;">Switch mode</button>`;
+            }
+            // Show learner banner on analytical pages
+            const oldBanner = document.getElementById('learner-mode-banner');
+            if (oldBanner) oldBanner.remove();
+            const isAnalyticalPage = COMPLIANCE_ONLY_PAGES.includes(appState.currentPage);
+            if (mode === 'learner' && isAnalyticalPage) {
+                const activePage = document.getElementById(appState.currentPage + '-page');
+                const mc = activePage && activePage.querySelector('.main-content');
+                if (mc) {
+                    const b = document.createElement('div');
+                    b.id = 'learner-mode-banner';
+                    b.style.cssText = 'background:var(--amber-dim);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;margin:0 0 20px;font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;';
+                    b.innerHTML = `<span style="font-size:18px;">💡</span><span>This is a compliance tool — designed for your legal or sustainability team. Feel free to explore it. <button onclick="setUserMode('compliance')" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:13px;font-weight:600;padding:0;">Switch to compliance mode →</button></span>`;
+                    mc.prepend(b);
+                }
+            }
+        }
+
+        function resetUserMode() {
+            appState.userMode = null;
+            localStorage.setItem('appState', JSON.stringify(appState));
+            const footer = document.getElementById('sidebar-mode-footer');
+            if (footer) footer.remove();
+            showOnboardingIfNeeded();
         }
 
         // ============================================================================
@@ -6008,6 +6114,8 @@
             } else {
                 showPage('home');
             }
+            // Show onboarding overlay if user hasn't chosen a mode yet
+            showOnboardingIfNeeded();
         });
 
         // ============================================================================
