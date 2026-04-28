@@ -2317,13 +2317,34 @@
                         <label style="font-size:13px; font-weight:600; display:block; margin-bottom:6px;">Country</label>
                         <select id="fe-country" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:14px;">
                             <option value="">— Select country —</option>
-                            <option value="SE">🇸🇪 Sweden</option>
-                            <option value="NO">🇳🇴 Norway (EEA)</option>
+                            <option value="AT">🇦🇹 Austria</option>
+                            <option value="BE">🇧🇪 Belgium</option>
+                            <option value="BG">🇧🇬 Bulgaria</option>
+                            <option value="HR">🇭🇷 Croatia</option>
+                            <option value="CY">🇨🇾 Cyprus</option>
+                            <option value="CZ">🇨🇿 Czech Republic</option>
                             <option value="DK">🇩🇰 Denmark</option>
-                            <option value="FI">🇫🇮 Finland</option>
                             <option value="EE">🇪🇪 Estonia</option>
+                            <option value="FI">🇫🇮 Finland</option>
+                            <option value="FR">🇫🇷 France</option>
+                            <option value="DE">🇩🇪 Germany</option>
+                            <option value="GR">🇬🇷 Greece</option>
+                            <option value="HU">🇭🇺 Hungary</option>
+                            <option value="IE">🇮🇪 Ireland</option>
+                            <option value="IT">🇮🇹 Italy</option>
                             <option value="LV">🇱🇻 Latvia</option>
                             <option value="LT">🇱🇹 Lithuania</option>
+                            <option value="LU">🇱🇺 Luxembourg</option>
+                            <option value="MT">🇲🇹 Malta</option>
+                            <option value="NL">🇳🇱 Netherlands</option>
+                            <option value="NO">🇳🇴 Norway (EEA)</option>
+                            <option value="PL">🇵🇱 Poland</option>
+                            <option value="PT">🇵🇹 Portugal</option>
+                            <option value="RO">🇷🇴 Romania</option>
+                            <option value="SK">🇸🇰 Slovakia</option>
+                            <option value="SI">🇸🇮 Slovenia</option>
+                            <option value="ES">🇪🇸 Spain</option>
+                            <option value="SE">🇸🇪 Sweden</option>
                         </select>
                     </div>
                     <div style="margin-bottom:16px;">
@@ -3519,31 +3540,81 @@
         ];
 
         const COUNTRY_ENFORCEMENT = {
-          SE: { name:'Sweden', flag:'🇸🇪', strictness:'high', strictnessLabel:'High', body:'Naturvårdsverket',
-            approach:'Proactive. Sweden has one of the most active EPR enforcement regimes in the EU. Regular audits, public reporting of non-compliant operators, and willingness to refer serious cases for criminal prosecution.',
-            priorities:['EPR registration completeness','Accurate tonnage reporting','Producer responsibility scheme compliance'],
-            dailyPenalty:true, publicNaming:true, criminalReferral:true, eea:false,
-            ranges:{ 'epr-missing':{iso:'SEK 5k–100k',per:'SEK 100k–1M',sys:'SEK 1M–10M'}, 'epr-underreport':{iso:'SEK 5k–50k',per:'SEK 50k–500k',sys:'SEK 500k–5M'}, 'recycled-content':{iso:'SEK 50k–200k',per:'SEK 200k–2M',sys:'SEK 2M–20M'}, 'labelling':{iso:'SEK 10k–100k',per:'SEK 100k–500k',sys:'SEK 500k–5M'}, 'reuse-target':{iso:'SEK 100k–500k',per:'SEK 500k–5M',sys:'SEK 5M–50M'}, 'prohibited-pkg':{iso:'SEK 200k–1M',per:'SEK 1M–10M',sys:'SEK 10M–50M'}, 'grade-de':{iso:'SEK 200k–1M',per:'SEK 1M–10M',sys:'SEK 10M–100M'} } },
-          NO: { name:'Norway', flag:'🇳🇴', strictness:'high', strictnessLabel:'High (EEA)', body:'Miljødirektoratet',
-            approach:'Proactive. Norway\'s existing packaging enforcement is well-established through Grønt Punkt Norge. PPWR will apply via EEA incorporation (est. mid-2026 to early 2027) — expect enforcement to ramp up quickly after incorporation.',
-            priorities:['EPR registration with Grønt Punkt Norge','Beverage container deposit compliance','Transport packaging documentation'],
-            dailyPenalty:true, publicNaming:true, criminalReferral:false, eea:true,
-            ranges:{ 'epr-missing':{iso:'NOK 50k–200k',per:'NOK 200k–1M',sys:'NOK 1M–5M'}, 'epr-underreport':{iso:'NOK 20k–100k',per:'NOK 100k–500k',sys:'NOK 500k–3M'}, 'recycled-content':{iso:'NOK 100k–500k',per:'NOK 500k–2M',sys:'NOK 2M–10M'}, 'labelling':{iso:'NOK 20k–100k',per:'NOK 100k–500k',sys:'NOK 500k–3M'}, 'reuse-target':{iso:'NOK 50k–300k',per:'NOK 300k–2M',sys:'NOK 2M–10M'}, 'prohibited-pkg':{iso:'NOK 100k–500k',per:'NOK 500k–3M',sys:'NOK 3M–15M'}, 'grade-de':{iso:'NOK 100k–500k',per:'NOK 500k–3M',sys:'NOK 3M–15M'} } },
+          AT: { name:'Austria', flag:'🇦🇹', strictness:'medium', strictnessLabel:'Moderate', body:'BMK / Landesbehörden',
+            approach:'Moderate. Austria enforces packaging EPR through a mix of federal (BMK) and state (Länder) authorities. Enforcement has historically focused on registration and reporting compliance rather than aggressive penalties.',
+            priorities:['ARA registration','Accurate tonnage reporting','Recyclability grade documentation'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–150k'}, 'epr-underreport':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–100k'}, 'recycled-content':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'}, 'labelling':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'reuse-target':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–250k'}, 'prohibited-pkg':{iso:'€2k–15k',per:'€15k–80k',sys:'€80k–300k'}, 'grade-de':{iso:'€2k–15k',per:'€15k–80k',sys:'€80k–300k'} } },
+          BE: { name:'Belgium', flag:'🇧🇪', strictness:'medium', strictnessLabel:'Moderate', body:'OVAM / SPW / Bruxelles Environnement',
+            approach:'Active. Belgium has a tri-regional enforcement structure (Flanders: OVAM; Wallonia: SPW; Brussels: Bruxelles Environnement). EPR compliance is well-monitored through Fost Plus and Val-I-Pac data.',
+            priorities:['Correct stream classification (B2C vs B2B)','Fost Plus and Val-I-Pac registration','Reporting accuracy across packaging types'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–5k',per:'€5k–40k',sys:'€40k–200k'}, 'epr-underreport':{iso:'€300–3k',per:'€3k–25k',sys:'€25k–100k'}, 'recycled-content':{iso:'€2k–15k',per:'€15k–80k',sys:'€80k–300k'}, 'labelling':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'reuse-target':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–250k'}, 'prohibited-pkg':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–400k'}, 'grade-de':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–400k'} } },
+          BG: { name:'Bulgaria', flag:'🇧🇬', strictness:'low', strictnessLabel:'Low (developing)', body:'MOEW / RIOSV regional inspectors',
+            approach:"Developing. Bulgaria's enforcement of packaging EPR has been limited historically. MOEW and regional RIOSV inspectors handle enforcement but capacity is constrained. EU Commission monitoring creates indirect pressure.",
+            priorities:['EPR registration','Basic reporting compliance'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–8k',sys:'€8k–30k'}, 'epr-underreport':{iso:'€50–500',per:'€500–5k',sys:'€5k–20k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–50k'}, 'labelling':{iso:'€50–500',per:'€500–5k',sys:'€5k–20k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'prohibited-pkg':{iso:'€500–5k',per:'€5k–25k',sys:'€25k–80k'}, 'grade-de':{iso:'€500–5k',per:'€5k–25k',sys:'€25k–80k'} } },
+          HR: { name:'Croatia', flag:'🇭🇷', strictness:'low', strictnessLabel:'Low (developing)', body:'HAOP / Ministry of Economy',
+            approach:"Developing. Croatia's packaging EPR enforcement is in early stages. HAOP manages both the scheme and regulatory oversight. Beverage deposit system (Povratna naknada) is well-enforced but broader EPR is less consistently monitored.",
+            priorities:['EPR registration with HAOP','Deposit system compliance for beverages'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–8k',sys:'€8k–30k'}, 'epr-underreport':{iso:'€50–500',per:'€500–4k',sys:'€4k–15k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–12k',sys:'€12k–50k'}, 'labelling':{iso:'€50–500',per:'€500–4k',sys:'€4k–15k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'prohibited-pkg':{iso:'€500–5k',per:'€5k–25k',sys:'€25k–80k'}, 'grade-de':{iso:'€500–5k',per:'€5k–25k',sys:'€25k–80k'} } },
+          CY: { name:'Cyprus', flag:'🇨🇾', strictness:'low', strictnessLabel:'Low (developing)', body:'Department of Environment',
+            approach:'Developing. Cyprus is a small market with limited enforcement history on packaging EPR. The Department of Environment is responsible but capacity is constrained. Register with Green Dot Cyprus and maintain basic compliance.',
+            priorities:['Green Dot Cyprus registration','Basic annual reporting'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–5k',sys:'€5k–20k'}, 'epr-underreport':{iso:'€50–500',per:'€500–3k',sys:'€3k–10k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–10k',sys:'€10k–30k'}, 'labelling':{iso:'€50–500',per:'€500–3k',sys:'€3k–10k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–10k',sys:'€10k–40k'}, 'prohibited-pkg':{iso:'€300–3k',per:'€3k–15k',sys:'€15k–50k'}, 'grade-de':{iso:'€300–3k',per:'€3k–15k',sys:'€15k–50k'} } },
+          CZ: { name:'Czech Republic', flag:'🇨🇿', strictness:'medium', strictnessLabel:'Moderate', body:'Czech Environmental Inspectorate (ČEI)',
+            approach:'Active. ČEI has a track record of active inspection and penalty activity. EKO-KOM is well-established and ČEI cross-references registration data. Companies without valid EKO-KOM membership are regularly identified and fined.',
+            priorities:['EKO-KOM registration','Accurate annual declaration','Labelling compliance'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–150k'}, 'epr-underreport':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–100k'}, 'recycled-content':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'}, 'labelling':{iso:'€300–3k',per:'€3k–15k',sys:'€15k–60k'}, 'reuse-target':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–250k'}, 'prohibited-pkg':{iso:'€2k–15k',per:'€15k–80k',sys:'€80k–300k'}, 'grade-de':{iso:'€2k–15k',per:'€15k–80k',sys:'€80k–300k'} } },
+          DE: { name:'Germany', flag:'🇩🇪', strictness:'high', strictnessLabel:'High', body:'ZSVR / UBA / Landesbehörden',
+            approach:'Very strict. Germany is the most rigorously enforced EPR jurisdiction in the EU. The LUCID registry is cross-referenced by customs and market surveillance. Non-registered producers can have goods seized at the border.',
+            priorities:['LUCID registration (zero tolerance)','Dual system membership','Correct fee declaration by packaging type'],
+            dailyPenalty:false, publicNaming:true, criminalReferral:true, eea:false,
+            ranges:{ 'epr-missing':{iso:'€1k–20k',per:'€20k–200k',sys:'€200k–2M'}, 'epr-underreport':{iso:'€1k–15k',per:'€15k–100k',sys:'€100k–1M'}, 'recycled-content':{iso:'€5k–50k',per:'€50k–300k',sys:'€300k–2M'}, 'labelling':{iso:'€1k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'reuse-target':{iso:'€5k–50k',per:'€50k–300k',sys:'€300k–2M'}, 'prohibited-pkg':{iso:'€10k–100k',per:'€100k–500k',sys:'€500k–5M'}, 'grade-de':{iso:'€10k–100k',per:'€100k–500k',sys:'€500k–5M'} } },
           DK: { name:'Denmark', flag:'🇩🇰', strictness:'high', strictnessLabel:'High', body:'Miljøstyrelsen',
             approach:'Active. Denmark introduced new EPR rules in 2025 and Miljøstyrelsen has increased audit activity. Track record of criminal referrals for serious environmental violations.',
             priorities:['EPR registration with DPA-System','B2B packaging reporting accuracy','Labelling for Danish market'],
             dailyPenalty:false, publicNaming:true, criminalReferral:true, eea:false,
             ranges:{ 'epr-missing':{iso:'DKK 5k–50k',per:'DKK 50k–500k',sys:'DKK 500k–5M'}, 'epr-underreport':{iso:'DKK 5k–30k',per:'DKK 30k–300k',sys:'DKK 300k–3M'}, 'recycled-content':{iso:'DKK 10k–100k',per:'DKK 100k–1M',sys:'DKK 1M–10M'}, 'labelling':{iso:'DKK 2k–20k',per:'DKK 20k–200k',sys:'DKK 200k–2M'}, 'reuse-target':{iso:'DKK 50k–300k',per:'DKK 300k–2M',sys:'DKK 2M–15M'}, 'prohibited-pkg':{iso:'DKK 100k–500k',per:'DKK 500k–5M',sys:'DKK 5M–20M'}, 'grade-de':{iso:'DKK 100k–500k',per:'DKK 500k–5M',sys:'DKK 5M–20M'} } },
-          FI: { name:'Finland', flag:'🇫🇮', strictness:'high', strictnessLabel:'High', body:'Syke / Kesely',
-            approach:'Systematic. Finland enforces through Syke (Finnish Environment Institute). Enforcement is methodical rather than aggressive — but Finland has a low tolerance for repeated non-compliance. Strong focus on data quality in EPR reporting.',
-            priorities:['RINKI registration (>1 tonne threshold)','Accurate material-type reporting','Packaging waste collection obligations'],
-            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
-            ranges:{ 'epr-missing':{iso:'€1k–10k',per:'€10k–100k',sys:'€100k–500k'}, 'epr-underreport':{iso:'€500–5k',per:'€5k–50k',sys:'€50k–250k'}, 'recycled-content':{iso:'€5k–30k',per:'€30k–150k',sys:'€150k–500k'}, 'labelling':{iso:'€500–5k',per:'€5k–50k',sys:'€50k–200k'}, 'reuse-target':{iso:'€5k–30k',per:'€30k–200k',sys:'€200k–1M'}, 'prohibited-pkg':{iso:'€10k–50k',per:'€50k–250k',sys:'€250k–1M'}, 'grade-de':{iso:'€10k–50k',per:'€50k–250k',sys:'€250k–1M'} } },
           EE: { name:'Estonia', flag:'🇪🇪', strictness:'medium', strictnessLabel:'Medium (building)', body:'Keskkonnaamet',
-            approach:'Building capacity. Strong deposit system for beverages but industrial/transport packaging enforcement is less developed. Currently reactive — complaints-driven rather than proactive audit.',
+            approach:'Building capacity. Estonia has a strong deposit system for beverages but industrial/transport packaging enforcement is less developed. Currently reactive — complaints-driven rather than proactive audit.',
             priorities:['EPR registration for industrial packaging','Cross-border flow documentation','Beverage deposit system compliance'],
             dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
             ranges:{ 'epr-missing':{iso:'€200–2k',per:'€2k–20k',sys:'€20k–80k'}, 'epr-underreport':{iso:'€100–1k',per:'€1k–10k',sys:'€10k–50k'}, 'recycled-content':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–100k'}, 'labelling':{iso:'€100–1k',per:'€1k–10k',sys:'€10k–50k'}, 'reuse-target':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'prohibited-pkg':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–150k'}, 'grade-de':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–150k'} } },
+          FI: { name:'Finland', flag:'🇫🇮', strictness:'high', strictnessLabel:'High', body:'Syke / Kesely',
+            approach:'Systematic. Finland enforces through Syke (Finnish Environment Institute). Enforcement is methodical — Finland has low tolerance for repeated non-compliance. Strong focus on data quality in EPR reporting.',
+            priorities:['RINKI registration (>1 tonne threshold)','Accurate material-type reporting','Packaging waste collection obligations'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€1k–10k',per:'€10k–100k',sys:'€100k–500k'}, 'epr-underreport':{iso:'€500–5k',per:'€5k–50k',sys:'€50k–250k'}, 'recycled-content':{iso:'€5k–30k',per:'€30k–150k',sys:'€150k–500k'}, 'labelling':{iso:'€500–5k',per:'€5k–50k',sys:'€50k–200k'}, 'reuse-target':{iso:'€5k–30k',per:'€30k–200k',sys:'€200k–1M'}, 'prohibited-pkg':{iso:'€10k–50k',per:'€50k–250k',sys:'€250k–1M'}, 'grade-de':{iso:'€10k–50k',per:'€50k–250k',sys:'€250k–1M'} } },
+          FR: { name:'France', flag:'🇫🇷', strictness:'medium', strictnessLabel:'Moderate–High', body:'DREAL / ADEME',
+            approach:'Active. France has a sophisticated EPR enforcement infrastructure with CITEO feeding compliance data to DREAL inspectors. AGEC law reinforces obligations nationally. France is a significant market where non-compliance is actively detected.',
+            priorities:['CITEO registration','Accurate declaration by material stream','Eco-modulated fee compliance'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€1k–15k',per:'€15k–100k',sys:'€100k–500k'}, 'epr-underreport':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–250k'}, 'recycled-content':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'labelling':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–150k'}, 'reuse-target':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'prohibited-pkg':{iso:'€3k–30k',per:'€30k–150k',sys:'€150k–1M'}, 'grade-de':{iso:'€3k–30k',per:'€30k–150k',sys:'€150k–1M'} } },
+          GR: { name:'Greece', flag:'🇬🇷', strictness:'low', strictnessLabel:'Low (developing)', body:'EOAN / Regional Authorities',
+            approach:'Developing. Greece has historically faced EU infringement proceedings for packaging directive compliance. EOAN is strengthening enforcement capacity under PPWR. Current enforcement is largely reactive.',
+            priorities:['EOAN registration','Basic annual reporting'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–2k',per:'€2k–15k',sys:'€15k–60k'}, 'epr-underreport':{iso:'€100–1k',per:'€1k–8k',sys:'€8k–30k'}, 'recycled-content':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'labelling':{iso:'€100–1k',per:'€1k–8k',sys:'€8k–30k'}, 'reuse-target':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'prohibited-pkg':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'grade-de':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'} } },
+          HU: { name:'Hungary', flag:'🇭🇺', strictness:'medium', strictnessLabel:'Moderate', body:'MOHU / Environmental Authority',
+            approach:'Moderate. Hungary reformed its EPR system in 2023 with MOHU as the sole concessionaire. MOHU actively enforces registration requirements as it has a direct financial interest in coverage.',
+            priorities:['MOHU registration (sole scheme)','Accurate volume declaration','Producer registration maintenance'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'epr-underreport':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'recycled-content':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'labelling':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–50k'}, 'reuse-target':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'prohibited-pkg':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'}, 'grade-de':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'} } },
+          IE: { name:'Ireland', flag:'🇮🇪', strictness:'medium', strictnessLabel:'Moderate', body:'EPA (Environmental Protection Agency)',
+            approach:"Moderate. Ireland's EPA monitors Repak membership and compliance through data-sharing. The EPA issues improvement notices and escalates to administrative sanctions for systemic non-compliance. Criminal prosecution is available for serious cases.",
+            priorities:['Repak membership','Accurate material tonnage reporting','DRS compliance for in-scope packaging'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:true, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–300k'}, 'epr-underreport':{iso:'€300–5k',per:'€5k–30k',sys:'€30k–150k'}, 'recycled-content':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–300k'}, 'labelling':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'reuse-target':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–300k'}, 'prohibited-pkg':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'grade-de':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'} } },
+          IT: { name:'Italy', flag:'🇮🇹', strictness:'medium', strictnessLabel:'Moderate', body:'MASE / ISPRA / CONAI',
+            approach:"Moderate. Italy's CONAI system has 6 material-specific sub-consortia. ISPRA and regional ARPA agencies monitor compliance. CONAI actively pursues non-members and under-declarants through regular audits.",
+            priorities:['CONAI membership and correct material classification','Accurate declaration per material type','Customs compliance for imports'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–8k',per:'€8k–60k',sys:'€60k–300k'}, 'epr-underreport':{iso:'€300–5k',per:'€5k–30k',sys:'€30k–150k'}, 'recycled-content':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'labelling':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'reuse-target':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'prohibited-pkg':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'grade-de':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'} } },
           LV: { name:'Latvia', flag:'🇱🇻', strictness:'medium', strictnessLabel:'Medium (building)', body:'VSIA LVĢMC',
             approach:'Developing. Latvia operates Latvijas Zaļais punkts with moderate enforcement. Administrative fines have historically been low but are expected to increase significantly under PPWR.',
             priorities:['LZP registration','B2B packaging under-registration','Import flow documentation'],
@@ -3551,9 +3622,64 @@
             ranges:{ 'epr-missing':{iso:'€280–2k',per:'€2k–15k',sys:'€15k–60k'}, 'epr-underreport':{iso:'€150–1k',per:'€1k–10k',sys:'€10k–40k'}, 'recycled-content':{iso:'€500–4k',per:'€4k–25k',sys:'€25k–80k'}, 'labelling':{iso:'€150–1k',per:'€1k–8k',sys:'€8k–40k'}, 'reuse-target':{iso:'€500–4k',per:'€4k–25k',sys:'€25k–100k'}, 'prohibited-pkg':{iso:'€700–5k',per:'€5k–35k',sys:'€35k–120k'}, 'grade-de':{iso:'€700–5k',per:'€5k–35k',sys:'€35k–120k'} } },
           LT: { name:'Lithuania', flag:'🇱🇹', strictness:'medium', strictnessLabel:'Medium (active)', body:'Aplinkos apsaugos agentūra (AAA)',
             approach:'Active and increasing. AAA has meaningfully increased enforcement activity since 2023 and has specifically flagged B2B packaging under-reporting as an audit priority.',
-            priorities:['B2B packaging EPR reporting (explicit audit priority)','Žaliasis taškas registration','Intra-cluster import documentation'],
+            priorities:['B2B packaging EPR reporting (explicit audit priority)','Žaliasis taškas registration','Cross-border import documentation'],
             dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
             ranges:{ 'epr-missing':{iso:'€300–3k',per:'€3k–20k',sys:'€20k–80k'}, 'epr-underreport':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'recycled-content':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–100k'}, 'labelling':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'reuse-target':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'prohibited-pkg':{iso:'€1k–8k',per:'€8k–50k',sys:'€50k–150k'}, 'grade-de':{iso:'€1k–8k',per:'€8k–50k',sys:'€50k–150k'} } },
+          LU: { name:'Luxembourg', flag:'🇱🇺', strictness:'low', strictnessLabel:'Low', body:"Administration de l'environnement",
+            approach:"Low enforcement activity. Luxembourg is a very small market. The Administration de l'environnement manages EPR through Valorlux. Enforcement actions are rare but the legal obligation to register and report is identical to larger member states.",
+            priorities:['Valorlux registration','Annual reporting'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–5k',sys:'€5k–20k'}, 'epr-underreport':{iso:'€50–500',per:'€500–3k',sys:'€3k–10k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–10k',sys:'€10k–40k'}, 'labelling':{iso:'€50–500',per:'€500–3k',sys:'€3k–10k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–10k',sys:'€10k–40k'}, 'prohibited-pkg':{iso:'€300–3k',per:'€3k–15k',sys:'€15k–50k'}, 'grade-de':{iso:'€300–3k',per:'€3k–15k',sys:'€15k–50k'} } },
+          MT: { name:'Malta', flag:'🇲🇹', strictness:'low', strictnessLabel:'Low (developing)', body:'ERA (Environment and Resources Authority)',
+            approach:'Developing. Malta is the smallest EU member state with limited enforcement history on packaging EPR. ERA is developing PPWR implementation capacity. Register with GreenPak and maintain basic compliance.',
+            priorities:['GreenPak registration','Annual reporting'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–5k',sys:'€5k–20k'}, 'epr-underreport':{iso:'€50–300',per:'€300–2k',sys:'€2k–8k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–8k',sys:'€8k–30k'}, 'labelling':{iso:'€50–300',per:'€300–2k',sys:'€2k–8k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–8k',sys:'€8k–30k'}, 'prohibited-pkg':{iso:'€300–3k',per:'€3k–12k',sys:'€12k–40k'}, 'grade-de':{iso:'€300–3k',per:'€3k–12k',sys:'€12k–40k'} } },
+          NL: { name:'Netherlands', flag:'🇳🇱', strictness:'medium', strictnessLabel:'Moderate–High', body:'ILT (Inspectie Leefomgeving en Transport)',
+            approach:'Active. The Netherlands has an advanced EPR system with Afvalfonds Verpakkingen and active ILT market surveillance. Notable for proactive customs integration — non-registered producers importing goods can face market access issues.',
+            priorities:['Afvalfonds Verpakkingen registration','Statiegeld compliance for in-scope containers','Accurate material stream declaration'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'epr-underreport':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–200k'}, 'recycled-content':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'labelling':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'reuse-target':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'prohibited-pkg':{iso:'€3k–30k',per:'€30k–150k',sys:'€150k–800k'}, 'grade-de':{iso:'€3k–30k',per:'€30k–150k',sys:'€150k–800k'} } },
+          NO: { name:'Norway', flag:'🇳🇴', strictness:'high', strictnessLabel:'High (EEA)', body:'Miljødirektoratet',
+            approach:"Proactive. Norway's existing packaging enforcement is well-established through Grønt Punkt Norge. PPWR will apply via EEA incorporation (est. mid-2026 to early 2027) — expect enforcement to ramp up quickly after incorporation.",
+            priorities:['EPR registration with Grønt Punkt Norge','Beverage container deposit compliance','Transport packaging documentation'],
+            dailyPenalty:true, publicNaming:true, criminalReferral:false, eea:true,
+            ranges:{ 'epr-missing':{iso:'NOK 50k–200k',per:'NOK 200k–1M',sys:'NOK 1M–5M'}, 'epr-underreport':{iso:'NOK 20k–100k',per:'NOK 100k–500k',sys:'NOK 500k–3M'}, 'recycled-content':{iso:'NOK 100k–500k',per:'NOK 500k–2M',sys:'NOK 2M–10M'}, 'labelling':{iso:'NOK 20k–100k',per:'NOK 100k–500k',sys:'NOK 500k–3M'}, 'reuse-target':{iso:'NOK 50k–300k',per:'NOK 300k–2M',sys:'NOK 2M–10M'}, 'prohibited-pkg':{iso:'NOK 100k–500k',per:'NOK 500k–3M',sys:'NOK 3M–15M'}, 'grade-de':{iso:'NOK 100k–500k',per:'NOK 500k–3M',sys:'NOK 3M–15M'} } },
+          PL: { name:'Poland', flag:'🇵🇱', strictness:'medium', strictnessLabel:'Moderate', body:'GIOŚ / BDO',
+            approach:"Active. Poland's BDO registry is a state-run system and registration is a direct statutory requirement. GIOŚ conducts regular inspections. Non-registration in BDO is treated as a direct violation.",
+            priorities:['BDO registration (mandatory statutory register)','Annual EPR declaration','Product register accuracy'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–250k'}, 'epr-underreport':{iso:'€300–5k',per:'€5k–30k',sys:'€30k–120k'}, 'recycled-content':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'labelling':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'reuse-target':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'prohibited-pkg':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'grade-de':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'} } },
+          PT: { name:'Portugal', flag:'🇵🇹', strictness:'medium', strictnessLabel:'Moderate', body:'APA / IGAMAOT',
+            approach:'Moderate. Portugal enforces EPR through APA and IGAMAOT. SPV is the single authorised scheme and feeds compliance data to regulators. Enforcement has increased over recent years — APA actively pursues producers not reporting.',
+            priorities:['SPV membership','Accurate tonnage reporting','Labelling for Portuguese market'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€300–5k',per:'€5k–30k',sys:'€30k–150k'}, 'epr-underreport':{iso:'€200–3k',per:'€3k–20k',sys:'€20k–80k'}, 'recycled-content':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–200k'}, 'labelling':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'reuse-target':{iso:'€500–8k',per:'€8k–50k',sys:'€50k–200k'}, 'prohibited-pkg':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–250k'}, 'grade-de':{iso:'€1k–10k',per:'€10k–60k',sys:'€60k–250k'} } },
+          RO: { name:'Romania', flag:'🇷🇴', strictness:'low', strictnessLabel:'Low (building)', body:'ANPM / Garda de Mediu',
+            approach:"Building. Romania's EPR enforcement is developing. The RetuRO DRS launched in 2023 and is actively enforced for beverage containers, but broader packaging EPR enforcement is less consistent.",
+            priorities:['ARAM registration','RetuRO compliance for beverage packaging','National register entry'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€100–1k',per:'€1k–10k',sys:'€10k–40k'}, 'epr-underreport':{iso:'€50–500',per:'€500–5k',sys:'€5k–20k'}, 'recycled-content':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'labelling':{iso:'€50–500',per:'€500–5k',sys:'€5k–20k'}, 'reuse-target':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'prohibited-pkg':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–100k'}, 'grade-de':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–100k'} } },
+          SK: { name:'Slovakia', flag:'🇸🇰', strictness:'medium', strictnessLabel:'Moderate', body:'SIŽP (Slovenská inšpekcia životného prostredia)',
+            approach:"Moderate. Slovakia's SIŽP has a track record of enforcement for environmental violations. EPR compliance is monitored through NATUR-PACK and RecyKLub data.",
+            priorities:['NATUR-PACK or equivalent registration','Annual declaration accuracy','Labelling for Slovak market'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'epr-underreport':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'recycled-content':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'labelling':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–50k'}, 'reuse-target':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'prohibited-pkg':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'}, 'grade-de':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'} } },
+          SI: { name:'Slovenia', flag:'🇸🇮', strictness:'medium', strictnessLabel:'Moderate', body:'ARSO (Agencija RS za okolje)',
+            approach:"Moderate. Slovenia's ARSO monitors packaging compliance through Slopak data. Enforcement is systematic but proportionate — focused on registration and reporting rather than aggressive penalty pursuit.",
+            priorities:['Slopak registration','Annual reporting','Labelling for Slovenian market'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'epr-underreport':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–60k'}, 'recycled-content':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'labelling':{iso:'€200–2k',per:'€2k–15k',sys:'€15k–50k'}, 'reuse-target':{iso:'€500–5k',per:'€5k–30k',sys:'€30k–120k'}, 'prohibited-pkg':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'}, 'grade-de':{iso:'€1k–10k',per:'€10k–50k',sys:'€50k–200k'} } },
+          ES: { name:'Spain', flag:'🇪🇸', strictness:'medium', strictnessLabel:'Moderate', body:'MITECO / CCAA (Autonomous Communities)',
+            approach:"Moderate with regional variation. Spain's packaging enforcement operates through national MITECO oversight and regional autonomous community (CCAA) implementation. Catalonia and Basque Country tend to be more proactive.",
+            priorities:['Ecoembes registration','Correct tonnage declaration','Labelling for Spanish market'],
+            dailyPenalty:false, publicNaming:false, criminalReferral:false, eea:false,
+            ranges:{ 'epr-missing':{iso:'€500–6k',per:'€6k–40k',sys:'€40k–200k'}, 'epr-underreport':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'recycled-content':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'labelling':{iso:'€300–4k',per:'€4k–25k',sys:'€25k–100k'}, 'reuse-target':{iso:'€1k–15k',per:'€15k–80k',sys:'€80k–400k'}, 'prohibited-pkg':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'}, 'grade-de':{iso:'€2k–20k',per:'€20k–100k',sys:'€100k–500k'} } },
+          SE: { name:'Sweden', flag:'🇸🇪', strictness:'high', strictnessLabel:'High', body:'Naturvårdsverket',
+            approach:'Proactive. Sweden has one of the most active EPR enforcement regimes in the EU. Regular audits, public reporting of non-compliant operators, and willingness to refer serious cases for criminal prosecution.',
+            priorities:['EPR registration completeness','Accurate tonnage reporting','Producer responsibility scheme compliance'],
+            dailyPenalty:true, publicNaming:true, criminalReferral:true, eea:false,
+            ranges:{ 'epr-missing':{iso:'SEK 5k–100k',per:'SEK 100k–1M',sys:'SEK 1M–10M'}, 'epr-underreport':{iso:'SEK 5k–50k',per:'SEK 50k–500k',sys:'SEK 500k–5M'}, 'recycled-content':{iso:'SEK 50k–200k',per:'SEK 200k–2M',sys:'SEK 2M–20M'}, 'labelling':{iso:'SEK 10k–100k',per:'SEK 100k–500k',sys:'SEK 500k–5M'}, 'reuse-target':{iso:'SEK 100k–500k',per:'SEK 500k–5M',sys:'SEK 5M–50M'}, 'prohibited-pkg':{iso:'SEK 200k–1M',per:'SEK 1M–10M',sys:'SEK 10M–50M'}, 'grade-de':{iso:'SEK 200k–1M',per:'SEK 1M–10M',sys:'SEK 10M–100M'} } },
         };
 
         const VIOLATION_PROFILES = {
