@@ -1511,6 +1511,7 @@
         <div class="sidebar-item page-link" data-page="roadmap">📅 Key Dates &amp; Deadlines</div>
         <div class="sidebar-item page-link" data-page="grading">♻️ Packaging Grades (A–E)</div>
         <div class="sidebar-item page-link" data-page="calculator">🧮 Recycled Material Check</div>
+        <div class="sidebar-item page-link" data-page="impact-calculator">💰 Impact Calculator</div>
         <div class="sidebar-item page-link" data-page="vault">📁 My Documents</div>
         <div class="sidebar-section-tools" style="padding: 0 16px; margin-top: 16px; margin-bottom: 6px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Tools &amp; Calculators</p>
@@ -2157,6 +2158,21 @@
                 <p style="color:var(--text3); font-size:13px; margin:0;">Also checks your packaging's "empty space ratio" — the regulation limits how much wasted space is allowed in a box or container.</p>
             </div>
             <div id="calculator-content"></div>
+        </div>
+    </div>
+
+    <!-- IMPACT CALCULATOR PAGE -->
+    <div class="page" id="impact-calculator-page">
+        <div class="main-content">
+            <div style="margin-bottom:32px;">
+                <p class="rc-eyebrow">PPWR Financial Modelling</p>
+                <h1 style="margin-bottom:8px;">💰 Impact Calculator</h1>
+                <p style="color:#888; font-size:15px; max-width:600px; line-height:1.65; margin:0;">
+                    Estimate your PPWR financial exposure — EPR fee liability, compliance gaps, remediation cost, and fine risk — based on your packaging profile.
+                </p>
+                <p style="color:var(--text3); font-size:12px; margin:8px 0 0;">All figures are indicative estimates. Consult a compliance advisor for formal assessments.</p>
+            </div>
+            <div id="impact-calculator-content"></div>
         </div>
     </div>
 
@@ -4794,8 +4810,10 @@
             if (pageName === 'certificates')    loadCertificates();
             if (pageName === 'roadmap')         renderRoadmap();
             if (pageName === 'grading')         renderGradingModule();
-            if (pageName === 'calculator')      renderCalculator();
-            if (pageName === 'vault')           renderVault();
+            if (pageName === 'calculator')         renderCalculator();
+            if (pageName === 'impact-calculator') renderImpactCalculator();
+            if (pageName === 'legal-chatbot')     renderLegalChatbot();
+            if (pageName === 'vault')             renderVault();
             if (pageName === 'scope')           renderScopePageNew();
             if (pageName === 'delegated-acts')  renderDelegatedActsPage();
             if (pageName === 'fine-estimator')  renderFineEstimatorPage();
@@ -4811,12 +4829,13 @@
         const TIER_ACCESS = {
             free:    ['dashboard', 'learning', 'scope', 'glossary'],
             starter: ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
-                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role'],
+                      'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
+                      'impact-calculator', 'legal-chatbot'],
             pro:     ['dashboard', 'learning', 'scenarios', 'assessment', 'certificates', 'risk-calculator',
                       'roadmap', 'grading', 'calculator', 'vault', 'admin-dashboard',
                       'admin-users', 'admin-analytics', 'admin-leads',
                       'scope', 'glossary', 'fine-estimator', 'packaging-audit', 'obligations', 'my-role',
-                      'delegated-acts', 'countries']
+                      'delegated-acts', 'countries', 'impact-calculator', 'legal-chatbot']
         };
 
         function tierHasAccess(page) {
@@ -7176,6 +7195,162 @@
                 <p style="font-size:12px;color:${riskColor};margin:0;"><strong>Estimated fine range:</strong> ${fineRange}</p>
                 <p style="font-size:11px;color:var(--text3);margin:4px 0 0;">Member states set exact penalties under Art. 65. Fines are per infringement and may compound annually.</p>
             </div>`;
+        }
+
+        // ============================================================================
+        // IMPACT CALCULATOR
+        // ============================================================================
+        function renderImpactCalculator() {
+            const el = document.getElementById('impact-calculator-content');
+            if (!el) return;
+            el.innerHTML = `
+            <div class="rc-grid">
+              <!-- LEFT: Inputs -->
+              <div class="card" style="padding:28px;">
+                <span class="rc-section-label">Your packaging profile</span>
+
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-skus">Number of distinct packaging SKUs</label>
+                  <input type="number" class="rc-select" id="ic-skus" min="1" placeholder="e.g. 12" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-volume">Annual packaging volume placed on EU market (tonnes)</label>
+                  <input type="number" class="rc-select" id="ic-volume" min="0" step="0.1" placeholder="e.g. 50" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-material">Primary material</label>
+                  <select class="rc-select" id="ic-material" onchange="calcImpact()">
+                    <option value="">— select —</option>
+                    <option value="plastic-pet">Plastic — PET</option>
+                    <option value="plastic-pp">Plastic — PP/HDPE/LDPE</option>
+                    <option value="plastic-mixed">Plastic — Mixed/Laminate</option>
+                    <option value="paper">Paper / Cardboard</option>
+                    <option value="glass">Glass</option>
+                    <option value="metal">Metal (steel/aluminium)</option>
+                    <option value="mixed">Mixed materials</option>
+                  </select>
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-recycled">Current recycled content in plastic packaging (%)</label>
+                  <input type="number" class="rc-select" id="ic-recycled" min="0" max="100" placeholder="e.g. 15" oninput="calcImpact()">
+                </div>
+                <div class="rc-field">
+                  <label class="rc-field-label" for="ic-grade">Packaging recyclability grade (A–E)</label>
+                  <select class="rc-select" id="ic-grade" onchange="calcImpact()">
+                    <option value="">— select —</option>
+                    <option value="A">A — Fully Recyclable (EPR discount)</option>
+                    <option value="B">B — Largely Recyclable</option>
+                    <option value="C">C — Recyclable with Barriers</option>
+                    <option value="D">D — Difficult (banned 2030, 1.5× fee)</option>
+                    <option value="E">E — Not Recyclable (banned 2030, 2.0× fee)</option>
+                  </select>
+                </div>
+                <div class="rc-field" style="margin-bottom:0;">
+                  <label class="rc-field-label" for="ic-markets">Number of EU member states you sell into</label>
+                  <input type="number" class="rc-select" id="ic-markets" min="1" max="27" placeholder="e.g. 5" oninput="calcImpact()">
+                </div>
+              </div>
+
+              <!-- RIGHT: Results -->
+              <div id="ic-results" style="display:none;">
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">EPR fee liability estimate</span>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 4px;">
+                    <span id="ic-epr-fee" style="font-size:32px;font-weight:800;color:var(--text);">—</span>
+                    <span style="font-size:14px;color:var(--text2);">/ year (all markets)</span>
+                  </div>
+                  <p id="ic-epr-note" style="font-size:12px;color:var(--text3);margin:0;"></p>
+                </div>
+
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">Recycled content gap</span>
+                  <div id="ic-rc-gap" style="margin-top:10px;"></div>
+                </div>
+
+                <div class="card" style="padding:28px;margin-bottom:16px;">
+                  <span class="rc-section-label">Cost to comply (2030 estimate)</span>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 4px;">
+                    <span id="ic-cost" style="font-size:28px;font-weight:800;color:var(--text);">—</span>
+                    <span style="font-size:14px;color:var(--text2);">total capital outlay</span>
+                  </div>
+                  <p id="ic-cost-note" style="font-size:12px;color:var(--text3);margin:0;"></p>
+                </div>
+
+                <div class="card" style="padding:28px;">
+                  <span class="rc-section-label">Fine risk exposure (Art. 65 PPWR)</span>
+                  <div id="ic-fine-risk" style="margin-top:10px;"></div>
+                </div>
+              </div>
+            </div>`;
+        }
+
+        function calcImpact() {
+            const skus     = parseInt(document.getElementById('ic-skus')?.value)   || 0;
+            const volume   = parseFloat(document.getElementById('ic-volume')?.value)|| 0;
+            const material = document.getElementById('ic-material')?.value          || '';
+            const recycled = parseFloat(document.getElementById('ic-recycled')?.value) || 0;
+            const grade    = document.getElementById('ic-grade')?.value             || '';
+            const markets  = parseInt(document.getElementById('ic-markets')?.value) || 1;
+
+            if (!volume || !material || !grade) { document.getElementById('ic-results').style.display='none'; return; }
+            document.getElementById('ic-results').style.display = '';
+
+            // EPR base rate €/tonne (industry average by material, 2026 est.)
+            const baseRate = { 'plastic-pet':320, 'plastic-pp':290, 'plastic-mixed':480, 'paper':95, 'glass':45, 'metal':185, 'mixed':380 };
+            const gradeMulti = { A:0.8, B:0.9, C:1.0, D:1.5, E:2.0 };
+            const rate = (baseRate[material] || 300) * (gradeMulti[grade] || 1.0);
+            const totalEPR = rate * volume * markets;
+            document.getElementById('ic-epr-fee').textContent = '€' + Math.round(totalEPR).toLocaleString();
+            document.getElementById('ic-epr-note').textContent =
+                'Base rate €' + (baseRate[material]||300) + '/t × ' + gradeMulti[grade||'C'] + '× grade multiplier × ' + volume + ' t × ' + markets + ' market(s). Rates vary by member state EPR scheme.';
+
+            // Recycled content gap
+            const rcTarget2030 = (material === 'plastic-pet') ? 30 : (material.startsWith('plastic')) ? 10 : 0;
+            const rcGapDiv = document.getElementById('ic-rc-gap');
+            if (rcTarget2030 > 0) {
+                const gap = Math.max(0, rcTarget2030 - recycled);
+                const gapColor = gap === 0 ? '#2A9D8F' : (gap < 10 ? '#F4A261' : '#E63946');
+                rcGapDiv.innerHTML = gap === 0
+                    ? `<p style="color:#2A9D8F;font-size:14px;font-weight:600;">✅ Meeting 2030 target (${rcTarget2030}%) with ${recycled}% recycled content.</p>`
+                    : `<p style="font-size:14px;">Your recycled content: <strong>${recycled}%</strong> — 2030 target: <strong>${rcTarget2030}%</strong></p>
+                       <p style="font-size:14px;color:${gapColor};font-weight:600;">Gap: ${gap.toFixed(1)}% — additional ${(gap/100 * volume).toFixed(1)} t/yr of recycled input required.</p>`;
+            } else {
+                rcGapDiv.innerHTML = '<p style="font-size:13px;color:var(--text3);">No mandatory recycled-content target applies to this material type under PPWR Art. 7.</p>';
+            }
+
+            // Cost to comply (rough: €1,200/t for sourcing recycled feedstock premium + redesign)
+            const rcGap = Math.max(0, rcTarget2030 - recycled);
+            const redesignCost = skus * 8500;
+            const feedstockPremium = (rcGap / 100) * volume * 1200;
+            const totalCost = redesignCost + feedstockPremium;
+            document.getElementById('ic-cost').textContent = '€' + Math.round(totalCost).toLocaleString();
+            document.getElementById('ic-cost-note').textContent =
+                'Packaging redesign: €8,500/SKU × ' + skus + ' SKUs = €' + Math.round(redesignCost).toLocaleString() +
+                (feedstockPremium > 0 ? ' + recycled feedstock premium: €' + Math.round(feedstockPremium).toLocaleString() : '') + '. Capital estimates only; excludes testing & certification.';
+
+            // Fine risk
+            let fineHtml;
+            if (grade === 'D' || grade === 'E') {
+                fineHtml = `<div style="background:#FFCDD2;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#B71C1C;margin-bottom:4px;">🚫 Critical — Grade ${grade} banned from 2030</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Continuing to place Grade D/E packaging after 2030 exposes you to fines of <strong>€500,000+ per infringement</strong> or up to 10% of annual EU turnover (Art. 65).</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Immediate redesign strongly recommended. Budget redesign now — 2030 is under 4 years away.</p></div>`;
+            } else if (rcGap >= 15) {
+                fineHtml = `<div style="background:#FFEBEE;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#C62828;margin-bottom:4px;">⚠️ High — Significant recycled content gap</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">A ${rcGap.toFixed(1)}% gap against the 2030 target creates estimated fine risk of <strong>€200,000 – €500,000</strong> per infringement per market.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Across ${markets} market(s), total exposure could reach €${Math.round(350000*markets).toLocaleString()}.</p></div>`;
+            } else if (rcGap > 0) {
+                fineHtml = `<div style="background:#FFF8E1;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#E65100;margin-bottom:4px;">⚠️ Medium — Recycled content gap</p>
+                    <p style="font-size:13px;color:var(--text);margin-bottom:4px;">Estimated fine exposure: <strong>€50,000 – €200,000</strong> per infringement if the gap persists past 2030.</p>
+                    <p style="font-size:11px;color:var(--text3);margin:0;">Plan now — sourcing certified recycled feedstock at scale requires 12–24 months of supplier qualification.</p></div>`;
+            } else {
+                fineHtml = `<div style="background:#E8F5E9;border-radius:8px;padding:12px 14px;">
+                    <p style="font-weight:700;color:#2A9D8F;margin-bottom:4px;">✅ Low risk — Recycled content on track</p>
+                    <p style="font-size:13px;color:var(--text);margin:0;">No fine exposure from recycled content gaps. Monitor grade D/E packaging and EPR registration per market.</p></div>`;
+            }
+            document.getElementById('ic-fine-risk').innerHTML = fineHtml;
         }
 
         function renderESCalc(container) {
