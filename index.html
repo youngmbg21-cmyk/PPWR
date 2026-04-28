@@ -917,21 +917,9 @@
         .ai-bubble.bot code { background: var(--bg); padding: 1px 4px; border-radius: 3px; font-size: 0.88em; }
 
         #ppwr-ask-bar {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: var(--sidebar-w);
-            right: 0;
-            padding: 6px 32px;
-            background: var(--bg0);
-            border-bottom: 1px solid var(--border);
-            z-index: 500;
+            margin-top: -20px;
+            margin-bottom: 18px;
         }
-
-        #ppwr-ask-bar.visible { display: block; }
-
-        /* Push main-content down to clear the bar (bar ~38px tall) */
-        body.has-ask-bar .main-content { padding-top: 52px; }
 
         #ppwr-ask-btn {
             display: inline-flex;
@@ -952,10 +940,6 @@
         #ppwr-ask-btn:hover {
             background: var(--accent);
             color: #fff;
-        }
-
-        @media (max-width: 768px) {
-            #ppwr-ask-bar { left: 0; padding: 6px 20px; }
         }
 
         .ai-bubble.bot .ai-source {
@@ -2759,11 +2743,6 @@
             <path d="M12 2a4.5 4.5 0 0 1 4.47 4.02A3.5 3.5 0 0 1 18.5 9.5a3.5 3.5 0 0 1-1.13 2.56A3.5 3.5 0 0 1 18.5 14a3.5 3.5 0 0 1-3 3.46V18a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-.54A3.5 3.5 0 0 1 5.5 14a3.5 3.5 0 0 1 1.13-2.56A3.5 3.5 0 0 1 5.5 9.5a3.5 3.5 0 0 1 2.03-3.16A4.5 4.5 0 0 1 12 2zm0 2a2.5 2.5 0 0 0-2.45 2h-.3A1.5 1.5 0 0 0 7.5 7.5c0 .53.27 1 .68 1.28A1.5 1.5 0 0 0 7.5 11c0 .8.63 1.45 1.42 1.49L9 12.5v1l-.08.01A1.5 1.5 0 0 0 7.5 14c0 .75.55 1.37 1.27 1.48L9 15.5V18a1 1 0 0 0 1 1h1v-5.5h1V19h1a1 1 0 0 0 1-1v-2.5l.23-.02A1.5 1.5 0 0 0 16.5 14a1.5 1.5 0 0 0-1.42-1.49L15 12.5v-1l.08-.01A1.5 1.5 0 0 0 16.5 11a1.5 1.5 0 0 0-.68-1.26c.41-.28.68-.75.68-1.24a1.5 1.5 0 0 0-1.75-1.48A2.5 2.5 0 0 0 12 4z"/>
         </svg>
     </button>
-
-    <!-- PPWR Assistant fixed bar -->
-    <div id="ppwr-ask-bar">
-        <button id="ppwr-ask-btn" onclick="aiNav.openChat()">🤖 Ask your PPWR Assistant</button>
-    </div>
 
     <!-- Chat Window -->
     <div id="ai-chat-window" role="dialog" aria-label="PPWR Knowledge Navigator">
@@ -5085,14 +5064,21 @@
             if (mc) mc.scrollTop = 0;
             window.scrollTo(0, 0);
 
-            // Show/hide the fixed "Ask your PPWR Assistant" bar
-            const askBar = document.getElementById('ppwr-ask-bar');
+            // Inject "Ask your PPWR Assistant" button as first item in each page
+            const existingBar = document.getElementById('ppwr-ask-bar');
+            if (existingBar) existingBar.remove();
             const noBarPages = ['home', 'tier-detail'];
             const tier = appState.currentTier || 'free';
             const hasBrain = ['starter', 'pro'].includes(tier);
-            const showBar = hasBrain && !noBarPages.includes(pageName);
-            if (askBar) askBar.classList.toggle('visible', showBar);
-            document.body.classList.toggle('has-ask-bar', showBar);
+            if (hasBrain && !noBarPages.includes(pageName) && pageEl) {
+                const pageMc = pageEl.querySelector('.main-content');
+                if (pageMc) {
+                    const bar = document.createElement('div');
+                    bar.id = 'ppwr-ask-bar';
+                    bar.innerHTML = '<button id="ppwr-ask-btn" onclick="aiNav.openChat()">🤖 Ask your PPWR Assistant</button>';
+                    pageMc.insertBefore(bar, pageMc.firstChild);
+                }
+            }
 
             // Update navigation
             updateNavigation();
