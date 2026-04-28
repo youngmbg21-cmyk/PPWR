@@ -2,9 +2,6 @@
  * PPWR Learning Hub — Netlify Function Proxy
  * File: netlify/functions/chat.js
  *
- * Netlify reads this automatically from your GitHub repo.
- * No manual deployment needed — every git push updates it.
- *
  * SETUP (one-time, all in the Netlify web dashboard):
  * 1. Connect your GitHub repo to Netlify
  * 2. Site Settings → Environment Variables → Add variable:
@@ -16,18 +13,8 @@
  *   /.netlify/functions/chat
  */
 
-// ─── PDF regulation reference ─────────────────────────────────────────────────
+// PDF is referenced by URL — Claude fetches it directly, no download needed here
 const PPWR_PDF_URL = 'https://raw.githubusercontent.com/youngmbg21-cmyk/PPWR/dev/PPWR-2025-40.pdf';
-let pdfBase64Cache = null;
-
-async function fetchPDFBase64() {
-    if (pdfBase64Cache) return pdfBase64Cache;
-    const res = await fetch(PPWR_PDF_URL);
-    if (!res.ok) throw new Error(`PDF fetch failed: ${res.status}`);
-    const buffer = await res.arrayBuffer();
-    pdfBase64Cache = Buffer.from(buffer).toString('base64');
-    return pdfBase64Cache;
-}
 
 const PDF_SYSTEM_PROMPT = `You are a PPWR Regulation Assistant for the PPWR Learning Hub.
 
@@ -89,7 +76,7 @@ function extractSource(raw, cards, scenarios) {
     return { sourceId: 'platform', sourceLabel: 'Platform Knowledge Base', cleanAnswer: raw };
 }
 
-// ─── CORS headers (returned with every response) ──────────────────────────────
+// ─── CORS headers ─────────────────────────────────────────────────────────────
 const CORS = {
     'Access-Control-Allow-Origin':  '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -147,18 +134,10 @@ exports.handler = async (event) => {
 
     // API key — from Netlify environment variables, never from the client
     const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) return reply({ error: 'Service unavailable' }, 500);
+    if (!apiKey) return reply({ error: 'Service unavailable: API key not configured' }, 500);
 
-    // ── PDF mode ──────────────────────────────────────────────────────────────
+    // ── PDF mode: pass the regulation URL directly to Claude ──────────────────
     if (mode === 'pdf') {
-        let pdfBase64;
-        try {
-            pdfBase64 = await fetchPDFBase64();
-        } catch (e) {
-            console.error('[chat.js] PDF fetch error:', e.message);
-            return reply({ error: 'Could not load regulation document' }, 500);
-        }
-
         let pdfAnswer;
         try {
             const resp = await fetch('https://api.anthropic.com/v1/messages', {
@@ -178,7 +157,7 @@ exports.handler = async (event) => {
                         content: [
                             {
                                 type:   'document',
-                                source: { type: 'base64', media_type: 'application/pdf', data: pdfBase64 }
+                                source: { type: 'url', url: PPWR_PDF_URL }
                             },
                             { type: 'text', text: sanitizedQuery }
                         ]
@@ -187,15 +166,16 @@ exports.handler = async (event) => {
             });
 
             if (!resp.ok) {
-                console.error('[chat.js] Anthropic PDF error:', resp.status, await resp.text());
-                return reply({ error: 'AI service unavailable' }, 500);
+                const errText = await resp.text();
+                console.error('[chat.js] Anthropic PDF error:', resp.status, errText);
+                return reply({ error: `AI service error: ${resp.status}` }, 500);
             }
 
             const data = await resp.json();
             pdfAnswer  = data?.content?.[0]?.text || '';
         } catch (e) {
             console.error('[chat.js] PDF query error:', e.message);
-            return reply({ error: 'Network error reaching AI service' }, 500);
+            return reply({ error: `Network error: ${e.message}` }, 500);
         }
 
         return reply({
@@ -250,15 +230,16 @@ ${knowledgeBlock}
         });
 
         if (!resp.ok) {
-            console.error('[chat.js] Anthropic error:', resp.status);
-            return reply({ error: 'AI service unavailable' }, 500);
+            const errText = await resp.text();
+            console.error('[chat.js] Anthropic error:', resp.status, errText);
+            return reply({ error: `AI service error: ${resp.status}` }, 500);
         }
 
         const data = await resp.json();
         claudeText = data?.content?.[0]?.text || '';
     } catch (e) {
         console.error('[chat.js] Fetch error:', e.message);
-        return reply({ error: 'Network error reaching AI service' }, 500);
+        return reply({ error: `Network error: ${e.message}` }, 500);
     }
 
     const { sourceId, sourceLabel, cleanAnswer } = extractSource(claudeText, cards, scenarios);

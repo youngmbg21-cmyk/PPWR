@@ -3,10 +3,10 @@
   functions = "netlify/functions"
 
 [functions]
-  node_bundler = "esbuild"
+  node_bundler = "nft"
 
 [functions."chat"]
-  timeout = 30
+  timeout = 26
 
 [build.environment]
   NODE_VERSION = "20"
