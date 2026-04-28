@@ -4591,11 +4591,31 @@
         };
 
         const RECYCLABILITY_GRADES = {
-            A: { label: 'Grade A — Fully Recyclable', eprMultiplier: 0.8, banned2030: false, color: '#2A9D8F', examples: 'Mono-material PE film, clear PP tray, aluminium can' },
-            B: { label: 'Grade B — Largely Recyclable', eprMultiplier: 0.9, banned2030: false, color: '#52B788', examples: 'Cardboard carton with detachable thin PE liner, clear PET bottle' },
-            C: { label: 'Grade C — Recyclable with Barriers', eprMultiplier: 1.0, banned2030: false, color: '#F4A261', examples: 'Mixed tray with non-separated lidding film, paper bag with PE window' },
-            D: { label: 'Grade D — Difficult to Recycle', eprMultiplier: 1.5, banned2030: true, color: '#E76F51', examples: 'Black PE with carbon black pigment, PVC shrink sleeve' },
-            E: { label: 'Grade E — Not Recyclable at Scale', eprMultiplier: 2.0, banned2030: true, color: '#E63946', examples: 'Metallised PET/PE laminate with adhesive, multi-layer composite (4+ materials)' }
+            A: { label: 'Grade A — Fully Recyclable', eprMultiplier: 0.8, banned2030: false, color: '#2A9D8F', examples: 'Mono-material PE film, clear PP tray, aluminium can',
+                plain: 'This packaging can be sorted and recycled easily by most EU recycling systems.',
+                detail: 'Grade A packaging is made from a single material with no coatings, dyes, or additives that block recycling equipment. Sorting machines can detect it instantly, recyclers want it, and it produces high-quality recycled material at the other end. As a reward, you pay <strong>20% less</strong> in EPR fees than the standard rate. This is the gold standard — design every new pack towards Grade A.',
+                whatMeans: 'You pay less. Your packaging gets recycled. Good for the environment and your costs.',
+                howToAchieve: 'Use one material only (e.g. all-PP, all-PE, or all-aluminium). Avoid metallic inks, dark pigments, and glued-on labels from a different material. Use water-soluble adhesives if labels are needed.' },
+            B: { label: 'Grade B — Largely Recyclable', eprMultiplier: 0.9, banned2030: false, color: '#52B788', examples: 'Cardboard carton with detachable thin PE liner, clear PET bottle',
+                plain: 'This packaging is mostly recyclable, with only a small element that complicates the process.',
+                detail: 'Grade B packaging is almost entirely one material, but has a minor component — like a plastic window on a box, or a small cap on a bottle — that is a different material. Recyclers can handle this, but it takes a little extra work. You still get a <strong>10% EPR fee discount</strong> compared to standard. Most well-designed packaging lands here.',
+                whatMeans: 'Nearly as good as Grade A. Small fee discount. Your packaging gets recycled in most systems.',
+                howToAchieve: 'Make sure any second material is easy to separate (e.g. a detachable cap, a label that floats off in water). Keep secondary materials to less than 5% of total weight.' },
+            C: { label: 'Grade C — Recyclable with Barriers', eprMultiplier: 1.0, banned2030: false, color: '#F4A261', examples: 'Mixed tray with non-separated lidding film, paper bag with PE window',
+                plain: 'This packaging can technically be recycled, but the design makes it harder — and not all facilities will accept it.',
+                detail: 'Grade C packaging has a problem that slows down or reduces the quality of recycling — for example, a plastic film lid glued to a plastic tray that cannot be separated, or a paper bag with a large plastic window. Some recycling facilities handle this well; others reject it entirely. You pay the <strong>standard EPR fee rate</strong> — no discount, no penalty. But you\'re at risk as standards tighten.',
+                whatMeans: 'You pay the standard fee. Some of your packaging gets recycled, some does not. Worth improving before 2030.',
+                howToAchieve: 'Identify what\'s blocking recyclability — usually a mixed-material join or a non-detachable component. Redesign so the two materials can be separated by the consumer or at a sorting facility.' },
+            D: { label: 'Grade D — Difficult to Recycle', eprMultiplier: 1.5, banned2030: true, color: '#E76F51', examples: 'Black PE with carbon black pigment, PVC shrink sleeve',
+                plain: 'This packaging confuses or contaminates recycling equipment. It will be banned from sale in the EU from 2030.',
+                detail: 'Grade D packaging either cannot be detected by the infrared sorting machines used in recycling plants (e.g. black plastic with carbon-black pigment absorbs the scanner\'s light beam), or contaminates other materials during reprocessing (e.g. PVC releases harmful gases and acids when heated). You pay a <strong>50% EPR surcharge</strong> today — and from <strong>1 January 2030</strong>, this packaging <strong>cannot be sold in the EU at all</strong>. You have roughly 4 years to redesign.',
+                whatMeans: '⚠️ Urgent. You pay 50% more in EPR fees now, and this packaging is banned from 2030. Redesign is not optional.',
+                howToAchieve: 'Replace carbon-black pigments with NIR-transparent alternatives (dark grey or black that recycling scanners can still read). Replace PVC shrink sleeves with PET or OPS alternatives.' },
+            E: { label: 'Grade E — Not Recyclable at Scale', eprMultiplier: 2.0, banned2030: true, color: '#E63946', examples: 'Metallised PET/PE laminate with adhesive, multi-layer composite (4+ materials)',
+                plain: 'This packaging cannot be recycled anywhere in the EU at scale. It goes straight to landfill or incineration. Banned from 2030.',
+                detail: 'Grade E packaging is typically made from four or more materials bonded together so tightly that they cannot be separated — for example, a crisp packet with a metallised film layer, a plastic sealant layer, and a printed outer layer all fused together. No recycling technology currently exists to recover these materials economically at EU scale. You pay <strong>double the standard EPR fee</strong> today, and from <strong>1 January 2030</strong>, this packaging is <strong>completely banned from the EU market</strong>. This is the highest-priority redesign category.',
+                whatMeans: '🚨 Critical. Double EPR fees now. Hard ban from 2030. Every SKU in this grade must be redesigned or discontinued.',
+                howToAchieve: 'Move to mono-material alternatives: mono-PP pouches, paper-based barrier pouches, or aluminium cans. The redesign is significant but non-negotiable for continued EU market access.' },
         };
 
         const RECYCLED_CONTENT_TARGETS = {
@@ -6993,6 +7013,34 @@
         // ============================================================================
         // GRADING LAB
         // ============================================================================
+        function showGradeDetail(g, info) {
+            const panel = document.getElementById('grade-detail-panel');
+            if (!panel) return;
+            const alreadyOpen = panel.dataset.grade === g && panel.style.display !== 'none';
+            if (alreadyOpen) { panel.style.display = 'none'; panel.dataset.grade = ''; return; }
+            panel.dataset.grade = g;
+            panel.style.display = 'block';
+            panel.innerHTML = `<div style="background:${info.color}10;border:2px solid ${info.color};border-radius:12px;padding:20px 24px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+                    <h3 style="font-size:17px;font-weight:800;color:${info.color};margin:0;">Grade ${g} — ${info.label.split('—')[1].trim()}</h3>
+                    <button onclick="document.getElementById('grade-detail-panel').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);padding:0 0 0 12px;">✕</button>
+                </div>
+                <p style="font-size:14px;line-height:1.75;color:var(--text);margin-bottom:14px;">${info.detail}</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                    <div style="background:#fff;border-radius:8px;padding:12px;">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:6px;">What this means for you</p>
+                        <p style="font-size:13px;color:var(--text);line-height:1.6;margin:0;">${info.whatMeans}</p>
+                    </div>
+                    <div style="background:#fff;border-radius:8px;padding:12px;">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text3);margin-bottom:6px;">How to achieve or improve</p>
+                        <p style="font-size:13px;color:var(--text);line-height:1.6;margin:0;">${info.howToAchieve}</p>
+                    </div>
+                </div>
+                <p style="font-size:12px;color:var(--text3);margin:0;"><strong>Real-world examples:</strong> ${info.examples}</p>
+            </div>`;
+            panel.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+
         function renderGradingModule() {
             const el = document.getElementById('grading-content');
             if (!el) return;
@@ -7007,21 +7055,26 @@
             refTitle.style.marginBottom = '12px';
             refCard.appendChild(refTitle);
             const refGrid = document.createElement('div');
-            refGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;';
+            refGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;';
             Object.entries(RECYCLABILITY_GRADES).forEach(([g, info]) => {
                 const gCard = document.createElement('div');
-                gCard.style.cssText = 'border:1px solid ' + info.color + ';border-radius:8px;padding:10px;';
-                const glbl = document.createElement('p');
-                glbl.style.cssText = 'font-size:13px;font-weight:700;color:' + info.color + ';margin-bottom:4px;';
-                glbl.textContent = 'Grade ' + g + ' — ' + (info.eprMultiplier < 1 ? info.eprMultiplier + '× EPR (discount)' : info.eprMultiplier + '× EPR') + (info.banned2030 ? ' 🚫 2030' : '');
-                const gex = document.createElement('p');
-                gex.style.cssText = 'font-size:11px;color:var(--text2);margin:0;line-height:1.4;';
-                gex.textContent = info.examples;
-                gCard.appendChild(glbl);
-                gCard.appendChild(gex);
+                gCard.style.cssText = 'border:2px solid ' + info.color + ';border-radius:10px;padding:14px 12px;cursor:pointer;transition:transform .15s,box-shadow .15s;';
+                gCard.title = 'Click to learn more';
+                gCard.onmouseenter = () => { gCard.style.transform='translateY(-2px)'; gCard.style.boxShadow='0 4px 16px '+info.color+'44'; };
+                gCard.onmouseleave = () => { gCard.style.transform=''; gCard.style.boxShadow=''; };
+                gCard.innerHTML = `
+                    <div style="font-size:22px;font-weight:900;color:${info.color};margin-bottom:4px;">Grade ${g}</div>
+                    <div style="font-size:12px;font-weight:700;color:${info.color};margin-bottom:6px;">${info.eprMultiplier < 1 ? info.eprMultiplier+'× EPR (discount)' : info.eprMultiplier+'× EPR'}${info.banned2030 ? ' · 🚫 2030' : ''}</div>
+                    <div style="font-size:12px;color:var(--text2);line-height:1.45;margin-bottom:8px;">${info.plain}</div>
+                    <div style="font-size:10px;color:${info.color};font-weight:600;">Tap to learn more ↓</div>`;
+                gCard.onclick = () => showGradeDetail(g, info);
                 refGrid.appendChild(gCard);
             });
+            const detailPanel = document.createElement('div');
+            detailPanel.id = 'grade-detail-panel';
+            detailPanel.style.cssText = 'margin-top:12px;display:none;';
             refCard.appendChild(refGrid);
+            refCard.appendChild(detailPanel);
             el.appendChild(refCard);
 
             // Cases
