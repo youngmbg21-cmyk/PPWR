@@ -6521,9 +6521,9 @@
         const aiNav = (() => {
 
             // ── Proxy config ──────────────────────────────────────────────────
-            // Paste your Cloudflare Worker URL here once deployed, e.g.:
-            // 'https://ppwr-chat.yourname.workers.dev/api/chat'
-            const PROXY_ENDPOINT = '';
+            // Netlify serves the function at this relative URL automatically.
+            // No changes needed here — it works as soon as you deploy to Netlify.
+            const PROXY_ENDPOINT = '/.netlify/functions/chat';
 
             // ── Session token (sent to proxy to identify this browser session) ─
             const sessionToken = 'ppwr-session-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
