@@ -2467,29 +2467,42 @@
                 <p style="color:var(--text3); font-size:13px; margin:0;">Takes about 2 minutes. Your answers stay in your browser only.</p>
             </div>
 
-            <!-- Org type selector — shown first, collapsed after selection -->
-            <div class="card" id="org-type-card" style="max-width:640px; margin-bottom:20px;">
-                <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 12px;">Step 1 of 5 — Organisation type</p>
-                <p style="font-weight:600;font-size:14px;margin-bottom:16px;">Which best describes your organisation?</p>
-                <div id="org-type-options" style="display:flex;flex-direction:column;gap:10px;"></div>
-                <p style="font-size:12px;color:var(--text3);margin:14px 0 0;line-height:1.6;">This helps us show examples and language that match how your business actually works. You can change it at any time.</p>
-            </div>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;">
+              <!-- Left column: wizard -->
+              <div>
+                <!-- Org type selector — shown first, collapsed after selection -->
+                <div class="card" id="org-type-card" style="margin-bottom:20px;">
+                    <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 12px;">Step 1 of 5 — Organisation type</p>
+                    <p style="font-weight:600;font-size:14px;margin-bottom:16px;">Which best describes your organisation?</p>
+                    <div id="org-type-options" style="display:flex;flex-direction:column;gap:10px;"></div>
+                    <p style="font-size:12px;color:var(--text3);margin:14px 0 0;line-height:1.6;">This helps us show examples and language that match how your business actually works. You can change it at any time.</p>
+                </div>
 
-            <!-- Wizard card — shown after org type is picked -->
-            <div class="card" id="wizard-card" style="max-width:640px; display:none;">
-                <div style="display:flex; gap:8px; margin-bottom:28px;" id="wizard-steps">
-                    <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--accent); color:#fff; font-size:12px; font-weight:700; font-family:var(--ff-mono);">2 Source</div>
-                    <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">3 Brand</div>
-                    <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">4 Modify</div>
-                    <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">5 Market</div>
+                <!-- Wizard card — shown after org type is picked -->
+                <div class="card" id="wizard-card" style="display:none;">
+                    <div style="display:flex; gap:8px; margin-bottom:28px;" id="wizard-steps">
+                        <div class="wizard-step-dot active" data-step="1" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--accent); color:#fff; font-size:12px; font-weight:700; font-family:var(--ff-mono);">2 Source</div>
+                        <div class="wizard-step-dot" data-step="2" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">3 Brand</div>
+                        <div class="wizard-step-dot" data-step="3" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">4 Modify</div>
+                        <div class="wizard-step-dot" data-step="4" style="flex:1; text-align:center; padding:8px; border-radius:8px; background:var(--bg4); color:var(--text3); font-size:12px; font-weight:700; font-family:var(--ff-mono);">5 Market</div>
+                    </div>
+                    <div id="wizard-body"></div>
+                    <div style="display:flex; gap:10px; margin-top:24px;">
+                        <button class="btn-secondary" id="wizard-back-btn" style="display:none;" onclick="wizardBack()">← Back</button>
+                        <button class="btn-primary" id="wizard-next-btn" onclick="wizardNext()" style="flex:1;">Next →</button>
+                    </div>
                 </div>
-                <div id="wizard-body"></div>
-                <div style="display:flex; gap:10px; margin-top:24px;">
-                    <button class="btn-secondary" id="wizard-back-btn" style="display:none;" onclick="wizardBack()">← Back</button>
-                    <button class="btn-primary" id="wizard-next-btn" onclick="wizardNext()" style="flex:1;">Next →</button>
+              </div>
+
+              <!-- Right column: results -->
+              <div>
+                <div class="card" id="wizard-result" style="display:none;"></div>
+                <div id="wizard-result-placeholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;border:2px dashed var(--border2);border-radius:var(--r);color:var(--text3);text-align:center;padding:32px;gap:8px;">
+                  <span style="font-size:32px">📋</span>
+                  <p style="font-size:13px;margin:0;">Your role analysis will appear here once you complete the wizard.</p>
                 </div>
+              </div>
             </div>
-            <div class="card" id="wizard-result" style="margin-top:24px; max-width:640px; display:none;"></div>
         </div>
     </div>
 
@@ -4090,11 +4103,16 @@
             { step:2, q:_wizardBrandLabel(orgType),          key:'brand',  opts:_wizardBrandOpts(orgType) },
             { step:3, q:_wizardModifyLabel(orgType),         key:'relabel',opts:_wizardModifyOpts(orgType) },
             { step:4, q:'Which country is the primary market?', key:'market', opts:[
-              { v:'SE', l:'🇸🇪 Sweden' }, { v:'NO', l:'🇳🇴 Norway (EEA)' }, { v:'DK', l:'🇩🇰 Denmark' },
-              { v:'FI', l:'🇫🇮 Finland' }, { v:'EE', l:'🇪🇪 Estonia' }, { v:'LV', l:'🇱🇻 Latvia' },
-              { v:'LT', l:'🇱🇹 Lithuania' }, { v:'DE', l:'🇩🇪 Germany' }, { v:'FR', l:'🇫🇷 France' },
-              { v:'NL', l:'🇳🇱 Netherlands' }, { v:'PL', l:'🇵🇱 Poland' }, { v:'ES', l:'🇪🇸 Spain' },
-              { v:'IT', l:'🇮🇹 Italy' }, { v:'OTHER_EU', l:'🌍 Other EU country' },
+              { v:'AT', l:'🇦🇹 Austria' }, { v:'BE', l:'🇧🇪 Belgium' }, { v:'BG', l:'🇧🇬 Bulgaria' },
+              { v:'HR', l:'🇭🇷 Croatia' }, { v:'CY', l:'🇨🇾 Cyprus' }, { v:'CZ', l:'🇨🇿 Czech Republic' },
+              { v:'DK', l:'🇩🇰 Denmark' }, { v:'EE', l:'🇪🇪 Estonia' }, { v:'FI', l:'🇫🇮 Finland' },
+              { v:'FR', l:'🇫🇷 France' }, { v:'DE', l:'🇩🇪 Germany' }, { v:'GR', l:'🇬🇷 Greece' },
+              { v:'HU', l:'🇭🇺 Hungary' }, { v:'IE', l:'🇮🇪 Ireland' }, { v:'IT', l:'🇮🇹 Italy' },
+              { v:'LV', l:'🇱🇻 Latvia' }, { v:'LT', l:'🇱🇹 Lithuania' }, { v:'LU', l:'🇱🇺 Luxembourg' },
+              { v:'MT', l:'🇲🇹 Malta' }, { v:'NL', l:'🇳🇱 Netherlands' }, { v:'NO', l:'🇳🇴 Norway (EEA)' },
+              { v:'PL', l:'🇵🇱 Poland' }, { v:'PT', l:'🇵🇹 Portugal' }, { v:'RO', l:'🇷🇴 Romania' },
+              { v:'SK', l:'🇸🇰 Slovakia' }, { v:'SI', l:'🇸🇮 Slovenia' }, { v:'ES', l:'🇪🇸 Spain' },
+              { v:'SE', l:'🇸🇪 Sweden' },
             ]},
           ];
         }
@@ -4106,6 +4124,8 @@
         function renderRoleWizardPage() {
           _wizardAnswers = {}; _wizardStep = 1; _wizardOrgType = appState.orgType || null;
           document.getElementById('wizard-result').style.display = 'none';
+          const ph = document.getElementById('wizard-result-placeholder');
+          if (ph) ph.style.display = 'flex';
           if (_wizardOrgType) {
             _showWizardCard();
           } else {
@@ -4175,13 +4195,24 @@
             d.style.background = s < _wizardStep ? 'var(--accent)' : s === _wizardStep ? 'var(--sage-deep)' : 'var(--bg4)';
             d.style.color      = s <= _wizardStep ? '#fff' : 'var(--text3)';
           });
-          bodyEl.innerHTML = `
-            <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 8px">Step ${_wizardStep + 1} of 5</p>
-            <p style="font-weight:600;font-size:15px;margin-bottom:16px;color:var(--text)">${cfg.q}</p>
-            ${cfg.opts.map(o => `
-              <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid ${_wizardAnswers[cfg.key]===o.v?'var(--accent)':'var(--border2)'};border-radius:var(--r);margin-bottom:8px;cursor:pointer;background:${_wizardAnswers[cfg.key]===o.v?'var(--accent-dim)':'var(--bg3)'};font-size:13px;transition:all .15s;color:var(--text)">
-                <input type="radio" name="wiz-opt" value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'checked':''} style="accent-color:var(--accent)"> ${o.l}
-              </label>`).join('')}`;
+          const isMarket = cfg.key === 'market';
+          if (isMarket) {
+            bodyEl.innerHTML = `
+              <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 8px">Step ${_wizardStep + 1} of 5</p>
+              <p style="font-weight:600;font-size:15px;margin-bottom:16px;color:var(--text)">${cfg.q}</p>
+              <select id="wiz-market-select" style="width:100%;padding:12px 14px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg3);color:var(--text);font-size:14px;font-family:var(--ff-body);cursor:pointer;">
+                <option value="">— Select a country —</option>
+                ${cfg.opts.map(o => `<option value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'selected':''}>${o.l}</option>`).join('')}
+              </select>`;
+          } else {
+            bodyEl.innerHTML = `
+              <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 8px">Step ${_wizardStep + 1} of 5</p>
+              <p style="font-weight:600;font-size:15px;margin-bottom:16px;color:var(--text)">${cfg.q}</p>
+              ${cfg.opts.map(o => `
+                <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid ${_wizardAnswers[cfg.key]===o.v?'var(--accent)':'var(--border2)'};border-radius:var(--r);margin-bottom:8px;cursor:pointer;background:${_wizardAnswers[cfg.key]===o.v?'var(--accent-dim)':'var(--bg3)'};font-size:13px;transition:all .15s;color:var(--text)">
+                  <input type="radio" name="wiz-opt" value="${o.v}" ${_wizardAnswers[cfg.key]===o.v?'checked':''} style="accent-color:var(--accent)"> ${o.l}
+                </label>`).join('')}`;
+          }
           backEl.style.display = _wizardStep > 1 ? 'inline-flex' : 'none';
           nextEl.textContent   = _wizardStep < steps.length ? 'Next →' : 'Show my roles →';
         }
@@ -4189,9 +4220,17 @@
         function wizardNext() {
           const steps = _getWizardSteps(_wizardOrgType || 'mid');
           const cfg   = steps[_wizardStep - 1];
-          const sel   = document.querySelector('input[name="wiz-opt"]:checked');
-          if (!sel) { alert('Please select an option to continue.'); return; }
-          _wizardAnswers[cfg.key] = sel.value;
+          let val;
+          if (cfg.key === 'market') {
+            const dd = document.getElementById('wiz-market-select');
+            val = dd ? dd.value : '';
+            if (!val) { alert('Please select a country to continue.'); return; }
+          } else {
+            const sel = document.querySelector('input[name="wiz-opt"]:checked');
+            if (!sel) { alert('Please select an option to continue.'); return; }
+            val = sel.value;
+          }
+          _wizardAnswers[cfg.key] = val;
           if (_wizardStep < steps.length) { _wizardStep++; _wizardRenderStep(); return; }
           _wizardShowResult();
         }
@@ -4210,6 +4249,8 @@
           const critObs = obs.filter(o => o.severity === 'critical');
           const orgMeta = ORG_TYPES.find(o => o.v === _wizardOrgType);
           const resultEl = document.getElementById('wizard-result');
+          const placeholder = document.getElementById('wizard-result-placeholder');
+          if (placeholder) placeholder.style.display = 'none';
           resultEl.style.display = 'block';
           resultEl.innerHTML = `
             <p style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--text3);font-family:var(--ff-mono);margin:0 0 10px">Your PPWR roles in ${country}</p>
@@ -5648,33 +5689,8 @@
             document.getElementById('dashboard-modules').textContent = appState.dashboard.modulesCompleted;
             document.getElementById('dashboard-progress-bar').style.width = appState.dashboard.progress + '%';
 
-            // Org-type context banner
             const orgBanner = document.getElementById('dashboard-org-banner');
-            if (orgBanner) {
-                const orgMeta = {
-                    sme:        { icon:'🏪', label:'Small or micro business', tip:'Your compliance journey is focused on essentials — EPR registration, labelling, and recycled content for your specific product formats.' },
-                    mid:        { icon:'🏢', label:'Mid-size company',         tip:'Your priorities include EPR registration across multiple markets, supplier verification, and preparing your packaging for recyclability grade requirements.' },
-                    enterprise: { icon:'🏭', label:'Large company or multi-national', tip:'Your focus spans multi-market EPR, cross-border producer obligations, reuse targets, and Digital Product Passport implementation.' },
-                };
-                const ot = appState.orgType;
-                if (ot && orgMeta[ot]) {
-                    const m = orgMeta[ot];
-                    orgBanner.innerHTML = `<div style="display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:var(--r);font-size:13px;line-height:1.5">
-                        <span style="font-size:20px;flex-shrink:0">${m.icon}</span>
-                        <div style="flex:1">
-                            <span style="font-weight:600;color:var(--text)">${m.label}</span>
-                            <span style="color:var(--text2);margin-left:8px">${m.tip}</span>
-                        </div>
-                        <button onclick="showPage('my-role')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 0">Change →</button>
-                    </div>`;
-                } else {
-                    orgBanner.innerHTML = `<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);font-size:13px">
-                        <span style="font-size:18px">💡</span>
-                        <span style="color:var(--text2);flex:1">Tell us about your organisation to get personalised guidance across the platform.</span>
-                        <button onclick="showPage('my-role')" style="background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 0">Get started →</button>
-                    </div>`;
-                }
-            }
+            if (orgBanner) orgBanner.innerHTML = '';
 
             renderMilestoneWidget();
             renderCertificationStatus();
