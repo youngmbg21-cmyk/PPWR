@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PPWR Navigator — Company A Nordic &amp; Baltic</title>
+<title>PPWR Navigator — Company A Europe</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
@@ -775,7 +775,7 @@
     <div class="logo-mark">CA</div>
     <div>
       <div class="logo-text">PPWR Navigator</div>
-      <div class="logo-sub">Nordic &amp; Baltic PPWR RegTech — Company A</div>
+      <div class="logo-sub">European PPWR RegTech — Company A</div>
     </div>
   </div>
   <div class="header-badge">📋 Reg. (EU) 2025/40 · March 2026</div>
@@ -823,7 +823,7 @@
   <div class="hero-banner">
     <div class="hero-eyebrow">PPWR — Packaging and Packaging Waste Regulation (EU) 2025/40 — Directly applicable in all EU Member States</div>
     <div class="hero-title">Packaging &amp; Packaging<br><span>Waste Regulation</span></div>
-    <div class="hero-desc">PPWR (Packaging and Packaging Waste Regulation) is a <strong>Regulation</strong>, not a Directive — it applies directly across all EU markets with no national transposition required. It entered into force 11 February 2025 and its core provisions apply from <strong>12 August 2026</strong>. It replaces Directive 94/62/EC and introduces binding targets for recycled content, reuse, and recyclability across all 7 Nordic &amp; Baltic markets.</div>
+    <div class="hero-desc">PPWR (Packaging and Packaging Waste Regulation) is a <strong>Regulation</strong>, not a Directive — it applies directly across all EU markets with no national transposition required. It entered into force 11 February 2025 and its core provisions apply from <strong>12 August 2026</strong>. It replaces Directive 94/62/EC and introduces binding targets for recycled content, reuse, and recyclability across all EU Member States and EEA countries.</div>
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-stat-num">2030</div>
@@ -834,8 +834,8 @@
         <div class="hero-stat-label">Recyclability grades<br>banned from 2030</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num">7</div>
-        <div class="hero-stat-label">Markets in scope<br>for this cluster</div>
+        <div class="hero-stat-num">27+</div>
+        <div class="hero-stat-label">EU Member States<br>+ EEA countries covered</div>
       </div>
       <div class="hero-stat">
         <div class="hero-stat-num">€9M</div>
@@ -857,7 +857,7 @@
 
   <div class="alert alert-warn">
     <div class="alert-icon">⚠️</div>
-    <div><strong>Company A Exposure — Six Distinct Flow Types:</strong> Company A Nordic &amp; Baltic operates across six different supply chain configurations, each triggering a different set of PPWR obligations. The most comprehensive obligations fall on <em>own manufactured products</em> — where Company A is the packer/filler and therefore the <strong>primary producer</strong> under PPWR, carrying full design, recycled content, recyclability, labelling, and EPR registration duties from day one of placing product on the market.</div>
+    <div><strong>Company A Exposure — Six Distinct Flow Types:</strong> Company A Europe operates across six different supply chain configurations, each triggering a different set of PPWR obligations. The most comprehensive obligations fall on <em>own manufactured products</em> — where Company A is the packer/filler and therefore the <strong>primary producer</strong> under PPWR, carrying full design, recycled content, recyclability, labelling, and EPR registration duties from day one of placing product on the market.</div>
   </div>
 
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px">
@@ -870,7 +870,7 @@
       <div style="color:var(--muted)">CA is importer-producer in destination country. Packaging obligations follow the importer.</div>
     </div>
     <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px">
-      <div style="font-weight:700;margin-bottom:4px">🇸🇪→🇱🇹 Intra-Cluster</div>
+      <div style="font-weight:700;margin-bottom:4px">🇪🇺→🇪🇺 Cross-Border</div>
       <div style="color:var(--muted)">EPR obligations shift to the receiving country entity. Each country runs its own EPR scheme — registration, fees and reporting differ.</div>
     </div>
     <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px">
@@ -913,12 +913,12 @@
     <div class="pillar-card">
       <div class="pillar-num">04</div>
       <div class="pillar-title">🏷️ Labelling &amp; QR Codes</div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6">Mandatory harmonised sorting labels across the EU from 2028. Digital product passport (QR code) required from 2030 for packaging. Critical for your own branded/private label products sold across all 7 markets.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Mandatory harmonised sorting labels across the EU from 2028. Digital product passport (QR code) required from 2030 for packaging. Critical for your own branded/private label products sold across all EU markets.</p>
     </div>
     <div class="pillar-card">
       <div class="pillar-num">05</div>
       <div class="pillar-title">💶 EPR &amp; Fees</div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6">Extended Producer Responsibility fees modulated by recyclability grade. The "polluter pays" principle — less recyclable packaging = higher EPR fee. Applies to all packaging you place on the market in each country, including intra-cluster flows.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Extended Producer Responsibility fees modulated by recyclability grade. The "polluter pays" principle — less recyclable packaging = higher EPR fee. Applies to all packaging you place on the market in each country, including cross-border flows within the EU.</p>
     </div>
     <div class="pillar-card" style="border-top-color: var(--amber)">
       <div class="pillar-num" style="color:#fcd34d">⚡</div>
@@ -974,7 +974,7 @@
   <div class="grid-2">
     <div class="card">
       <div class="card-title">🏭 Who is a "Producer" under PPWR?</div>
-      <p style="font-size:14px;color:var(--muted);margin-bottom:12px">PPWR defines producer broadly. For Company A Nordic &amp; Baltic, you are a producer when you:</p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:12px">PPWR defines producer broadly. For Company A Europe, you are a producer when you:</p>
       <ul style="list-style:none">
         <li style="padding:7px 6px;border-bottom:1px solid var(--cream);font-size:14px;background:#fff5f5;border-radius:4px">🏗️ <strong>Manufacture and pack your own products</strong> — you are the <em>primary producer</em> (packer/filler). Highest obligation tier: you control packaging design, must hit recycled content targets, achieve recyclability grade, apply mandatory labelling, and register for EPR in every country you sell into.</li>
         <li style="padding:6px 0;border-bottom:1px solid var(--cream);font-size:14px">📥 <strong>Import packaged goods</strong> from sister companies (you become the importer-producer in the destination country)</li>
@@ -1003,9 +1003,30 @@
   <h2 class="section-heading">Country-by-Country Guide</h2>
   <p class="section-sub">Click any country card to expand its full profile. Cards highlight automatically when you run a scenario in the Flow Simulator.</p>
 
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:180px;max-width:320px">
+      <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)">🔍</span>
+      <input id="country-search" type="text" placeholder="Search country…" oninput="filterCountryCards()"
+        style="width:100%;padding:8px 10px 8px 30px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);outline:none;box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button onclick="filterCountryCards('all')" id="cf-all" class="cf-btn cf-active"
+        style="padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--ink);color:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">All (28)</button>
+      <button onclick="filterCountryCards('high')" id="cf-high"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #dc2626;background:white;color:#dc2626;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🔴 High</button>
+      <button onclick="filterCountryCards('medium')" id="cf-med"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #d97706;background:white;color:#d97706;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟡 Medium</button>
+      <button onclick="filterCountryCards('low')" id="cf-low"
+        style="padding:6px 12px;border-radius:20px;border:1px solid #0369a1;background:white;color:#0369a1;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟢 Low</button>
+      <button onclick="filterCountryCards('deposit')" id="cf-dep"
+        style="padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:white;color:var(--ink);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">💰 Has DRS</button>
+    </div>
+    <span id="country-count" style="font-size:12px;color:var(--muted);white-space:nowrap">28 countries</span>
+  </div>
+
   <div class="alert alert-info" id="countries-alert">
     <div class="alert-icon">ℹ️</div>
-    <div><strong>PPWR is a Regulation — directly applicable in all EU Member States</strong> (SE, DK, FI, EE, LV, LT) from <strong>12 August 2026</strong>, with no national transposition required. Each Member State must have a designated competent authority, operational EPR scheme, and penalty framework in place by that date. <strong>Norway (EEA)</strong> incorporates PPWR through the EEA Agreement — expected 2026–2027, with substance equivalent to the EU Regulation.
+    <div><strong>PPWR is a Regulation — directly applicable in all 27 EU Member States</strong> from <strong>12 August 2026</strong>, with no national transposition required. Each Member State must have a designated competent authority, operational EPR scheme, and penalty framework in place by that date. <strong>Norway (EEA)</strong> incorporates PPWR through the EEA Agreement — expected 2026–2027, with substance equivalent to the EU Regulation.
       <div style="margin-top:8px;padding:8px 12px;background:rgba(29,111,164,.1);border-radius:6px;border-left:3px solid var(--blue);font-size:12px">
         <strong>📦 EPR registration is triggered by sale to a customer — not by moving goods to a warehouse.</strong> A Company A warehouse in Finland serving customers in Finland, Estonia and Latvia requires three separate EPR registrations. Each is triggered at the moment of first sale in that country, not when goods arrive in the warehouse.
       </div>
@@ -1017,9 +1038,22 @@
 
   <div class="country-grid" id="country-grid-dynamic"></div>
 
+  <!-- Compare panel — shown when 2+ countries are selected -->
+  <div id="compare-panel" style="display:none;background:white;border:2px solid #7c3aed;border-radius:12px;padding:16px 20px;margin-bottom:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#7c3aed">⚖️ Country Comparison</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="renderCompare()" style="padding:6px 14px;border-radius:8px;border:1px solid #7c3aed;background:#7c3aed;color:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">Compare selected</button>
+        <button onclick="clearCompare()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:white;color:var(--muted);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Clear</button>
+      </div>
+    </div>
+    <div id="compare-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div id="compare-table" style="overflow-x:auto"></div>
+  </div>
+
     <div class="card">
     <div class="card-title">🔗 Cross-Border Complexity Matrix</div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:16px">When packaging crosses borders within the cluster, EPR obligations follow the <em>country of placement on the market</em> — not the country of origin.</p>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:16px">When packaging crosses borders within the EU, EPR obligations follow the <em>country of placement on the market</em> — not the country of origin.</p>
     <div style="overflow-x:auto">
       <table style="width:100%;border-collapse:collapse;font-size:13px">
         <thead>
@@ -1032,13 +1066,13 @@
         </thead>
         <tbody>
           <tr>
-            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><strong>🏗️ CA manufactures in cluster country → sells domestically</strong></td>
+            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><strong>🏗️ CA manufactures in EU country → sells domestically</strong></td>
             <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5">CA manufacturing entity (primary producer)</td>
-            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5">🇸🇪🇳🇴🇩🇰 etc. — market of sale</td>
+            <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5">🇩🇪🇫🇷🇵🇱 etc. — market of sale</td>
             <td style="padding:10px 14px;border:1px solid var(--border);background:#fff5f5"><span style="color:var(--sg-red);font-weight:600">HIGHEST — Full obligations</span></td>
           </tr>
           <tr style="background:#fef9f5">
-            <td style="padding:10px 14px;border:1px solid var(--border)"><strong>🏗️ CA manufactures in cluster country → exports to other cluster countries</strong></td>
+            <td style="padding:10px 14px;border:1px solid var(--border)"><strong>🏗️ CA manufactures in EU country → exports to other EU countries</strong></td>
             <td style="padding:10px 14px;border:1px solid var(--border)">CA mfg entity (export packaging) + receiving entity (EPR in destination)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">Both origin + destination countries</td>
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--warn);font-weight:600">HIGH — Dual obligations</span></td>
@@ -1050,7 +1084,7 @@
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--warn);font-weight:600">HIGH</span></td>
           </tr>
           <tr style="background:var(--cream)">
-            <td style="padding:10px 14px;border:1px solid var(--border)">CA Sweden → CA Norway (intra-cluster)</td>
+            <td style="padding:10px 14px;border:1px solid var(--border)">CA Sweden → CA Norway (cross-border)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">CA Norway (Norwegian importer)</td>
             <td style="padding:10px 14px;border:1px solid var(--border)">🇳🇴 Norway</td>
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--amber);font-weight:600">MEDIUM</span></td>
@@ -1068,9 +1102,9 @@
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--warn);font-weight:600">HIGH</span></td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;border:1px solid var(--border)">CA Nordic sells to customer outside cluster (e.g. Poland)</td>
-            <td style="padding:10px 14px;border:1px solid var(--border)">Polish importer / customer (not CA NB)</td>
-            <td style="padding:10px 14px;border:1px solid var(--border)">🇵🇱 Poland</td>
+            <td style="padding:10px 14px;border:1px solid var(--border)">CA entity sells to customer outside the EU (e.g. UK, Switzerland)</td>
+            <td style="padding:10px 14px;border:1px solid var(--border)">Non-EU importer / customer (not CA)</td>
+            <td style="padding:10px 14px;border:1px solid var(--border)">🌍 Non-EU country</td>
             <td style="padding:10px 14px;border:1px solid var(--border)"><span style="color:var(--green);font-weight:600">LOW</span> (if EXW/DAP terms)</td>
           </tr>
         </tbody>
@@ -1108,37 +1142,37 @@
       <div class="scenario-card" id="sc-own" onclick="selectScenario('own')" style="border-color:var(--sg-red);border-width:2px">
         <div class="sc-icon">🏗️</div>
         <div class="sc-title" style="color:var(--sg-red)">Own Manufactured Products ★</div>
-        <div class="sc-desc">Company A manufactures and packs products within the cluster, then sells domestically or cross-border. You are the primary producer — the highest PPWR obligation tier.</div>
+        <div class="sc-desc">Company A manufactures and packs products in an EU/EEA country, then sells domestically or cross-border. You are the primary producer — the highest PPWR obligation tier.</div>
         <span class="sc-badge sc-high">Primary Producer — Maximum Obligations</span>
       </div>
       <div class="scenario-card selected" id="sc-0" onclick="selectScenario(0)">
         <div class="sc-icon">🏭→🇸🇪</div>
         <div class="sc-title">Import from Sister Company</div>
-        <div class="sc-desc">CA affiliate outside cluster (e.g. France, Germany) ships packaged goods to CA Nordic country for warehousing and resale.</div>
+        <div class="sc-desc">CA affiliate in another EU country ships packaged goods to a CA entity in the destination country for warehousing and resale.</div>
         <span class="sc-badge sc-high">High EPR Exposure</span>
       </div>
       <div class="scenario-card" id="sc-1" onclick="selectScenario(1)">
-        <div class="sc-icon">🇸🇪→🇱🇹</div>
-        <div class="sc-title">Intra-Cluster Transfer</div>
-        <div class="sc-desc">CA entity in one Nordic/Baltic country sells and ships packaged goods to CA entity or customer in another cluster country.</div>
+        <div class="sc-icon">🇪🇺→🇪🇺</div>
+        <div class="sc-title">Cross-Border Transfer</div>
+        <div class="sc-desc">CA entity in one EU country sells and ships packaged goods to CA entity or customer in another EU country.</div>
         <span class="sc-badge sc-med">Medium EPR Exposure</span>
       </div>
       <div class="scenario-card" id="sc-2" onclick="selectScenario(2)">
         <div class="sc-icon">🌏→📦→🏠</div>
         <div class="sc-title">3rd Party Direct Ship</div>
-        <div class="sc-desc">CA orders from 3rd party supplier (e.g. Asia). Supplier ships directly to end customer in Nordic/Baltic country. No CA warehouse.</div>
+        <div class="sc-desc">CA orders from 3rd party supplier (e.g. Asia). Supplier ships directly to end customer in an EU country. No CA warehouse.</div>
         <span class="sc-badge sc-high">High EPR Exposure</span>
       </div>
       <div class="scenario-card" id="sc-3" onclick="selectScenario(3)">
         <div class="sc-icon">🌏→🏭→🏠</div>
         <div class="sc-title">3rd Party via CA Warehouse</div>
-        <div class="sc-desc">CA orders 3rd party goods, warehouses in Nordic/Baltic country, then sells to local customers. Multiple obligation touch points.</div>
+        <div class="sc-desc">CA orders 3rd party goods, warehouses in an EU country, then sells to local customers. Multiple obligation touch points.</div>
         <span class="sc-badge sc-high">Highest Complexity</span>
       </div>
       <div class="scenario-card" id="sc-4" onclick="selectScenario(4)">
         <div class="sc-icon">🇸🇪→🌍</div>
         <div class="sc-title">Export Outside Cluster</div>
-        <div class="sc-desc">CA Nordic/Baltic sells and ships packaged goods to a customer in a non-cluster EU or non-EU country.</div>
+        <div class="sc-desc">CA entity sells and ships packaged goods to a customer outside the EU or to a non-EU/EEA country.</div>
         <span class="sc-badge sc-low">Lower EPR Exposure</span>
       </div>
       <div class="scenario-card" id="sc-5" onclick="selectScenario(5)">
@@ -1392,7 +1426,24 @@
 
   <!-- ── COUNTRY ENFORCEMENT PROFILES ── -->
   <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin-bottom:6px">Country Enforcement Profiles</h3>
-  <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Enforcement strictness varies significantly across the cluster. Click a country to expand its profile.</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:10px">Enforcement strictness varies significantly across EU Member States. Click a country to expand its profile.</p>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+    <div style="position:relative;flex:1;min-width:160px;max-width:260px">
+      <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted)">🔍</span>
+      <input id="enf-search" type="text" placeholder="Filter country…" oninput="filterEnfProfiles()"
+        style="width:100%;padding:7px 9px 7px 28px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);outline:none;box-sizing:border-box">
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button onclick="filterEnfProfiles('all')" id="ef-all"
+        style="padding:5px 10px;border-radius:20px;border:1px solid var(--border);background:var(--ink);color:white;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">All</button>
+      <button onclick="filterEnfProfiles('high')" id="ef-high"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #dc2626;background:white;color:#dc2626;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🔴 High</button>
+      <button onclick="filterEnfProfiles('medium')" id="ef-med"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #d97706;background:white;color:#d97706;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟡 Medium</button>
+      <button onclick="filterEnfProfiles('low')" id="ef-low"
+        style="padding:5px 10px;border-radius:20px;border:1px solid #0369a1;background:white;color:#0369a1;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600">🟢 Low</button>
+    </div>
+  </div>
   <div id="enforcement-profiles" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px"></div>
 
   <!-- ── VIOLATION REFERENCE TABLE ── -->
@@ -1443,13 +1494,34 @@
       <div class="form-group">
         <label class="form-label">Country</label>
         <select id="fc-country" onchange="clearFineResult()">
-          <option value="SE">🇸🇪 Sweden</option>
-          <option value="NO">🇳🇴 Norway</option>
+          <option value="AT">🇦🇹 Austria</option>
+          <option value="BE">🇧🇪 Belgium</option>
+          <option value="BG">🇧🇬 Bulgaria</option>
+          <option value="HR">🇭🇷 Croatia</option>
+          <option value="CY">🇨🇾 Cyprus</option>
+          <option value="CZ">🇨🇿 Czech Republic</option>
           <option value="DK">🇩🇰 Denmark</option>
-          <option value="FI">🇫🇮 Finland</option>
           <option value="EE">🇪🇪 Estonia</option>
+          <option value="FI">🇫🇮 Finland</option>
+          <option value="FR">🇫🇷 France</option>
+          <option value="DE">🇩🇪 Germany</option>
+          <option value="GR">🇬🇷 Greece</option>
+          <option value="HU">🇭🇺 Hungary</option>
+          <option value="IE">🇮🇪 Ireland</option>
+          <option value="IT">🇮🇹 Italy</option>
           <option value="LV">🇱🇻 Latvia</option>
           <option value="LT">🇱🇹 Lithuania</option>
+          <option value="LU">🇱🇺 Luxembourg</option>
+          <option value="MT">🇲🇹 Malta</option>
+          <option value="NL">🇳🇱 Netherlands</option>
+          <option value="NO">🇳🇴 Norway (EEA)</option>
+          <option value="PL">🇵🇱 Poland</option>
+          <option value="PT">🇵🇹 Portugal</option>
+          <option value="RO">🇷🇴 Romania</option>
+          <option value="SK">🇸🇰 Slovakia</option>
+          <option value="SI">🇸🇮 Slovenia</option>
+          <option value="ES">🇪🇸 Spain</option>
+          <option value="SE">🇸🇪 Sweden</option>
         </select>
       </div>
       <div class="form-group">
@@ -1623,7 +1695,7 @@
 <!-- ════════════════════════════════════════ ROLES ════════════════════════════════════ -->
 <div id="roles" class="section">
   <h2 class="section-heading">Who Does What</h2>
-  <p class="section-sub">PPWR touches multiple functions across Company A Nordic &amp; Baltic. Here is who owns what.</p>
+  <p class="section-sub">PPWR touches multiple functions across Company A Europe. Here is who owns what.</p>
   <div class="role-cards">
     <div class="role-card">
       <div class="role-icon">🚛</div>
@@ -1640,8 +1712,8 @@
       <div class="role-icon">⚖️</div>
       <div class="role-title">Legal / Compliance</div>
       <ul class="role-tasks">
-        <li class="role-task">Register with EPR systems in all 7 markets</li>
-        <li class="role-task">Monitor EPR scheme updates and penalty rule changes in each of the 7 markets</li>
+        <li class="role-task">Register with EPR systems in all EU/EEA markets where packaging is placed</li>
+        <li class="role-task">Monitor EPR scheme updates and penalty rule changes in each market where CA operates</li>
         <li class="role-task">Review Incoterms in contracts to confirm EPR liability allocation</li>
         <li class="role-task">Ensure own-manufactured product packaging is legally compliant by 2028/2030</li>
         <li class="role-task">Manage penalty risk and enforcement correspondence</li>
@@ -1878,7 +1950,7 @@ const SCOPE_DATA = {
       item: 'Reusable transport packaging in closed-loop B2B systems',
       status: 'modified-epr',
       article: 'Art. 44(3)',
-      detail: 'Transport packaging used exclusively in a closed-loop system (i.e. CA-to-CA entity only, never placed on the market for a third party) may qualify for modified EPR registration treatment. This is relevant for intercompany flows between cluster entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.',
+      detail: 'Transport packaging used exclusively in a closed-loop system (i.e. CA-to-CA entity only, never placed on the market for a third party) may qualify for modified EPR registration treatment. This is relevant for intercompany flows between EU entities. Seek legal confirmation of the closed-loop definition in each national EPR scheme.',
       urgency: 'medium',
     },
     {
@@ -2064,7 +2136,7 @@ function toggleCountry(code) {
 
 // ── LAYER 0: COUNTRY DATA ──────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════
-// COUNTRY CONFIG — single source of truth for all 7 cluster countries
+// COUNTRY CONFIG — single source of truth for all 28 EU/EEA countries
 // Update fields here; country cards, rule engine and simulator all read from this.
 // ═══════════════════════════════════════════════════════════════════════════
 const COUNTRY_CONFIG = {
@@ -2110,7 +2182,7 @@ const COUNTRY_CONFIG = {
     languageLabel: 'Swedish',
     depositSystem: true,
     depositNote: 'Pantbanken / Returpack deposit systems for cans and bottles — separate from packaging EPR',
-    notableFeatures: ['Strictest enforcement in cluster', 'Daily accruing penalties possible', 'Public naming of non-compliant operators', 'Criminal referral for serious cases'],
+    notableFeatures: ['Among strictest enforcement in EU', 'Daily accruing penalties possible', 'Public naming of non-compliant operators', 'Criminal referral for serious cases'],
     caAction: 'Maintain FTI registration. Prepare for modulated EPR fee structure under PPWR — recyclability grades will directly affect costs. Priority: audit all packaging grades for Swedish market-placed products.',
     enforcement: 'high',
   },
@@ -2203,8 +2275,281 @@ const COUNTRY_CONFIG = {
     depositSystem: false,
     depositNote: null,
     notableFeatures: ['Green Dot system (LZP)', 'Fee increases expected under PPWR', 'B2B under-registration a known gap'],
-    caAction: 'Model EPR fee increases for Latvian operations. Intra-cluster flows from SE/FI → LV mean the Latvian entity bears EPR liability. Clarify legal entity responsibility in intra-cluster contracts.',
+    caAction: 'Model EPR fee increases for Latvian operations. Cross-border flows from other EU countries into LV mean the Latvian entity bears EPR liability. Clarify legal entity responsibility in cross-border supply contracts.',
     enforcement: 'medium',
+  },
+  AT: {
+    code: 'AT', name: 'Austria', flag: '🇦🇹', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['ARA (Austria Recycling)'], eprSchemeUrl: 'https://www.ara.at',
+    regulator: 'BMK (Bundesministerium für Klimaschutz)', regulatorUrl: 'https://www.bmk.gv.at',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; ARA scheme updating for PPWR requirements.',
+    registrationThreshold: 'Register with ARA for all packaging placed on the Austrian market.',
+    languages: ['de'], languageLabel: 'German',
+    depositSystem: false, depositNote: 'Voluntary return for some bottle formats; no national mandatory DRS.',
+    notableFeatures: ['ARA scheme covers most producers', 'Modulated fees based on recyclability under PPWR', 'Federal structure — BMK coordinates nationally'],
+    caAction: 'Maintain ARA registration. Prepare for modulated EPR fee structure under PPWR — recyclability grades will directly affect fees.',
+    enforcement: 'medium',
+  },
+  BE: {
+    code: 'BE', name: 'Belgium', flag: '🇧🇪', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Fost Plus (household)', 'Val-I-Pac (industrial/B2B)'], eprSchemeUrl: 'https://www.fostplus.be',
+    regulator: 'OVAM (Flanders) / SPW (Wallonia) / Bruxelles Environnement', regulatorUrl: 'https://www.ovam.be',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Belgium has separate household and industrial EPR streams.',
+    registrationThreshold: 'All producers must register with Fost Plus (B2C) and/or Val-I-Pac (B2B) depending on packaging end-use.',
+    languages: ['nl', 'fr', 'de'], languageLabel: 'Dutch (Flemish), French (Walloon), German',
+    depositSystem: false, depositNote: 'No national DRS; Belgium relies on kerbside collection.',
+    notableFeatures: ['Separate household (Fost Plus) and industrial (Val-I-Pac) EPR streams', 'Tri-regional regulatory structure', 'Fees modulated by recyclability'],
+    caAction: 'Register with both Fost Plus and Val-I-Pac if placing both consumer and B2B packaging on the Belgian market.',
+    enforcement: 'medium',
+  },
+  BG: {
+    code: 'BG', name: 'Bulgaria', flag: '🇧🇬', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Ecobulpack', 'Ecopack Bulgaria'], eprSchemeUrl: 'https://www.ecobulpack.com',
+    regulator: 'MOEW (Ministry of Environment and Water)', regulatorUrl: 'https://www.moew.government.bg',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; EPR enforcement capacity developing; MOEW updating framework.',
+    registrationThreshold: 'Register with approved EPR organisation — threshold being updated under PPWR.',
+    languages: ['bg'], languageLabel: 'Bulgarian',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['EPR enforcement capacity building', 'Fees expected to increase under PPWR', 'EU Commission monitoring for implementation adequacy'],
+    caAction: 'Register proactively — EU Commission monitoring creates downstream risk for operators even where national enforcement is developing.',
+    enforcement: 'low',
+  },
+  CY: {
+    code: 'CY', name: 'Cyprus', flag: '🇨🇾', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Green Dot Cyprus (GreenDotCy)'], eprSchemeUrl: 'https://www.greendot.com.cy',
+    regulator: 'Department of Environment', regulatorUrl: 'https://www.environment.gov.cy',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; small market; EPR framework being updated.',
+    registrationThreshold: 'Register with Green Dot Cyprus — all producers placing packaging on Cypriot market.',
+    languages: ['el', 'tr'], languageLabel: 'Greek, Turkish',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['Small market', 'Green Dot scheme covers most categories', 'Limited enforcement history'],
+    caAction: 'Register with Green Dot Cyprus if selling to Cypriot market. Monitor for PPWR-specific fee updates.',
+    enforcement: 'low',
+  },
+  CZ: {
+    code: 'CZ', name: 'Czech Republic', flag: '🇨🇿', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['EKO-KOM'], eprSchemeUrl: 'https://www.ekokom.cz',
+    regulator: 'Czech Environmental Inspectorate (ČEI) / CENIA', regulatorUrl: 'https://www.cizp.cz',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; EKO-KOM well-established; DRS under discussion.',
+    registrationThreshold: 'Register with EKO-KOM — applies to producers placing packaging on Czech market.',
+    languages: ['cs'], languageLabel: 'Czech',
+    depositSystem: false, depositNote: 'DRS under discussion; not yet implemented.',
+    notableFeatures: ['EKO-KOM is well-established', 'ČEI has history of active EPR enforcement', 'Proposed DRS legislation pending'],
+    caAction: 'Maintain EKO-KOM registration. Fees will be modulated under PPWR. Monitor DRS legislation for potential deposit obligations.',
+    enforcement: 'medium',
+  },
+  DE: {
+    code: 'DE', name: 'Germany', flag: '🇩🇪', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Duales System / LUCID (Central Registry)'], eprSchemeUrl: 'https://www.verpackungsregister.org',
+    regulator: 'Zentrale Stelle Verpackungsregister (ZSVR) / UBA', regulatorUrl: 'https://www.verpackungsregister.org',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Germany has the most strictly-enforced EPR system in the EU.',
+    registrationThreshold: 'ALL producers placing packaging on the German market must register in LUCID — no minimum threshold.',
+    languages: ['de'], languageLabel: 'German',
+    depositSystem: true, depositNote: 'Pfand system — comprehensive deposit scheme covering plastic and glass bottles, cans. Separate from packaging EPR.',
+    notableFeatures: ['LUCID registration mandatory — no threshold', 'Most actively enforced EPR in EU', 'Criminal prosecution possible', 'Pfand DRS runs separately', 'Market surveillance coordinated with customs'],
+    caAction: 'Register in LUCID immediately if not done. Select a licensed dual system. Germany is the highest-risk EU market for EPR non-compliance — ZSVR actively coordinates with customs.',
+    enforcement: 'high',
+  },
+  FR: {
+    code: 'FR', name: 'France', flag: '🇫🇷', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['CITEO (household/retail)', 'Adelphe (wines/spirits)'], eprSchemeUrl: 'https://www.citeo.com',
+    regulator: "ADEME / Direction régionale de l'environnement", regulatorUrl: 'https://www.ademe.fr',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; France has one of the most developed EPR systems in Europe.',
+    registrationThreshold: 'Register with CITEO (or Adelphe for wine/spirits) — all producers placing household packaging on French market.',
+    languages: ['fr'], languageLabel: 'French',
+    depositSystem: false, depositNote: "No national DRS; France has rejected deposit return in favour of kerbside collection.",
+    notableFeatures: ['CITEO runs highly modulated fee scheme — Grade A packaging pays significantly less', 'France leads EU in EPR fee modulation by recyclability', 'AGEC law reinforces PPWR requirements nationally'],
+    caAction: "Maintain CITEO registration. France's existing modulated fee structure means recyclability grades already have significant financial impact.",
+    enforcement: 'medium',
+  },
+  GR: {
+    code: 'GR', name: 'Greece', flag: '🇬🇷', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['EOAN (Ελληνικός Οργανισμός Ανακύκλωσης)'], eprSchemeUrl: 'https://www.eoan.gr',
+    regulator: 'EOAN (Hellenic Recycling Agency)', regulatorUrl: 'https://www.eoan.gr',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; Greece has faced EU infringement proceedings historically; EOAN strengthening.',
+    registrationThreshold: 'Register with EOAN — all producers placing packaging on Greek market.',
+    languages: ['el'], languageLabel: 'Greek',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['History of EU infringement proceedings for packaging directive', 'EOAN capacity increasing', 'Seasonal tourism economy creates demand variation'],
+    caAction: 'Register with EOAN proactively. EU Commission monitoring creates downstream risk for non-registered operators even where national enforcement is developing.',
+    enforcement: 'low',
+  },
+  HU: {
+    code: 'HU', name: 'Hungary', flag: '🇭🇺', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['MOHU (Mohu Recycling Hungary)'], eprSchemeUrl: 'https://www.mohu.hu',
+    regulator: 'Ministry of Energy / MOHU', regulatorUrl: 'https://www.mohu.hu',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable; Hungary reformed EPR system with MOHU monopoly concession from 2023.',
+    registrationThreshold: 'Register with MOHU — Hungary operates a single mandatory EPR concessionaire system.',
+    languages: ['hu'], languageLabel: 'Hungarian',
+    depositSystem: false, depositNote: 'DRS under consideration.',
+    notableFeatures: ['MOHU is the sole licensed EPR operator — no choice of scheme', 'Fees set by MOHU/government', 'New registration requirements since 2023 reform'],
+    caAction: 'Ensure MOHU registration is current. MOHU is the only accepted EPR scheme — no alternative schemes are available in Hungary.',
+    enforcement: 'medium',
+  },
+  IT: {
+    code: 'IT', name: 'Italy', flag: '🇮🇹', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['CONAI (Consorzio Nazionale Imballaggi)'], eprSchemeUrl: 'https://www.conai.org',
+    regulator: "MASE (Ministero dell'Ambiente) / ISPRA", regulatorUrl: 'https://www.mase.gov.it',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: "EU Member — PPWR directly applicable from 12 Aug 2026; Italy's CONAI consortium covers all packaging materials.",
+    registrationThreshold: 'Register with CONAI — all producers importing or placing packaging on Italian market.',
+    languages: ['it'], languageLabel: 'Italian',
+    depositSystem: false, depositNote: 'No national DRS; CONAI covers all packaging streams.',
+    notableFeatures: ['CONAI covers 6 material-specific consortia (paper, plastic, glass, metal, wood, composites)', 'Large market with active enforcement', 'MASE coordinating PPWR requirements'],
+    caAction: 'Maintain CONAI membership and declare correctly by material type — each material feeds into a specific sub-consortium.',
+    enforcement: 'medium',
+  },
+  LU: {
+    code: 'LU', name: 'Luxembourg', flag: '🇱🇺', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Valorlux', 'SuperDrecksKëscht'], eprSchemeUrl: 'https://www.valorlux.lu',
+    regulator: "Administration de l'environnement (AE)", regulatorUrl: 'https://environnement.public.lu',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; small market; well-organised EPR through Valorlux.',
+    registrationThreshold: 'Register with Valorlux for household packaging; SuperDrecksKëscht for hazardous/industrial.',
+    languages: ['fr', 'de', 'lb'], languageLabel: 'French, German, Luxembourgish',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['Very small market — often de minimis for many producers', 'Well-organised scheme', 'High per-capita income'],
+    caAction: 'Register with Valorlux if placing packaging on Luxembourg market. Small volumes may qualify for simplified reporting.',
+    enforcement: 'low',
+  },
+  MT: {
+    code: 'MT', name: 'Malta', flag: '🇲🇹', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['GreenPak', 'WasteServ Malta'], eprSchemeUrl: 'https://www.greenpakmalta.org',
+    regulator: 'ERA (Environment and Resources Authority)', regulatorUrl: 'https://era.org.mt',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; Malta has limited infrastructure but ERA is developing PPWR framework.',
+    registrationThreshold: 'Register with GreenPak — ERA-approved scheme for Malta.',
+    languages: ['mt', 'en'], languageLabel: 'Maltese, English',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['Small island market', 'Limited recycling infrastructure vs continental EU', 'ERA capacity building', 'English as official language'],
+    caAction: 'Register with GreenPak if placing packaging on Maltese market. English-language labelling is acceptable.',
+    enforcement: 'low',
+  },
+  PL: {
+    code: 'PL', name: 'Poland', flag: '🇵🇱', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['BDO (Baza Danych Odpadowych — national waste register)'], eprSchemeUrl: 'https://www.bdo.mos.gov.pl',
+    regulator: 'GIOŚ (Chief Inspectorate for Environmental Protection)', regulatorUrl: 'https://www.gios.gov.pl',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Poland is one of the largest EU packaging markets; BDO registry is mandatory.',
+    registrationThreshold: 'Register in BDO — all producers importing or manufacturing packaging; low threshold.',
+    languages: ['pl'], languageLabel: 'Polish',
+    depositSystem: false, depositNote: 'DRS planned — Polish deposit scheme legislation in progress.',
+    notableFeatures: ['BDO is mandatory national register — not optional scheme membership', 'One of largest EU packaging markets by volume', 'GIOŚ enforcement increasing', 'DRS legislation in progress'],
+    caAction: "Register in BDO and submit annual reports. Poland's registry is state-run — non-registration is a direct statutory violation. Monitor DRS legislation.",
+    enforcement: 'medium',
+  },
+  PT: {
+    code: 'PT', name: 'Portugal', flag: '🇵🇹', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Sociedade Ponto Verde (SPV)'], eprSchemeUrl: 'https://www.pontoverde.pt',
+    regulator: 'APA (Agência Portuguesa do Ambiente)', regulatorUrl: 'https://www.apambiente.pt',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; SPV is the established EPR scheme; APA updating for PPWR.',
+    registrationThreshold: 'Register with SPV — all producers placing packaging on Portuguese market.',
+    languages: ['pt'], languageLabel: 'Portuguese',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['SPV is the single authorised scheme', 'APA is the environmental regulator', 'PPWR fee modulation being implemented'],
+    caAction: 'Maintain SPV membership. Prepare for fee modulation under PPWR — recyclability grades will affect costs.',
+    enforcement: 'medium',
+  },
+  RO: {
+    code: 'RO', name: 'Romania', flag: '🇷🇴', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['RetuRO (DRS operator)', 'ARAM (Asociația Română pentru Ambalaje și Mediu)'], eprSchemeUrl: 'https://www.returo.ro',
+    regulator: 'ANPM (Agenția Națională pentru Protecția Mediului)', regulatorUrl: 'https://www.anpm.ro',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; Romania launched DRS (RetuRO) in 2023; broader EPR framework building.',
+    registrationThreshold: 'Register with ARAM and in national waste register; threshold being updated.',
+    languages: ['ro'], languageLabel: 'Romanian',
+    depositSystem: true, depositNote: 'RetuRO DRS launched November 2023 — covers PET, glass and metal beverage containers.',
+    notableFeatures: ['RetuRO DRS launched 2023 — still scaling', 'ANPM enforcement capacity building', 'EU structural funds supporting recycling infrastructure'],
+    caAction: 'Register with ARAM for EPR obligations. Beverage containers are subject to RetuRO deposit scheme — ensure compliance.',
+    enforcement: 'low',
+  },
+  SK: {
+    code: 'SK', name: 'Slovakia', flag: '🇸🇰', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['NATUR-PACK', 'RecyKLub'], eprSchemeUrl: 'https://www.naturpack.sk',
+    regulator: 'SIŽP (Slovenská inšpekcia životného prostredia)', regulatorUrl: 'https://www.sizp.sk',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Slovakia has established EPR schemes; SIŽP is the enforcement body.',
+    registrationThreshold: 'Register with NATUR-PACK or another approved EPR organisation.',
+    languages: ['sk'], languageLabel: 'Slovak',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['NATUR-PACK and RecyKLub are both approved schemes', 'SIŽP enforcement track record for environmental violations', 'PPWR fee modulation expected to increase scheme costs'],
+    caAction: 'Maintain registration with NATUR-PACK or equivalent. Audit packaging grades for Slovak market.',
+    enforcement: 'medium',
+  },
+  SI: {
+    code: 'SI', name: 'Slovenia', flag: '🇸🇮', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Slopak'], eprSchemeUrl: 'https://www.slopak.si',
+    regulator: 'ARSO (Agencija RS za okolje)', regulatorUrl: 'https://www.arso.gov.si',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Slopak is the established EPR scheme; ARSO is the regulator.',
+    registrationThreshold: 'Register with Slopak — all producers placing packaging on Slovenian market.',
+    languages: ['sl'], languageLabel: 'Slovenian',
+    depositSystem: false, depositNote: null,
+    notableFeatures: ['Slopak is the single approved scheme', 'ARSO is an active environmental regulator', 'Small but well-organised market'],
+    caAction: 'Maintain Slopak registration. Small market but obligations are the same as larger EU states.',
+    enforcement: 'medium',
+  },
+  NL: {
+    code: 'NL', name: 'Netherlands', flag: '🇳🇱', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Afvalfonds Verpakkingen'], eprSchemeUrl: 'https://www.afvalfondsverpakkingen.nl',
+    regulator: 'ILT (Inspectie Leefomgeving en Transport) / NVWA', regulatorUrl: 'https://www.ilent.nl',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Netherlands has an advanced EPR and deposit system.',
+    registrationThreshold: 'Register with Afvalfonds Verpakkingen — all producers placing packaging on Dutch market.',
+    languages: ['nl'], languageLabel: 'Dutch',
+    depositSystem: true, depositNote: 'Statiegeld — Dutch deposit return system covers plastic bottles and cans. Separate from EPR.',
+    notableFeatures: ['Statiegeld deposit system — active and expanding', 'ILT is an active market surveillance authority', 'High recycling infrastructure maturity', 'Fees modulated by recyclability'],
+    caAction: 'Register with Afvalfonds Verpakkingen. Ensure goods subject to Statiegeld (plastic bottles, cans) comply with deposit scheme requirements.',
+    enforcement: 'medium',
+  },
+  IE: {
+    code: 'IE', name: 'Ireland', flag: '🇮🇪', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Repak'], eprSchemeUrl: 'https://www.repak.ie',
+    regulator: 'EPA (Environmental Protection Agency)', regulatorUrl: 'https://www.epa.ie',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Deposit Return Scheme launched 2024; Repak updating for PPWR.',
+    registrationThreshold: 'Register with Repak if placing ≥10 tonnes packaging on Irish market per year, or turnover >€1M.',
+    languages: ['en', 'ga'], languageLabel: 'English, Irish (Gaeilge)',
+    depositSystem: true, depositNote: 'Irish DRS (Deposit Return Scheme) launched 2024 — covers PET bottles and cans. Separate from Repak EPR.',
+    notableFeatures: ['Repak is well-established EPR scheme', 'Irish DRS launched 2024 — separate from EPR', 'English language market', 'EPA is active regulator'],
+    caAction: 'Maintain Repak membership. Ensure goods subject to Irish DRS (PET bottles, cans) are registered with the DRS operator.',
+    enforcement: 'medium',
+  },
+  ES: {
+    code: 'ES', name: 'Spain', flag: '🇪🇸', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['Ecoembes (SDDR Punto Verde)'], eprSchemeUrl: 'https://www.ecoembes.com',
+    regulator: 'MITECO (Ministerio para la Transición Ecológica)', regulatorUrl: 'https://www.miteco.gob.es',
+    ppwrStatus: 'directly-applicable', ppwrStatusLabel: 'Active EPR',
+    ppwrStatusNote: 'EU Member — PPWR directly applicable from 12 Aug 2026; Spain updating packaging law to align with PPWR.',
+    registrationThreshold: 'Register with Ecoembes — all producers placing packaging on Spanish market.',
+    languages: ['es'], languageLabel: 'Spanish (Castilian)',
+    depositSystem: false, depositNote: 'DRS proposed — pending final legislation.',
+    notableFeatures: ['Large market with significant enforcement', 'Proposed DRS legislation in progress', 'Regional complexity (autonomous communities)', 'Fees modulated under PPWR'],
+    caAction: 'Maintain Ecoembes registration. Monitor DRS legislation. Regional regulators in Catalonia and Basque Country sometimes take independent enforcement action.',
+    enforcement: 'medium',
+  },
+  HR: {
+    code: 'HR', name: 'Croatia', flag: '🇭🇷', membership: 'EU', eeaLag: false, eeaLagNote: null,
+    eprSchemes: ['HAOP (Hrvatska agencija za okoliš i prirodu)'], eprSchemeUrl: 'https://www.haop.hr',
+    regulator: 'HAOP (Croatian Environment and Nature Agency)', regulatorUrl: 'https://www.haop.hr',
+    ppwrStatus: 'building', ppwrStatusLabel: 'Building Capacity',
+    ppwrStatusNote: 'EU Member — PPWR applies from 12 Aug 2026; Croatia has a beverage deposit system; broader packaging EPR developing.',
+    registrationThreshold: 'Register with HAOP — producer obligations under review for PPWR implementation.',
+    languages: ['hr'], languageLabel: 'Croatian',
+    depositSystem: true, depositNote: 'Povratna naknada — Croatian deposit return scheme covers beverage containers.',
+    notableFeatures: ['Functioning beverage DRS (Povratna naknada)', 'Industrial packaging EPR developing', 'HAOP is both scheme operator and regulator'],
+    caAction: 'Register with HAOP for all packaging placed on the Croatian market. Beverage containers subject to deposit system rules.',
+    enforcement: 'low',
   },
   LT: {
     code: 'LT',
@@ -2226,13 +2571,13 @@ const COUNTRY_CONFIG = {
     depositSystem: false,
     depositNote: null,
     notableFeatures: ['Most enforcement-active Baltic state', 'AAA has flagged B2B under-reporting as audit priority', 'Enforcement increasing since 2023'],
-    caAction: 'Review B2B packaging reporting immediately — AAA has flagged this as an audit priority. Ensure all packaging weights and types are captured in EPR reporting for all intra-cluster and 3rd party flows.',
+    caAction: 'Review B2B packaging reporting immediately — AAA has flagged this as an audit priority. Ensure all packaging weights and types are captured in EPR reporting for all cross-border and 3rd party flows.',
     enforcement: 'medium',
   },
 };
 
-// Ordered list for rendering
-const COUNTRY_ORDER = ['NO','SE','DK','FI','EE','LV','LT'];
+// Ordered list for rendering (alphabetical by country name)
+const COUNTRY_ORDER = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE'];
 
 // Status badge styles
 const PPWR_STATUS_STYLE = {
@@ -2287,11 +2632,14 @@ function renderCountryCards() {
         <strong style="color:var(--sg-red)">Company A Action:</strong> ${c.caAction}
       </div>`;
 
+    const inCompare = compareSet.has(code);
     return `
       <div class="country-card" id="cc-${code.toLowerCase()}" onclick="toggleCountry('${code.toLowerCase()}')"
-           style="position:relative${highlight === 'required' ? ';border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.15)' : highlight === 'check' ? ';border-color:#d97706' : ''}">
+           style="position:relative${highlight === 'required' ? ';border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.15)' : highlight === 'check' ? ';border-color:#d97706' : inCompare ? ';border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15)' : ''}">
         ${hlBadge}
-        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <button onclick="event.stopPropagation();toggleCompare('${code}')" title="${inCompare ? 'Remove from compare' : 'Add to compare'}"
+          style="position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;border:1.5px solid ${inCompare ? '#7c3aed' : 'var(--border)'};background:${inCompare ? '#7c3aed' : 'white'};color:${inCompare ? 'white' : 'var(--muted)'};font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:'DM Sans',sans-serif;font-weight:700;line-height:1">+</button>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;padding-right:28px">
           <div>
             <div class="country-flag">${c.flag}</div>
             <div class="country-name">${c.name}</div>
@@ -2348,19 +2696,133 @@ function clearSimHighlights() {
   if (banner) banner.style.display = 'none';
 }
 
+// ── COUNTRY COMPARISON ────────────────────────────────────────────────────
+let compareSet = new Set();
+
+function toggleCompare(code) {
+  if (compareSet.has(code)) { compareSet.delete(code); } else { compareSet.add(code); }
+  renderCountryCards();
+  updateComparePanel();
+}
+
+function clearCompare() {
+  compareSet.clear();
+  renderCountryCards();
+  updateComparePanel();
+}
+
+function updateComparePanel() {
+  const panel = document.getElementById('compare-panel');
+  const chips = document.getElementById('compare-chips');
+  const table = document.getElementById('compare-table');
+  if (!panel) return;
+  const codes = [...compareSet];
+  panel.style.display = codes.length >= 1 ? 'block' : 'none';
+  if (chips) chips.innerHTML = codes.map(code => {
+    const c = COUNTRY_CONFIG[code];
+    return `<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:#ede9fe;border-radius:20px;font-size:12px;font-weight:600;color:#7c3aed">
+      ${c.flag} ${c.name}
+      <button onclick="toggleCompare('${code}')" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:14px;padding:0;line-height:1">×</button>
+    </span>`;
+  }).join('');
+  if (table) table.innerHTML = '';
+}
+
+function renderCompare() {
+  const codes = [...compareSet];
+  if (codes.length < 2) { alert('Select at least 2 countries to compare.'); return; }
+  const table = document.getElementById('compare-table');
+  if (!table) return;
+  const rows = [
+    ['', ...codes.map(c => `<strong>${COUNTRY_CONFIG[c].flag} ${COUNTRY_CONFIG[c].name}</strong>`)],
+    ['Membership', ...codes.map(c => COUNTRY_CONFIG[c].membership === 'EEA' ? '<span style="color:#d97706">EEA (Norway)</span>' : '🇪🇺 EU Member')],
+    ['PPWR Status', ...codes.map(c => `<span style="font-size:11px">${COUNTRY_CONFIG[c].ppwrStatusLabel}</span>`)],
+    ['EPR Scheme', ...codes.map(c => COUNTRY_CONFIG[c].eprSchemes.join('<br>'))],
+    ['Regulator', ...codes.map(c => COUNTRY_CONFIG[c].regulator)],
+    ['Enforcement', ...codes.map(c => {
+      const lvl = COUNTRY_CONFIG[c].enforcement;
+      const col = lvl === 'high' ? '#dc2626' : lvl === 'medium' ? '#d97706' : '#0369a1';
+      return `<span style="font-weight:700;color:${col}">${lvl.toUpperCase()}</span>`;
+    })],
+    ['Deposit System', ...codes.map(c => COUNTRY_CONFIG[c].depositSystem ? '✅ Yes' : '—')],
+    ['Language(s)', ...codes.map(c => COUNTRY_CONFIG[c].languageLabel)],
+    ['Registration', ...codes.map(c => `<span style="font-size:11px">${COUNTRY_CONFIG[c].registrationThreshold}</span>`)],
+  ];
+  const colW = `${Math.floor(80 / codes.length)}%`;
+  table.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">` +
+    rows.map((row, i) => `<tr style="background:${i % 2 === 0 ? 'var(--cream)' : 'white'}">` +
+      row.map((cell, j) => `<td style="padding:8px 10px;border:1px solid var(--border);${j === 0 ? 'font-weight:600;width:18%;white-space:nowrap' : `width:${colW}`}">${cell}</td>`).join('') +
+    '</tr>').join('') + '</table>';
+}
+
+let _cfActive = 'all';
+function filterCountryCards(enforcement) {
+  if (enforcement !== undefined) _cfActive = enforcement;
+  const query = (document.getElementById('country-search')?.value || '').toLowerCase();
+  const grid = document.getElementById('country-grid-dynamic');
+  if (!grid) return;
+  let visible = 0;
+  COUNTRY_ORDER.forEach(code => {
+    const card = document.getElementById('cc-' + code.toLowerCase());
+    if (!card) return;
+    const c = COUNTRY_CONFIG[code];
+    const matchesSearch = !query ||
+      c.name.toLowerCase().includes(query) ||
+      (c.eprSchemes || []).join(' ').toLowerCase().includes(query) ||
+      c.regulator.toLowerCase().includes(query);
+    const matchesFilter =
+      _cfActive === 'all' ||
+      (_cfActive === 'deposit' ? c.depositSystem : c.enforcement === _cfActive);
+    const show = matchesSearch && matchesFilter;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById('country-count');
+  if (countEl) countEl.textContent = visible + ' countr' + (visible === 1 ? 'y' : 'ies');
+  ['all','high','medium','low','deposit'].forEach(k => {
+    const btn = document.getElementById('cf-' + (k === 'medium' ? 'med' : k === 'deposit' ? 'dep' : k));
+    if (!btn) return;
+    const active = _cfActive === k;
+    btn.style.background = active ? 'var(--ink)' : 'white';
+    btn.style.color = active ? 'white' :
+      k === 'high' ? '#dc2626' : k === 'medium' ? '#d97706' :
+      k === 'low' ? '#0369a1' : 'var(--ink)';
+  });
+}
+
 
 const COUNTRY_DATA = {
-  SE: { name:'Sweden',       flag:'🇸🇪', epr:'FTI Förpackningsinsamlingen',   regulator:'Naturvårdsverket',       enforcement:'high',    eea:false, eu:true  },
-  NO: { name:'Norway',       flag:'🇳🇴', epr:'Grønt Punkt Norge',             regulator:'Miljødirektoratet',      enforcement:'high',    eea:true,  eu:false },
-  DK: { name:'Denmark',      flag:'🇩🇰', epr:'DPA-System',                    regulator:'Miljøstyrelsen',         enforcement:'high',    eea:false, eu:true  },
-  FI: { name:'Finland',      flag:'🇫🇮', epr:'RINKI',                         regulator:'Syke',                   enforcement:'high',    eea:false, eu:true  },
-  EE: { name:'Estonia',      flag:'🇪🇪', epr:'Eesti Pandipakend / ETT',       regulator:'Keskkonnaamet',          enforcement:'medium',  eea:false, eu:true  },
-  LV: { name:'Latvia',       flag:'🇱🇻', epr:'Latvijas Zaļais punkts',        regulator:'VSIA LVĢMC',             enforcement:'medium',  eea:false, eu:true  },
-  LT: { name:'Lithuania',    flag:'🇱🇹', epr:'Žaliasis taškas',               regulator:'AAA',                    enforcement:'medium',  eea:false, eu:true  },
-  'OTHER-EU':  { name:'Other EU country',  flag:'🇪🇺', epr:'National scheme', regulator:'National authority',    enforcement:'varies',  eea:false, eu:true  },
-  'NON-EU':    { name:'Non-EU country',    flag:'🌍', epr:'N/A',              regulator:'N/A',                    enforcement:'n/a',     eea:false, eu:false },
+  AT: { name:'Austria',        flag:'🇦🇹', epr:'ARA (Austria Recycling)',      regulator:'BMK',                    enforcement:'medium',  eea:false, eu:true  },
+  BE: { name:'Belgium',        flag:'🇧🇪', epr:'Fost Plus / Val-I-Pac',        regulator:'OVAM / SPW',             enforcement:'medium',  eea:false, eu:true  },
+  BG: { name:'Bulgaria',       flag:'🇧🇬', epr:'Ecobulpack',                   regulator:'MOEW',                   enforcement:'low',     eea:false, eu:true  },
+  HR: { name:'Croatia',        flag:'🇭🇷', epr:'HAOP',                         regulator:'HAOP',                   enforcement:'low',     eea:false, eu:true  },
+  CY: { name:'Cyprus',         flag:'🇨🇾', epr:'Green Dot Cyprus',             regulator:'Dept of Environment',    enforcement:'low',     eea:false, eu:true  },
+  CZ: { name:'Czech Republic', flag:'🇨🇿', epr:'EKO-KOM',                      regulator:'ČEI',                    enforcement:'medium',  eea:false, eu:true  },
+  DK: { name:'Denmark',        flag:'🇩🇰', epr:'DPA-System',                   regulator:'Miljøstyrelsen',         enforcement:'high',    eea:false, eu:true  },
+  EE: { name:'Estonia',        flag:'🇪🇪', epr:'Eesti Pandipakend / ETT',      regulator:'Keskkonnaamet',          enforcement:'medium',  eea:false, eu:true  },
+  FI: { name:'Finland',        flag:'🇫🇮', epr:'RINKI',                        regulator:'Syke',                   enforcement:'high',    eea:false, eu:true  },
+  FR: { name:'France',         flag:'🇫🇷', epr:'CITEO',                        regulator:'ADEME',                  enforcement:'medium',  eea:false, eu:true  },
+  DE: { name:'Germany',        flag:'🇩🇪', epr:'Dual System / LUCID',          regulator:'ZSVR / UBA',             enforcement:'high',    eea:false, eu:true  },
+  GR: { name:'Greece',         flag:'🇬🇷', epr:'EOAN',                         regulator:'EOAN',                   enforcement:'low',     eea:false, eu:true  },
+  HU: { name:'Hungary',        flag:'🇭🇺', epr:'MOHU',                         regulator:'Ministry of Energy',     enforcement:'medium',  eea:false, eu:true  },
+  IE: { name:'Ireland',        flag:'🇮🇪', epr:'Repak',                        regulator:'EPA',                    enforcement:'medium',  eea:false, eu:true  },
+  IT: { name:'Italy',          flag:'🇮🇹', epr:'CONAI',                        regulator:'MASE / ISPRA',           enforcement:'medium',  eea:false, eu:true  },
+  LV: { name:'Latvia',         flag:'🇱🇻', epr:'Latvijas Zaļais punkts',       regulator:'VSIA LVĢMC',             enforcement:'medium',  eea:false, eu:true  },
+  LT: { name:'Lithuania',      flag:'🇱🇹', epr:'Žaliasis taškas',              regulator:'AAA',                    enforcement:'medium',  eea:false, eu:true  },
+  LU: { name:'Luxembourg',     flag:'🇱🇺', epr:'Valorlux',                     regulator:"Admin. de l'env.",       enforcement:'low',     eea:false, eu:true  },
+  MT: { name:'Malta',          flag:'🇲🇹', epr:'GreenPak',                     regulator:'ERA',                    enforcement:'low',     eea:false, eu:true  },
+  NL: { name:'Netherlands',    flag:'🇳🇱', epr:'Afvalfonds Verpakkingen',      regulator:'ILT / NVWA',             enforcement:'medium',  eea:false, eu:true  },
+  NO: { name:'Norway',         flag:'🇳🇴', epr:'Grønt Punkt Norge',            regulator:'Miljødirektoratet',      enforcement:'high',    eea:true,  eu:false },
+  PL: { name:'Poland',         flag:'🇵🇱', epr:'BDO',                          regulator:'GIOŚ',                   enforcement:'medium',  eea:false, eu:true  },
+  PT: { name:'Portugal',       flag:'🇵🇹', epr:'Sociedade Ponto Verde',        regulator:'APA',                    enforcement:'medium',  eea:false, eu:true  },
+  RO: { name:'Romania',        flag:'🇷🇴', epr:'ARAM / RetuRO',                regulator:'ANPM',                   enforcement:'low',     eea:false, eu:true  },
+  SK: { name:'Slovakia',       flag:'🇸🇰', epr:'NATUR-PACK',                   regulator:'SIŽP',                   enforcement:'medium',  eea:false, eu:true  },
+  SI: { name:'Slovenia',       flag:'🇸🇮', epr:'Slopak',                       regulator:'ARSO',                   enforcement:'medium',  eea:false, eu:true  },
+  ES: { name:'Spain',          flag:'🇪🇸', epr:'Ecoembes',                     regulator:'MITECO',                 enforcement:'medium',  eea:false, eu:true  },
+  SE: { name:'Sweden',         flag:'🇸🇪', epr:'FTI Förpackningsinsamlingen',  regulator:'Naturvårdsverket',       enforcement:'high',    eea:false, eu:true  },
+  'NON-EU': { name:'Non-EU country', flag:'🌍', epr:'N/A', regulator:'N/A', enforcement:'n/a', eea:false, eu:false },
 };
-const CLUSTER = ['SE','NO','DK','FI','EE','LV','LT'];
+const CLUSTER = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE'];
 
 // ── LAYER 1: ROLE RESOLUTION ───────────────────────────────────────────────
 // Rules evaluated top-to-bottom; first matching rule wins per role type.
@@ -2395,7 +2857,7 @@ const ROLE_RULES = [
       if (s.relabel === 'relabel') reasons.push('CA re-labels the packaging');
       if (s.relabel === 'repack') reasons.push('CA re-packs into new packaging');
       if (s.relabel === 'modify') reasons.push('CA modifies the packaging');
-      return `CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because ${reasons.join(' and ')} — even though physical production is by a sister company outside the cluster. As the entity placing goods under its own name on the ${c} market, CA is also the <strong>EPR Producer</strong> in ${c}. CA is the <strong>Importer</strong> because goods cross into the cluster from outside.`;
+      return `CA is classified as <strong>Manufacturer</strong> under PPWR Art. 3(11) because ${reasons.join(' and ')} — even though physical production is by a sister company. As the entity placing goods under its own name on the ${c} market, CA is also the <strong>EPR Producer</strong> in ${c}. CA is the <strong>Importer</strong> because goods originate from outside ${c}.`;
     }
   },
 
@@ -2477,13 +2939,34 @@ const TARGET_LOOKUP = {
 
 // ── EPR_SCHEME_INFO ───────────────────────────────────────────────────────
 const EPR_SCHEME_INFO = {
-  SE: { scheme: 'FTI Förpackningsinsamlingen', regulator: 'Naturvårdsverket', threshold: '> 1 tonne/yr', deadline: '12 Aug 2026' },
-  NO: { scheme: 'Grønt Punkt Norge', regulator: 'Miljødirektoratet', threshold: 'No minimum threshold', deadline: 'After EEA incorporation (~2026–2027)' },
+  AT: { scheme: 'ARA (Austria Recycling)', regulator: 'BMK', threshold: 'All producers', deadline: '12 Aug 2026' },
+  BE: { scheme: 'Fost Plus (B2C) / Val-I-Pac (B2B)', regulator: 'OVAM / SPW', threshold: 'All producers', deadline: '12 Aug 2026' },
+  BG: { scheme: 'Ecobulpack', regulator: 'MOEW', threshold: 'Register proactively', deadline: '12 Aug 2026' },
+  HR: { scheme: 'HAOP', regulator: 'HAOP', threshold: 'All producers', deadline: '12 Aug 2026' },
+  CY: { scheme: 'Green Dot Cyprus', regulator: 'Department of Environment', threshold: 'All producers', deadline: '12 Aug 2026' },
+  CZ: { scheme: 'EKO-KOM', regulator: 'Czech Environmental Inspectorate (ČEI)', threshold: 'All producers', deadline: '12 Aug 2026' },
   DK: { scheme: 'DPA-System', regulator: 'Miljøstyrelsen', threshold: 'All producers', deadline: '12 Aug 2026' },
-  FI: { scheme: 'RINKI (Suomen Pakkauskierrätys)', regulator: 'Syke', threshold: '> 1 tonne/yr', deadline: '12 Aug 2026' },
   EE: { scheme: 'ETT (Eesti Taaskasutusorganisatsioon)', regulator: 'Keskkonnaamet', threshold: 'Register proactively', deadline: '12 Aug 2026' },
+  FI: { scheme: 'RINKI (Suomen Pakkauskierrätys)', regulator: 'Syke', threshold: '> 1 tonne/yr', deadline: '12 Aug 2026' },
+  FR: { scheme: 'CITEO', regulator: 'ADEME / DREAL', threshold: 'All producers', deadline: '12 Aug 2026' },
+  DE: { scheme: 'Duales System / LUCID', regulator: 'ZSVR / UBA', threshold: 'No minimum — mandatory for all', deadline: '12 Aug 2026' },
+  GR: { scheme: 'EOAN', regulator: 'EOAN', threshold: 'All producers', deadline: '12 Aug 2026' },
+  HU: { scheme: 'MOHU', regulator: 'Ministry of Energy', threshold: 'All producers', deadline: '12 Aug 2026' },
+  IE: { scheme: 'Repak', regulator: 'EPA', threshold: '≥ 10 tonnes/yr or turnover > €1M', deadline: '12 Aug 2026' },
+  IT: { scheme: 'CONAI', regulator: 'MASE / ISPRA', threshold: 'All producers', deadline: '12 Aug 2026' },
   LV: { scheme: 'Latvijas Zaļais punkts (LZP)', regulator: 'VSIA LVĢMC', threshold: 'All producers', deadline: '12 Aug 2026' },
   LT: { scheme: 'Žaliasis taškas', regulator: 'AAA (Aplinkos apsaugos agentūra)', threshold: 'All producers', deadline: '12 Aug 2026' },
+  LU: { scheme: 'Valorlux / SuperDrecksKëscht', regulator: "Administration de l'environnement", threshold: 'All producers', deadline: '12 Aug 2026' },
+  MT: { scheme: 'GreenPak', regulator: 'ERA', threshold: 'All producers', deadline: '12 Aug 2026' },
+  NL: { scheme: 'Afvalfonds Verpakkingen', regulator: 'ILT / NVWA', threshold: 'Low threshold', deadline: '12 Aug 2026' },
+  NO: { scheme: 'Grønt Punkt Norge', regulator: 'Miljødirektoratet', threshold: 'No minimum threshold', deadline: 'After EEA incorporation (~2026–2027)' },
+  PL: { scheme: 'BDO (national register)', regulator: 'GIOŚ', threshold: 'Mandatory registration', deadline: '12 Aug 2026' },
+  PT: { scheme: 'Sociedade Ponto Verde (SPV)', regulator: 'APA', threshold: 'All producers', deadline: '12 Aug 2026' },
+  RO: { scheme: 'ARAM / RetuRO', regulator: 'ANPM', threshold: 'Register proactively', deadline: '12 Aug 2026' },
+  SK: { scheme: 'NATUR-PACK / RecyKLub', regulator: 'SIŽP', threshold: 'All producers', deadline: '12 Aug 2026' },
+  SI: { scheme: 'Slopak', regulator: 'ARSO', threshold: 'All producers', deadline: '12 Aug 2026' },
+  ES: { scheme: 'Ecoembes', regulator: 'MITECO', threshold: 'All producers', deadline: '12 Aug 2026' },
+  SE: { scheme: 'FTI Förpackningsinsamlingen', regulator: 'Naturvårdsverket', threshold: '> 1 tonne/yr', deadline: '12 Aug 2026' },
 };;
 
 // ── Target helper functions ───────────────────────────────────────────────
@@ -2516,7 +2999,7 @@ const OBLIGATION_DB = [
     deadline: 2025,
     severity: 'critical',
     title: 'EPR Registration — required in each country where you place packaging on the market',
-    detail: 'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale — not at year-end. Most EU Member States require registration by 12 August 2026 at the latest. Non-registration is the highest-penalty violation across all 7 cluster markets. Use EPR_SCHEME_INFO for per-country scheme names and contacts.',
+    detail: 'PPWR Art. 44: register with the competent authority or approved EPR scheme in every Member State where you make your first sale. Registration must be in place before the first sale — not at year-end. Most EU Member States require registration by 12 August 2026 at the latest. Non-registration is the highest-penalty violation across EU markets. Use EPR_SCHEME_INFO for per-country scheme names and contacts.',
     article: 'Art. 44',
     injectCountry: true,  // flag: runSimulation will append country-specific rows
   },
@@ -2614,7 +3097,7 @@ const OBLIGATION_DB = [
     deadline: 2025,
     severity: 'high',
     title: 'Recycled content: ≥25% in plastic beverage bottles NOW (→30% 2030, →65% 2040)',
-    detail: 'PPWR Annex II: PET and HDPE plastic bottles for beverages must already contain 25% recycled plastic (this target was set under earlier EU legislation and is carried forward in PPWR). From 2030, this rises to 30%; from 2035 to 40%; from 2040 to 65%. Depot return systems in Norway, Estonia and Denmark typically cover these formats.',
+    detail: 'PPWR Annex II: PET and HDPE plastic bottles for beverages must already contain 25% recycled plastic (this target was set under earlier EU legislation and is carried forward in PPWR). From 2030, this rises to 30%; from 2035 to 40%; from 2040 to 65%. Deposit return systems exist in several EU/EEA countries (e.g. Norway, Germany, Ireland, Denmark, Estonia, Croatia, Romania) and typically cover these formats.',
     article: 'Art. 7, Annex II',
     threshold: { pct: 25, year: 2025, category: 'beverage plastic bottles', escalates: [{year:2030,pct:30},{year:2035,pct:40},{year:2040,pct:65}] },
   },
@@ -2670,7 +3153,7 @@ const OBLIGATION_DB = [
     deadline: 2028,
     severity: 'high',
     title: 'Harmonised sorting labels — mandatory on all sales and grouped packaging by 2028',
-    detail: 'PPWR Art. 12: from 2028, all sales and grouped packaging must carry harmonised EU sorting labels showing the packaging material and disposal route. Labels must be in the official language(s) of the country of sale — a Swedish label is not valid in Lithuania or Estonia. For own-manufactured products, this requires label redesign across the entire product range with per-market language variants. Start the label programme now — 2028 is close.',
+    detail: 'PPWR Art. 12: from 2028, all sales and grouped packaging must carry harmonised EU sorting labels showing the packaging material and disposal route. Labels must be in the official language(s) of the country of sale — a label in one language is not valid in a country with a different official language (e.g. English labels are insufficient for French, German, or Polish markets). For own-manufactured products, this requires label redesign across the entire product range with per-market language variants. Start the label programme now — 2028 is close.',
     article: 'Art. 12',
   },
   {
@@ -2817,18 +3300,29 @@ function resolveObligations(roles, pkgType, country, yearFilter) {
   });
 }
 
+// ── ALL EU/EEA COUNTRY OPTIONS (shared across scenario dropdowns) ──────────
+const EU_COUNTRY_OPTIONS = [
+  {v:'AT',l:'🇦🇹 Austria'},    {v:'BE',l:'🇧🇪 Belgium'},     {v:'BG',l:'🇧🇬 Bulgaria'},
+  {v:'HR',l:'🇭🇷 Croatia'},    {v:'CY',l:'🇨🇾 Cyprus'},      {v:'CZ',l:'🇨🇿 Czech Republic'},
+  {v:'DK',l:'🇩🇰 Denmark'},    {v:'EE',l:'🇪🇪 Estonia'},     {v:'FI',l:'🇫🇮 Finland'},
+  {v:'FR',l:'🇫🇷 France'},     {v:'DE',l:'🇩🇪 Germany'},     {v:'GR',l:'🇬🇷 Greece'},
+  {v:'HU',l:'🇭🇺 Hungary'},    {v:'IE',l:'🇮🇪 Ireland'},     {v:'IT',l:'🇮🇹 Italy'},
+  {v:'LV',l:'🇱🇻 Latvia'},     {v:'LT',l:'🇱🇹 Lithuania'},   {v:'LU',l:'🇱🇺 Luxembourg'},
+  {v:'MT',l:'🇲🇹 Malta'},      {v:'NL',l:'🇳🇱 Netherlands'}, {v:'NO',l:'🇳🇴 Norway (EEA)'},
+  {v:'PL',l:'🇵🇱 Poland'},     {v:'PT',l:'🇵🇹 Portugal'},    {v:'RO',l:'🇷🇴 Romania'},
+  {v:'SK',l:'🇸🇰 Slovakia'},   {v:'SI',l:'🇸🇮 Slovenia'},    {v:'ES',l:'🇪🇸 Spain'},
+  {v:'SE',l:'🇸🇪 Sweden'},
+];
+
 // ── SCENARIO CONFIG: Step 2 form fields per scenario ──────────────────────
 const SCENARIO_FIELDS = {
   'own': {
     heading: 'Step 2 — Configure your manufacturing flow:',
     fields: [
-      { id:'own-mfgcountry', label:'Manufacturing Country', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'own-mfgcountry', label:'Manufacturing Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'own-sellto', label:'Where do you sell?', type:'select', options:[
-        {v:'same',l:'Same country as manufacturing'},{v:'other-cluster',l:'Other cluster countries'},
-        {v:'both',l:'Both — domestic + other cluster'}
+        {v:'same',l:'Same country as manufacturing'},{v:'other-cluster',l:'Other EU/EEA countries'},
+        {v:'both',l:'Both — domestic + other EU/EEA countries'}
       ]},
       { id:'own-pkgtype', label:'Packaging Type', type:'select', options:[
         {v:'sales',l:'Sales / Consumer'},{v:'grouped',l:'Grouped / Secondary'},
@@ -2853,14 +3347,8 @@ const SCENARIO_FIELDS = {
   0: {
     heading: 'Step 2 — Configure the import from sister company:',
     fields: [
-      { id:'imp-origin', label:'Sister Company Country', type:'select', options:[
-        {v:'FR',l:'🇫🇷 France'},{v:'DE',l:'🇩🇪 Germany'},{v:'UK',l:'🇬🇧 UK'},
-        {v:'ES',l:'🇪🇸 Spain'},{v:'IT',l:'🇮🇹 Italy'},{v:'PL',l:'🇵🇱 Poland'},{v:'OTHER',l:'Other EU country'}
-      ]},
-      { id:'imp-dest', label:'Receiving Cluster Country', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'imp-origin', label:'Sister Company Country', type:'select', options: EU_COUNTRY_OPTIONS },
+      { id:'imp-dest', label:'Receiving Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'imp-brand', label:'Brand on packaging', type:'select', options:[
         {v:'sg-brand',l:'CA brand'},{v:'supplier-brand',l:"Sister company's brand"},
         {v:'customer-brand',l:"Customer's brand"},{v:'white-label',l:'White label / no brand'}
@@ -2889,16 +3377,10 @@ const SCENARIO_FIELDS = {
   },
 
   1: {
-    heading: 'Step 2 — Configure the intra-cluster transfer:',
+    heading: 'Step 2 — Configure the cross-border transfer:',
     fields: [
-      { id:'ic-origin', label:'Sending Cluster Country', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
-      { id:'ic-dest', label:'Receiving Country', type:'select', options:[
-        {v:'NO',l:'🇳🇴 Norway'},{v:'SE',l:'🇸🇪 Sweden'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'ic-origin', label:'Sending Country', type:'select', options: EU_COUNTRY_OPTIONS },
+      { id:'ic-dest', label:'Receiving Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'ic-brand', label:'Brand on packaging', type:'select', options:[
         {v:'sg-brand',l:'CA brand'},{v:'supplier-brand',l:'Original supplier brand'},
         {v:'customer-brand',l:"Customer's brand"}
@@ -2930,12 +3412,9 @@ const SCENARIO_FIELDS = {
     heading: 'Step 2 — Configure the 3rd party direct ship:',
     fields: [
       { id:'ds-supplier', label:'Supplier Location', type:'select', options:[
-        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU (outside cluster)'}
+        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU supplier'}
       ]},
-      { id:'ds-dest', label:"Customer's Country", type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'ds-dest', label:"Customer's Country", type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'ds-brand', label:'Brand on packaging', type:'select', options:[
         {v:'sg-brand',l:'CA brand'},{v:'supplier-brand',l:"Supplier's brand"},
         {v:'customer-brand',l:"Customer's brand"},{v:'white-label',l:'White label'}
@@ -2967,12 +3446,9 @@ const SCENARIO_FIELDS = {
     heading: 'Step 2 — Configure the 3rd party via CA warehouse:',
     fields: [
       { id:'wh-supplier', label:'Supplier Location', type:'select', options:[
-        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU (outside cluster)'}
+        {v:'3p-non-eu',l:'Non-EU (China, Turkey, India…)'},{v:'3p-eu',l:'EU supplier'}
       ]},
-      { id:'wh-country', label:'CA Warehouse Country', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'wh-country', label:'CA Warehouse Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'wh-brand', label:'Brand on packaging', type:'select', options:[
         {v:'sg-brand',l:'CA brand'},{v:'supplier-brand',l:"Supplier's brand"},
         {v:'white-label',l:'White label'}
@@ -2982,8 +3458,8 @@ const SCENARIO_FIELDS = {
         {v:'repack',l:'Re-packs in warehouse'}
       ]},
       { id:'wh-sellto', label:'Markets served from warehouse', type:'select', options:[
-        {v:'same',l:'Same country only'},{v:'multi',l:'Multiple cluster countries'},
-        {v:'outside',l:'Outside cluster as well'}
+        {v:'same',l:'Same country only'},{v:'multi',l:'Multiple EU/EEA countries'},
+        {v:'outside',l:'Non-EU countries as well'}
       ]},
       { id:'wh-pkgtype', label:'Packaging Type', type:'select', options:[
         {v:'sales',l:'Sales / Consumer'},{v:'grouped',l:'Grouped / Secondary'},
@@ -3004,20 +3480,17 @@ const SCENARIO_FIELDS = {
         pkgType: document.getElementById('wh-pkgtype')?.value || 'all',
         yearFilter: parseInt(document.getElementById('wh-yearfilter')?.value || '2030'),
         additionalMarkets: sellTo === 'multi' ? CLUSTER.filter(c => c !== whCountry) :
-                           sellTo === 'outside' ? [...CLUSTER.filter(c => c !== whCountry), 'OTHER-EU'] : []
+                           sellTo === 'outside' ? CLUSTER.filter(c => c !== whCountry) : []
       };
     }
   },
 
   4: {
-    heading: 'Step 2 — Configure the export outside cluster:',
+    heading: 'Step 2 — Configure the export outside the EU/EEA:',
     fields: [
-      { id:'ex-origin', label:'Exporting Cluster Country', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'ex-origin', label:'Exporting Country', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'ex-dest', label:'Destination', type:'select', options:[
-        {v:'OTHER-EU',l:'EU country (outside cluster)'},{v:'NON-EU',l:'Non-EU country'}
+        {v:'NON-EU',l:'Non-EU country (UK, Switzerland, USA…)'}
       ]},
       { id:'ex-incoterms', label:'Incoterms', type:'select', options:[
         {v:'exw-fca',l:'EXW / FCA — buyer collects'},{v:'dap',l:'DAP — delivered, buyer clears'},
@@ -3039,7 +3512,7 @@ const SCENARIO_FIELDS = {
       pkgType: document.getElementById('ex-pkgtype')?.value || 'all',
       yearFilter: parseInt(document.getElementById('ex-yearfilter')?.value || '2030'),
       additionalMarkets: [],
-      exportDest: document.getElementById('ex-dest')?.value || 'OTHER-EU',
+      exportDest: document.getElementById('ex-dest')?.value || 'NON-EU',
       incoterms: document.getElementById('ex-incoterms')?.value || 'exw-fca'
     })
   },
@@ -3047,17 +3520,14 @@ const SCENARIO_FIELDS = {
   5: {
     heading: 'Step 2 — Configure the transport packaging return flow:',
     fields: [
-      { id:'tp-country', label:'Country of Operation', type:'select', options:[
-        {v:'SE',l:'🇸🇪 Sweden'},{v:'NO',l:'🇳🇴 Norway'},{v:'DK',l:'🇩🇰 Denmark'},
-        {v:'FI',l:'🇫🇮 Finland'},{v:'EE',l:'🇪🇪 Estonia'},{v:'LV',l:'🇱🇻 Latvia'},{v:'LT',l:'🇱🇹 Lithuania'}
-      ]},
+      { id:'tp-country', label:'Country of Operation', type:'select', options: EU_COUNTRY_OPTIONS },
       { id:'tp-current', label:'Current packaging mix', type:'select', options:[
         {v:'one-way',l:'One-way only (all single-trip)'},{v:'mixed',l:'Mix of one-way and reusable'},
         {v:'mostly-reusable',l:'Mostly reusable (pooled pallets etc.)'}
       ]},
       { id:'tp-crossborder', label:'Cross-border flows?', type:'select', options:[
-        {v:'domestic',l:'Domestic only'},{v:'cross-cluster',l:'Cross-cluster (multiple countries)'},
-        {v:'outside',l:'Into / out of cluster as well'}
+        {v:'domestic',l:'Domestic only'},{v:'cross-cluster',l:'Cross-border EU/EEA (multiple countries)'},
+        {v:'outside',l:'Into / out of EU as well'}
       ]},
       { id:'tp-yearfilter', label:'Show obligations by', type:'select', options:[
         {v:'2025',l:'Active now'},{v:'2028',l:'By 2028'},{v:'2030',l:'By 2030 ★'},{v:'2040',l:'Full picture'}
@@ -3208,7 +3678,7 @@ function runSimulation() {
       deadline: 2025,
       title: `Incoterms: ${inputs.incoterms.toUpperCase()} — ${inputs.incoterms === 'ddp' ? 'CA retains importer-of-record status in destination country' : inputs.incoterms === 'dap' ? 'Verify whether CA is importer of record in destination' : 'EPR obligation passes to buyer at point of collection'}`,
       detail: inputs.incoterms === 'ddp'
-        ? `Under DDP, CA remains the importer of record in the destination country and carries EPR Producer obligations there. This requires EPR registration in the destination country — not just the exporting cluster country.`
+        ? `Under DDP, CA remains the importer of record in the destination country and carries EPR Producer obligations there. This requires EPR registration in the destination country — not just the exporting country.`
         : inputs.incoterms === 'dap'
         ? `Under DAP, CA delivers to the named place but customs clearance is done by the buyer. Whether CA is the importer of record depends on specific contractual and customs arrangements. Legal must confirm this for each destination country.`
         : `Under EXW/FCA, the buyer takes responsibility from the point of collection. EPR obligations in the destination country fall to the buyer/importer there. CA must document the export to exclude these volumes from its domestic EPR report.`,
@@ -3282,6 +3752,342 @@ function runSimulation() {
 //   PENALTY_BANDS        — strictness × severity × scale → band + range
 
 const COUNTRY_ENFORCEMENT = {
+  AT: {
+    name: 'Austria', flag: '🇦🇹', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'BMK / Landesbehörden',
+    approach: 'Moderate. Austria enforces packaging EPR through a mix of federal (BMK) and state (Länder) authorities. Enforcement has historically focused on registration and reporting compliance rather than aggressive penalties. PPWR implementation is expected to increase regulatory activity.',
+    priorities: ['ARA registration', 'Accurate tonnage reporting', 'Recyclability grade documentation'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'epr-underreport':  { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–100k'  },
+      'recycled-content': { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+      'labelling':        { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'reuse-target':     { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–250k'  },
+      'prohibited-pkg':   { iso:'€2k–15k',    per:'€15k–80k',   sys:'€80k–300k'  },
+      'grade-de':         { iso:'€2k–15k',    per:'€15k–80k',   sys:'€80k–300k'  },
+    }
+  },
+  BE: {
+    name: 'Belgium', flag: '🇧🇪', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'OVAM / SPW / Bruxelles Environnement',
+    approach: 'Active. Belgium has a tri-regional enforcement structure (Flanders: OVAM; Wallonia: SPW; Brussels: Bruxelles Environnement). EPR compliance is well-monitored through Fost Plus and Val-I-Pac data. Enforcement is process-oriented — penalties for systematic failures rather than isolated errors.',
+    priorities: ['Correct stream classification (B2C vs B2B)', 'Fost Plus and Val-I-Pac registration', 'Reporting accuracy across packaging types'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–5k',    per:'€5k–40k',    sys:'€40k–200k'  },
+      'epr-underreport':  { iso:'€300–3k',    per:'€3k–25k',    sys:'€25k–100k'  },
+      'recycled-content': { iso:'€2k–15k',    per:'€15k–80k',   sys:'€80k–300k'  },
+      'labelling':        { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'reuse-target':     { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–250k'  },
+      'prohibited-pkg':   { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–400k' },
+      'grade-de':         { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–400k' },
+    }
+  },
+  BG: {
+    name: 'Bulgaria', flag: '🇧🇬', strictness: 'low', strictnessLabel: 'Low (developing)',
+    body: 'MOEW / RIOSV regional inspectors',
+    approach: "Developing. Bulgaria's enforcement of packaging EPR regulations has been limited historically. MOEW and regional RIOSV inspectors handle enforcement but capacity is constrained. EU Commission monitoring creates indirect pressure — operators should not rely on enforcement gaps.",
+    priorities: ['EPR registration', 'Basic reporting compliance'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–8k',     sys:'€8k–30k'    },
+      'epr-underreport':  { iso:'€50–500',    per:'€500–5k',    sys:'€5k–20k'    },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–50k'   },
+      'labelling':        { iso:'€50–500',    per:'€500–5k',    sys:'€5k–20k'    },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'prohibited-pkg':   { iso:'€500–5k',    per:'€5k–25k',    sys:'€25k–80k'   },
+      'grade-de':         { iso:'€500–5k',    per:'€5k–25k',    sys:'€25k–80k'   },
+    }
+  },
+  HR: {
+    name: 'Croatia', flag: '🇭🇷', strictness: 'low', strictnessLabel: 'Low (developing)',
+    body: 'HAOP / Ministry of Economy',
+    approach: "Developing. Croatia's packaging EPR enforcement is in early stages. HAOP manages both the scheme and regulatory oversight. Beverage deposit system (Povratna naknada) is well-enforced, but broader packaging EPR is less consistently monitored.",
+    priorities: ['EPR registration with HAOP', 'Deposit system compliance for beverages'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–8k',     sys:'€8k–30k'    },
+      'epr-underreport':  { iso:'€50–500',    per:'€500–4k',    sys:'€4k–15k'    },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–12k',    sys:'€12k–50k'   },
+      'labelling':        { iso:'€50–500',    per:'€500–4k',    sys:'€4k–15k'    },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'prohibited-pkg':   { iso:'€500–5k',    per:'€5k–25k',    sys:'€25k–80k'   },
+      'grade-de':         { iso:'€500–5k',    per:'€5k–25k',    sys:'€25k–80k'   },
+    }
+  },
+  CY: {
+    name: 'Cyprus', flag: '🇨🇾', strictness: 'low', strictnessLabel: 'Low (developing)',
+    body: 'Department of Environment',
+    approach: 'Developing. Cyprus is a small market with limited enforcement history on packaging EPR. The Department of Environment is responsible but capacity is constrained. Operators should register with Green Dot Cyprus and maintain basic compliance.',
+    priorities: ['Green Dot Cyprus registration', 'Basic annual reporting'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–5k',     sys:'€5k–20k'    },
+      'epr-underreport':  { iso:'€50–500',    per:'€500–3k',    sys:'€3k–10k'    },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–10k',    sys:'€10k–30k'   },
+      'labelling':        { iso:'€50–500',    per:'€500–3k',    sys:'€3k–10k'    },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–10k',    sys:'€10k–40k'   },
+      'prohibited-pkg':   { iso:'€300–3k',    per:'€3k–15k',    sys:'€15k–50k'   },
+      'grade-de':         { iso:'€300–3k',    per:'€3k–15k',    sys:'€15k–50k'   },
+    }
+  },
+  CZ: {
+    name: 'Czech Republic', flag: '🇨🇿', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'Czech Environmental Inspectorate (ČEI)',
+    approach: 'Active. ČEI has a track record of active inspection and penalty activity for packaging violations. EKO-KOM is well-established and ČEI cross-references registration data. Companies without valid EKO-KOM membership are regularly identified and fined.',
+    priorities: ['EKO-KOM registration', 'Accurate annual declaration', 'Labelling compliance'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'epr-underreport':  { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–100k'  },
+      'recycled-content': { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+      'labelling':        { iso:'€300–3k',    per:'€3k–15k',    sys:'€15k–60k'   },
+      'reuse-target':     { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–250k'  },
+      'prohibited-pkg':   { iso:'€2k–15k',    per:'€15k–80k',   sys:'€80k–300k'  },
+      'grade-de':         { iso:'€2k–15k',    per:'€15k–80k',   sys:'€80k–300k'  },
+    }
+  },
+  DE: {
+    name: 'Germany', flag: '🇩🇪', strictness: 'high', strictnessLabel: 'High',
+    body: 'ZSVR / UBA / Landesbehörden',
+    approach: 'Very strict. Germany is widely considered the most rigorously enforced EPR jurisdiction in the EU. The LUCID registry is cross-referenced by customs and market surveillance authorities. Non-registered producers can have goods seized at the border. The dual system is legally required — operating without it is a statutory violation regardless of whether complaints are received.',
+    priorities: ['LUCID registration (zero tolerance for non-registration)', 'Dual system membership', 'Correct fee declaration by packaging type'],
+    dailyPenalty: false, publicNaming: true, criminalReferral: true, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€1k–20k',    per:'€20k–200k',  sys:'€200k–2M'   },
+      'epr-underreport':  { iso:'€1k–15k',    per:'€15k–100k',  sys:'€100k–1M'   },
+      'recycled-content': { iso:'€5k–50k',    per:'€50k–300k',  sys:'€300k–2M'   },
+      'labelling':        { iso:'€1k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'reuse-target':     { iso:'€5k–50k',    per:'€50k–300k',  sys:'€300k–2M'   },
+      'prohibited-pkg':   { iso:'€10k–100k',  per:'€100k–500k', sys:'€500k–5M'   },
+      'grade-de':         { iso:'€10k–100k',  per:'€100k–500k', sys:'€500k–5M'   },
+    }
+  },
+  ES: {
+    name: 'Spain', flag: '🇪🇸', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'MITECO / CCAA (Autonomous Communities)',
+    approach: "Moderate with regional variation. Spain's packaging enforcement operates through a combination of national MITECO oversight and regional autonomous community (CCAA) implementation. Ecoembes monitors membership compliance. Active enforcement varies significantly by region — Catalonia and Basque Country tend to be more proactive.",
+    priorities: ['Ecoembes registration', 'Correct tonnage declaration', 'Labelling for Spanish market'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–6k',    per:'€6k–40k',    sys:'€40k–200k'  },
+      'epr-underreport':  { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'recycled-content': { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'labelling':        { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'reuse-target':     { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'prohibited-pkg':   { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'grade-de':         { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+    }
+  },
+  RO: {
+    name: 'Romania', flag: '🇷🇴', strictness: 'low', strictnessLabel: 'Low (building)',
+    body: 'ANPM / Garda de Mediu',
+    approach: "Building. Romania's EPR enforcement is developing. ANPM and the Environmental Guard (Garda de Mediu) handle inspections. The RetuRO DRS launched in 2023 and is actively enforced for beverage containers, but broader packaging EPR enforcement is less consistent. Expect increasing activity as PPWR implementation proceeds.",
+    priorities: ['ARAM registration', 'RetuRO compliance for beverage packaging', 'National register entry'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–10k',    sys:'€10k–40k'   },
+      'epr-underreport':  { iso:'€50–500',    per:'€500–5k',    sys:'€5k–20k'    },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'labelling':        { iso:'€50–500',    per:'€500–5k',    sys:'€5k–20k'    },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'prohibited-pkg':   { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–100k'  },
+      'grade-de':         { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–100k'  },
+    }
+  },
+  SK: {
+    name: 'Slovakia', flag: '🇸🇰', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'SIŽP (Slovenská inšpekcia životného prostredia)',
+    approach: "Moderate. Slovakia's SIŽP has a track record of enforcement activity for environmental violations. EPR compliance is monitored through NATUR-PACK and RecyKLub data. Enforcement is systematic for obvious non-compliance. Operators with valid scheme membership are unlikely to face significant action without egregious violations.",
+    priorities: ['NATUR-PACK or equivalent registration', 'Annual declaration accuracy', 'Labelling for Slovak market'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'epr-underreport':  { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'recycled-content': { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'labelling':        { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–50k'   },
+      'reuse-target':     { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'prohibited-pkg':   { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+      'grade-de':         { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+    }
+  },
+  SI: {
+    name: 'Slovenia', flag: '🇸🇮', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'ARSO (Agencija RS za okolje)',
+    approach: "Moderate. Slovenia's ARSO monitors packaging compliance through Slopak data. Enforcement is systematic but proportionate — focused on registration and reporting rather than aggressive penalty pursuit. PPWR expected to increase both scheme activity and regulatory scrutiny.",
+    priorities: ['Slopak registration', 'Annual reporting', 'Labelling for Slovenian market'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'epr-underreport':  { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'recycled-content': { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'labelling':        { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–50k'   },
+      'reuse-target':     { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'prohibited-pkg':   { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+      'grade-de':         { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+    }
+  },
+  LU: {
+    name: 'Luxembourg', flag: '🇱🇺', strictness: 'low', strictnessLabel: 'Low',
+    body: "Administration de l'environnement",
+    approach: "Low enforcement activity. Luxembourg is a very small market. The Administration de l'environnement manages EPR through Valorlux. Enforcement actions are rare due to small market size — but the legal obligation to register and report is the same as in larger member states.",
+    priorities: ['Valorlux registration', 'Annual reporting'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–5k',     sys:'€5k–20k'    },
+      'epr-underreport':  { iso:'€50–500',    per:'€500–3k',    sys:'€3k–10k'    },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–10k',    sys:'€10k–40k'   },
+      'labelling':        { iso:'€50–500',    per:'€500–3k',    sys:'€3k–10k'    },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–10k',    sys:'€10k–40k'   },
+      'prohibited-pkg':   { iso:'€300–3k',    per:'€3k–15k',    sys:'€15k–50k'   },
+      'grade-de':         { iso:'€300–3k',    per:'€3k–15k',    sys:'€15k–50k'   },
+    }
+  },
+  MT: {
+    name: 'Malta', flag: '🇲🇹', strictness: 'low', strictnessLabel: 'Low (developing)',
+    body: 'ERA (Environment and Resources Authority)',
+    approach: 'Developing. Malta is the smallest EU member state with limited enforcement history on packaging EPR. ERA is developing its PPWR implementation capacity. Operators should register with GreenPak and maintain basic compliance.',
+    priorities: ['GreenPak registration', 'Annual reporting'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–1k',    per:'€1k–5k',     sys:'€5k–20k'    },
+      'epr-underreport':  { iso:'€50–300',    per:'€300–2k',    sys:'€2k–8k'     },
+      'recycled-content': { iso:'€200–2k',    per:'€2k–8k',     sys:'€8k–30k'    },
+      'labelling':        { iso:'€50–300',    per:'€300–2k',    sys:'€2k–8k'     },
+      'reuse-target':     { iso:'€200–2k',    per:'€2k–8k',     sys:'€8k–30k'    },
+      'prohibited-pkg':   { iso:'€300–3k',    per:'€3k–12k',    sys:'€12k–40k'   },
+      'grade-de':         { iso:'€300–3k',    per:'€3k–12k',    sys:'€12k–40k'   },
+    }
+  },
+  NL: {
+    name: 'Netherlands', flag: '🇳🇱', strictness: 'medium', strictnessLabel: 'Moderate–High',
+    body: 'ILT (Inspectie Leefomgeving en Transport)',
+    approach: 'Active. The Netherlands has an advanced EPR system with Afvalfonds Verpakkingen and active ILT market surveillance. ILT enforces through a risk-based inspection approach and cross-references Afvalfonds data. Notable for proactive customs integration — non-registered producers importing goods can face market access issues.',
+    priorities: ['Afvalfonds Verpakkingen registration', 'Statiegeld compliance for in-scope containers', 'Accurate material stream declaration'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'epr-underreport':  { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–200k'  },
+      'recycled-content': { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'labelling':        { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'reuse-target':     { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'prohibited-pkg':   { iso:'€3k–30k',    per:'€30k–150k',  sys:'€150k–800k' },
+      'grade-de':         { iso:'€3k–30k',    per:'€30k–150k',  sys:'€150k–800k' },
+    }
+  },
+  PL: {
+    name: 'Poland', flag: '🇵🇱', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'GIOŚ / BDO',
+    approach: "Active. Poland's BDO registry is a state-run system and registration is a direct statutory requirement. GIOŚ (Chief Environmental Inspectorate) conducts regular inspections. Poland is a large market where enforcement capacity is significant. Non-registration in BDO is treated as a direct violation.",
+    priorities: ['BDO registration (mandatory statutory register)', 'Annual EPR declaration', 'Product register accuracy'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–250k'  },
+      'epr-underreport':  { iso:'€300–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'recycled-content': { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'labelling':        { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'reuse-target':     { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'prohibited-pkg':   { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'grade-de':         { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+    }
+  },
+  PT: {
+    name: 'Portugal', flag: '🇵🇹', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'APA / IGAMAOT',
+    approach: 'Moderate. Portugal enforces EPR through APA (national environment agency) and IGAMAOT (inspection body). SPV is the single authorised scheme and feeds compliance data to regulators. Enforcement has increased over recent years — APA actively pursues producers identified as not reporting.',
+    priorities: ['SPV membership', 'Accurate tonnage reporting', 'Labelling for Portuguese market'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€300–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'epr-underreport':  { iso:'€200–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'recycled-content': { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–200k'  },
+      'labelling':        { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'reuse-target':     { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–200k'  },
+      'prohibited-pkg':   { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–250k'  },
+      'grade-de':         { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–250k'  },
+    }
+  },
+  GR: {
+    name: 'Greece', flag: '🇬🇷', strictness: 'low', strictnessLabel: 'Low (developing)',
+    body: 'EOAN / Regional Authorities',
+    approach: 'Developing. Greece has historically been subject to EU infringement proceedings for packaging directive compliance. EOAN is strengthening its enforcement capacity under PPWR. Current enforcement is largely reactive. Operators should not rely on limited enforcement — EU Commission scrutiny applies indirectly.',
+    priorities: ['EOAN registration', 'Basic annual reporting'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€100–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'epr-underreport':  { iso:'€100–1k',    per:'€1k–8k',     sys:'€8k–30k'    },
+      'recycled-content': { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'labelling':        { iso:'€100–1k',    per:'€1k–8k',     sys:'€8k–30k'    },
+      'reuse-target':     { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'prohibited-pkg':   { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'grade-de':         { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+    }
+  },
+  HU: {
+    name: 'Hungary', flag: '🇭🇺', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'MOHU / Environmental Authority',
+    approach: 'Moderate. Hungary reformed its EPR system in 2023 with MOHU as the sole concessionaire. MOHU actively enforces registration requirements as it has a financial interest in coverage. Administrative penalties apply for non-registration and under-reporting.',
+    priorities: ['MOHU registration (sole scheme)', 'Accurate volume declaration', 'Producer registration maintenance'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€300–4k',    per:'€4k–25k',    sys:'€25k–100k'  },
+      'epr-underreport':  { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–60k'   },
+      'recycled-content': { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'labelling':        { iso:'€200–2k',    per:'€2k–15k',    sys:'€15k–50k'   },
+      'reuse-target':     { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–120k'  },
+      'prohibited-pkg':   { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+      'grade-de':         { iso:'€1k–10k',    per:'€10k–50k',   sys:'€50k–200k'  },
+    }
+  },
+  IE: {
+    name: 'Ireland', flag: '🇮🇪', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'EPA (Environmental Protection Agency)',
+    approach: "Moderate. Ireland's EPA monitors Repak membership and compliance through data-sharing with Repak. Enforcement has been process-oriented — the EPA issues improvement notices and escalates to administrative sanctions for systemic non-compliance. Criminal prosecution is available for serious cases.",
+    priorities: ['Repak membership', 'Accurate material tonnage reporting', 'DRS compliance for in-scope packaging'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: true, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–300k'  },
+      'epr-underreport':  { iso:'€300–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'recycled-content': { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–300k'  },
+      'labelling':        { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'reuse-target':     { iso:'€1k–10k',    per:'€10k–60k',   sys:'€60k–300k'  },
+      'prohibited-pkg':   { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'grade-de':         { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+    }
+  },
+  IT: {
+    name: 'Italy', flag: '🇮🇹', strictness: 'medium', strictnessLabel: 'Moderate',
+    body: 'MASE / ISPRA / CONAI',
+    approach: "Moderate. Italy's CONAI system is the backbone of packaging EPR with 6 material-specific sub-consortia. ISPRA and regional environmental agencies (ARPA) monitor compliance. CONAI actively pursues non-members and under-declarants through regular audits. Italy is a large market with significant enforcement activity for major non-compliance.",
+    priorities: ['CONAI membership and correct material classification', 'Accurate declaration per material type', 'Customs compliance for imports'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€500–8k',    per:'€8k–60k',    sys:'€60k–300k'  },
+      'epr-underreport':  { iso:'€300–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'recycled-content': { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'labelling':        { iso:'€300–3k',    per:'€3k–20k',    sys:'€20k–80k'   },
+      'reuse-target':     { iso:'€1k–15k',    per:'€15k–80k',   sys:'€80k–400k'  },
+      'prohibited-pkg':   { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'grade-de':         { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+    }
+  },
+  FR: {
+    name: 'France', flag: '🇫🇷', strictness: 'medium', strictnessLabel: 'Moderate–High',
+    body: 'DREAL / ADEME',
+    approach: 'Active. France has a sophisticated EPR enforcement infrastructure with CITEO feeding compliance data to DREAL inspectors. French EPR enforcement tends to be process-driven — systematic non-compliance triggers escalating administrative sanctions. AGEC law reinforces obligations nationally. France is a significant market where non-compliance is actively detected.',
+    priorities: ['CITEO registration', 'Accurate declaration by material stream', 'Eco-modulated fee compliance'],
+    dailyPenalty: false, publicNaming: false, criminalReferral: false, eea: false,
+    ranges: {
+      'epr-missing':      { iso:'€1k–15k',    per:'€15k–100k',  sys:'€100k–500k' },
+      'epr-underreport':  { iso:'€500–8k',    per:'€8k–50k',    sys:'€50k–250k'  },
+      'recycled-content': { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'labelling':        { iso:'€500–5k',    per:'€5k–30k',    sys:'€30k–150k'  },
+      'reuse-target':     { iso:'€2k–20k',    per:'€20k–100k',  sys:'€100k–500k' },
+      'prohibited-pkg':   { iso:'€3k–30k',    per:'€30k–150k',  sys:'€150k–1M'   },
+      'grade-de':         { iso:'€3k–30k',    per:'€30k–150k',  sys:'€150k–1M'   },
+    }
+  },
   SE: {
     name: 'Sweden', flag: '🇸🇪',
     strictness: 'high',
@@ -3329,7 +4135,7 @@ const COUNTRY_ENFORCEMENT = {
     strictness: 'high',
     strictnessLabel: 'High',
     body: 'Miljøstyrelsen',
-    approach: 'Active. Denmark introduced new EPR rules in 2025 and Miljøstyrelsen has increased audit activity. Denmark has a track record of criminal referrals for serious environmental violations. New PPWR penalty framework expected to be among the stricter in the cluster.',
+    approach: 'Active. Denmark introduced new EPR rules in 2025 and Miljøstyrelsen has increased audit activity. Denmark has a track record of criminal referrals for serious environmental violations. New PPWR penalty framework expected to be among the stricter in the EU.',
     priorities: ['EPR registration with DPA-System', 'B2B packaging reporting accuracy', 'Labelling for Danish market'],
     dailyPenalty: false,
     publicNaming: true,
@@ -3414,7 +4220,7 @@ const COUNTRY_ENFORCEMENT = {
     strictnessLabel: 'Medium (active)',
     body: 'Aplinkos apsaugos agentūra (AAA)',
     approach: 'Active and increasing. Lithuania\'s AAA has meaningfully increased enforcement activity since 2023 and has specifically flagged B2B packaging under-reporting as an audit priority. Lithuania is considered more enforcement-active than its Baltic peers. Expect continued escalation as PPWR implementation proceeds.',
-    priorities: ['B2B packaging EPR reporting (explicit audit priority)', 'Žaliasis taškas registration', 'Intra-cluster import documentation'],
+    priorities: ['B2B packaging EPR reporting (explicit audit priority)', 'Žaliasis taškas registration', 'Cross-border import documentation'],
     dailyPenalty: false,
     publicNaming: false,
     criminalReferral: false,
@@ -3567,6 +4373,31 @@ function toggleEnfProfile(code) {
   detail.style.display = isOpen ? 'none' : 'block';
   card.style.borderColor = isOpen ? 'var(--border)' : 'var(--sg-red)';
   if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+let _efActive = 'all';
+function filterEnfProfiles(strictness) {
+  if (strictness !== undefined) _efActive = strictness;
+  const query = (document.getElementById('enf-search')?.value || '').toLowerCase();
+  Object.keys(COUNTRY_ENFORCEMENT).forEach(code => {
+    const card = document.getElementById('enf-' + code);
+    if (!card) return;
+    const c = COUNTRY_ENFORCEMENT[code];
+    const matchesSearch = !query ||
+      c.name.toLowerCase().includes(query) ||
+      c.body.toLowerCase().includes(query);
+    const matchesFilter = _efActive === 'all' || c.strictness === _efActive;
+    card.style.display = matchesSearch && matchesFilter ? '' : 'none';
+  });
+  ['all','high','medium','low'].forEach(k => {
+    const btn = document.getElementById('ef-' + (k === 'medium' ? 'med' : k));
+    if (!btn) return;
+    const active = _efActive === k;
+    btn.style.background = active ? 'var(--ink)' : 'white';
+    btn.style.color = active ? 'white' :
+      k === 'high' ? '#dc2626' : k === 'medium' ? '#d97706' :
+      k === 'low' ? '#0369a1' : 'var(--ink)';
+  });
 }
 
 // ── RENDER PENALTY TABLE ────────────────────────────────────────────────────
@@ -3724,7 +4555,7 @@ const PACKAGING_MATERIALS = [
     material: 'LDPE plastic',
     grade: 'C',
     gradeRationale: 'LDPE film is technically recyclable but collection infrastructure is limited in most markets. Grades C under current criteria due to scale of recycling availability.',
-    issues: ['Limited collection infrastructure in Baltic states', 'Often contaminated in mixed waste streams', 'Thin-gauge film difficult to sort mechanically'],
+    issues: ['Limited collection infrastructure in many EU markets', 'Often contaminated in mixed waste streams', 'Thin-gauge film difficult to sort mechanically'],
     ppwrBan: false,
     banReason: null,
     banYear: null,
@@ -3774,7 +4605,7 @@ const PACKAGING_MATERIALS = [
     tier: 'sales',
     material: 'HDPE plastic',
     grade: 'A',
-    gradeRationale: 'HDPE is one of the most recyclable plastics with well-established collection and reprocessing at scale across all 7 cluster markets.',
+    gradeRationale: 'HDPE is one of the most recyclable plastics with well-established collection and reprocessing at scale across EU markets.',
     issues: ['Lids may be different polymer — check and specify mono-material lid'],
     ppwrBan: false,
     banReason: null,
@@ -3791,14 +4622,14 @@ const PACKAGING_MATERIALS = [
     tier: 'sales',
     material: 'Glass',
     grade: 'A',
-    gradeRationale: 'Glass is infinitely recyclable with no quality degradation. Well-established collection in all 7 markets, particularly through deposit systems in Norway and Baltic states.',
+    gradeRationale: 'Glass is infinitely recyclable with no quality degradation. Well-established collection across EU markets, particularly through deposit systems in Norway, Germany, Ireland, and several other EU/EEA countries.',
     issues: ['Heavy — higher transport emissions', 'Ceramic or crystal glass contaminates container glass stream'],
     ppwrBan: false,
     banReason: null,
     banYear: null,
     rcCategory: 'none',
     reusable: true,
-    reusableNotes: 'Deposit-return schemes in NO, EE, LV, LT mean glass bottles are often reused multiple times before recycling.',
+    reusableNotes: 'Deposit-return schemes in various EU/EEA countries (NO, DE, IE, EE, HR, RO, etc.) mean glass bottles are often reused multiple times before recycling.',
     eprFeeDirection: 'lowest',
     sgRelevance: 'Not typical for construction products but relevant if any liquid product lines use glass. Grade A, no recycled content target (not plastic).',
   },
@@ -3811,7 +4642,7 @@ const PACKAGING_MATERIALS = [
     material: 'PE plastic film',
     grade: 'C',
     gradeRationale: 'PE film is recyclable in dedicated film streams but grouped packaging shrink wrap is often removed and discarded at retail or customer site — collection rate is low.',
-    issues: ['Rarely collected separately at B2B customer sites', 'Often contaminated with labels, print, and adhesive residue', 'Limited infrastructure in Baltic states'],
+    issues: ['Rarely collected separately at B2B customer sites', 'Often contaminated with labels, print, and adhesive residue', 'Collection infrastructure varies across EU markets'],
     ppwrBan: false,
     banReason: null,
     banYear: null,
@@ -3847,7 +4678,7 @@ const PACKAGING_MATERIALS = [
     material: 'LLDPE plastic film',
     grade: 'D',
     gradeRationale: 'LLDPE stretch film is technically recyclable but one-way pallet stretch wrap is almost never collected from B2B customer sites. Practical recycling rate near zero. Grades D under current criteria.',
-    issues: ['Near-zero actual collection rate at B2B delivery points', 'Contamination from tape, labels and product residue', 'No viable collection system across cluster markets for B2B use'],
+    issues: ['Near-zero actual collection rate at B2B delivery points', 'Contamination from tape, labels and product residue', 'No viable collection system across most EU markets for B2B use'],
     ppwrBan: true,
     banReason: 'Grade D banned from 2030 (PPWR Art. 6). As the most common one-way transport packaging format, this is one of the highest-impact PPWR compliance issues for Company A logistics.',
     banYear: 2030,
@@ -4274,13 +5105,13 @@ function populateMaterialSelects() {
 
 // ── GLOSSARY ──
 const terms = [
-  { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers. Company A is a producer in multiple roles — as manufacturer of own products, as importer of sister company goods, and as the EU importer of 3rd party non-EU goods.', sg:'For CA Nordic/Baltic, being a primary producer (own manufacture) carries the fullest set of obligations.' },
-  { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade — the less recyclable your packaging, the higher your fee.', sg:'CA must register with EPR systems in all 7 markets for all packaging flows.' },
-  { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier. If Company A manufactures and packs its own products, it is the packer/filler and bears the fullest PPWR responsibilities.', sg:'CA\'s own manufacturing sites in the cluster make CA a packer/filler for those product lines.' },
-  { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in the importing country, even if obligations were already met elsewhere.', sg:'Every time CA buys from a sister company outside the cluster, CA becomes the importer-producer in the destination market.' },
+  { term:'Producer', tag:'Core Concept', def:'Under PPWR, any person or entity that places packaging or packaged goods on the market for the first time. Includes manufacturers, importers, brand owners, and re-labellers. Company A is a producer in multiple roles — as manufacturer of own products, as importer of sister company goods, and as the EU importer of 3rd party non-EU goods.', sg:'Being a primary producer (own manufacture) carries the fullest set of PPWR obligations.' },
+  { term:'EPR — Extended Producer Responsibility', tag:'Regulation', def:'A policy framework making producers financially responsible for the end-of-life management of the packaging they place on the market. Under PPWR, EPR fees are modulated by recyclability grade — the less recyclable your packaging, the higher your fee.', sg:'CA must register with EPR systems in all EU/EEA markets for all packaging flows.' },
+  { term:'Packer/Filler', tag:'Legal Role', def:'The entity that physically fills or packs a product into packaging. Under PPWR, the packer/filler is the primary producer — the highest obligation tier. If Company A manufactures and packs its own products, it is the packer/filler and bears the fullest PPWR responsibilities.', sg:'CA\'s own manufacturing sites make CA a packer/filler for those product lines — the highest PPWR obligation tier.' },
+  { term:'Importer-Producer', tag:'Legal Role', def:'When a company imports packaged goods into an EU country from outside that country, it becomes the "importer-producer" — taking on full producer obligations for the packaging in the importing country, even if obligations were already met elsewhere.', sg:'Every time CA buys from a sister company in another country, CA becomes the importer-producer in the destination market.' },
   { term:'Recyclability Grade (A–E)', tag:'Compliance', def:'PPWR requires all packaging to be assessed against a five-grade recyclability scale. Grade A = easily recyclable at scale. Grade E = non-recyclable, banned from 2030. Grades directly determine EPR fee levels. Packaging manufacturers must publish recyclability grades.', sg:'CA must know the recyclability grade of all packaging it places on the market — including packaging received from suppliers.' },
   { term:'Recycled Content', tag:'Targets', def:'The minimum percentage of recycled material that must be present in plastic packaging. Mandatory minimum of 30% for most plastic packaging by 2030, escalating to 55% by 2040. Applies per packaging category. Compliance requires certificates of conformity from packaging material suppliers.', sg:'CA\'s own manufactured products require compliant packaging material sourcing. For imported goods, CA must verify supplier compliance.' },
-  { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions. Must be accessible to consumers, waste collectors, and regulators.', sg:'CA must implement a digital passport programme for all own-manufactured products sold across the 7-market cluster.' },
+  { term:'Digital Product Passport', tag:'Labelling', def:'A mandatory QR-code-accessible data record attached to packaging from 2030, containing packaging composition, recyclability grade, recycled content percentage, and sorting instructions. Must be accessible to consumers, waste collectors, and regulators.', sg:'CA must implement a digital passport programme for all own-manufactured products sold across EU markets.' },
   { term:'Placement on the Market', tag:'Trigger Point',
     def:"The legal trigger for PPWR EPR obligations. Placing on the market means making packaging available in a country for distribution or use — when supplied to another person. Key distinction: (1) Moving goods to your own warehouse in another country is NOT placing on the market. (2) Selling from that warehouse to a local customer IS placing on the market in that country. (3) Shipping from your warehouse to a customer abroad IS placing on the market in the customer's country. For own-manufactured products, placement occurs when goods first leave the factory for distribution.",
     sg:"A Finnish warehouse serving FI, EE and LV customers requires three separate EPR registrations, each triggered at the first sale in that country — not when goods arrive in the warehouse." },
