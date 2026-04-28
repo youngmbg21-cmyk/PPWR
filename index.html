@@ -1754,7 +1754,7 @@
         </div>
 
         <div style="max-width:1100px; margin:0 auto; padding:32px;">
-            <p style="text-align:center; color:var(--text3); font-size:13px;">PPWR Learning Hub © 2026 · Covering Sweden, Denmark, Norway, Finland, Estonia, Latvia, Lithuania</p>
+            <p style="text-align:center; color:var(--text3); font-size:13px;">PPWR Learning Hub © 2026 · Covering all 27 EU member states + Norway (EEA)</p>
         </div>
     </div>
 
@@ -2582,7 +2582,7 @@
             <div style="margin-bottom:32px;">
                 <h1 style="margin-bottom:8px;">🌍 My Country's Rules</h1>
                 <p style="color:#888; font-size:15px; margin:0 0 4px;">The EU regulation is the same everywhere, but each country sets its own enforcement approach, fines, and fee structure. Select your country to see what applies specifically where you operate.</p>
-                <p style="color:var(--text3); font-size:13px; margin:0;">Covering Sweden, Norway, Denmark, Finland, Estonia, Latvia and Lithuania.</p>
+                <p style="color:var(--text3); font-size:13px; margin:0;">Covering all 27 EU member states plus Norway (EEA).</p>
             </div>
             <div id="countries-hub-grid" class="grid-2"></div>
         </div>
@@ -4394,15 +4394,36 @@
         function renderCountriesHubPage() {
           const grid = document.getElementById('countries-hub-grid');
           if (!grid) return;
-          const order = ['SE','NO','DK','FI','EE','LV','LT'];
+          const order = ['DE','FR','IT','ES','PL','NL','BE','SE','AT','PT','CZ','RO','HU','DK','FI','GR','SK','IE','HR','BG','LT','SI','LV','EE','CY','LU','MT','NO'];
           const eprInfo = {
-            SE:{ scheme:'FTI Förpackningsinsamlingen', threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
-            NO:{ scheme:'Grønt Punkt Norge',           threshold:'No minimum',   deadline:'~late 2026' },
-            DK:{ scheme:'DPA-System',                  threshold:'All producers',deadline:'12 Aug 2026' },
-            FI:{ scheme:'RINKI',                       threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
-            EE:{ scheme:'ETT',                         threshold:'Register proactively',deadline:'12 Aug 2026' },
-            LV:{ scheme:'Latvijas Zaļais punkts',      threshold:'All producers',deadline:'12 Aug 2026' },
-            LT:{ scheme:'Žaliasis taškas',             threshold:'All producers',deadline:'12 Aug 2026' },
+            AT:{ scheme:'ARA (Altstoff Recycling Austria)', threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            BE:{ scheme:'Fost Plus / Val-I-Pac',            threshold:'> 300 kg/yr',  deadline:'12 Aug 2026' },
+            BG:{ scheme:'EcoDisc / Ecobulpack',             threshold:'All producers',deadline:'12 Aug 2026' },
+            HR:{ scheme:'Fond za zaštitu okoliša (FZOEU)',  threshold:'All producers',deadline:'12 Aug 2026' },
+            CY:{ scheme:'Green Dot Cyprus',                 threshold:'All producers',deadline:'12 Aug 2026' },
+            CZ:{ scheme:'EKO-KOM',                         threshold:'> 300 kg/yr',  deadline:'12 Aug 2026' },
+            DE:{ scheme:'LUCID (Verpackungsregister)',      threshold:'Any amount',   deadline:'12 Aug 2026' },
+            DK:{ scheme:'DPA-System',                      threshold:'All producers',deadline:'12 Aug 2026' },
+            EE:{ scheme:'ETT',                             threshold:'Register proactively', deadline:'12 Aug 2026' },
+            FI:{ scheme:'RINKI',                           threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            FR:{ scheme:'CITEO',                           threshold:'> 50 kg/yr',   deadline:'12 Aug 2026' },
+            GR:{ scheme:'EOAN / Ανακύκλωση',               threshold:'All producers',deadline:'12 Aug 2026' },
+            HU:{ scheme:'MOHU Hulladékgazdálkodási Zrt.',  threshold:'All producers',deadline:'12 Aug 2026' },
+            IE:{ scheme:'Repak',                           threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            IT:{ scheme:'CONAI',                           threshold:'Any amount',   deadline:'12 Aug 2026' },
+            LV:{ scheme:'Latvijas Zaļais punkts',          threshold:'All producers',deadline:'12 Aug 2026' },
+            LT:{ scheme:'Žaliasis taškas',                 threshold:'All producers',deadline:'12 Aug 2026' },
+            LU:{ scheme:'Valorlux',                        threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
+            MT:{ scheme:'GreenPak / Wasteserv',            threshold:'All producers',deadline:'12 Aug 2026' },
+            NL:{ scheme:'Afvalfonds Verpakkingen',         threshold:'> 50 kg/yr',   deadline:'12 Aug 2026' },
+            NO:{ scheme:'Grønt Punkt Norge',               threshold:'No minimum',   deadline:'~late 2026' },
+            PL:{ scheme:'BDO Registry',                    threshold:'All producers',deadline:'12 Aug 2026' },
+            PT:{ scheme:'Sociedade Ponto Verde (SPV)',     threshold:'All producers',deadline:'12 Aug 2026' },
+            RO:{ scheme:'RetuRO / OIREP schemes',          threshold:'All producers',deadline:'12 Aug 2026' },
+            SK:{ scheme:'ENVI-PAK / NATUR-PACK',           threshold:'All producers',deadline:'12 Aug 2026' },
+            SI:{ scheme:'SLOPAK',                          threshold:'All producers',deadline:'12 Aug 2026' },
+            ES:{ scheme:'Ecoembes / Ecologic',             threshold:'> 250 kg/yr',  deadline:'12 Aug 2026' },
+            SE:{ scheme:'FTI Förpackningsinsamlingen',     threshold:'> 1 tonne/yr', deadline:'12 Aug 2026' },
           };
           const strictColor = { high:'#dc2626', medium:'#d97706' };
           const strictBg    = { high:'#fee2e2', medium:'#fef3c7' };
