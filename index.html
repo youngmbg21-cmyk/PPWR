@@ -917,8 +917,11 @@
         .ai-bubble.bot code { background: var(--bg); padding: 1px 4px; border-radius: 3px; font-size: 0.88em; }
 
         #ppwr-ask-bar {
-            margin-top: -26px;
             margin-bottom: 18px;
+        }
+
+        .main-content.has-bar {
+            padding-top: 8px;
         }
 
         #ppwr-ask-btn {
@@ -5066,7 +5069,10 @@
 
             // Inject "Ask your PPWR Assistant" button as first item in each page
             const existingBar = document.getElementById('ppwr-ask-bar');
-            if (existingBar) existingBar.remove();
+            if (existingBar) {
+                existingBar.closest('.main-content')?.classList.remove('has-bar');
+                existingBar.remove();
+            }
             const noBarPages = ['home', 'tier-detail'];
             const tier = appState.currentTier || 'free';
             const hasBrain = ['starter', 'pro'].includes(tier);
@@ -5077,6 +5083,7 @@
                     bar.id = 'ppwr-ask-bar';
                     bar.innerHTML = '<button id="ppwr-ask-btn" onclick="aiNav.openChat()">🤖 Ask your PPWR Assistant</button>';
                     pageMc.insertBefore(bar, pageMc.firstChild);
+                    pageMc.classList.add('has-bar');
                 }
             }
 
