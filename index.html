@@ -6013,7 +6013,7 @@
         // ============================================================================
         // MODULE 2: DETERMINISTIC RISK CALCULATOR
         // ============================================================================
-        document.getElementById('calculate-risk-btn')?.addEventListener('click', function() {
+        function runRiskCalculation() {
             const industry = document.getElementById('risk-industry').value;
             const material = document.getElementById('risk-material').value;
             const markets  = Array.from(document.querySelectorAll('#risk-calculator-page input[type="checkbox"]:checked')).map(c => c.value);
@@ -6262,6 +6262,19 @@
             }
 
             resultsDiv.scrollIntoView({ behavior:'smooth', block:'nearest' });
+        }
+
+        document.getElementById('calculate-risk-btn')?.addEventListener('click', runRiskCalculation);
+
+        // Auto-recalculate when any input changes and results are already visible
+        function riskAutoRecalc() {
+            if (document.getElementById('risk-results')?.style.display !== 'none') runRiskCalculation();
+        }
+        document.getElementById('risk-industry')?.addEventListener('input',  riskAutoRecalc);
+        document.getElementById('risk-industry')?.addEventListener('change', riskAutoRecalc);
+        document.getElementById('risk-material')?.addEventListener('change', riskAutoRecalc);
+        document.querySelectorAll('#risk-calculator-page input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', riskAutoRecalc);
         });
 
         // ============================================================================
