@@ -7317,11 +7317,7 @@
 
                 <div class="card" style="padding:28px;margin-bottom:16px;">
                   <span class="rc-section-label">Cost to comply (2030 estimate)</span>
-                  <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 4px;">
-                    <span id="ic-cost" style="font-size:28px;font-weight:800;color:var(--text);">—</span>
-                    <span style="font-size:14px;color:var(--text2);">total capital outlay</span>
-                  </div>
-                  <p id="ic-cost-note" style="font-size:12px;color:var(--text3);margin:0;"></p>
+                  <div id="ic-cost-range" style="margin-top:12px;"></div>
                 </div>
 
                 <div class="card" style="padding:28px;">
@@ -7366,15 +7362,39 @@
                 rcGapDiv.innerHTML = '<p style="font-size:13px;color:var(--text3);">No mandatory recycled-content target applies to this material type under PPWR Art. 7.</p>';
             }
 
-            // Cost to comply (rough: €1,200/t for sourcing recycled feedstock premium + redesign)
+            // Cost to comply — three scenarios (redesign cost per SKU varies by scope of change)
             const rcGap = Math.max(0, rcTarget2030 - recycled);
-            const redesignCost = skus * 8500;
             const feedstockPremium = (rcGap / 100) * volume * 1200;
-            const totalCost = redesignCost + feedstockPremium;
-            document.getElementById('ic-cost').textContent = '€' + Math.round(totalCost).toLocaleString();
-            document.getElementById('ic-cost-note').textContent =
-                'Packaging redesign: €8,500/SKU × ' + skus + ' SKUs = €' + Math.round(redesignCost).toLocaleString() +
-                (feedstockPremium > 0 ? ' + recycled feedstock premium: €' + Math.round(feedstockPremium).toLocaleString() : '') + '. Capital estimates only; excludes testing & certification.';
+            // Redesign cost bands per SKU:
+            //   Low  — label/sorting mark updates only (€500/SKU)
+            //   Mid  — material swap or barrier layer removal (€8,500/SKU)
+            //   High — full structural redesign, e.g. Grade D/E → A/B (€35,000/SKU)
+            const scenarios = [
+                { label:'Low',  desc:'Label & sorting mark updates only',        perSku:500,   color:'#2A9D8F', bg:'#F0FAF8' },
+                { label:'Mid',  desc:'Material swap or barrier layer removal',   perSku:8500,  color:'#E65100', bg:'#FFF8F0' },
+                { label:'High', desc:'Full structural redesign (Grade D/E → A)', perSku:35000, color:'#C62828', bg:'#FFF5F5' },
+            ];
+            // Highlight the most likely scenario based on grade
+            const likelyIdx = (grade === 'D' || grade === 'E') ? 2 : (grade === 'C') ? 1 : 0;
+            const costDiv = document.getElementById('ic-cost-range');
+            if (costDiv) {
+                const rows = scenarios.map((s, i) => {
+                    const total = skus * s.perSku + feedstockPremium;
+                    const isLikely = i === likelyIdx;
+                    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;margin-bottom:6px;border:${isLikely ? '2px solid '+s.color : '1px solid var(--border)'};background:${isLikely ? s.bg : 'var(--bg2)'};">
+                        <div>
+                            <span style="font-size:11px;font-weight:700;text-transform:uppercase;color:${s.color};letter-spacing:.06em;">${s.label}${isLikely ? ' — most likely for your profile' : ''}</span>
+                            <p style="font-size:12px;color:var(--text2);margin:2px 0 0;">${s.desc}</p>
+                        </div>
+                        <span style="font-size:20px;font-weight:800;color:var(--text);white-space:nowrap;margin-left:16px;">€${Math.round(total).toLocaleString()}</span>
+                    </div>`;
+                }).join('');
+                costDiv.innerHTML = rows + `<p style="font-size:11px;color:var(--text3);margin:8px 0 0;">
+                    <strong>What drives the range:</strong> Low = only sorting labels need updating.
+                    Mid = a material or layer needs replacing. High = packaging must be completely redesigned to avoid Grade D/E ban.
+                    Feedstock premium: €1,200/t per % recycled content gap. Excludes testing &amp; certification costs.
+                </p>`;
+            }
 
             // Fine risk
             let fineHtml;
