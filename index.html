@@ -1985,52 +1985,49 @@
 
                     <div class="rc-field">
                         <label class="rc-field-label" for="risk-industry">Industry</label>
-                        <input type="text" class="rc-select" id="risk-industry" list="industry-datalist"
-                               placeholder="Type to search your industry…"
-                               style="cursor:text;"
-                               autocomplete="off">
-                        <datalist id="industry-datalist">
-                            <option value="Agriculture &amp; Horticulture">
-                            <option value="Automotive &amp; Vehicle Parts">
-                            <option value="Bakery &amp; Confectionery">
-                            <option value="Beauty &amp; Personal Care">
-                            <option value="Beverages (Alcoholic)">
-                            <option value="Beverages (Non-Alcoholic)">
-                            <option value="Chemicals &amp; Cleaning Products">
-                            <option value="Construction Materials &amp; DIY">
-                            <option value="Consumer Electronics">
-                            <option value="Consumer Goods (General)">
-                            <option value="Dairy &amp; Refrigerated Foods">
-                            <option value="E-commerce &amp; Online Retail">
-                            <option value="Education &amp; Office Supplies">
-                            <option value="Fashion &amp; Apparel">
-                            <option value="Fisheries &amp; Seafood">
-                            <option value="Food Manufacturing (General)">
-                            <option value="Food Service &amp; Catering">
-                            <option value="Fresh Produce &amp; Vegetables">
-                            <option value="Furniture &amp; Home Goods">
-                            <option value="Garden &amp; Outdoor Products">
-                            <option value="Glass &amp; Ceramics">
-                            <option value="Healthcare &amp; Medical Devices">
-                            <option value="Industrial Equipment &amp; Machinery">
-                            <option value="Logistics &amp; Warehousing">
-                            <option value="Luxury Goods">
-                            <option value="Meat &amp; Poultry">
-                            <option value="Nutraceuticals &amp; Supplements">
-                            <option value="Packaging Manufacturing">
-                            <option value="Pet Food &amp; Pet Care">
-                            <option value="Pharmaceuticals">
-                            <option value="Printing &amp; Publishing">
-                            <option value="Retail (General)">
-                            <option value="Snacks &amp; Confectionery">
-                            <option value="Specialty &amp; Organic Foods">
-                            <option value="Sports &amp; Recreation">
-                            <option value="Textiles &amp; Household Linens">
-                            <option value="Tobacco &amp; Nicotine Products">
-                            <option value="Toys &amp; Childrenware">
-                            <option value="Wholesale Distribution">
-                            <option value="Wine &amp; Spirits">
-                        </datalist>
+                        <select class="rc-select" id="risk-industry">
+                            <option value="">— select your industry —</option>
+                            <option>Agriculture &amp; Horticulture</option>
+                            <option>Automotive &amp; Vehicle Parts</option>
+                            <option>Bakery &amp; Confectionery</option>
+                            <option>Beauty &amp; Personal Care</option>
+                            <option>Beverages (Alcoholic)</option>
+                            <option>Beverages (Non-Alcoholic)</option>
+                            <option>Chemicals &amp; Cleaning Products</option>
+                            <option>Construction Materials &amp; DIY</option>
+                            <option>Consumer Electronics</option>
+                            <option>Consumer Goods (General)</option>
+                            <option>Dairy &amp; Refrigerated Foods</option>
+                            <option>E-commerce &amp; Online Retail</option>
+                            <option>Education &amp; Office Supplies</option>
+                            <option>Fashion &amp; Apparel</option>
+                            <option>Fisheries &amp; Seafood</option>
+                            <option>Food Manufacturing (General)</option>
+                            <option>Food Service &amp; Catering</option>
+                            <option>Fresh Produce &amp; Vegetables</option>
+                            <option>Furniture &amp; Home Goods</option>
+                            <option>Garden &amp; Outdoor Products</option>
+                            <option>Glass &amp; Ceramics</option>
+                            <option>Healthcare &amp; Medical Devices</option>
+                            <option>Industrial Equipment &amp; Machinery</option>
+                            <option>Logistics &amp; Warehousing</option>
+                            <option>Luxury Goods</option>
+                            <option>Meat &amp; Poultry</option>
+                            <option>Nutraceuticals &amp; Supplements</option>
+                            <option>Packaging Manufacturing</option>
+                            <option>Pet Food &amp; Pet Care</option>
+                            <option>Pharmaceuticals</option>
+                            <option>Printing &amp; Publishing</option>
+                            <option>Retail (General)</option>
+                            <option>Snacks &amp; Confectionery</option>
+                            <option>Specialty &amp; Organic Foods</option>
+                            <option>Sports &amp; Recreation</option>
+                            <option>Textiles &amp; Household Linens</option>
+                            <option>Tobacco &amp; Nicotine Products</option>
+                            <option>Toys &amp; Childrenware</option>
+                            <option>Wholesale Distribution</option>
+                            <option>Wine &amp; Spirits</option>
+                        </select>
                     </div>
 
                     <div class="rc-field">
@@ -6013,7 +6010,7 @@
         // ============================================================================
         // MODULE 2: DETERMINISTIC RISK CALCULATOR
         // ============================================================================
-        function runRiskCalculation() {
+        function runRiskCalculation(scrollToResults = false) {
             const industry = document.getElementById('risk-industry').value;
             const material = document.getElementById('risk-material').value;
             const markets  = Array.from(document.querySelectorAll('#risk-calculator-page input[type="checkbox"]:checked')).map(c => c.value);
@@ -6261,15 +6258,15 @@
                 </div>`;
             }
 
-            resultsDiv.scrollIntoView({ behavior:'smooth', block:'nearest' });
+            if (scrollToResults) resultsDiv.scrollIntoView({ behavior:'smooth', block:'nearest' });
         }
 
-        document.getElementById('calculate-risk-btn')?.addEventListener('click', runRiskCalculation);
+        document.getElementById('calculate-risk-btn')?.addEventListener('click', () => runRiskCalculation(true));
 
         // Auto-recalculate when any input changes and results are already visible.
         // Industry uses only 'change' (not 'input') so the datalist dropdown stays usable while typing.
         function riskAutoRecalc() {
-            if (document.getElementById('risk-results')?.style.display !== 'none') runRiskCalculation();
+            if (document.getElementById('risk-results')?.style.display !== 'none') runRiskCalculation(false);
         }
         document.getElementById('risk-industry')?.addEventListener('change', riskAutoRecalc);
         document.getElementById('risk-material')?.addEventListener('change', riskAutoRecalc);
