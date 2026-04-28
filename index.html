@@ -6266,11 +6266,11 @@
 
         document.getElementById('calculate-risk-btn')?.addEventListener('click', runRiskCalculation);
 
-        // Auto-recalculate when any input changes and results are already visible
+        // Auto-recalculate when any input changes and results are already visible.
+        // Industry uses only 'change' (not 'input') so the datalist dropdown stays usable while typing.
         function riskAutoRecalc() {
             if (document.getElementById('risk-results')?.style.display !== 'none') runRiskCalculation();
         }
-        document.getElementById('risk-industry')?.addEventListener('input',  riskAutoRecalc);
         document.getElementById('risk-industry')?.addEventListener('change', riskAutoRecalc);
         document.getElementById('risk-material')?.addEventListener('change', riskAutoRecalc);
         document.querySelectorAll('#risk-calculator-page input[type="checkbox"]').forEach(cb => {
