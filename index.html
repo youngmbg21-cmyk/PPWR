@@ -6627,13 +6627,13 @@
                 if (!PROXY_ENDPOINT) {
                     removeTyping();
                     appendBotBubble(
-                        '⚠️ Full Regulation mode needs a Cloudflare Worker URL configured in <code>PROXY_ENDPOINT</code> inside <code>index.html</code>. Deploy <code>worker.js</code> to Cloudflare and paste the URL there.',
+                        '⚠️ Full Regulation mode needs the proxy URL configured.',
                         null, false, true
                     );
                     return;
                 }
                 try {
-                    const res  = await fetch(PROXY_ENDPOINT, {
+                    const res = await fetch(PROXY_ENDPOINT, {
                         method:  'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body:    JSON.stringify({
@@ -6641,14 +6641,30 @@
                             mode:  'pdf', context: { cards: [], scenarios: [] }
                         })
                     });
+
+                    // If the server returned non-JSON (e.g. a 404/502 error page),
+                    // surface the HTTP status so it's diagnosable.
+                    const contentType = res.headers.get('content-type') || '';
+                    if (!contentType.includes('application/json')) {
+                        removeTyping();
+                        appendBotBubble(
+                            `Function error — HTTP ${res.status}. Check the Netlify dashboard → Functions → chat → Logs.`,
+                            null, false
+                        );
+                        return;
+                    }
+
                     const data = await res.json();
                     removeTyping();
                     if (data.upgradeRequired) { appendUpgradeWall(); }
-                    else if (data.error)      { appendBotBubble('Service temporarily unavailable. Please try again shortly.', null, false); }
+                    else if (data.error)      { appendBotBubble(`Error: ${data.error}`, null, false); }
                     else                      { appendBotBubble(data.answer, data.sourceLabel, data.sourceVerified); }
-                } catch {
+                } catch (err) {
                     removeTyping();
-                    appendBotBubble('Could not connect to the AI service. Check your internet connection and try again.', null, false);
+                    appendBotBubble(
+                        `Network error: ${err.message}. Make sure you are on your Netlify URL (not a dev/local URL).`,
+                        null, false
+                    );
                 }
             }
 
