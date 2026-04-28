@@ -1524,6 +1524,7 @@
         <div class="sidebar-item page-link" data-page="my-role">🎭 What's My Role?</div>
         <div class="sidebar-item page-link" data-page="delegated-acts">📜 Upcoming Rule Changes</div>
         <div class="sidebar-item page-link" data-page="countries">🌍 My Country's Rules</div>
+        <div class="sidebar-item page-link" data-page="legal-chatbot">🤖 PPWR Legal Assistant</div>
         <div class="sidebar-section-admin" style="padding: 0 16px; margin-top: 20px; margin-bottom: 8px; border-top: 1px solid var(--border); padding-top: 16px;">
             <p style="font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; font-family: var(--ff-mono);">Admin</p>
         </div>
@@ -2173,6 +2174,22 @@
                 <p style="color:var(--text3); font-size:12px; margin:8px 0 0;">All figures are indicative estimates. Consult a compliance advisor for formal assessments.</p>
             </div>
             <div id="impact-calculator-content"></div>
+        </div>
+    </div>
+
+    <!-- LEGAL CHATBOT PAGE -->
+    <div class="page" id="legal-chatbot-page">
+        <div class="main-content" style="max-width:860px;">
+            <div style="margin-bottom:24px;">
+                <p class="rc-eyebrow">AI-Powered Compliance Tool</p>
+                <h1 style="margin-bottom:8px;">🤖 PPWR Legal Assistant</h1>
+                <p style="color:#888; font-size:15px; max-width:640px; line-height:1.65; margin:0 0 4px;">
+                    Ask any question about the Packaging and Packaging Waste Regulation (EU) 2025/40.
+                    Each answer cites the relevant PPWR Articles and Annexes.
+                </p>
+                <p style="color:var(--text3); font-size:12px; margin:0;">Not legal advice — always verify with counsel before acting on compliance decisions.</p>
+            </div>
+            <div id="legal-chatbot-content"></div>
         </div>
     </div>
 
@@ -7353,10 +7370,175 @@
             document.getElementById('ic-fine-risk').innerHTML = fineHtml;
         }
 
+        // ============================================================================
+        // PPWR LEGAL CHATBOT
+        // ============================================================================
+
+        // Set to your Cloudflare Worker / Netlify Function URL to enable Claude API mode.
+        // Leave empty to use the built-in closed-knowledge fallback.
+        const LEGAL_CHATBOT_ENDPOINT = '';
+
+        // Built-in PPWR article knowledge base for offline / no-API-key mode
+        const PPWR_LEGAL_KB = [
+            { articles:['Art. 2','Scope'], keywords:['scope','apply','covered','applies','included','excluded','exemption'],
+              answer:'PPWR (EU 2025/40) applies to all packaging placed on the EU market and to packaging waste, regardless of the material used. Exempted items include military packaging, certain medical packaging where sterility cannot be achieved otherwise, and packaging for goods exported outside the EU (Art. 2).' },
+            { articles:['Art. 5','Annex I'], keywords:['pfas','banned','prohibited','substance','restrict','lead','cadmium','mercury','oxo','chemical'],
+              answer:'Art. 5 and Annex I prohibit: (a) PFAS in food-contact packaging (from 12 July 2024); (b) oxo-degradable plastic packaging (from 1 January 2025); (c) packaging with > 100 ppm combined of lead, cadmium, mercury, and hexavalent chromium. Additional substances may be restricted by delegated act.' },
+            { articles:['Art. 6','Art. 7','Annex II'], keywords:['recyclability','grade','a','b','c','d','e','recyclable','recycle','banned 2030'],
+              answer:'Art. 6 requires all packaging to receive a recyclability grade A–E based on EU-wide design-for-recycling criteria (Annex II). Grades D and E are banned from January 2030. Grade A packaging may receive a reduced EPR contribution. Delegated acts will set detailed grading criteria by end 2026.' },
+            { articles:['Art. 7'], keywords:['recycled content','recycled material','target','pet','plastic','percentage'],
+              answer:'Art. 7 sets mandatory minimum recycled content in plastic packaging: PET beverage bottles — 25% by 2025, 30% by 2030; contact-sensitive plastics — 10% by 2030, 15% by 2035; non-PET plastic packaging — 10% by 2030, 25% by 2035. Chemical recycling credits count if ISO 15270 certified.' },
+            { articles:['Art. 9','Art. 10','Annex IV'], keywords:['minimisation','weight','volume','space','void','size','necessary','overpackaging'],
+              answer:'Art. 9 and 10 require packaging to be minimised to the necessary amount — no unnecessary weight, volume, or layers beyond what protects the product. Annex IV bans packaging with > 40% empty space (50% for e-commerce). Art. 10 prohibits misleading packaging shapes that overstate product quantity.' },
+            { articles:['Art. 11','Annex V'], keywords:['reuse','refill','reusable','single-use','restrict','ban','sup'],
+              answer:'Art. 11 and Annex V restrict single-use formats and set reuse targets. Key restrictions from August 2026: single-use plastic packaging for food/beverage consumed on-site in HORECA, single-use plastic hotel amenity packaging. Reuse targets for transport packaging: 50% by 2030, 90% by 2040.' },
+            { articles:['Art. 12'], keywords:['label','labelling','sorting','qr','code','symbol','colour','material'],
+              answer:'Art. 12 requires packaging to carry standardised sorting instruction labels (material type, how to sort) using EU-harmonised pictograms. Digital product passports via QR code are required for secondary and tertiary packaging > 5 kg. Labels must be in the official language(s) of the member state.' },
+            { articles:['Art. 44','Art. 45'], keywords:['epr','producer responsibility','extended producer','fee','register','registration'],
+              answer:'Arts. 44–45 require producers to register with the competent authority in each EU member state where they place packaging on the market. EPR fees must be modulated by packaging recyclability grade and recycled content. Registration is per-country — there is no single EU-wide EPR registration.' },
+            { articles:['Art. 50'], keywords:['deposit return','drs','deposit','bottle','can','beverage'],
+              answer:'Art. 50 requires member states to establish deposit-return systems (DRS) for single-use plastic beverage bottles ≤ 3 litres and metal beverage containers ≤ 3 litres by 1 January 2029. Countries with existing DRS achieving ≥ 90% collection may apply for derogation.' },
+            { articles:['Art. 65'], keywords:['fine','penalty','sanction','enforcement','infringement'],
+              answer:'Art. 65 requires member states to set penalties that are effective, proportionate, and dissuasive. Penalties must take into account: severity and duration of infringement, the economic benefit gained, the scale of the company, prior violations. Member states report penalty frameworks to the Commission.' },
+            { articles:['Art. 58','Art. 59'], keywords:['sme','small','micro','threshold','exempt','exemption','size'],
+              answer:'Micro-enterprises (< 10 employees and ≤ €2 million turnover) may be exempted from certain PPWR requirements by member states (Art. 58). SME-specific provisions and extended timelines are available for some targets. Always verify with the competent authority in each member state where you operate.' },
+            { articles:['Recital 1','Art. 1'], keywords:['purpose','objective','goal','why','circular economy','sustainability','environment'],
+              answer:'PPWR (EU 2025/40) replaces Directive 94/62/EC and is designed to reduce packaging waste, increase reuse and recycling, remove harmful substances, and complete the EU single market for sustainable packaging. It is part of the European Green Deal and Circular Economy Action Plan (Art. 1).' },
+        ];
+
+        let legalChatHistory = [];
+        let legalChatBusy = false;
+
+        function renderLegalChatbot() {
+            const el = document.getElementById('legal-chatbot-content');
+            if (!el) return;
+            legalChatHistory = [];
+            legalChatBusy = false;
+            const apiMode = !!LEGAL_CHATBOT_ENDPOINT;
+            el.innerHTML = `
+            ${!apiMode ? `<div style="background:#FFF8E1;border:1px solid #FFD54F;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#E65100;">
+                <strong>ℹ️ Knowledge-base mode:</strong> Answers are drawn from PPWR Articles and Annexes built into this platform.
+                To enable full AI mode, configure <code>LEGAL_CHATBOT_ENDPOINT</code> with your Cloudflare Worker URL.
+            </div>` : `<div style="background:#E8F5E9;border:1px solid #A5D6A7;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#1B5E20;">
+                <strong>✅ AI mode active</strong> — responses are generated by Claude and cite PPWR Articles/Annexes directly.
+            </div>`}
+            <div id="lc-messages" style="min-height:320px;max-height:480px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:12px;">
+                <div class="lc-bot-msg" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;max-width:88%;font-size:14px;line-height:1.65;">
+                    <strong>PPWR Legal Assistant</strong><br>
+                    Hello! Ask me anything about EU Packaging and Packaging Waste Regulation (EU) 2025/40 — scope, substance bans, recycled content targets, EPR obligations, labelling, fines, and more. I'll cite the relevant Articles and Annexes in every answer.
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:12px;">
+                <input type="text" id="lc-input" placeholder="e.g. What are the recycled content targets for PET bottles?"
+                    style="flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;outline:none;"
+                    onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+                <button class="btn-primary" id="lc-send" onclick="legalChatSend()" style="padding:12px 24px;white-space:nowrap;">Ask →</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${['What is banned under Art. 5?','Recycled content targets for plastics','Recyclability grading A–E explained','EPR registration — how does it work?','Fine and penalty rules (Art. 65)','Scope — what packaging is covered?']
+                    .map(q => `<button class="btn-secondary" style="font-size:12px;padding:5px 12px;" onclick="legalChatQuick('${q.replace(/'/,"\\'")}');">${q}</button>`).join('')}
+            </div>`;
+            document.getElementById('lc-input')?.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); legalChatSend(); }
+            });
+        }
+
+        function legalChatQuick(text) {
+            const inp = document.getElementById('lc-input');
+            if (inp) { inp.value = text; legalChatSend(); }
+        }
+
+        function legalChatAppend(role, text, articles) {
+            const msgs = document.getElementById('lc-messages');
+            if (!msgs) return;
+            const isBot = role === 'bot';
+            const div = document.createElement('div');
+            div.style.cssText = isBot
+                ? 'background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;max-width:88%;font-size:14px;line-height:1.65;'
+                : 'background:var(--accent);color:#fff;border-radius:10px;padding:12px 16px;max-width:80%;font-size:14px;line-height:1.55;align-self:flex-end;margin-left:auto;';
+            div.textContent = text;
+            if (isBot && articles && articles.length) {
+                const ref = document.createElement('p');
+                ref.style.cssText = 'font-size:11px;color:var(--text3);margin:8px 0 0;font-weight:600;';
+                ref.textContent = '📖 ' + articles.join(' · ');
+                div.appendChild(ref);
+            }
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function legalChatKBSearch(query) {
+            const q = query.toLowerCase();
+            let best = null, bestScore = 0;
+            for (const entry of PPWR_LEGAL_KB) {
+                let score = 0;
+                for (const kw of entry.keywords) { if (q.includes(kw)) score += (kw.length > 4 ? 3 : 1); }
+                for (const art of entry.articles) { if (q.includes(art.toLowerCase())) score += 4; }
+                if (score > bestScore) { bestScore = score; best = entry; }
+            }
+            return bestScore >= 2 ? best : null;
+        }
+
+        async function legalChatSend() {
+            if (legalChatBusy) return;
+            const inp = document.getElementById('lc-input');
+            const sendBtn = document.getElementById('lc-send');
+            const text = inp?.value.trim();
+            if (!text) return;
+
+            inp.value = '';
+            legalChatHistory.push({ role:'user', content: text });
+            legalChatAppend('user', text, null);
+            legalChatBusy = true;
+            if (sendBtn) sendBtn.disabled = true;
+
+            if (LEGAL_CHATBOT_ENDPOINT) {
+                // API mode — call worker proxy
+                const typingEl = document.createElement('div');
+                typingEl.style.cssText = 'font-size:13px;color:var(--text3);padding:10px 0;';
+                typingEl.textContent = '⏳ Thinking…';
+                document.getElementById('lc-messages')?.appendChild(typingEl);
+                try {
+                    const res = await fetch(LEGAL_CHATBOT_ENDPOINT, {
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body: JSON.stringify({ query: text, sessionToken:'ppwr-session-legal-' + Date.now(), plan:'pro',
+                            context:{ cards: [], scenarios: [] } })
+                    });
+                    typingEl.remove();
+                    if (res.ok) {
+                        const data = await res.json();
+                        legalChatAppend('bot', data.answer || '(no answer)', data.sourceLabel ? [data.sourceLabel] : []);
+                    } else {
+                        legalChatAppend('bot', 'The AI service is currently unavailable. Please try again later.', ['Art. Error']);
+                    }
+                } catch (e) {
+                    typingEl.remove();
+                    legalChatAppend('bot', 'Network error reaching the AI service. Falling back to knowledge base.', []);
+                    const kb = legalChatKBSearch(text);
+                    if (kb) legalChatAppend('bot', kb.answer, kb.articles);
+                }
+            } else {
+                // Knowledge-base fallback
+                setTimeout(() => {
+                    const kb = legalChatKBSearch(text);
+                    if (kb) {
+                        legalChatAppend('bot', kb.answer, kb.articles);
+                    } else {
+                        legalChatAppend('bot',
+                            "I'm sorry, that specific detail isn't covered in my built-in knowledge base. Please consult the official Regulation (EU) 2025/40 text on EUR-Lex, or configure the AI endpoint for full coverage.",
+                            ['PPWR (EU) 2025/40']);
+                    }
+                }, 400);
+            }
+
+            legalChatBusy = false;
+            if (sendBtn) sendBtn.disabled = false;
+            inp?.focus();
+        }
+
         function renderESCalc(container) {
             container.innerHTML = '';
-            const title = document.createElement('h3');
-            title.style.marginBottom = '8px';
             title.textContent = 'Empty Space Checker';
             const subtitle = document.createElement('p');
             subtitle.style.cssText = 'font-size:14px;color:var(--text2);margin-bottom:20px;';
